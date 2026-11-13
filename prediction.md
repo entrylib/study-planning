@@ -1,6 +1,6 @@
 # Prediction: forecasting, regression and classification
 
-Version 0.2 (draft, to be reviewed by someone who works in the field) · 2026-11-13
+Version 0.3 (draft, to be reviewed by someone who works in the field) · 2026-11-13
 
 For any study that evaluates predictions: point forecasts, quantiles, intervals or whole predictive distributions, of
 time series, of a regression's outcome, or of a class.
@@ -26,9 +26,9 @@ method predict?** The measures follow from the answer.
 - **Why:** squared error is consistent for the mean ([Gneiting 2011](https://doi.org/10.1198/jasa.2011.r10138)).
 - **Avoid:** MAE and MASE as the main measure: they are consistent for the median and reward median forecasts
   ([Gneiting 2011](https://doi.org/10.1198/jasa.2011.r10138)). MAPE: it is consistent for the median of order −1, which lies below the median for positive outcomes, so
-  it rewards forecasts that are too low ([Gneiting 2011](https://doi.org/10.1198/jasa.2011.r10138)). sMAPE: it is asymmetric ([Goodwin and Lawton 1999](https://doi.org/10.1016/S0169-2070%2899%2900007-2)) and undefined when actual and
-  forecast are both zero.
-- **References:** [Gneiting 2011](https://doi.org/10.1198/jasa.2011.r10138); [Makridakis, Spiliotis and Assimakopoulos 2022a](https://doi.org/10.1016/j.ijforecast.2021.11.013); [Goodwin and Lawton 1999](https://doi.org/10.1016/S0169-2070%2899%2900007-2); [Hyndman and Khandakar 2008](https://doi.org/10.18637/jss.v027.i03); [Hyndman and Athanasopoulos 2018](https://otexts.com/fpp2/transformations.html).
+  it rewards forecasts that are too low ([Gneiting 2011](https://doi.org/10.1198/jasa.2011.r10138)). sMAPE: for the same outcome it penalises low forecasts more heavily than high ones, so it
+  rewards forecasts that are too high ([Hyndman and Koehler 2006](https://doi.org/10.1016/j.ijforecast.2006.03.001); [Goodwin and Lawton 1999](https://doi.org/10.1016/S0169-2070%2899%2900007-2)), and it is undefined when actual and forecast are both zero.
+- **References:** [Gneiting 2011](https://doi.org/10.1198/jasa.2011.r10138); [Makridakis, Spiliotis and Assimakopoulos 2022a](https://doi.org/10.1016/j.ijforecast.2021.11.013); [Goodwin and Lawton 1999](https://doi.org/10.1016/S0169-2070%2899%2900007-2); [Hyndman and Koehler 2006](https://doi.org/10.1016/j.ijforecast.2006.03.001); [Hyndman and Khandakar 2008](https://doi.org/10.18637/jss.v027.i03); [Hyndman and Athanasopoulos 2018](https://otexts.com/fpp2/transformations.html).
 
 ## median-forecasts
 
@@ -87,6 +87,20 @@ method predict?** The measures follow from the answer.
   single measure favours the methods that target what it is consistent for ([Kolassa 2020](https://doi.org/10.1016/j.ijforecast.2019.02.017); [Gneiting 2011](https://doi.org/10.1198/jasa.2011.r10138)).
 - **References:** [Gneiting 2011](https://doi.org/10.1198/jasa.2011.r10138); [Kolassa 2020](https://doi.org/10.1016/j.ijforecast.2019.02.017).
 
+## aggregation
+
+- **When:** accuracy is summarised over several series or data sets on different scales.
+- **Default:** scale each series' errors by a quantity of that series that does not depend on the compared forecasts
+  (the in-sample error of the one-step naive forecast, as in MASE and RMSSE, or the error of a benchmark method), then
+  average the scaled errors. Choose the scaling of the measure that fits what the forecasts target: RMSSE for means,
+  MASE for medians.
+- **Why:** scale-dependent measures should not be compared across data sets on different scales, and scaled errors
+  make series comparable ([Hyndman and Koehler 2006](https://doi.org/10.1016/j.ijforecast.2006.03.001)). Dividing by a quantity that does not depend on the forecasts keeps the measure's
+  target.
+- **Avoid:** summing or averaging RMSE or MAE over series as they are: the series with the largest values dominate the
+  result ([Hyndman and Koehler 2006](https://doi.org/10.1016/j.ijforecast.2006.03.001); [Athanasopoulos and Kourentzes 2023](https://doi.org/10.1016/j.ijforecast.2022.08.003)).
+- **References:** [Hyndman and Koehler 2006](https://doi.org/10.1016/j.ijforecast.2006.03.001); [Athanasopoulos and Kourentzes 2023](https://doi.org/10.1016/j.ijforecast.2022.08.003); [Makridakis, Spiliotis and Assimakopoulos 2022a](https://doi.org/10.1016/j.ijforecast.2021.11.013).
+
 ## many-series
 
 - **When:** methods are compared over many series or data sets.
@@ -109,6 +123,8 @@ method predict?** The measures follow from the answer.
 
 ## References
 
+- Athanasopoulos, G., and Kourentzes, N. (2023). On the evaluation of hierarchical forecasts. *International Journal
+  of Forecasting*, 39(4), 1502–1511. [doi:10.1016/j.ijforecast.2022.08.003](https://doi.org/10.1016/j.ijforecast.2022.08.003)
 - Brier, G. W. (1950). Verification of forecasts expressed in terms of probability. *Monthly Weather Review*, 78(1),
   1–3. [doi:10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2](https://doi.org/10.1175/1520-0493%281950%29078%3C0001:VOFEIT%3E2.0.CO;2)
 - Demšar, J. (2006). Statistical comparisons of classifiers over multiple data sets. *Journal of Machine Learning
@@ -154,3 +170,5 @@ method predict?** The measures follow from the answer.
   point forecasts are medians (multiplicative ETS beyond one step, back-transformed forecasts as in TBATS); the M5
   papers are cited where their measures are named; the interval, AUC, precision-recall and many-series wording
   follows what the papers say.
+- **0.3** (2026-11-13): sMAPE rewards forecasts that are too high (Hyndman and Koehler 2006); a new entry,
+  aggregation: scale each series' errors before averaging over series on different scales, never sum them unscaled.
