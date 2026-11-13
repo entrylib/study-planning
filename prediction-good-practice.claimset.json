@@ -976,7 +976,7 @@
     {
       "id": "A9",
       "kind": "lab_record",
-      "uri": "https://github.com/entrylib/study-planning/blob/201c4574536c9ab6f42fcd5616eb12dcc81716a2/lab/lab.jsonl",
+      "uri": "https://github.com/entrylib/study-planning/blob/d8b48ba92b07c31f8bc9c4b5dc43a231414c4e9b/lab/lab.jsonl",
       "version": "sha256:8f86302e9a6f3d87151acf31ea18841cee798b37bb62e7101f3ce0aae0d27c66",
       "availability": {
         "level": "public"
