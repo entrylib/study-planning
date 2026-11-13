@@ -44,4 +44,4 @@ claimset lab plan … --choice "measure|RMSSE|good-practice|study-planning/predi
 - Anchors never change meaning. A default that is withdrawn keeps its anchor, marked withdrawn, with the reason.
 - New guides are welcome from people who work in the field they cover.
 
-Licence: Apache 2.0 (see `LICENSE`).
+Licence: CC BY 4.0 (Creative Commons Attribution 4.0 International, see `LICENSE` and https://creativecommons.org/licenses/by/4.0/).
