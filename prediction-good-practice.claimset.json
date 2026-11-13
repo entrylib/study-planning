@@ -2,45 +2,16 @@
   "schema_version": "0.42",
   "paper": {
     "title": "Good practice for evaluating predictions: what the literature supports",
-    "contributions": [
-      "C1",
-      "C2",
-      "C3",
-      "C4",
-      "C5",
-      "C6",
-      "C7",
-      "C8",
-      "C9",
-      "C10",
-      "C11",
-      "C12",
-      "C13",
-      "C14",
-      "C15",
-      "C16",
-      "C17",
-      "C18",
-      "C19",
-      "C20",
-      "C21",
-      "C22",
-      "C23",
-      "C24",
-      "C25",
-      "C26",
-      "C27",
-      "C28"
-    ],
-    "autonomy": "human_supervised",
+    "contributions": [],
+    "autonomy": "unknown",
     "contribution_record": "complete",
     "origin": "native",
     "exploration": {
       "lab_record": "A10",
       "questions": 1,
       "hypotheses": {
-        "total": 30,
-        "supported": 28,
+        "total": 55,
+        "supported": 53,
         "not_supported": 0,
         "inconclusive": 0,
         "revised": 0,
@@ -62,26 +33,16 @@
       }
     },
     "study": "prediction-good-practice",
-    "licence": "CC-BY-4.0",
-    "summary": "How should a study measure and compare predictions? This paper turns the methodological literature into rules. A measure has to match what a prediction targets: squared error (RMSE) for forecasts of the mean, absolute error (MAE) for the median, the pinball loss for a quantile, the interval score with coverage for intervals, and a proper scoring rule for distributions and class probabilities. MAPE rewards forecasts that are too low, sMAPE forecasts that are too high, and AUC and accuracy do not judge probabilities. Errors of series on different scales should be scaled per series before they are averaged (RMSSE, MASE, scaled pinball loss, scaled interval score), never summed as they are. The mean, median and quartiles of a scaled measure summarise accuracy over many series, and rank tests tell whether methods that perform similarly differ. Each rule cites the paper it rests on; several were checked only by abstracts.",
-    "classification": {
-      "keywords": [
-        "forecast evaluation",
-        "scoring rules",
-        "error measures",
-        "classifier evaluation"
-      ]
-    },
-    "declarations": {
-      "funding": [],
-      "competing_interests": "Ivan Svetunkov runs EntryLib, which publishes the study-planning guides that this claimset summarises."
-    },
-    "highlights": [
-      "C1",
-      "C2",
-      "C5",
-      "C26"
-    ]
+    "ext": {
+      "review": {
+        "flow": {
+          "identified": 0,
+          "assessed": 20,
+          "included": 20,
+          "other_sources": 20
+        }
+      }
+    }
   },
   "contributors": [
     {
@@ -105,44 +66,16 @@
         "name": "Claude Code"
       },
       "label": "literature summary",
-      "record_source": "self_reported",
-      "credit_roles": [
-        "investigation",
-        "writing_original_draft"
-      ],
-      "tools": [
-        "web_search",
-        "code_execution",
-        "file_access"
-      ],
-      "ai_tasks": [
-        {
-          "task": "literature_search",
-          "extent": "full"
-        },
-        {
-          "task": "writing",
-          "extent": "full"
-        },
-        {
-          "task": "json_preparation",
-          "extent": "full"
-        }
-      ]
+      "record_source": "self_reported"
     },
     {
       "id": "P2",
       "type": "human",
       "name": "Ivan Svetunkov",
       "positions": [
-        "supervisor",
-        "guarantor"
+        "contributor"
       ],
-      "orcid": "0000-0001-7826-0281",
-      "credit_roles": [
-        "conceptualization",
-        "supervision"
-      ]
+      "orcid": "0000-0001-7826-0281"
     }
   ],
   "models": [
@@ -152,8 +85,7 @@
       "name": "Claude Opus",
       "version": "5.5",
       "identifier": "claude-opus-5-5",
-      "accessed": "2026-11-13",
-      "weights": "api_only"
+      "accessed": "2026-11-13"
     }
   ],
   "definitions": [
@@ -162,140 +94,140 @@
       "term": "consistent scoring function",
       "kind": "concept",
       "definition": "A scoring function (an error measure for point forecasts) is consistent for a functional of the predictive distribution, such as the mean, the median or a quantile, when its expected value is lowest when the point forecast equals that functional.",
-      "source": "B1"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D2",
       "term": "proper scoring rule",
       "kind": "concept",
       "definition": "A scoring rule for probabilistic forecasts is proper when its expected value is best when the forecast distribution equals the distribution of the outcome, and strictly proper when it is best only then.",
-      "source": "B2"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D3",
       "term": "point forecast of the mean",
       "kind": "concept",
       "definition": "A single-valued forecast meant to equal the mean (expected value) of the outcome's distribution given the information available.",
-      "source": "B1"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D4",
       "term": "point forecast of the median",
       "kind": "concept",
       "definition": "A single-valued forecast meant to equal the median of the outcome's distribution given the information available.",
-      "source": "B1"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D5",
       "term": "RMSE",
       "kind": "variable",
       "definition": "Root mean squared error: the square root of the mean of the squared differences between outcomes and point forecasts.",
-      "source": "B7"
+      "source": "doi:10.1016/j.ijforecast.2006.03.001"
     },
     {
       "id": "D6",
       "term": "RMSSE",
       "kind": "variable",
       "definition": "Root mean squared scaled error: the RMSE of a series' forecasts divided by the in-sample RMSE of the one-step naive forecast of that series, so that series on different scales can be averaged.",
-      "source": "B10"
+      "source": "doi:10.1016/j.ijforecast.2021.11.013"
     },
     {
       "id": "D7",
       "term": "MAE",
       "kind": "variable",
       "definition": "Mean absolute error: the mean of the absolute differences between outcomes and point forecasts.",
-      "source": "B7"
+      "source": "doi:10.1016/j.ijforecast.2006.03.001"
     },
     {
       "id": "D8",
       "term": "MASE",
       "kind": "variable",
       "definition": "Mean absolute scaled error: the MAE of a series' forecasts divided by the in-sample MAE of the one-step naive forecast of that series.",
-      "source": "B7"
+      "source": "doi:10.1016/j.ijforecast.2006.03.001"
     },
     {
       "id": "D9",
       "term": "MAPE",
       "kind": "variable",
       "definition": "Mean absolute percentage error: the mean of the absolute differences between outcomes and point forecasts, each divided by the outcome.",
-      "source": "B7"
+      "source": "doi:10.1016/j.ijforecast.2006.03.001"
     },
     {
       "id": "D10",
       "term": "sMAPE",
       "kind": "variable",
       "definition": "Symmetric mean absolute percentage error: the mean of the absolute differences between outcomes and point forecasts, each divided by the mean of the absolute outcome and the absolute forecast.",
-      "source": "B12"
+      "source": "doi:10.1016/S0169-2070(99)00007-2"
     },
     {
       "id": "D11",
       "term": "median of order -1",
       "kind": "concept",
       "definition": "The beta-median with beta = -1: the point forecast that minimises the expected absolute percentage error; for positive outcomes it lies below the median.",
-      "source": "B1"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D12",
       "term": "pinball loss",
       "kind": "variable",
       "definition": "The quantile (asymmetric piecewise linear) loss at level tau: tau times the error when the outcome is above the forecast, and (1 - tau) times the absolute error when it is below.",
-      "source": "B1"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D13",
       "term": "interval score",
       "kind": "variable",
       "definition": "The score of a central (1 - alpha) prediction interval: its width plus 2/alpha times the distance by which the outcome falls outside it.",
-      "source": "B2"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D14",
       "term": "coverage",
       "kind": "variable",
       "definition": "The share of outcomes that fall inside the prediction intervals, compared with their nominal level.",
-      "source": "B2"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D15",
       "term": "CRPS",
       "kind": "variable",
       "definition": "Continuous ranked probability score: the integral over thresholds of the squared difference between the forecast's cumulative distribution function and the step function at the outcome.",
-      "source": "B2"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D16",
       "term": "log score",
       "kind": "variable",
       "definition": "The logarithmic score: the negative logarithm of the forecast density (or probability) at the outcome.",
-      "source": "B2"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D17",
       "term": "Brier score",
       "kind": "variable",
       "definition": "The mean squared difference between forecast probabilities of a class and the outcome coded 1 if the class occurred and 0 otherwise.",
-      "source": "B14"
+      "source": "doi:10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2"
     },
     {
       "id": "D18",
       "term": "probability integral transform",
       "kind": "concept",
       "definition": "The value of the forecast's cumulative distribution function at the outcome; for a calibrated forecast its values are uniformly distributed.",
-      "source": "B3"
+      "source": "doi:10.1111/j.1467-9868.2007.00587.x"
     },
     {
       "id": "D19",
       "term": "calibration",
       "kind": "concept",
       "definition": "Statistical consistency between forecast distributions and outcomes: events forecast with a given probability occur with that frequency.",
-      "source": "B3"
+      "source": "doi:10.1111/j.1467-9868.2007.00587.x"
     },
     {
       "id": "D20",
       "term": "sharpness",
       "kind": "concept",
       "definition": "The concentration of the forecast distributions, a property of the forecasts alone; among calibrated forecasts, sharper ones are better.",
-      "source": "B3"
+      "source": "doi:10.1111/j.1467-9868.2007.00587.x"
     },
     {
       "id": "D21",
@@ -308,55 +240,69 @@
       "term": "AUC",
       "kind": "variable",
       "definition": "The area under the ROC curve: the probability that a randomly chosen case of the positive class receives a higher score than a randomly chosen case of the negative class.",
-      "source": "B15"
+      "source": "doi:10.1007/s10994-009-5119-5"
     },
     {
       "id": "D23",
       "term": "precision-recall curve",
       "kind": "concept",
       "definition": "The curve of precision (the share of predicted positives that are positive) against recall (the share of positives predicted as positive) over the classification thresholds.",
-      "source": "B8"
+      "source": "doi:10.1371/journal.pone.0118432"
     },
     {
       "id": "D24",
       "term": "intermittent series",
       "kind": "data",
       "definition": "A time series with many zero values, such as the sales of a slow-moving item.",
-      "source": "B13"
+      "source": "doi:10.1016/j.ijforecast.2015.12.004"
     },
     {
       "id": "D25",
       "term": "Friedman test",
       "kind": "method",
       "definition": "A non-parametric test of whether several methods differ, applied to their ranks on each of several data sets.",
-      "source": "B4"
+      "source": "https://jmlr.org/papers/v7/demsar06a.html"
     },
     {
       "id": "D26",
       "term": "Nemenyi test",
       "kind": "method",
       "definition": "A post-hoc test after the Friedman test that compares every pair of methods by their mean ranks against a critical difference.",
-      "source": "B4"
+      "source": "https://jmlr.org/papers/v7/demsar06a.html"
     },
     {
       "id": "D27",
       "term": "MCB",
       "kind": "method",
       "definition": "Multiple comparisons with the best: a test, on mean ranks over series, of which methods differ significantly from the best-ranked one.",
-      "source": "B16"
+      "source": "doi:10.1016/j.ijforecast.2004.10.003"
     },
     {
       "id": "D28",
       "term": "Diebold-Mariano test",
       "kind": "method",
       "definition": "A test of equal expected loss of two competing forecasts of the same series, based on the mean loss differential and its long-run variance.",
-      "source": "B17"
+      "source": "doi:10.1080/07350015.1995.10524599"
+    },
+    {
+      "id": "D29",
+      "term": "bias adjustment",
+      "kind": "method",
+      "definition": "Correcting a forecast back-transformed from a Box-Cox or log scale so that it estimates the mean, not the median, of the forecast distribution.",
+      "source": "https://otexts.com/fpp2/transformations.html"
+    },
+    {
+      "id": "D30",
+      "term": "ETS",
+      "kind": "method",
+      "definition": "Exponential smoothing state space models with error, trend and seasonal components, each additive, multiplicative or absent.",
+      "source": "doi:10.18637/jss.v027.i03"
     }
   ],
   "claims": [
     {
       "id": "C1",
-      "statement": "To evaluate point forecasts, use a [[D1:consistent scoring function]] for the functional the forecasts target (the mean, the median or a quantile): a scoring function consistent for a different functional rewards a different forecast from the one the method was built to make.",
+      "statement": "Point forecasts should be evaluated with a [[D1:consistent scoring function]] for the functional they target: the mean, the median or a quantile.",
       "about": {
         "subject": "D1",
         "relation": "should be used to evaluate",
@@ -366,52 +312,20 @@
           "the functional the forecasts target is known"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B1",
-          "locator": "Abstract; Section 2.2 (Consistency) (arXiv:0912.0902 numbering)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B9"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H1",
+        "lab_event": "H62",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B1",
-          "note": "Gneiting (2011) shows that a scoring function must be consistent for the functional a point forecast targets for the evaluation to reward that forecast."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C2",
-      "statement": "Point forecasts of the mean ([[D3:point forecast of the mean]]) should be evaluated with squared error ([[D5:RMSE]]), the scoring function consistent for the mean.",
+      "statement": "[[D3:Point forecasts of the mean]] should be evaluated with squared error, as in [[D5:RMSE]].",
       "about": {
         "subject": "D5",
         "relation": "should be used to evaluate",
@@ -419,50 +333,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B1",
-          "locator": "Section 5 (Discussion); Theorem 3.1 (arXiv:0912.0902 numbering)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H2",
+        "lab_event": "H63",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts of the mean"
-      },
-      "depends_on": [
-        "C1"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B1",
-          "note": "Gneiting (2011) shows that squared error is consistent for the mean."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C3",
-      "statement": "When [[D3:point forecasts of the mean]] are compared over series on different scales, the [[D5:RMSE]] of each series should be scaled by the in-sample RMSE of the one-step naive forecast ([[D6:RMSSE]]), as the M5 accuracy competition did; scaling each series by a fixed number keeps the comparison consistent for the mean.",
+      "statement": "When [[D3:point forecasts of the mean]] are compared over series on different scales, each series' [[D5:RMSE]] should be scaled by the in-sample RMSE of its one-step naive forecast, as in [[D6:RMSSE]].",
       "about": {
         "subject": "D6",
         "relation": "should be used to evaluate",
@@ -472,58 +356,20 @@
           "series on different scales"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B19",
-          "locator": "Point forecasts (RMSSE)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B10"
-        },
-        {
-          "kind": "argument",
-          "warrant": "W1"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H3",
+        "lab_event": "H64",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts of the mean, over series on different scales"
-      },
-      "depends_on": [
-        "C2"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B19",
-          "note": "The M5 competition scored point forecasts by the RMSSE, chosen because squared errors are optimised for the mean and the scaling makes series comparable."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C4",
-      "statement": "[[D7:MAE]] and [[D8:MASE]] should not be the main measure for [[D3:point forecasts of the mean]]: absolute error is consistent for the median and rewards median forecasts.",
+      "statement": "[[D7:MAE]] and [[D8:MASE]] should not be the main measure for [[D3:point forecasts of the mean]].",
       "about": {
         "subject": "D7",
         "relation": "should not be the main measure for",
@@ -531,50 +377,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B1",
-          "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H6",
+        "lab_event": "H65",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts of the mean"
-      },
-      "depends_on": [
-        "C1"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B1",
-          "note": "Gneiting (2011) shows that absolute error is consistent for the median."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C5",
-      "statement": "[[D9:MAPE]] should not be the measure for point forecasts of the mean or the median: it is consistent for the [[D11:median of order -1]], which lies below the median for positive outcomes, so it rewards forecasts that are too low.",
+      "statement": "[[D9:MAPE]] should not be the measure for point forecasts of the mean or the median.",
       "about": {
         "subject": "D9",
         "relation": "should not be the measure for",
@@ -584,50 +400,20 @@
           "positive outcomes"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B1",
-          "locator": "Section 5 (Discussion); beta-median in Section 1.3, MAPE as its beta = -1 case in Section 2.3 (arXiv:0912.0902 numbering)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H7",
+        "lab_event": "H66",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts of positive outcomes"
-      },
-      "depends_on": [
-        "C1"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B1",
-          "note": "Gneiting (2011) shows that the absolute percentage error is consistent for the median of order -1, which supports underforecasts."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C6",
-      "statement": "[[D10:sMAPE]] should not be the measure for point forecasts: for the same outcome it penalises forecasts below the outcome more heavily than forecasts above it, so it rewards forecasts that are too high, and it is undefined when the outcome and the forecast are both zero.",
+      "statement": "[[D10:sMAPE]] should not be the measure for point forecasts.",
       "about": {
         "subject": "D10",
         "relation": "should not be the measure for",
@@ -635,56 +421,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B12"
-        },
-        {
-          "kind": "cited",
-          "reference": "B7",
-          "locator": "Section 2.2 (Measures based on percentage errors)"
-        },
-        {
-          "kind": "argument",
-          "warrant": "W2"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H27",
+        "lab_event": "H61",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B12",
-          "note": "Goodwin and Lawton (1999) show that the symmetric MAPE is not symmetric in its treatment of positive and negative errors of the same size."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C7",
-      "statement": "Point forecasts of the median ([[D4:point forecast of the median]]) should be evaluated with absolute error ([[D7:MAE]]), the scoring function consistent for the median, and, across series on different scales, with [[D8:MASE]].",
+      "statement": "[[D4:Point forecasts of the median]] should be evaluated with absolute error, as in [[D7:MAE]] or, across series on different scales, [[D8:MASE]].",
       "about": {
         "subject": "D7",
         "relation": "should be used to evaluate",
@@ -692,55 +442,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B1",
-          "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B7",
-          "locator": "Abstract; Section 3 (Scaled errors)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H9",
+        "lab_event": "H67",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts of the median"
-      },
-      "depends_on": [
-        "C1"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B7",
-          "note": "Hyndman and Koehler (2006) propose the MASE as the standard measure across series."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C8",
-      "statement": "On [[D24:intermittent series]], absolute-error measures should not be used alone: the median of the outcome can be zero, and absolute error then rewards a forecast of zero for every period.",
+      "statement": "On [[D24:intermittent series]], absolute-error measures should not be used alone.",
       "about": {
         "subject": "absolute-error measures",
         "relation": "should not be used alone on",
@@ -750,54 +465,20 @@
           "many zero outcomes"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B19",
-          "locator": "Point forecasts (the choice of the RMSSE)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B13"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H10",
+        "lab_event": "H68",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts of intermittent series"
-      },
-      "depends_on": [
-        "C4"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B19",
-          "note": "The M5 guide states that on intermittent series absolute errors favour forecasts close to zero."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C9",
-      "statement": "Quantile forecasts should be evaluated with the [[D12:pinball loss]] at the quantile's level, the scoring function consistent for that quantile, averaged over the levels when there are several.",
+      "statement": "Quantile forecasts should be evaluated with the [[D12:pinball loss]] at the quantile's level, averaged over the levels when there are several.",
       "about": {
         "subject": "D12",
         "relation": "should be used to evaluate",
@@ -805,50 +486,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B1",
-          "locator": "Abstract; Theorem 3.3 (arXiv:0912.0902 numbering)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H30",
+        "lab_event": "H83",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "quantile forecasts"
-      },
-      "depends_on": [
-        "C1"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B1",
-          "note": "Gneiting (2011) shows that a scoring function is consistent for a quantile if and only if it is generalized piecewise linear."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C10",
-      "statement": "Prediction intervals should be evaluated with the [[D13:interval score]], a proper scoring rule for central intervals, reported together with their [[D14:coverage]] against the nominal level.",
+      "statement": "Prediction intervals should be evaluated with the [[D13:interval score]], reported together with their [[D14:coverage]] against the nominal level.",
       "about": {
         "subject": "D13",
         "relation": "should be used to evaluate",
@@ -858,47 +509,20 @@
           "central intervals"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B2",
-          "locator": "Section 6.2 (Interval score)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H12",
+        "lab_event": "H69",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "central prediction intervals"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B2",
-          "note": "Gneiting and Raftery (2007) show that the interval score is proper for central prediction intervals."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C11",
-      "statement": "[[D14:coverage]] alone should not be the measure of prediction intervals: it does not measure their width, so sharp intervals and needlessly wide ones can reach the same coverage.",
+      "statement": "[[D14:Coverage]] alone should not be the measure of prediction intervals.",
       "about": {
         "subject": "D14",
         "relation": "should not be the only measure of",
@@ -906,47 +530,16 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B2",
-          "locator": "Abstract; Section 6.2 (Interval score)"
-        },
-        {
-          "kind": "argument",
-          "warrant": "W3"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H13",
+        "lab_event": "H70",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "prediction intervals"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B2",
-          "note": "Gneiting and Raftery (2007) propose the interval score because it addresses width as well as coverage."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C12",
@@ -958,47 +551,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B2",
-          "locator": "Section 4.1 (log score); Section 4.2 (CRPS)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H14",
+        "lab_event": "H71",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "predictive distributions"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B2",
-          "note": "Gneiting and Raftery (2007) show that the CRPS and the logarithmic score are proper."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C13",
-      "statement": "The evaluation of predictive distributions should check their [[D19:calibration]], with the [[D18:probability integral transform]] or coverage at several levels, and report their [[D20:sharpness]]: the goal is the sharpest forecast that is calibrated.",
+      "statement": "The evaluation of predictive distributions should check their [[D19:calibration]] and report their [[D20:sharpness]].",
       "about": {
         "subject": "calibration and sharpness checks",
         "relation": "should be part of evaluating",
@@ -1006,50 +572,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B3",
-          "locator": "Abstract; Section 3.1 (Assessing probabilistic calibration); Section 3.3 (Assessing sharpness)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H15",
+        "lab_event": "H72",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "predictive distributions"
-      },
-      "depends_on": [
-        "C12"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B3",
-          "note": "Gneiting, Balabdaoui and Raftery (2007) evaluate predictive distributions by maximising sharpness subject to calibration."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C14",
-      "statement": "Predictive distributions of counts, such as forecasts of intermittent sales, should be evaluated with proper scoring rules and a randomised [[D18:probability integral transform]], since the probability integral transform of a discrete forecast is not uniform even when the forecast is calibrated.",
+      "statement": "Predictive distributions of counts, such as forecasts of intermittent sales, should be evaluated with proper scoring rules and a randomised [[D18:probability integral transform]].",
       "about": {
         "subject": "proper scoring rules and the randomised PIT",
         "relation": "should be used to evaluate",
@@ -1059,45 +595,16 @@
           "count data"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B13"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H16",
+        "lab_event": "H73",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "predictive distributions of counts"
-      },
-      "depends_on": [
-        "C12"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B13",
-          "note": "Kolassa (2016) evaluates predictive count distributions with proper scoring rules and a randomised probability integral transform."
-        }
-      ],
-      "limitations": [
-        "L1",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "moderate",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L1: the claim rests on papers read only in their abstracts; a full text could qualify it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C15",
@@ -1109,52 +616,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B2",
-          "locator": "Section 3, Example 1 (Quadratic or Brier score); Section 4.1"
-        },
-        {
-          "kind": "cited",
-          "reference": "B14"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H17",
+        "lab_event": "H74",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "forecast probabilities of classes"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B2",
-          "note": "Gneiting and Raftery (2007) show that the Brier and logarithmic scores are strictly proper."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C16",
-      "statement": "[[D21:accuracy]] should not be the measure of forecast class probabilities: it ignores the probabilities beyond which side of a threshold they fall, and weighs every error the same.",
+      "statement": "[[D21:Accuracy]] should not be the measure of forecast class probabilities.",
       "about": {
         "subject": "D21",
         "relation": "should not be the measure of",
@@ -1164,42 +639,20 @@
           "predictions are probabilities, or the costs of errors differ"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "no_prior_found",
-      "support": [
-        {
-          "kind": "argument",
-          "warrant": "W4"
-        }
-      ],
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H18",
+        "lab_event": "H75",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "forecast class probabilities, thresholded to labels"
-      },
-      "depends_on": [
-        "C15"
-      ],
-      "limitations": [
-        "L4",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "moderate",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L4: the claim rests on an argument from the definition of the measure, with no cited paper as its source."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C17",
-      "statement": "[[D22:AUC]] should not be the measure of forecast class probabilities: it measures how well cases are ranked, not whether the probabilities are right, and it weighs the costs of misclassification differently for different classifiers.",
+      "statement": "[[D22:AUC]] should not be the measure of forecast class probabilities.",
       "about": {
         "subject": "D22",
         "relation": "should not be the measure of",
@@ -1207,49 +660,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B15"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H19",
+        "lab_event": "H76",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "forecast class probabilities, ranked by a classifier's scores"
-      },
-      "depends_on": [
-        "C15"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B15",
-          "note": "Hand (2009) shows that the AUC measures different classifiers with different misclassification cost distributions."
-        }
-      ],
-      "limitations": [
-        "L1",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "moderate",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L1: the claim rests on papers read only in their abstracts; a full text could qualify it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C18",
-      "statement": "With rare positive cases, the [[D23:precision-recall curve]] should be reported rather than the ROC curve alone, because the ROC curve can look good while most cases predicted positive are negative.",
+      "statement": "With rare positive cases, the [[D23:precision-recall curve]] should be reported rather than the ROC curve alone.",
       "about": {
         "subject": "D23",
         "relation": "is more informative than the ROC curve for",
@@ -1259,49 +683,20 @@
           "imbalanced classes"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B8",
-          "locator": "Title; Abstract"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H20",
+        "lab_event": "H77",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "binary classifiers",
-        "conditions": [
-          "imbalanced classes"
-        ]
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B8",
-          "note": "Saito and Rehmsmeier (2015) show that the precision-recall plot is more informative than the ROC plot on imbalanced data."
-        }
-      ],
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C19",
-      "statement": "When the compared methods target different functionals (one the mean, another the median), each should be evaluated with a measure consistent for its own target, or the methods made to target the same functional, because a single measure favours the methods that target what it is consistent for.",
+      "statement": "When the compared methods target different functionals, one the mean and another the median, each should be evaluated with a measure consistent for its own target, or the methods made to target the same functional.",
       "about": {
         "subject": "the comparison of methods with different targets",
         "relation": "should use",
@@ -1311,55 +706,20 @@
           "methods target different functionals"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B9"
-        },
-        {
-          "kind": "cited",
-          "reference": "B1",
-          "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H21",
+        "lab_event": "H78",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts of methods that target different functionals"
-      },
-      "depends_on": [
-        "C1"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B9",
-          "note": "Kolassa (2020) shows that different error measures are minimised by different summaries of one predictive density."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C20",
-      "statement": "When methods are compared over many series, their accuracy should be summarised by aggregates of a scaled measure across the series, the mean together with the median and the quartiles of [[D6:RMSSE]], [[D8:MASE]] or another scaled error, since a mean over series alone is sensitive to a few outlying ones.",
+      "statement": "When methods are compared over many series, their accuracy should be summarised by the mean, the median and the quartiles of a scaled measure across the series, such as [[D6:RMSSE]] or [[D8:MASE]].",
       "about": {
         "subject": "aggregates of a scaled measure across series",
         "relation": "should summarise",
@@ -1369,60 +729,20 @@
           "many series"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B4",
-          "locator": "Section 3.1 (Comparisons of two classifiers)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B7",
-          "locator": "Section 3 (Scaled errors)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B19",
-          "locator": "Point forecasts (WRMSSE)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H31",
+        "lab_event": "H84",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "comparisons of methods over many series"
-      },
-      "depends_on": [
-        "C26"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B4",
-          "note": "Demsar (2006) notes that averages over data sets are susceptible to outliers."
-        }
-      ],
-      "limitations": [
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C21",
-      "statement": "To tell whether several methods whose aggregate accuracy is similar differ significantly over many series or data sets, their ranks on each series should be tested with the [[D25:Friedman test]] followed by [[D26:Nemenyi test]] post-hoc comparisons, which do not assume that errors are comparable across series.",
+      "statement": "To tell whether several methods whose aggregate accuracy is similar differ significantly over many series or data sets, their ranks on each series should be tested with the [[D25:Friedman test]] followed by [[D26:Nemenyi test]] post-hoc comparisons.",
       "about": {
         "subject": "D25",
         "relation": "should be used to test",
@@ -1432,49 +752,20 @@
           "many series or data sets"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B4",
-          "locator": "Abstract; Section 3.1; Section 3.2.2 (Friedman test, with the Nemenyi test)"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H32",
+        "lab_event": "H85",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "comparisons of several methods over many series or data sets"
-      },
-      "depends_on": [
-        "C20"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B4",
-          "note": "Demsar (2006) recommends the Friedman test with post-hoc tests to test whether several classifiers differ over many data sets."
-        }
-      ],
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. The sources the claim rests on were read in full, and the passage it turns on was quoted from them."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C22",
-      "statement": "To tell which methods differ significantly from the best one over many series, multiple comparisons with the best ([[D27:MCB]]) on ranks should be used, as in the statistical analysis of the M3 competition.",
+      "statement": "To tell which methods differ significantly from the best one over many series, multiple comparisons with the best ([[D27:MCB]]) on ranks should be used.",
       "about": {
         "subject": "D27",
         "relation": "should be used to test",
@@ -1484,49 +775,20 @@
           "many series"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B16"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H33",
+        "lab_event": "H86",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "comparisons of methods over many series"
-      },
-      "depends_on": [
-        "C20"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B16",
-          "note": "Koning et al. (2005) test the M3 results with multiple comparisons with the best on ranks."
-        }
-      ],
-      "limitations": [
-        "L1",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "moderate",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L1: the claim rests on papers read only in their abstracts; a full text could qualify it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C23",
-      "statement": "The accuracy of two forecasts of the same series should be compared with the [[D28:Diebold-Mariano test]], which allows forecast errors that are serially correlated and not normally distributed.",
+      "statement": "The accuracy of two forecasts of the same series should be compared with the [[D28:Diebold-Mariano test]].",
       "about": {
         "subject": "D28",
         "relation": "should be used to compare",
@@ -1536,46 +798,20 @@
           "one series"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B17"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H25",
+        "lab_event": "H79",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "two forecasts of one series"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B17",
-          "note": "Diebold and Mariano (1995) propose a test of equal accuracy of two forecasts."
-        }
-      ],
-      "limitations": [
-        "L1",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "moderate",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L1: the claim rests on papers read only in their abstracts; a full text could qualify it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C24",
-      "statement": "An error measure should not be chosen because a competition or a well-known study used it: the measure has to be consistent for what the compared methods predict.",
+      "statement": "That a competition or a well-known study used an error measure should not be the reason for choosing it.",
       "about": {
         "subject": "the choice of an error measure by precedent",
         "relation": "should not decide",
@@ -1583,55 +819,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B9"
-        },
-        {
-          "kind": "cited",
-          "reference": "B1",
-          "locator": "Abstract"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H26",
+        "lab_event": "H80",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "evaluations of point forecasts"
-      },
-      "depends_on": [
-        "C1"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B9",
-          "note": "Kolassa (2020), on the M4 measures, argues that the best point forecast depends on the error measure."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C25",
-      "statement": "Scale-dependent error measures ([[D5:RMSE]], [[D7:MAE]]) should not be summed or averaged across series on different scales: the series with the largest values then dominate the aggregate, whatever the forecasts of the other series.",
+      "statement": "Scale-dependent error measures, such as [[D5:RMSE]] and [[D7:MAE]], should not be summed or averaged across series on different scales.",
       "about": {
         "subject": "scale-dependent error measures",
         "relation": "should not be aggregated across",
@@ -1639,52 +840,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B7",
-          "locator": "Section 2.1 (Scale-dependent measures); Section 2.4 (Relative measures)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B18"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H28",
+        "lab_event": "H81",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts over series on different scales"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B7",
-          "note": "Hyndman and Koehler (2006) state that scale-dependent measures should not be used to compare across data sets on different scales."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C26",
-      "statement": "To aggregate the accuracy of point forecasts over series on different scales, each series' errors should first be scaled by a quantity of that series (as in [[D8:MASE]] and [[D6:RMSSE]], or relative to a benchmark method), and the scaled errors then averaged, choosing a scaling that keeps the measure consistent for what the forecasts target.",
+      "statement": "To aggregate the accuracy of point forecasts over series on different scales, each series' errors should first be scaled by a quantity of that series that does not depend on the compared forecasts, such as the in-sample error of its one-step naive forecast in [[D8:MASE]] or [[D6:RMSSE]], before the scaled errors are averaged.",
       "about": {
         "subject": "scaling per series before aggregation",
         "relation": "should be used to aggregate",
@@ -1692,64 +861,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B7",
-          "locator": "Section 3 (Scaled errors)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B19",
-          "locator": "Point forecasts (RMSSE)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B10"
-        },
-        {
-          "kind": "argument",
-          "warrant": "W5"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H29",
+        "lab_event": "H82",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "point forecasts over series on different scales"
-      },
-      "depends_on": [
-        "C1"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B7",
-          "note": "Hyndman and Koehler (2006) propose scaled errors as the standard approach for comparing accuracy across series on different scales."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C27",
-      "statement": "When quantile forecasts are compared over series on different scales, each series' [[D12:pinball loss]] should be scaled by a quantity of that series, as the scaled pinball loss of the M5 uncertainty competition divides it by the in-sample mean absolute error of the one-step naive forecast.",
+      "statement": "When quantile forecasts are compared over series on different scales, each series' [[D12:pinball loss]] should be scaled by a quantity of that series.",
       "about": {
         "subject": "D12",
         "relation": "should be scaled per series over",
@@ -1757,58 +882,20 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B19",
-          "locator": "Probabilistic forecasts (Scaled Pinball Loss)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B11"
-        },
-        {
-          "kind": "argument",
-          "warrant": "W5"
-        }
-      ],
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H34",
+        "lab_event": "H87",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "quantile forecasts over series on different scales"
-      },
-      "depends_on": [
-        "C9"
-      ],
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B19",
-          "note": "The M5 competition scored quantile forecasts with the pinball loss scaled per series."
-        }
-      ],
-      "limitations": [
-        "L2",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
-        }
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C28",
-      "statement": "When prediction intervals are compared over series on different scales, each series' [[D13:interval score]] should be scaled by a quantity of that series, as the mean scaled interval score (MSIS) of the M4 competition does.",
+      "statement": "When prediction intervals are compared over series on different scales, each series' [[D13:interval score]] should be scaled by a quantity of that series.",
       "about": {
         "subject": "D13",
         "relation": "should be scaled per series over",
@@ -1816,207 +903,1112 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H88",
+        "outcome": "supported"
+      },
+      "planning": "exploratory"
+    },
+    {
+      "id": "C29",
+      "statement": "Squared error is a [[D1:consistent scoring function]] for the mean.",
+      "about": {
+        "subject": "squared error",
+        "relation": "is consistent for",
+        "object": "the mean",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
       "support": [
         {
           "kind": "cited",
-          "reference": "B20"
-        },
-        {
-          "kind": "cited",
-          "reference": "B7",
-          "locator": "Section 2.1 (Scale-dependent measures)"
-        },
-        {
-          "kind": "argument",
-          "warrant": "W5"
+          "reference": "B10",
+          "locator": "Section 5 (Discussion); Theorem 3.1 (arXiv:0912.0902 numbering)"
         }
       ],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H35",
+        "lab_event": "H36",
         "outcome": "supported"
       },
       "planning": "exploratory",
-      "scope": {
-        "data_type": "prediction intervals over series on different scales"
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B10",
+              "locator": "Section 5 (Discussion); Theorem 3.1 (arXiv:0912.0902 numbering)",
+              "lab_event": "XT1",
+              "exact": "the squared error scoring function is consistent for the mean",
+              "prefix": "businesses and organi-\nzations, ",
+              "suffix": ", and the absolute error\nscoring",
+              "start": 74674,
+              "end": 74735,
+              "artefact": "A1"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C30",
+      "statement": "Which point forecast has the lowest expected score depends on the scoring function: a [[D1:consistent scoring function]] for a functional, such as the mean or a quantile, is lowest in expectation for the forecast that equals that functional of the outcome's distribution.",
+      "about": {
+        "subject": "D1",
+        "relation": "is lowest in expectation for",
+        "object": "the forecast equal to its functional",
+        "comparator": null,
+        "conditions": []
       },
-      "depends_on": [
-        "C10"
-      ],
-      "relations": [
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
         {
-          "type": "extends",
-          "reference": "B20",
-          "note": "The M4 competition scored prediction intervals with the mean scaled interval score."
+          "kind": "cited",
+          "reference": "B10",
+          "locator": "Abstract (arXiv:0912.0902 numbering)"
         }
       ],
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L2: the part the claim turns on comes from a source read in full; the papers checked only by their abstracts add to it."
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H37",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B10",
+              "locator": "Abstract (arXiv:0912.0902 numbering)",
+              "lab_event": "XT2",
+              "exact": "it is critical that the\n                                         scoring function be consistent for it",
+              "prefix": "ve in the form of a functional, ",
+              "suffix": ", in the sense that the expected",
+              "start": 2433,
+              "end": 2535,
+              "artefact": "A1"
+            }
+          ],
+          "kind": "summary"
         }
-      ]
+      }
+    },
+    {
+      "id": "C31",
+      "statement": "Absolute error is a [[D1:consistent scoring function]] for the median.",
+      "about": {
+        "subject": "absolute error",
+        "relation": "is consistent for",
+        "object": "the median",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B10",
+          "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H38",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B10",
+              "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)",
+              "lab_event": "XT3",
+              "exact": "the absolute error\nscoring function for the median",
+              "prefix": "is consistent for the mean, and ",
+              "suffix": ". The absolute percentage error ",
+              "start": 74741,
+              "end": 74791,
+              "artefact": "A1"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C32",
+      "statement": "The absolute percentage error averaged by [[D9:MAPE]] is consistent for the [[D11:median of order -1]], a functional that supports severe underforecasts compared with the mean or the median.",
+      "about": {
+        "subject": "D9",
+        "relation": "is consistent for",
+        "object": "D11",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B10",
+          "locator": "Section 5 (Discussion); the beta-median in Section 1.3 (arXiv:0912.0902 numbering)"
+        },
+        {
+          "kind": "cited",
+          "reference": "B10",
+          "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H39",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B10",
+              "locator": "Section 5 (Discussion); the beta-median in Section 1.3 (arXiv:0912.0902 numbering)",
+              "lab_event": "XT4",
+              "exact": "the median of order −1",
+              "prefix": "on-standard functional, namely, ",
+              "suffix": ", med(−1) , which tends to sup-\n",
+              "start": 74980,
+              "end": 75002,
+              "artefact": "A1"
+            },
+            {
+              "reference": "B10",
+              "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)",
+              "lab_event": "XT5",
+              "exact": "severe underforecasts, as compared to the mean or median",
+              "prefix": "(−1) , which tends to sup-\nport ",
+              "suffix": ". It thus seems prudent that\nbus",
+              "start": 75039,
+              "end": 75095,
+              "artefact": "A1"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C33",
+      "statement": "For the same outcome, [[D10:sMAPE]] penalises a forecast below the outcome more heavily than a forecast above it.",
+      "about": {
+        "subject": "D10",
+        "relation": "penalises more heavily",
+        "object": "forecasts below the outcome",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B15",
+          "locator": "Section 2.2 (Measures based on percentage errors)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H40",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B15",
+              "locator": "Section 2.2 (Measures based on percentage errors)",
+              "lab_event": "XT6",
+              "exact": "has a\nheavier penalty when forecasts are low compared to when forecasts are high",
+              "prefix": "value of 2|Yt − Ft |/(Yt + Ft ) ",
+              "suffix": ". See Goodwin\nand Lawton (1999) ",
+              "start": 17140,
+              "end": 17220,
+              "artefact": "A7"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C34",
+      "statement": "The [[D12:pinball loss]] at a level is a [[D1:consistent scoring function]] for the quantile at that level.",
+      "about": {
+        "subject": "D12",
+        "relation": "is consistent for",
+        "object": "the quantile at its level",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B10",
+          "locator": "Abstract; Theorem 3.3 (arXiv:0912.0902 numbering)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H41",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B10",
+              "locator": "Abstract; Theorem 3.3 (arXiv:0912.0902 numbering)",
+              "lab_event": "XT7",
+              "exact": "It is consistent for a quantile if and only if it is generalized piecewise linear",
+              "prefix": "                      function. ",
+              "suffix": ".\n                              ",
+              "start": 3351,
+              "end": 3432,
+              "artefact": "A1"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C35",
+      "statement": "The [[D13:interval score]] is a [[D2:proper scoring rule]] for central prediction intervals that addresses their width as well as their coverage.",
+      "about": {
+        "subject": "D13",
+        "relation": "is proper for",
+        "object": "central prediction intervals",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B11",
+          "locator": "Section 1 (Introduction)"
+        },
+        {
+          "kind": "cited",
+          "reference": "B11",
+          "locator": "Abstract"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H42",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B11",
+              "locator": "Section 1 (Introduction)",
+              "lab_event": "XT8",
+              "exact": "a scoring rule for prediction intervals that is proper",
+              "prefix": " the general idea dates back at\n",
+              "suffix": " and has in-     least to Brier ",
+              "start": 15726,
+              "end": 15780,
+              "artefact": "A2"
+            },
+            {
+              "reference": "B11",
+              "locator": "Abstract",
+              "lab_event": "XT9",
+              "exact": "propose the intuitively appealing interval score as a utility function in interval estimation that addresses width as well as\n           coverage",
+              "prefix": "tile\n           estimation, and ",
+              "suffix": ".\n           KEY WORDS: Bayes fa",
+              "start": 2499,
+              "end": 2644,
+              "artefact": "A2"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C36",
+      "statement": "The [[D15:CRPS]] is a [[D2:proper scoring rule]] for predictive distributions of continuous outcomes.",
+      "about": {
+        "subject": "D15",
+        "relation": "is proper for",
+        "object": "predictive distributions",
+        "comparator": null,
+        "conditions": [
+          "continuous outcomes"
+        ]
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B11",
+          "locator": "Section 4.2 (Continuous ranked probability score)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H43",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B11",
+              "locator": "Section 4.2 (Continuous ranked probability score)",
+              "lab_event": "XT10",
+              "exact": "The CRPS is proper relative to the class P",
+              "prefix": "003) implies the equality of\n   ",
+              "suffix": " and strictly proper\n           ",
+              "start": 64068,
+              "end": 64110,
+              "artefact": "A2"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C37",
+      "statement": "The [[D16:log score]] is a strictly [[D2:proper scoring rule]].",
+      "about": {
+        "subject": "D16",
+        "relation": "is strictly proper for",
+        "object": "predictive distributions",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B11",
+          "locator": "Section 4.1"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H44",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B11",
+              "locator": "Section 4.1",
+              "lab_event": "XT11",
+              "exact": "The logarithmic score is strictly proper",
+              "prefix": "rithmic score (Ta-       2002). ",
+              "suffix": " relative to the\nble 1), the asy",
+              "start": 53590,
+              "end": 53630,
+              "artefact": "A2"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C38",
+      "statement": "The [[D17:Brier score]] is a [[D2:proper scoring rule]] for forecast probabilities of classes.",
+      "about": {
+        "subject": "D17",
+        "relation": "is proper for",
+        "object": "forecast probabilities of classes",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B11",
+          "locator": "Section 3, Example 1 (Quadratic or Brier score)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H45",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B11",
+              "locator": "Section 3, Example 1 (Quadratic or Brier score)",
+              "lab_event": "XT12",
+              "exact": "Example 1 (Quadratic or Brier score)",
+              "prefix": "                           \u0005\n   ",
+              "suffix": ". If G(p) = m    j=1 pj −\n      ",
+              "start": 33270,
+              "end": 33306,
+              "artefact": "A2"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C39",
+      "statement": "Predictive distributions are assessed by maximising their [[D20:sharpness]] subject to their [[D19:calibration]].",
+      "about": {
+        "subject": "predictive distributions",
+        "relation": "are assessed by",
+        "object": "D20",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B12",
+          "locator": "Abstract"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H46",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B12",
+              "locator": "Abstract",
+              "lab_event": "XT13",
+              "exact": "is based on the paradigm of maximizing the sharpness of\n      the predictive distributions subject to calibration",
+              "prefix": " of predictive performance that ",
+              "suffix": ". Calibration refers to the stat",
+              "start": 635,
+              "end": 748,
+              "artefact": "A3"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C40",
+      "statement": "The calibration of predictive distributions of counts can be assessed with a randomised [[D18:probability integral transform]].",
+      "about": {
+        "subject": "D18",
+        "relation": "assesses",
+        "object": "the calibration of predictive distributions of counts",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H47",
+        "outcome": "supported"
+      },
+      "planning": "exploratory"
+    },
+    {
+      "id": "C41",
+      "statement": "On [[D24:intermittent series]], absolute-error measures give their best scores to forecasts close to zero.",
+      "about": {
+        "subject": "absolute-error measures",
+        "relation": "give their best scores to",
+        "object": "forecasts close to zero",
+        "comparator": null,
+        "conditions": [
+          "D24"
+        ]
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B9",
+          "locator": "Point forecasts"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H48",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B9",
+              "locator": "Point forecasts",
+              "lab_event": "XT14",
+              "exact": "absolute errors, which are optimized for the median, would assign lower scores\n        (better performance) to forecasting methods that derive forecasts close to zero",
+              "prefix": " zeros.\n        This means that ",
+              "suffix": ". However, the\n        objective",
+              "start": 15824,
+              "end": 15990,
+              "artefact": "A9"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C42",
+      "statement": "The [[D22:AUC]] is equivalent to averaging the misclassification loss over a distribution of misclassification costs that depends on the classifier.",
+      "about": {
+        "subject": "D22",
+        "relation": "averages the misclassification loss over",
+        "object": "a cost distribution that depends on the classifier",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H49",
+        "outcome": "supported"
+      },
+      "planning": "exploratory"
+    },
+    {
+      "id": "C43",
+      "statement": "On imbalanced data, the [[D23:precision-recall curve]] is more informative than the ROC curve for evaluating binary classifiers.",
+      "about": {
+        "subject": "D23",
+        "relation": "is more informative than",
+        "object": "the ROC curve",
+        "comparator": null,
+        "conditions": [
+          "imbalanced data"
+        ]
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B16",
+          "locator": "Title"
+        },
+        {
+          "kind": "cited",
+          "reference": "B16",
+          "locator": "Abstract"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H50",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B16",
+              "locator": "Title",
+              "lab_event": "XT15",
+              "exact": "The Precision-Recall Plot Is More Informative\n                                                          than the ROC Plot When Evaluating Binary\n                                                          Classifiers on Imbalanced Datasets",
+              "prefix": "                                ",
+              "suffix": "\n                               ",
+              "start": 135,
+              "end": 372,
+              "artefact": "A8"
+            },
+            {
+              "reference": "B16",
+              "locator": "Abstract",
+              "lab_event": "XT16",
+              "exact": "can be deceptive",
+              "prefix": " context of imbalanced datasets ",
+              "suffix": " with respect to conclu-\nROC Plo",
+              "start": 2381,
+              "end": 2397,
+              "artefact": "A8"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C44",
+      "statement": "Scale-dependent error measures, such as [[D5:RMSE]] and [[D7:MAE]], cannot be compared across series on different scales.",
+      "about": {
+        "subject": "scale-dependent error measures",
+        "relation": "cannot be compared across",
+        "object": "series on different scales",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B15",
+          "locator": "Section 2.1 (Scale-dependent measures)"
+        },
+        {
+          "kind": "cited",
+          "reference": "B15",
+          "locator": "Section 2.4 (Relative measures)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H51",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B15",
+              "locator": "Section 2.1 (Scale-dependent measures)",
+              "lab_event": "XT17",
+              "exact": "should\nnot be used, for example, when comparing across data sets that have different scales",
+              "prefix": "ds on the same set of data, but ",
+              "suffix": ". Never-\ntheless, the MSE was us",
+              "start": 13183,
+              "end": 13274,
+              "artefact": "A7"
+            },
+            {
+              "reference": "B15",
+              "locator": "Section 2.4 (Relative measures)",
+              "lab_event": "XT18",
+              "exact": "It makes no sense to compute the MAE across series (due to their different scales)",
+              "prefix": "horizon across multiple\nseries. ",
+              "suffix": ".\n\nA related approach is to use ",
+              "start": 21483,
+              "end": 21565,
+              "artefact": "A7"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C45",
+      "statement": "When the errors of series on different scales are summed or averaged without scaling, the series with the largest values dominate the result.",
+      "about": {
+        "subject": "unscaled errors summed over series",
+        "relation": "are dominated by",
+        "object": "the series with the largest values",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H52",
+        "outcome": "supported"
+      },
+      "planning": "exploratory"
+    },
+    {
+      "id": "C46",
+      "statement": "Scaled errors, as in [[D8:MASE]], are independent of the scale of the data and can be averaged over series on different scales.",
+      "about": {
+        "subject": "D8",
+        "relation": "can be averaged over",
+        "object": "series on different scales",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B15",
+          "locator": "Abstract; Section 3 (Scaled errors)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H53",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B15",
+              "locator": "Abstract; Section 3 (Scaled errors)",
+              "lab_event": "XT19",
+              "exact": "we propose that the mean absolute scaled error become the standard measure for\ncomparing forecast accuracy across multiple time series",
+              "prefix": "ccurring situ-\nations. Instead, ",
+              "suffix": ".\n\n\n\nKeywords: forecast accuracy",
+              "start": 840,
+              "end": 974,
+              "artefact": "A7"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C47",
+      "statement": "The M5 accuracy competition scored point forecasts with the [[D6:RMSSE]]: each series' squared errors divided by the in-sample mean squared error of its one-step naive forecast.",
+      "about": {
+        "subject": "D6",
+        "relation": "scored point forecasts in",
+        "object": "the M5 accuracy competition",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B9",
+          "locator": "Point forecasts"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H54",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B9",
+              "locator": "Point forecasts",
+              "lab_event": "XT20",
+              "exact": "The accuracy of the point forecasts will be evaluated using the Root Mean Squared Scaled Error (RMSSE)",
+              "prefix": "ce-\nprogram\n\n5\n\fPoint forecasts\n",
+              "suffix": ",\nwhich is a variant of the well",
+              "start": 14467,
+              "end": 14569,
+              "artefact": "A9"
+            },
+            {
+              "reference": "B9",
+              "locator": "Point forecasts",
+              "lab_event": "XT21",
+              "exact": "The measure is scale independent, meaning that it can be effectively used to compare forecasts\n        across series with different scales",
+              "prefix": "optimized for the mean.\n       ",
+              "suffix": ".\n       In contrast to other m",
+              "start": 16197,
+              "end": 16335,
+              "artefact": "A9"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C48",
+      "statement": "The M5 uncertainty competition scored quantile forecasts with the scaled pinball loss: each series' [[D12:pinball loss]] divided by the in-sample mean absolute error of its one-step naive forecast.",
+      "about": {
+        "subject": "the scaled pinball loss",
+        "relation": "scored quantile forecasts in",
+        "object": "the M5 uncertainty competition",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B9",
+          "locator": "Probabilistic forecasts"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H55",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B9",
+              "locator": "Probabilistic forecasts",
+              "lab_event": "XT22",
+              "exact": "The precision of the probabilistic forecasts will be evaluated using the Scaled Pinball Loss (SPL) function",
+              "prefix": "ition.\n\nProbabilistic forecasts\n",
+              "suffix": ".\nThe measure is calculated for ",
+              "start": 17832,
+              "end": 17939,
+              "artefact": "A9"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C49",
+      "statement": "The M4 competition scored prediction intervals with the mean scaled interval score: the [[D13:interval score]] of each series scaled by an in-sample error of that series.",
+      "about": {
+        "subject": "the mean scaled interval score",
+        "relation": "scored prediction intervals in",
+        "object": "the M4 competition",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H56",
+        "outcome": "supported"
+      },
+      "planning": "exploratory"
+    },
+    {
+      "id": "C50",
+      "statement": "Averages of a performance measure over many data sets are susceptible to outliers.",
+      "about": {
+        "subject": "averages over data sets",
+        "relation": "are susceptible to",
+        "object": "outliers",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B13",
+          "locator": "Section 3.1 (Comparisons of two classifiers)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H57",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B13",
+              "locator": "Section 3.1 (Comparisons of two classifiers)",
+              "lab_event": "XT23",
+              "exact": "Averages are also susceptible to outliers",
+              "prefix": "ms\nwith similar properties.\n    ",
+              "suffix": ". They allow classifier’s excell",
+              "start": 18817,
+              "end": 18858,
+              "artefact": "A4"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C51",
+      "statement": "The [[D25:Friedman test]], followed by the [[D26:Nemenyi test]], compares several methods over many data sets by their ranks on each data set, assuming only limited commensurability of the measure across data sets.",
+      "about": {
+        "subject": "D25",
+        "relation": "compares methods by",
+        "object": "their ranks on each data set",
+        "comparator": null,
+        "conditions": [
+          "many data sets"
+        ]
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B13",
+          "locator": "Section 3.2.2 (Friedman test)"
+        },
+        {
+          "kind": "cited",
+          "reference": "B13",
+          "locator": "Section 5 (Conclusion)"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H58",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B13",
+              "locator": "Section 3.2.2 (Friedman test)",
+              "lab_event": "XT24",
+              "exact": "It ranks the algorithms for each data set separately",
+              "prefix": "of the repeated-measures\nANOVA. ",
+              "suffix": ", the best performing algorithm ",
+              "start": 38209,
+              "end": 38261,
+              "artefact": "A4"
+            },
+            {
+              "reference": "B13",
+              "locator": "Section 3.2.2 (Friedman test)",
+              "lab_event": "XT25",
+              "exact": "The Nemenyi test",
+              "prefix": "n proceed with a post-hoc test. ",
+              "suffix": " (Ne-\nmenyi, 1963) is similar to",
+              "start": 40625,
+              "end": 40641,
+              "artefact": "A4"
+            },
+            {
+              "reference": "B13",
+              "locator": "Section 5 (Conclusion)",
+              "lab_event": "XT26",
+              "exact": "They are appropriate since they assume some, but limited commensurability",
+              "prefix": " are suitable for our\nproblems. ",
+              "suffix": ". They\nare safer than parametric",
+              "start": 432529,
+              "end": 432602,
+              "artefact": "A4"
+            }
+          ],
+          "kind": "summary"
+        }
+      }
+    },
+    {
+      "id": "C52",
+      "statement": "[[D27:MCB]] on ranks was used to test the differences between the methods of the M3 competition.",
+      "about": {
+        "subject": "D27",
+        "relation": "was used to test",
+        "object": "the methods of the M3 competition",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H59",
+        "outcome": "supported"
+      },
+      "planning": "exploratory"
+    },
+    {
+      "id": "C53",
+      "statement": "The [[D28:Diebold-Mariano test]] of equal accuracy of two forecasts allows forecast errors that are serially correlated and not normally distributed.",
+      "about": {
+        "subject": "D28",
+        "relation": "allows",
+        "object": "serially correlated, non-normal forecast errors",
+        "comparator": null,
+        "conditions": []
+      },
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
+      "support": [],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H60",
+        "outcome": "supported"
+      },
+      "planning": "exploratory"
     }
   ],
   "evidence": [],
-  "warrants": [
-    {
-      "id": "W1",
-      "reasoning": "deductive",
-      "premises": [
-        "C2"
-      ],
-      "text": "Dividing a series' squared errors by a fixed positive number, such as the in-sample mean squared error of its one-step naive forecast, does not change which forecast minimises their expected value; so the RMSSE, like the RMSE, is lowest in expectation for the mean, while series on different scales can be averaged."
-    },
-    {
-      "id": "W2",
-      "reasoning": "deductive",
-      "premises": [],
-      "text": "The sMAPE divides each absolute error by the mean of the absolute outcome and the absolute forecast; when the outcome and the forecast are both zero, that ratio is zero divided by zero, so the measure is undefined."
-    },
-    {
-      "id": "W3",
-      "reasoning": "deductive",
-      "premises": [
-        "C10"
-      ],
-      "text": "Coverage counts only whether each outcome falls inside its interval; widening an interval never lowers its coverage, so coverage alone cannot penalise needless width, which the interval score does."
-    },
-    {
-      "id": "W4",
-      "reasoning": "deductive",
-      "premises": [
-        "C15"
-      ],
-      "text": "Accuracy uses a forecast probability only through which side of a threshold it falls, and counts every misclassification as the same loss; so two forecasts with different probabilities but the same thresholded labels score the same, and unequal costs of errors are not reflected. A proper scoring rule rewards the probabilities themselves."
-    },
-    {
-      "id": "W5",
-      "reasoning": "deductive",
-      "premises": [
-        "C1"
-      ],
-      "text": "Dividing a series' scores by a quantity of that series that does not depend on the forecasts being compared (an in-sample error of the naive forecast, or a benchmark's error) does not change which forecast minimises the expected score of that series; so the scaled measure keeps the target of the unscaled one, while series on different scales can be averaged."
-    }
-  ],
-  "limitations": [
-    {
-      "id": "L1",
-      "category": "data_quality",
-      "statement": "These claims rest on papers that could not be read in full from the session that wrote this claimset (paywalled, or a scan without text): each was checked by its bibliographic record and abstract (lab notes NT2 to NT13), and a full text could qualify what the abstract states.",
-      "affects": [
-        "C14",
-        "C17",
-        "C22",
-        "C23"
-      ],
-      "impact": "could_reverse",
-      "mitigation": "none"
-    },
-    {
-      "id": "L2",
-      "category": "data_quality",
-      "statement": "Part of the support of these claims comes from papers checked only by their records and abstracts (lab notes NT2 to NT13); the rest comes from papers or documents read in full.",
-      "affects": [
-        "C1",
-        "C3",
-        "C6",
-        "C8",
-        "C15",
-        "C19",
-        "C24",
-        "C25",
-        "C26",
-        "C27",
-        "C28"
-      ],
-      "impact": "reduces_precision",
-      "mitigation": "none"
-    },
-    {
-      "id": "L3",
-      "category": "measurement",
-      "statement": "Section and theorem numbers for Gneiting 2011, Gneiting and Raftery 2007, Gneiting, Balabdaoui and Raftery 2007 and Hyndman and Koehler 2006 were read in their preprints or authors' copies (arXiv:0912.0902 and the authors' web pages), whose numbering may differ from the published versions.",
-      "affects": [
-        "C1",
-        "C2",
-        "C4",
-        "C5",
-        "C6",
-        "C7",
-        "C9",
-        "C10",
-        "C11",
-        "C12",
-        "C13",
-        "C15",
-        "C19",
-        "C20",
-        "C24",
-        "C25",
-        "C26",
-        "C28"
-      ],
-      "impact": "reduces_precision",
-      "mitigation": "none"
-    },
-    {
-      "id": "L4",
-      "category": "other",
-      "statement": "No paper is the source for this claim; it rests on an argument from the definition of the measure alone (its warrant).",
-      "affects": [
-        "C16"
-      ],
-      "impact": "could_reverse",
-      "mitigation": "none"
-    },
-    {
-      "id": "L5",
-      "category": "researcher_position",
-      "statement": "The claims restate EntryLib's study-planning guide on prediction, drafted by an agent of the same system that checked them here, and were stated before the papers were read; the papers were read to confirm what the guide states, not searched for work that disagrees with it.",
-      "affects": [
-        "C1",
-        "C2",
-        "C3",
-        "C4",
-        "C5",
-        "C6",
-        "C7",
-        "C8",
-        "C9",
-        "C10",
-        "C11",
-        "C12",
-        "C13",
-        "C14",
-        "C15",
-        "C16",
-        "C17",
-        "C18",
-        "C19",
-        "C20",
-        "C21",
-        "C22",
-        "C23",
-        "C24",
-        "C25",
-        "C26",
-        "C27",
-        "C28"
-      ],
-      "impact": "could_bias_magnitude",
-      "mitigation": "none"
-    }
-  ],
+  "warrants": [],
+  "limitations": [],
   "artefacts": [
     {
       "id": "A1",
@@ -2029,7 +2021,7 @@
         "reason": "legal",
         "content_hash": "sha256:6b6cc2f0fd3daa1da42506f42f05fe88425880b2806f864ceaab85fc606ab5c9"
       },
-      "reference": "B1"
+      "reference": "B10"
     },
     {
       "id": "A2",
@@ -2042,7 +2034,7 @@
         "reason": "legal",
         "content_hash": "sha256:d31a0c5f0ae8fec1a0a6544db5d056645b2d7296d71b44a2e8efb293c7d87ba2"
       },
-      "reference": "B2"
+      "reference": "B11"
     },
     {
       "id": "A3",
@@ -2055,7 +2047,7 @@
         "reason": "legal",
         "content_hash": "sha256:5ca1dc51db5fc619ed757bf1b79f3601408d579373c43d6dc06d601d51b271ea"
       },
-      "reference": "B3"
+      "reference": "B12"
     },
     {
       "id": "A4",
@@ -2068,7 +2060,7 @@
         "reason": "legal",
         "content_hash": "sha256:aa5fa1c71338d0d380e7a97e3503ce486d4e5798069647a8d39f57a1f99a7c8c"
       },
-      "reference": "B4"
+      "reference": "B13"
     },
     {
       "id": "A5",
@@ -2079,8 +2071,8 @@
       "availability": {
         "level": "public"
       },
-      "reference": "B5",
-      "licence": "CC-BY-3.0"
+      "licence": "CC-BY-3.0",
+      "reference": "B14"
     },
     {
       "id": "A6",
@@ -2106,7 +2098,7 @@
         "reason": "legal",
         "content_hash": "sha256:b86b2d78457b62195faa87e2071beb3cacea2d6cb413c296dab746b00bb90a80"
       },
-      "reference": "B7"
+      "reference": "B15"
     },
     {
       "id": "A8",
@@ -2117,8 +2109,8 @@
       "availability": {
         "level": "public"
       },
-      "reference": "B8",
-      "licence": "CC-BY-4.0"
+      "licence": "CC-BY-4.0",
+      "reference": "B16"
     },
     {
       "id": "A9",
@@ -2131,120 +2123,282 @@
         "reason": "legal",
         "content_hash": "sha256:f2650a2dbfb14d2c7d4482bda66c129ce5eec9341a76b76a833219559bf17109"
       },
-      "reference": "B19"
+      "reference": "B9"
     },
     {
       "id": "A10",
       "kind": "lab_record",
-      "uri": "https://github.com/entrylib/study-planning/blob/7b4b7418addb1a7f460b7aa1317a047c13615bdd/lab/lab.jsonl",
-      "version": "sha256:1b43a1fe247308338fa60f5551811662449102249e42d02ff4da2ace4843f4ea",
+      "uri": "https://github.com/entrylib/study-planning/blob/fdf3de051186074565dfdbb25483bc0e156b9f18/lab/lab.jsonl",
+      "version": "sha256:51f295709b6ce114b653a8bf53e682ba90c3d9ec585af4b60f8f862ff4cd2919",
       "availability": {
         "level": "public"
       },
-      "description": "Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-13; exported with claimset 0.42.6).",
-      "licence": "CC-BY-4.0"
+      "description": "Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-13; exported with claimset 0.42.7)."
     }
   ],
   "references": [
     {
-      "id": "B1",
-      "target": "10.1198/jasa.2011.r10138",
-      "id_type": "doi"
-    },
-    {
-      "id": "B2",
-      "target": "10.1198/016214506000001437",
-      "id_type": "doi"
-    },
-    {
-      "id": "B3",
-      "target": "10.1111/j.1467-9868.2007.00587.x",
-      "id_type": "doi"
-    },
-    {
-      "id": "B4",
-      "target": "https://jmlr.org/papers/v7/demsar06a.html",
-      "id_type": "url"
-    },
-    {
-      "id": "B5",
-      "target": "10.18637/jss.v027.i03",
-      "id_type": "doi"
-    },
-    {
       "id": "B6",
       "target": "https://otexts.com/fpp2/transformations.html",
-      "id_type": "url"
-    },
-    {
-      "id": "B7",
-      "target": "10.1016/j.ijforecast.2006.03.001",
-      "id_type": "doi"
-    },
-    {
-      "id": "B8",
-      "target": "10.1371/journal.pone.0118432",
-      "id_type": "doi"
+      "id_type": "url",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-13",
+          "artefact": "A6",
+          "lab_event": "SC6"
+        }
+      }
     },
     {
       "id": "B9",
-      "target": "10.1016/j.ijforecast.2019.02.017",
-      "id_type": "doi"
+      "target": "https://github.com/Mcompetitions/M5-methods/blob/master/M5-Competitors-Guide.pdf",
+      "id_type": "url",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "other",
+          "checked_on": "2026-11-13",
+          "artefact": "A9",
+          "lab_event": "SC9"
+        }
+      }
     },
     {
       "id": "B10",
-      "target": "10.1016/j.ijforecast.2021.11.013",
-      "id_type": "doi"
+      "target": "10.1198/jasa.2011.r10138",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "preprint",
+          "checked_on": "2026-11-13",
+          "artefact": "A1",
+          "lab_event": "SC1"
+        }
+      }
     },
     {
       "id": "B11",
-      "target": "10.1016/j.ijforecast.2021.10.009",
-      "id_type": "doi"
+      "target": "10.1198/016214506000001437",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "author_copy",
+          "checked_on": "2026-11-13",
+          "artefact": "A2",
+          "lab_event": "SC2"
+        }
+      }
     },
     {
       "id": "B12",
-      "target": "10.1016/S0169-2070(99)00007-2",
-      "id_type": "doi"
+      "target": "10.1111/j.1467-9868.2007.00587.x",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "author_copy",
+          "checked_on": "2026-11-13",
+          "artefact": "A3",
+          "lab_event": "SC3"
+        }
+      }
     },
     {
       "id": "B13",
-      "target": "10.1016/j.ijforecast.2015.12.004",
-      "id_type": "doi"
+      "target": "https://jmlr.org/papers/v7/demsar06a.html",
+      "id_type": "url",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-13",
+          "artefact": "A4",
+          "lab_event": "SC4"
+        }
+      }
     },
     {
       "id": "B14",
-      "target": "10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2",
-      "id_type": "doi"
+      "target": "10.18637/jss.v027.i03",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-13",
+          "artefact": "A5",
+          "lab_event": "SC5"
+        }
+      }
     },
     {
       "id": "B15",
-      "target": "10.1007/s10994-009-5119-5",
-      "id_type": "doi"
+      "target": "10.1016/j.ijforecast.2006.03.001",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "author_copy",
+          "checked_on": "2026-11-13",
+          "artefact": "A7",
+          "lab_event": "SC7"
+        }
+      }
     },
     {
       "id": "B16",
-      "target": "10.1016/j.ijforecast.2004.10.003",
-      "id_type": "doi"
+      "target": "10.1371/journal.pone.0118432",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-13",
+          "artefact": "A8",
+          "lab_event": "SC8"
+        }
+      }
     },
     {
       "id": "B17",
-      "target": "10.1080/07350015.1995.10524599",
-      "id_type": "doi"
+      "target": "10.1016/j.ijforecast.2019.02.017",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC10"
+        }
+      }
     },
     {
       "id": "B18",
-      "target": "10.1016/j.ijforecast.2022.08.003",
-      "id_type": "doi"
+      "target": "10.1016/j.ijforecast.2021.11.013",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC11"
+        }
+      }
     },
     {
       "id": "B19",
-      "target": "https://github.com/Mcompetitions/M5-methods/blob/master/M5-Competitors-Guide.pdf",
-      "id_type": "url"
+      "target": "10.1016/j.ijforecast.2021.10.009",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC12"
+        }
+      }
     },
     {
       "id": "B20",
+      "target": "10.1016/S0169-2070(99)00007-2",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC13"
+        }
+      }
+    },
+    {
+      "id": "B21",
+      "target": "10.1016/j.ijforecast.2015.12.004",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC14"
+        }
+      }
+    },
+    {
+      "id": "B22",
+      "target": "10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "abstract",
+          "version": "published",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC15"
+        }
+      }
+    },
+    {
+      "id": "B23",
+      "target": "10.1007/s10994-009-5119-5",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "abstract",
+          "version": "published",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC16"
+        }
+      }
+    },
+    {
+      "id": "B24",
+      "target": "10.1016/j.ijforecast.2004.10.003",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC17"
+        }
+      }
+    },
+    {
+      "id": "B25",
+      "target": "10.1080/07350015.1995.10524599",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC18"
+        }
+      }
+    },
+    {
+      "id": "B26",
+      "target": "10.1016/j.ijforecast.2022.08.003",
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC19"
+        }
+      }
+    },
+    {
+      "id": "B27",
       "target": "10.1016/j.ijforecast.2019.04.014",
-      "id_type": "doi"
+      "id_type": "doi",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "checked_on": "2026-11-13",
+          "lab_event": "SC20"
+        }
+      }
     }
-  ]
+  ],
+  "extensions": {
+    "review": "0.1"
+  }
 }
