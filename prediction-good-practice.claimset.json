@@ -2130,7 +2130,7 @@
     {
       "id": "A10",
       "kind": "lab_record",
-      "uri": "https://github.com/entrylib/study-planning/blob/cf53af0a71d087b4fdfea535205e5163263a2111/lab/lab.jsonl",
+      "uri": "https://github.com/entrylib/study-planning/blob/832f05acb63d49f2ae374c15920814e5d050b326/lab/lab.jsonl",
       "version": "sha256:80799913b6759e1ce1201351e05780390a7ef6b831e17b97dcaa13b575d9a695",
       "availability": {
         "level": "public"
