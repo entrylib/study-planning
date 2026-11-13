@@ -1,8 +1,8 @@
 CLAIMSET Good practice for evaluating predictions: what the literature supports
-summary How should a study measure and compare predictions? This paper turns the methodological literature into rules. A measure has to match what a prediction targets: squared error (RMSE) for forecasts of the mean, absolute error (MAE, or MASE across series) for the median, the pinball loss for a quantile, the interval score with coverage for prediction intervals, and a proper scoring rule (such as the CRPS, log score or Brier score) for predicted distributions and class probabilities. Common choices that do not match are named: MAPE rewards forecasts that are too low, sMAPE rewards forecasts that are too high, and AUC and accuracy do not judge probabilities. When methods are compared over many series, ranks and the Friedman and Nemenyi tests are recommended over averages alone. Each rule cites the paper it rests on; several of those papers were checked only by their abstracts.
-licence CC-BY-4.0; contributions C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26; highlights C1, C2, C5, C25
+summary How should a study measure and compare predictions? This paper turns the methodological literature into rules. A measure has to match what a prediction targets: squared error (RMSE) for forecasts of the mean, absolute error (MAE) for the median, the pinball loss for a quantile, the interval score with coverage for intervals, and a proper scoring rule for distributions and class probabilities. MAPE rewards forecasts that are too low, sMAPE forecasts that are too high, and AUC and accuracy do not judge probabilities. Errors of series on different scales should be scaled per series before they are averaged (RMSSE, MASE, scaled pinball loss, scaled interval score), never summed as they are. The mean, median and quartiles of a scaled measure summarise accuracy over many series, and rank tests tell whether methods that perform similarly differ. Each rule cites the paper it rests on; several were checked only by abstracts.
+licence CC-BY-4.0; contributions C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28; highlights C1, C2, C5, C26
 declarations funding: none | competing interests: Ivan Svetunkov runs EntryLib, which publishes the study-planning guides that this claimset summarises.
-exploration 1 question; hypotheses 28: 26 supported, 2 abandoned; tests 0; runs 0; lab record A9
+exploration 1 question; hypotheses 30: 28 supported, 2 abandoned; tests 0; runs 0; lab record A10
 
 DEFINITIONS
 D1 [concept] consistent scoring function: A scoring function (an error measure for point forecasts) is consistent for a functional of the predictive distribution, such as the mean, the median or a quantile, when its expected value is lowest when the point forecast equals that functional. [source B1]
@@ -35,7 +35,7 @@ D27 [method] MCB: Multiple comparisons with the best: a test, on mean ranks over
 D28 [method] Diebold-Mariano test: A test of equal expected loss of two competing forecasts of the same series, based on the mean loss differential and its long-run variance. [source B17]
 
 CLAIMS
-C1 [methodological; principal; extension; support: cited B1, at Abstract; Section 2.2 (Consistency), cited B9; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
+C1 [methodological; principal; extension; support: cited B1, at Abstract; Section 2.2 (Consistency) (arXiv:0912.0902 numbering), cited B9; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
   To evaluate point forecasts, use a [[D1:consistent scoring function]] for the functional the forecasts target (the mean, the median or a quantile): a scoring function consistent for a different functional rewards a different forecast from the one the method was built to make.
   scope: data_type: point forecasts
   extends B1: Gneiting (2011) shows that a scoring function must be consistent for the functional a point forecast targets for the evaluation to reward that forecast.
@@ -43,11 +43,11 @@ C2 [methodological; principal; extension; support: cited B1, at Section 5 (Discu
   Point forecasts of the mean ([[D3:point forecast of the mean]]) should be evaluated with squared error ([[D5:RMSE]]), the scoring function consistent for the mean.
   scope: data_type: point forecasts of the mean
   extends B1: Gneiting (2011) shows that squared error is consistent for the mean.
-C3 [methodological; principal; extension; support: cited B10, argument W1; uses C2; limitations L2, L5; strength high (author); planning exploratory; outcome supported]
+C3 [methodological; principal; extension; support: cited B19, at Point forecasts (RMSSE), cited B10, argument W1; uses C2; limitations L2, L5; strength high (author); planning exploratory; outcome supported]
   When [[D3:point forecasts of the mean]] are compared over series on different scales, the [[D5:RMSE]] of each series should be scaled by the in-sample RMSE of the one-step naive forecast ([[D6:RMSSE]]), as the M5 accuracy competition did; scaling each series by a fixed number keeps the comparison consistent for the mean.
   scope: data_type: point forecasts of the mean, over series on different scales
-  extends B10: The M5 accuracy competition ranked point forecasts by the weighted RMSSE.
-C4 [methodological; principal; extension; support: cited B1, at Section 5 (Discussion); uses C1; limitations L3, L5; strength high (author); planning exploratory; outcome supported]
+  extends B19: The M5 competition scored point forecasts by the RMSSE, chosen because squared errors are optimised for the mean and the scaling makes series comparable.
+C4 [methodological; principal; extension; support: cited B1, at Section 5 (Discussion) (arXiv:0912.0902 numbering); uses C1; limitations L3, L5; strength high (author); planning exploratory; outcome supported]
   [[D7:MAE]] and [[D8:MASE]] should not be the main measure for [[D3:point forecasts of the mean]]: absolute error is consistent for the median and rewards median forecasts.
   scope: data_type: point forecasts of the mean
   extends B1: Gneiting (2011) shows that absolute error is consistent for the median.
@@ -55,20 +55,20 @@ C5 [methodological; principal; extension; support: cited B1, at Section 5 (Discu
   [[D9:MAPE]] should not be the measure for point forecasts of the mean or the median: it is consistent for the [[D11:median of order -1]], which lies below the median for positive outcomes, so it rewards forecasts that are too low.
   scope: data_type: point forecasts of positive outcomes
   extends B1: Gneiting (2011) shows that the absolute percentage error is consistent for the median of order -1, which supports underforecasts.
-C6 [methodological; principal; extension; support: cited B7, at Section 2.2 (Measures based on percentage errors), cited B12, argument W2; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
+C6 [methodological; principal; extension; support: cited B12, cited B7, at Section 2.2 (Measures based on percentage errors), argument W2; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
   [[D10:sMAPE]] should not be the measure for point forecasts: for the same outcome it penalises forecasts below the outcome more heavily than forecasts above it, so it rewards forecasts that are too high, and it is undefined when the outcome and the forecast are both zero.
   scope: data_type: point forecasts
-  extends B7: Hyndman and Koehler (2006) show that, for the same outcome, sMAPE penalises low forecasts more heavily than high ones.
-C7 [methodological; principal; extension; support: cited B1, at Section 5 (Discussion), cited B7, at Abstract; uses C1; limitations L3, L5; strength high (author); planning exploratory; outcome supported]
+  extends B12: Goodwin and Lawton (1999) show that the symmetric MAPE is not symmetric in its treatment of positive and negative errors of the same size.
+C7 [methodological; principal; extension; support: cited B1, at Section 5 (Discussion) (arXiv:0912.0902 numbering), cited B7, at Abstract; Section 3 (Scaled errors); uses C1; limitations L3, L5; strength high (author); planning exploratory; outcome supported]
   Point forecasts of the median ([[D4:point forecast of the median]]) should be evaluated with absolute error ([[D7:MAE]]), the scoring function consistent for the median, and, across series on different scales, with [[D8:MASE]].
   scope: data_type: point forecasts of the median
   extends B7: Hyndman and Koehler (2006) propose the MASE as the standard measure across series.
-C8 [methodological; principal; extension; support: cited B13, cited B10; uses C4; limitations L1, L5; strength moderate (author); planning exploratory; outcome supported]
+C8 [methodological; principal; extension; support: cited B19, at Point forecasts (the choice of the RMSSE), cited B13; uses C4; limitations L2, L5; strength high (author); planning exploratory; outcome supported]
   On [[D24:intermittent series]], absolute-error measures should not be used alone: the median of the outcome can be zero, and absolute error then rewards a forecast of zero for every period.
   scope: data_type: point forecasts of intermittent series
-  extends B13: Kolassa (2016) shows that absolute-error measures are minimised by a zero forecast on intermittent count data.
-C9 [methodological; principal; extension; support: cited B1, at Abstract; Theorem 3.3 (arXiv:0912.0902 numbering), cited B11; uses C1; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
-  Quantile forecasts should be evaluated with the [[D12:pinball loss]] at the quantile's level, the scoring function consistent for that quantile, averaged over the levels when there are several, and scaled per series when series are on different scales.
+  extends B19: The M5 guide states that on intermittent series absolute errors favour forecasts close to zero.
+C9 [methodological; principal; extension; support: cited B1, at Abstract; Theorem 3.3 (arXiv:0912.0902 numbering); uses C1; limitations L3, L5; strength high (author); planning exploratory; outcome supported]
+  Quantile forecasts should be evaluated with the [[D12:pinball loss]] at the quantile's level, the scoring function consistent for that quantile, averaged over the levels when there are several.
   scope: data_type: quantile forecasts
   extends B1: Gneiting (2011) shows that a scoring function is consistent for a quantile if and only if it is generalized piecewise linear.
 C10 [methodological; principal; extension; support: cited B2, at Section 6.2 (Interval score); limitations L3, L5; strength high (author); planning exploratory; outcome supported]
@@ -97,29 +97,29 @@ C15 [methodological; principal; extension; support: cited B2, at Section 3, Exam
   extends B2: Gneiting and Raftery (2007) show that the Brier and logarithmic scores are strictly proper.
 C16 [methodological; principal; support: argument W4; uses C15; limitations L4, L5; strength moderate (author); planning exploratory; outcome supported]
   [[D21:accuracy]] should not be the measure of forecast class probabilities: it ignores the probabilities beyond which side of a threshold they fall, and weighs every error the same.
-  scope: data_type: forecast probabilities of classes
+  scope: data_type: forecast class probabilities, thresholded to labels
 C17 [methodological; principal; extension; support: cited B15; uses C15; limitations L1, L5; strength moderate (author); planning exploratory; outcome supported]
   [[D22:AUC]] should not be the measure of forecast class probabilities: it measures how well cases are ranked, not whether the probabilities are right, and it weighs the costs of misclassification differently for different classifiers.
-  scope: data_type: forecast probabilities of classes
+  scope: data_type: forecast class probabilities, ranked by a classifier's scores
   extends B15: Hand (2009) shows that the AUC measures different classifiers with different misclassification cost distributions.
 C18 [methodological; principal; extension; support: cited B8, at Title; Abstract; limitations L5; strength high (author); planning exploratory; outcome supported]
   With rare positive cases, the [[D23:precision-recall curve]] should be reported rather than the ROC curve alone, because the ROC curve can look good while most cases predicted positive are negative.
   scope: data_type: binary classifiers | conditions: imbalanced classes
   extends B8: Saito and Rehmsmeier (2015) show that the precision-recall plot is more informative than the ROC plot on imbalanced data.
-C19 [methodological; principal; extension; support: cited B9, cited B1, at Section 5 (Discussion); uses C1; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
+C19 [methodological; principal; extension; support: cited B9, cited B1, at Section 5 (Discussion) (arXiv:0912.0902 numbering); uses C1; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
   When the compared methods target different functionals (one the mean, another the median), each should be evaluated with a measure consistent for its own target, or the methods made to target the same functional, because a single measure favours the methods that target what it is consistent for.
   scope: data_type: point forecasts of methods that target different functionals
   extends B9: Kolassa (2020) shows that different error measures are minimised by different summaries of one predictive density.
-C20 [methodological; principal; extension; support: cited B4, at Section 3.1 (Comparisons of two classifiers); limitations L5; strength high (author); planning exploratory; outcome supported]
-  When methods are compared over many series or data sets, the distribution of their scaled errors across the series should be reported, not only the mean, because a mean over data sets is sensitive to a few outlying ones.
-  scope: data_type: comparisons of methods over many series or data sets
+C20 [methodological; principal; extension; support: cited B4, at Section 3.1 (Comparisons of two classifiers), cited B7, at Section 3 (Scaled errors), cited B19, at Point forecasts (WRMSSE); uses C26; limitations L3, L5; strength high (author); planning exploratory; outcome supported]
+  When methods are compared over many series, their accuracy should be summarised by aggregates of a scaled measure across the series, the mean together with the median and the quartiles of [[D6:RMSSE]], [[D8:MASE]] or another scaled error, since a mean over series alone is sensitive to a few outlying ones.
+  scope: data_type: comparisons of methods over many series
   extends B4: Demsar (2006) notes that averages over data sets are susceptible to outliers.
-C21 [methodological; principal; extension; support: cited B4, at Abstract; Section 3.2.2 (Friedman test, with the Nemenyi test); limitations L5; strength high (author); planning exploratory; outcome supported]
-  When several methods are compared over many data sets, their differences should be tested with the [[D25:Friedman test]] on ranks followed by [[D26:Nemenyi test]] post-hoc comparisons, which do not assume the errors are comparable across data sets.
-  scope: data_type: comparisons of several methods over many data sets
-  extends B4: Demsar (2006) recommends the Friedman test with post-hoc tests for comparing several classifiers over many data sets.
-C22 [methodological; principal; extension; support: cited B16; limitations L1, L5; strength moderate (author); planning exploratory; outcome supported]
-  When the question is which methods differ from the best one over many series, multiple comparisons with the best ([[D27:MCB]]) on ranks answer it, as in the statistical analysis of the M3 competition.
+C21 [methodological; principal; extension; support: cited B4, at Abstract; Section 3.1; Section 3.2.2 (Friedman test, with the Nemenyi test); uses C20; limitations L5; strength high (author); planning exploratory; outcome supported]
+  To tell whether several methods whose aggregate accuracy is similar differ significantly over many series or data sets, their ranks on each series should be tested with the [[D25:Friedman test]] followed by [[D26:Nemenyi test]] post-hoc comparisons, which do not assume that errors are comparable across series.
+  scope: data_type: comparisons of several methods over many series or data sets
+  extends B4: Demsar (2006) recommends the Friedman test with post-hoc tests to test whether several classifiers differ over many data sets.
+C22 [methodological; principal; extension; support: cited B16; uses C20; limitations L1, L5; strength moderate (author); planning exploratory; outcome supported]
+  To tell which methods differ significantly from the best one over many series, multiple comparisons with the best ([[D27:MCB]]) on ranks should be used, as in the statistical analysis of the M3 competition.
   scope: data_type: comparisons of methods over many series
   extends B16: Koning et al. (2005) test the M3 results with multiple comparisons with the best on ranks.
 C23 [methodological; principal; extension; support: cited B17; limitations L1, L5; strength moderate (author); planning exploratory; outcome supported]
@@ -134,24 +134,32 @@ C25 [methodological; principal; extension; support: cited B7, at Section 2.1 (Sc
   Scale-dependent error measures ([[D5:RMSE]], [[D7:MAE]]) should not be summed or averaged across series on different scales: the series with the largest values then dominate the aggregate, whatever the forecasts of the other series.
   scope: data_type: point forecasts over series on different scales
   extends B7: Hyndman and Koehler (2006) state that scale-dependent measures should not be used to compare across data sets on different scales.
-C26 [methodological; principal; extension; support: cited B7, at Section 3 (Scaled errors), cited B10, argument W5; uses C1; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
+C26 [methodological; principal; extension; support: cited B7, at Section 3 (Scaled errors), cited B19, at Point forecasts (RMSSE), cited B10, argument W5; uses C1; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
   To aggregate the accuracy of point forecasts over series on different scales, each series' errors should first be scaled by a quantity of that series (as in [[D8:MASE]] and [[D6:RMSSE]], or relative to a benchmark method), and the scaled errors then averaged, choosing a scaling that keeps the measure consistent for what the forecasts target.
   scope: data_type: point forecasts over series on different scales
   extends B7: Hyndman and Koehler (2006) propose scaled errors as the standard approach for comparing accuracy across series on different scales.
+C27 [methodological; principal; extension; support: cited B19, at Probabilistic forecasts (Scaled Pinball Loss), cited B11, argument W5; uses C9; limitations L2, L5; strength high (author); planning exploratory; outcome supported]
+  When quantile forecasts are compared over series on different scales, each series' [[D12:pinball loss]] should be scaled by a quantity of that series, as the scaled pinball loss of the M5 uncertainty competition divides it by the in-sample mean absolute error of the one-step naive forecast.
+  scope: data_type: quantile forecasts over series on different scales
+  extends B19: The M5 competition scored quantile forecasts with the pinball loss scaled per series.
+C28 [methodological; principal; extension; support: cited B20, cited B7, at Section 2.1 (Scale-dependent measures), argument W5; uses C10; limitations L2, L3, L5; strength high (author); planning exploratory; outcome supported]
+  When prediction intervals are compared over series on different scales, each series' [[D13:interval score]] should be scaled by a quantity of that series, as the mean scaled interval score (MSIS) of the M4 competition does.
+  scope: data_type: prediction intervals over series on different scales
+  extends B20: The M4 competition scored prediction intervals with the mean scaled interval score.
 
 WARRANTS
 W1 [deductive; premises C2] Dividing a series' squared errors by a fixed positive number, such as the in-sample mean squared error of its one-step naive forecast, does not change which forecast minimises their expected value; so the RMSSE, like the RMSE, is lowest in expectation for the mean, while series on different scales can be averaged.
 W2 [deductive] The sMAPE divides each absolute error by the mean of the absolute outcome and the absolute forecast; when the outcome and the forecast are both zero, that ratio is zero divided by zero, so the measure is undefined.
 W3 [deductive; premises C10] Coverage counts only whether each outcome falls inside its interval; widening an interval never lowers its coverage, so coverage alone cannot penalise needless width, which the interval score does.
-W5 [deductive; premises C1] Dividing a series' errors by a quantity of that series that does not depend on the forecasts being compared (an in-sample error of the naive forecast, or a benchmark's error) does not change which forecast minimises the expected error of that series; so the scaled measure keeps the target of the unscaled one, while series on different scales can be averaged.
 W4 [deductive; premises C15] Accuracy uses a forecast probability only through which side of a threshold it falls, and counts every misclassification as the same loss; so two forecasts with different probabilities but the same thresholded labels score the same, and unequal costs of errors are not reflected. A proper scoring rule rewards the probabilities themselves.
+W5 [deductive; premises C1] Dividing a series' scores by a quantity of that series that does not depend on the forecasts being compared (an in-sample error of the naive forecast, or a benchmark's error) does not change which forecast minimises the expected score of that series; so the scaled measure keeps the target of the unscaled one, while series on different scales can be averaged.
 
 LIMITATIONS
-L1 [data_quality; affects C8, C14, C17, C22, C23; could_reverse; mitigation none] The papers these claims rest on alone (Kolassa 2016, Hand 2009, Koning et al. 2005, Diebold and Mariano 1995, and the M5 accuracy paper for the reason in C10) could not be read in full from the session that wrote this claimset: they were checked by their bibliographic records and abstracts (lab notes NT3, NT6, NT8, NT9, NT10), and the M5 accuracy paper's reason only in secondary accounts.
-L2 [data_quality; affects C1, C3, C6, C9, C15, C19, C24, C25, C26; reduces_precision; mitigation none] Part of the support of these claims comes from papers checked only by their records and abstracts (Kolassa 2020, both M5 papers, Goodwin and Lawton 1999, Brier 1950, Athanasopoulos and Kourentzes 2023); the part each claim turns on comes from a paper read in full.
-L3 [measurement; affects C1, C2, C4, C5, C6, C7, C9, C10, C11, C12, C13, C15, C19, C24, C25, C26; reduces_precision; mitigation none] Section and theorem numbers for Gneiting 2011, Gneiting and Raftery 2007, Gneiting, Balabdaoui and Raftery 2007 and Hyndman and Koehler 2006 were read in their preprints or authors' copies (arXiv:0912.0902 and the authors' web pages), whose numbering may differ from the published versions.
-L4 [other; affects C16; could_reverse; mitigation none] No paper among those cited is the source for avoiding accuracy as the measure of class probabilities; the claim rests on an argument from the definition of accuracy (W4) alone.
-L5 [researcher_position; affects C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26; could_bias_magnitude; mitigation none] The claims restate EntryLib's study-planning guide on prediction (v0.2), drafted by an agent of the same system that checked them here, and were stated before the papers were read; the papers were read to confirm what the guide states, not searched for work that disagrees with it.
+L1 [data_quality; affects C14, C17, C22, C23; could_reverse; mitigation none] These claims rest on papers that could not be read in full from the session that wrote this claimset (paywalled, or a scan without text): each was checked by its bibliographic record and abstract (lab notes NT2 to NT13), and a full text could qualify what the abstract states.
+L2 [data_quality; affects C1, C3, C6, C8, C15, C19, C24, C25, C26, C27, C28; reduces_precision; mitigation none] Part of the support of these claims comes from papers checked only by their records and abstracts (lab notes NT2 to NT13); the rest comes from papers or documents read in full.
+L3 [measurement; affects C1, C2, C4, C5, C6, C7, C9, C10, C11, C12, C13, C15, C19, C20, C24, C25, C26, C28; reduces_precision; mitigation none] Section and theorem numbers for Gneiting 2011, Gneiting and Raftery 2007, Gneiting, Balabdaoui and Raftery 2007 and Hyndman and Koehler 2006 were read in their preprints or authors' copies (arXiv:0912.0902 and the authors' web pages), whose numbering may differ from the published versions.
+L4 [other; affects C16; could_reverse; mitigation none] No paper is the source for this claim; it rests on an argument from the definition of the measure alone (its warrant).
+L5 [researcher_position; affects C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28; could_bias_magnitude; mitigation none] The claims restate EntryLib's study-planning guide on prediction, drafted by an agent of the same system that checked them here, and were stated before the papers were read; the papers were read to confirm what the guide states, not searched for work that disagrees with it.
 
 ARTEFACTS
 A1 [data] Making and evaluating point forecasts (arXiv:0912.0902, the preprint of Gneiting 2011, JASA 106(494), 746-762, doi:10.1198/jasa.2011.r10138) (application/pdf), saved by hand on 2026-11-13; recorded in the lab record as SR1 on 2026-11-13. venue: arXiv. Written by others.
@@ -162,7 +170,8 @@ A5 [data] Automatic time series forecasting: the forecast package for R (Hyndman
 A6 [data] Forecasting: principles and practice, 2nd edition, section 3.2 Transformations and adjustments (Hyndman and Athanasopoulos 2018) (text/html), saved by hand on 2026-11-13; recorded in the lab record as SR6 on 2026-11-13. venue: OTexts. Written by others.
 A7 [data] Another look at measures of forecast accuracy (preprint of Hyndman and Koehler 2006, IJF 22(4), 679-688, doi:10.1016/j.ijforecast.2006.03.001) (application/pdf), saved by hand on 2026-11-13; recorded in the lab record as SR7 on 2026-11-13. venue: International Journal of Forecasting. Written by others.
 A8 [data] The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets (Saito and Rehmsmeier 2015, PLoS ONE 10(3), e0118432, doi:10.1371/journal.pone.0118432) (application/pdf), saved by hand on 2026-11-13; recorded in the lab record as SR8 on 2026-11-13. venue: PLoS ONE; published: 2015-03-04. Written by others.
-A9 [lab_record] Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-13; exported with claimset 0.42.6).
+A9 [data] The M5 Competition: Competitors' Guide (the organisers' definition of the RMSSE, the scaled pinball loss and the reasons for them) (application/pdf), saved by hand on 2026-11-13; recorded in the lab record as SR9 on 2026-11-13. venue: M Open Forecasting Center, GitHub repository Mcompetitions/M5-methods. Written by others.
+A10 [lab_record] Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-13; exported with claimset 0.42.6).
 
 REFERENCES
 B1 10.1198/jasa.2011.r10138 (doi)
@@ -183,3 +192,5 @@ B15 10.1007/s10994-009-5119-5 (doi)
 B16 10.1016/j.ijforecast.2004.10.003 (doi)
 B17 10.1080/07350015.1995.10524599 (doi)
 B18 10.1016/j.ijforecast.2022.08.003 (doi)
+B19 https://github.com/Mcompetitions/M5-methods/blob/master/M5-Competitors-Guide.pdf (url)
+B20 10.1016/j.ijforecast.2019.04.014 (doi)
