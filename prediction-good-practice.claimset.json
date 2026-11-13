@@ -36,10 +36,12 @@
     "ext": {
       "review": {
         "flow": {
-          "identified": 0,
           "assessed": 20,
-          "included": 20,
-          "other_sources": 20
+          "excluded_full_text": {
+            "out of scope: it was cited only for implementation facts of ETS models and back-transformed forecasts, which decision DC1 left out of this study": 2
+          },
+          "included": 18,
+          "other_sources": 18
         }
       }
     }
@@ -1126,7 +1128,7 @@
       "support": [
         {
           "kind": "cited",
-          "reference": "B15",
+          "reference": "B14",
           "locator": "Section 2.2 (Measures based on percentage errors)"
         }
       ],
@@ -1140,7 +1142,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B15",
+              "reference": "B14",
               "locator": "Section 2.2 (Measures based on percentage errors)",
               "lab_event": "XT6",
               "exact": "has a\nheavier penalty when forecasts are low compared to when forecasts are high",
@@ -1550,12 +1552,12 @@
       "support": [
         {
           "kind": "cited",
-          "reference": "B16",
+          "reference": "B15",
           "locator": "Title"
         },
         {
           "kind": "cited",
-          "reference": "B16",
+          "reference": "B15",
           "locator": "Abstract"
         }
       ],
@@ -1569,7 +1571,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B16",
+              "reference": "B15",
               "locator": "Title",
               "lab_event": "XT15",
               "exact": "The Precision-Recall Plot Is More Informative\n                                                          than the ROC Plot When Evaluating Binary\n                                                          Classifiers on Imbalanced Datasets",
@@ -1580,7 +1582,7 @@
               "artefact": "A8"
             },
             {
-              "reference": "B16",
+              "reference": "B15",
               "locator": "Abstract",
               "lab_event": "XT16",
               "exact": "can be deceptive",
@@ -1611,12 +1613,12 @@
       "support": [
         {
           "kind": "cited",
-          "reference": "B15",
+          "reference": "B14",
           "locator": "Section 2.1 (Scale-dependent measures)"
         },
         {
           "kind": "cited",
-          "reference": "B15",
+          "reference": "B14",
           "locator": "Section 2.4 (Relative measures)"
         }
       ],
@@ -1630,7 +1632,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B15",
+              "reference": "B14",
               "locator": "Section 2.1 (Scale-dependent measures)",
               "lab_event": "XT17",
               "exact": "should\nnot be used, for example, when comparing across data sets that have different scales",
@@ -1641,7 +1643,7 @@
               "artefact": "A7"
             },
             {
-              "reference": "B15",
+              "reference": "B14",
               "locator": "Section 2.4 (Relative measures)",
               "lab_event": "XT18",
               "exact": "It makes no sense to compute the MAE across series (due to their different scales)",
@@ -1693,7 +1695,7 @@
       "support": [
         {
           "kind": "cited",
-          "reference": "B15",
+          "reference": "B14",
           "locator": "Abstract; Section 3 (Scaled errors)"
         }
       ],
@@ -1707,7 +1709,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B15",
+              "reference": "B14",
               "locator": "Abstract; Section 3 (Scaled errors)",
               "lab_event": "XT19",
               "exact": "we propose that the mean absolute scaled error become the standard measure for\ncomparing forecast accuracy across multiple time series",
@@ -2072,7 +2074,7 @@
         "level": "public"
       },
       "licence": "CC-BY-3.0",
-      "reference": "B14"
+      "reference": "B5"
     },
     {
       "id": "A6",
@@ -2098,7 +2100,7 @@
         "reason": "legal",
         "content_hash": "sha256:b86b2d78457b62195faa87e2071beb3cacea2d6cb413c296dab746b00bb90a80"
       },
-      "reference": "B15"
+      "reference": "B14"
     },
     {
       "id": "A8",
@@ -2110,7 +2112,7 @@
         "level": "public"
       },
       "licence": "CC-BY-4.0",
-      "reference": "B16"
+      "reference": "B15"
     },
     {
       "id": "A9",
@@ -2128,8 +2130,8 @@
     {
       "id": "A10",
       "kind": "lab_record",
-      "uri": "https://github.com/entrylib/study-planning/blob/fdf3de051186074565dfdbb25483bc0e156b9f18/lab/lab.jsonl",
-      "version": "sha256:51f295709b6ce114b653a8bf53e682ba90c3d9ec585af4b60f8f862ff4cd2919",
+      "uri": "https://github.com/entrylib/study-planning/blob/18fdd71118b9805e756673012a31077b4bd7ca90/lab/lab.jsonl",
+      "version": "sha256:4349fdb97509b7b6eaa48d2daa67e955cb3b7d86fc397363cff5188868bb32de",
       "availability": {
         "level": "public"
       },
@@ -2138,18 +2140,14 @@
   ],
   "references": [
     {
+      "id": "B5",
+      "target": "https://www.jstatsoft.org/article/download/v027i03/255",
+      "id_type": "url"
+    },
+    {
       "id": "B6",
       "target": "https://otexts.com/fpp2/transformations.html",
-      "id_type": "url",
-      "ext": {
-        "review": {
-          "read": "full_text",
-          "version": "published",
-          "checked_on": "2026-11-13",
-          "artefact": "A6",
-          "lab_event": "SC6"
-        }
-      }
+      "id_type": "url"
     },
     {
       "id": "B9",
@@ -2223,20 +2221,6 @@
     },
     {
       "id": "B14",
-      "target": "10.18637/jss.v027.i03",
-      "id_type": "doi",
-      "ext": {
-        "review": {
-          "read": "full_text",
-          "version": "published",
-          "checked_on": "2026-11-13",
-          "artefact": "A5",
-          "lab_event": "SC5"
-        }
-      }
-    },
-    {
-      "id": "B15",
       "target": "10.1016/j.ijforecast.2006.03.001",
       "id_type": "doi",
       "ext": {
@@ -2250,7 +2234,7 @@
       }
     },
     {
-      "id": "B16",
+      "id": "B15",
       "target": "10.1371/journal.pone.0118432",
       "id_type": "doi",
       "ext": {
@@ -2264,7 +2248,7 @@
       }
     },
     {
-      "id": "B17",
+      "id": "B16",
       "target": "10.1016/j.ijforecast.2019.02.017",
       "id_type": "doi",
       "ext": {
@@ -2276,7 +2260,7 @@
       }
     },
     {
-      "id": "B18",
+      "id": "B17",
       "target": "10.1016/j.ijforecast.2021.11.013",
       "id_type": "doi",
       "ext": {
@@ -2288,7 +2272,7 @@
       }
     },
     {
-      "id": "B19",
+      "id": "B18",
       "target": "10.1016/j.ijforecast.2021.10.009",
       "id_type": "doi",
       "ext": {
@@ -2300,7 +2284,7 @@
       }
     },
     {
-      "id": "B20",
+      "id": "B19",
       "target": "10.1016/S0169-2070(99)00007-2",
       "id_type": "doi",
       "ext": {
@@ -2312,7 +2296,7 @@
       }
     },
     {
-      "id": "B21",
+      "id": "B20",
       "target": "10.1016/j.ijforecast.2015.12.004",
       "id_type": "doi",
       "ext": {
@@ -2324,7 +2308,7 @@
       }
     },
     {
-      "id": "B22",
+      "id": "B21",
       "target": "10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2",
       "id_type": "doi",
       "ext": {
@@ -2337,7 +2321,7 @@
       }
     },
     {
-      "id": "B23",
+      "id": "B22",
       "target": "10.1007/s10994-009-5119-5",
       "id_type": "doi",
       "ext": {
@@ -2350,7 +2334,7 @@
       }
     },
     {
-      "id": "B24",
+      "id": "B23",
       "target": "10.1016/j.ijforecast.2004.10.003",
       "id_type": "doi",
       "ext": {
@@ -2362,7 +2346,7 @@
       }
     },
     {
-      "id": "B25",
+      "id": "B24",
       "target": "10.1080/07350015.1995.10524599",
       "id_type": "doi",
       "ext": {
@@ -2374,7 +2358,7 @@
       }
     },
     {
-      "id": "B26",
+      "id": "B25",
       "target": "10.1016/j.ijforecast.2022.08.003",
       "id_type": "doi",
       "ext": {
@@ -2386,7 +2370,7 @@
       }
     },
     {
-      "id": "B27",
+      "id": "B26",
       "target": "10.1016/j.ijforecast.2019.04.014",
       "id_type": "doi",
       "ext": {
