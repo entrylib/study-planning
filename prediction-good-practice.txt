@@ -43,10 +43,10 @@ C2 [methodological; principal; synthesis; support: argument W2; uses C29, C30; l
   [[D3:Point forecasts of the mean]] should be evaluated with squared error, as in [[D5:RMSE]].
   scope: data_type: point forecasts of the mean
 C3 [methodological; principal; synthesis; support: argument W3; uses C47, C29, C46; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
-  When [[D3:point forecasts of the mean]] are compared over series on different scales, each series' [[D5:RMSE]] should be scaled by the in-sample RMSE of its one-step naive forecast, as in [[D6:RMSSE]].
+  When [[D3:point forecasts of the mean]] are compared over series on different scales, each series' [[D5:RMSE]] should be scaled by the in-sample RMSE of its one-step naive forecast, for example, as in [[D6:RMSSE]].
   scope: data_type: point forecasts of the mean, over series on different scales
 C4 [methodological; principal; synthesis; support: argument W4; uses C31, C29; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
-  [[D7:MAE]] and [[D8:MASE]] should not be the main measure for [[D3:point forecasts of the mean]].
+  [[D7:MAE]] and [[D8:MASE]] can be used as the main measure of point forecasts only when the mean and median forecasts coincide.
   scope: data_type: point forecasts of the mean
 C5 [methodological; principal; synthesis; support: argument W5; uses C32; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
   [[D9:MAPE]] should not be the measure for point forecasts of the mean or the median.
@@ -58,7 +58,7 @@ C7 [methodological; principal; synthesis; support: argument W7; uses C31, C46; l
   [[D4:Point forecasts of the median]] should be evaluated with absolute error, as in [[D7:MAE]] or, across series on different scales, [[D8:MASE]].
   scope: data_type: point forecasts of the median
 C8 [methodological; principal; synthesis; support: argument W8; uses C41, C31; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
-  On [[D24:intermittent series]], absolute-error measures should not be used alone.
+  On [[D24:intermittent series]], absolute-error measures should be avoided.
   scope: data_type: point forecasts of intermittent series
 C9 [methodological; principal; synthesis; support: argument W9; uses C34; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
   Quantile forecasts should be evaluated with the [[D12:pinball loss]] at the quantile's level, averaged over the levels when there are several.
@@ -72,9 +72,9 @@ C11 [methodological; principal; synthesis; support: argument W11; uses C35; limi
 C12 [methodological; principal; synthesis; support: argument W12; uses C36, C37; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
   Predictive distributions should be evaluated with a [[D2:proper scoring rule]], such as the [[D15:CRPS]] or the [[D16:log score]].
   scope: data_type: predictive distributions
-C13 [methodological; principal; synthesis; support: argument W13; uses C39; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
-  The evaluation of predictive distributions should check their [[D19:calibration]] and report their [[D20:sharpness]].
-  scope: data_type: predictive distributions
+C13 [methodological; principal; synthesis; support: argument W13; uses C39, C35; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
+  Predictive distributions and prediction intervals should first be checked for [[D19:calibration]], and their [[D20:sharpness]] compared only among forecasts that are calibrated.
+  scope: data_type: predictive distributions and prediction intervals
 C14 [methodological; principal; synthesis; support: argument W14; uses C40, C36, C37; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
   Predictive distributions of counts, such as forecasts of intermittent sales, should be evaluated with proper scoring rules and a randomised [[D18:probability integral transform]].
   scope: data_type: predictive distributions of counts
@@ -107,7 +107,7 @@ C23 [methodological; principal; synthesis; support: argument W23; uses C53; limi
   The accuracy of two forecasts of the same series should be compared with the [[D28:Diebold-Mariano test]].
   scope: data_type: two forecasts of one series
 C24 [methodological; principal; synthesis; support: argument W24; uses C30; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
-  That a competition or a well-known study used an error measure should not be the reason for choosing it.
+  An error measure should be chosen to match what the compared methods predict, even if competitions or well-known studies used a different one.
   scope: data_type: evaluations of point forecasts
 C25 [methodological; principal; synthesis; support: argument W25; uses C44, C45; limitations L5; strength high (author); planning exploratory; outcome supported] [review: kind recommendation]
   Scale-dependent error measures, such as [[D5:RMSE]] and [[D7:MAE]], should not be summed or averaged across series on different scales.
@@ -200,17 +200,17 @@ C53 [methodological; supporting; synthesis; support: cited B16; limitations L5, 
 WARRANTS
 W1 [deductive; premises C30] A forecast is built to target one functional, and only a scoring function consistent for that functional is lowest in expectation for it; a scoring function consistent for another functional ranks forecasts by how close they come to that other functional.
 W2 [deductive; premises C29, C30] Squared error is consistent for the mean, so its expected value is lowest for the forecast that equals the mean; the RMSE, the square root of the mean squared error, ranks forecasts in the same order.
-W3 [deductive; premises C47, C29, C46] Dividing a series' squared errors by a fixed positive number, the in-sample mean squared error of its one-step naive forecast, does not change which forecast minimises their expected value, so the RMSSE keeps the target of the RMSE, the mean, and the scaled values of different series can be averaged, as in the M5 accuracy competition.
-W4 [deductive; premises C31, C29] Absolute error, which MAE averages and MASE scales, is consistent for the median, not the mean; on skewed outcomes the two differ, and these measures then rank a median forecast above a forecast that is correct for the mean.
+W3 [deductive; premises C47, C29, C46] Dividing a series' squared errors by a fixed positive number, such as the in-sample mean squared error of its one-step naive forecast, does not change which forecast minimises their expected value, so the scaled RMSE (the RMSSE) keeps the target of the RMSE, the mean, and the scaled values of different series can be averaged, as in the M5 accuracy competition.
+W4 [deductive; premises C31, C29] Absolute error, which MAE averages and MASE scales, is consistent for the median, and squared error for the mean. When the mean and median forecasts coincide (a symmetric predictive distribution), both reward the same forecast; otherwise MAE and MASE reward the median forecast over a forecast that is correct for the mean.
 W5 [deductive; premises C32] MAPE is consistent for the median of order -1, which supports severe underforecasts compared with the mean or the median; it therefore rewards forecasts that are too low for either target.
 W6 [deductive; premises C33] sMAPE penalises forecasts below the outcome more heavily than forecasts above it, so it rewards forecasts that are too high; and it divides by the mean of the absolute outcome and the absolute forecast, which is zero when both are zero, so it is then undefined.
 W7 [deductive; premises C31, C46] Absolute error is consistent for the median, so its expected value is lowest for the median forecast; MASE divides each series' absolute errors by a fixed in-sample quantity, which keeps that target and lets series on different scales be averaged.
-W8 [deductive; premises C41, C31] On intermittent series the median of the outcome can be zero, and absolute error, consistent for the median, then gives its best score to a forecast of zero in every period; a measure of the mean or of the whole distribution shows what such a forecast misses.
+W8 [deductive; premises C41, C31] On intermittent series the median of the outcome can be zero, and absolute error, consistent for the median, then gives its best score to a forecast of zero in every period, which says nothing of the demand to be met; a measure of the mean or of the whole distribution does not reward it.
 W9 [deductive; premises C34] The pinball loss at a level is consistent for the quantile at that level, so its expected value is lowest for the correct quantile; averaging over the levels gives each quantile the same weight.
 W10 [deductive; premises C35] The interval score is proper for central intervals and addresses width as well as coverage; coverage against the nominal level shows how far the intervals' calibration departs from what they claim.
 W11 [deductive; premises C35] Coverage counts only whether each outcome falls inside its interval; widening an interval never lowers its coverage, so coverage alone cannot penalise needless width, which the interval score does.
 W12 [deductive; premises C36, C37] The CRPS and the log score are proper: their expected values are best for the true distribution, so they never reward a forecaster for reporting a distribution other than the one believed.
-W13 [deductive; premises C39] Predictive distributions are assessed by maximising their sharpness subject to calibration; checking calibration, with the probability integral transform or coverage at several levels, and reporting sharpness show how a forecast fails, which a single score does not.
+W13 [deductive; premises C39, C35] Predictive distributions are assessed by maximising their sharpness subject to their calibration: a sharper forecast that is not calibrated is overconfident, so sharpness tells which of two forecasts is better only when both are calibrated. A prediction interval summarises a predictive distribution, and the interval score weighs its width against its misses in the same way.
 W14 [deductive; premises C40, C36, C37] The probability integral transform of a discrete distribution takes few values and is not uniform even when the forecast is calibrated, so the calibration of count forecasts is checked with the randomised transform; proper scoring rules apply to count distributions as to any other.
 W15 [deductive; premises C38, C37] The Brier score is proper and the log score strictly proper, so both are best in expectation for the true probabilities of the classes.
 W16 [deductive; premises C38, C37] Accuracy uses a forecast probability only through which side of a threshold it falls, and counts every misclassification as the same loss; two forecasts with different probabilities but the same thresholded labels score the same, and unequal costs of errors are not reflected. The Brier and log scores, which are proper, reward the probabilities themselves.
@@ -221,7 +221,7 @@ W20 [deductive; premises C46, C50] A scaled measure can be averaged over series,
 W21 [deductive; premises C51] The Friedman test, followed by the Nemenyi test, compares methods by their ranks on each data set and assumes only limited commensurability of the measure across data sets; it tells whether differences between methods whose aggregate accuracy is close are larger than chance.
 W22 [deductive; premises C52] Multiple comparisons with the best on ranks test which methods differ from the best one, and were used for this on the methods of the M3 competition.
 W23 [deductive; premises C53] The Diebold-Mariano test allows forecast errors that are serially correlated and not normally distributed, as the errors of multi-step forecasts of one series usually are; tests that assume independent, normal errors do not hold for them.
-W24 [deductive; premises C30] A measure fits a study when it is consistent for what the compared methods predict; that a competition used a measure says nothing about whether it is consistent for the forecasts of this study.
+W24 [deductive; premises C30] A measure fits a study when it is consistent for what the compared methods predict; that a competition or a well-known study used another measure says nothing about whether that one is consistent for the forecasts of this study.
 W25 [deductive; premises C44, C45] Scale-dependent measures cannot be compared across series on different scales, and summed or averaged without scaling they are dominated by the series with the largest values; the result then says little about accuracy on the other series.
 W26 [deductive; premises C44, C46, C47] Scaled errors are independent of the scale of the data and can be averaged over series; dividing by a quantity of the series that does not depend on the compared forecasts keeps the target that the unscaled measure is consistent for.
 W27 [deductive; premises C48, C34, C44] Pinball losses of series on different scales cannot be compared unscaled; dividing each series' pinball loss by a quantity of that series that does not depend on the forecasts keeps the quantile it is consistent for, as the scaled pinball loss of the M5 uncertainty competition does.
