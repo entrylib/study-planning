@@ -1,7 +1,7 @@
 {
   "schema_version": "0.42",
   "paper": {
-    "title": "Good practice for evaluating predictions: what the literature supports",
+    "title": "Evaluating forecasts and classifiers: which measures, scoring rules and tests to use",
     "contributions": [
       "C1",
       "C2",
