@@ -48,6 +48,23 @@ def grid(kind, t):
     return np.round(np.arange(0.0, top + 1e-9, STEP_ABS), 6), STEP_ABS
 
 
+def select(fn, y, f, step, kind, tries=20):
+    """The candidate with the lowest score, extending the grid (by its own step) whenever the choice lands on an
+    edge: the upper edge always, the lower edge down to zero (forecasts are not negative; for counts zero is the
+    floor). Returns (choice, whether it is still on an edge after the extensions)."""
+    for _ in range(tries):
+        k = int(np.argmin(fn(y, f)))
+        lower_open = f[0] > 0 and kind == "continuous"
+        if k == f.size - 1:
+            f = np.concatenate([f, f[-1] + step * np.arange(1, f.size + 1)])
+        elif k == 0 and lower_open:
+            new = f[0] - step * np.arange(f.size, 0, -1)
+            f = np.concatenate([new[new > 0], f])
+        else:
+            return float(f[k]), False
+    return float(f[k]), True
+
+
 def z_for(k, alpha=0.01):
     """Two-sided z of a Bonferroni interval, one of k at family level alpha."""
     lo, hi = 0.0, 10.0
@@ -86,9 +103,9 @@ def one_size(seed, n, reps, per):
             for m, fn in MEASURES.items():
                 if m == "MAPE" and kind != "continuous":
                     continue                              # MAPE leaves out zeros: not studied on counts
-                k = int(np.argmin(fn(y, f)))
-                sel[m].append(f[k])
-                edge[m] += k in (0, f.size - 1)
+                choice, at_edge = select(fn, y, f, step, kind)
+                sel[m].append(choice)
+                edge[m] += at_edge
         for m, v in sel.items():
             if not v:
                 continue
