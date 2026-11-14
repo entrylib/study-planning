@@ -25,10 +25,18 @@ STEP_ABS = 0.01                                          # count grid: absolute
 
 
 def settings():
-    out = [("normal", "continuous", dict(mean=100.0, median=100.0), lambda g, n: g.normal(100.0, 10.0, n))]
+    out = [("normal", "continuous", dict(mean=100.0, median=100.0, symmetric=True),
+            lambda g, n: g.normal(100.0, 10.0, n)),
+           ("Laplace", "continuous", dict(mean=100.0, median=100.0, symmetric=True),      # sd 10: b = 10 / sqrt(2)
+            lambda g, n: g.laplace(100.0, 10.0 / math.sqrt(2), n)),
+           ("Student t df=3", "continuous", dict(mean=100.0, median=100.0, symmetric=True),  # sd 10: scale 10 / sqrt(3)
+            lambda g, n: 100.0 + 10.0 / math.sqrt(3) * g.standard_t(3, n))]
     for s in (0.1, 0.25, 0.5, 1.0):
         out.append((f"lognormal s={s}", "continuous", dict(mean=100 * math.exp(s * s / 2), median=100.0, s=s),
                     lambda g, n, s=s: g.lognormal(math.log(100.0), s, n)))
+    for b in (0.25, 0.5):                                 # y = 100 exp(Laplace(0, b)): mean 100 / (1 - b^2)
+        out.append((f"log-Laplace b={b}", "continuous", dict(mean=100 / (1 - b * b), median=100.0, b=b),
+                    lambda g, n, b=b: 100.0 * np.exp(g.laplace(0.0, b, n))))
     for lam, med in ((1.5, 1.0), (3.5, 3.0), (10.0, 10.0)):
         out.append((f"Poisson lambda={lam}", "count", dict(mean=lam, median=med),
                     lambda g, n, lam=lam: g.poisson(lam, n).astype(float)))
@@ -120,10 +128,10 @@ def one_size(seed, n, reps, per):
         sc = {"setting": name, "test-set size": n}
         results += [{"variable": "share of zero outcomes", "value": float(np.mean(zeros)), "conditions": sc},
                     {"variable": "outcomes left out of MAPE (zeros)", "value": int(np.sum(left_out)), "conditions": sc}]
-        if name == "normal":                              # H3: MAE minus RMSE selection, per replication
+        if t.get("symmetric"):                           # RMSE and MAE alike: MAE minus RMSE, per replication
             d = np.asarray(sel["MAE"]) - np.asarray(sel["RMSE"])
             mean, se = float(d.mean()), float(d.std(ddof=1)) / math.sqrt(d.size)
-            per[("H3", n)] = dict(mean=mean, se=se, step=step)
+            per[("H3", name, n)] = dict(mean=mean, se=se, step=step)
             results.append({"variable": "MAE minus RMSE selected forecast", "value": mean,
                             "interval": {"level": 0.99, "lower": mean - Z99 * se, "upper": mean + Z99 * se},
                             "conditions": sc})
@@ -147,7 +155,7 @@ def summaries(per):
     out = []
 
     def count(hyp, measure, kinds, target, names=None):
-        rows = [p for k, p in per.items() if len(k) == 3 and k[1] == measure and p["kind"] in kinds
+        rows = [p for k, p in per.items() if len(k) == 3 and k[0] != "H3" and k[1] == measure and p["kind"] in kinds
                 and (names is None or p["name"].startswith(names))]
         z = z_for(len(rows))
         sides = [side(p, p["t"][target], z) for p in rows]
@@ -159,15 +167,16 @@ def summaries(per):
     allkinds = ("continuous", "count", "intermittent")
     count("RMSE selects the mean", "RMSE", allkinds, "mean")
     count("MAE selects the median", "MAE", allkinds, "median")
-    count("MAPE selects below the median", "MAPE", ("continuous",), "median", "lognormal")
-    count("sMAPE selects above the mean", "sMAPE", ("continuous",), "mean", "lognormal")
-    count("sMAPE selects above the median", "sMAPE", ("continuous",), "median", "lognormal")
+    skewed = ("lognormal", "log-Laplace")
+    count("MAPE selects below the median", "MAPE", ("continuous",), "median", skewed)
+    count("sMAPE selects above the mean", "sMAPE", ("continuous",), "mean", skewed)
+    count("sMAPE selects above the median", "sMAPE", ("continuous",), "median", skewed)
     count("MAE selects zero", "MAE", ("intermittent",), "median")
     count("sMAPE selects zero", "sMAPE", ("intermittent",), "median")
     rows = [p for k, p in per.items() if k[0] == "H3"]
     z = z_for(len(rows))
     reach = sum(p["mean"] - z * p["se"] - p["step"] <= 0 <= p["mean"] + z * p["se"] + p["step"] for p in rows)
-    hyp = "RMSE and MAE select the same on normal outcomes"
+    hyp = "RMSE and MAE select the same on symmetric outcomes"
     out += [{"variable": "intervals", "value": len(rows), "conditions": {"hypothesis": hyp}},
             {"variable": "intervals that reach the target", "value": int(reach), "conditions": {"hypothesis": hyp}},
             {"variable": "Bonferroni z", "value": z, "conditions": {"hypothesis": hyp}}]
