@@ -1,13 +1,14 @@
 """Part A, the oracle design: which point forecast does each measure select when outcomes come from a known
 distribution?
 
-For each setting and replication: draw `n` outcomes, score every candidate on a fine grid by RMSE, MAE, MAPE and
-sMAPE (measures.py), and record each measure's selected forecast (the candidate with the lowest score). Over the
-replications, report the mean selected forecast with its 99% confidence interval (mean +/- z_0.995 sd / sqrt(R)),
-and, per hypothesis, how many settings fall on each side of the target, allowing half a grid step for the grid
-(a selection cannot be closer to a target than the grid allows).
+For each setting, test-set size n and replication: draw n outcomes, score every candidate on a fine grid by RMSE,
+MAE, MAPE and sMAPE (measures.py), and record each measure's selected forecast (the candidate with the lowest score).
+Over the replications, report the mean selected forecast with its 99% confidence interval. Per hypothesis, count
+how many of its intervals (settings x sizes) fall on each side of its target, at the Bonferroni level for that many
+intervals (1% for the hypothesis as a whole), allowing half a grid step for the grid (a selection cannot be closer to
+a target than the grid allows).
 
-    python3 oracle.py --seed 1 --reps 200 --n 100000
+    python3 oracle.py --seed 1 --sizes 10 30 50 100 500 1000 100000 --reps-small 1000 --reps-large 200
 """
 import argparse
 import json
@@ -47,15 +48,38 @@ def grid(kind, t):
     return np.round(np.arange(0.0, top + 1e-9, STEP_ABS), 6), STEP_ABS
 
 
-def run(seed, reps, n):
+def z_for(k, alpha=0.01):
+    """Two-sided z of a Bonferroni interval, one of k at family level alpha."""
+    lo, hi = 0.0, 10.0
+    target = 1 - alpha / (2 * k)
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if 0.5 * (1 + math.erf(mid / math.sqrt(2))) < target else (lo, mid)
+    return (lo + hi) / 2
+
+
+def run(seed, sizes, reps_small, reps_large, large=100_000):
     results, per = [], {}
+    for name, _kind, t, _draw in settings():
+        results += [{"variable": "mean of the outcome distribution", "value": t["mean"], "conditions": {"setting": name}},
+                    {"variable": "median of the outcome distribution", "value": t["median"],
+                     "conditions": {"setting": name}}]
+    for n in sizes:
+        reps = reps_large if n >= large else reps_small
+        results += one_size(seed, n, reps, per)
+    results += summaries(per)
+    return results
+
+
+def one_size(seed, n, reps, per):
+    results = []
     for i, (name, kind, t, draw) in enumerate(settings()):
         f, step = grid(kind, t)
         sel = {m: [] for m in MEASURES}
         edge = {m: 0 for m in MEASURES}
         zeros, left_out = [], []
         for r in range(reps):
-            g = np.random.default_rng([seed + r, i])
+            g = np.random.default_rng([seed + r, i, n])
             y = draw(g, n)
             zeros.append(float(np.mean(y == 0)))
             left_out.append(mape_left_out(y))
@@ -69,36 +93,34 @@ def run(seed, reps, n):
             if not v:
                 continue
             v = np.asarray(v)
-            mean, half = float(v.mean()), Z99 * float(v.std(ddof=1)) / math.sqrt(v.size)
-            per[(name, m)] = dict(mean=mean, lower=mean - half, upper=mean + half, step=step, t=t, kind=kind)
+            mean, se = float(v.mean()), float(v.std(ddof=1)) / math.sqrt(v.size)
+            per[(name, m, n)] = dict(mean=mean, se=se, step=step, t=t, kind=kind, name=name)
+            cond = {"setting": name, "measure": m, "test-set size": n}
             results.append({"variable": "selected forecast", "value": mean,
-                            "interval": {"level": 0.99, "lower": mean - half, "upper": mean + half},
-                            "conditions": {"setting": name, "measure": m}})
-            results.append({"variable": "selections at the edge of the grid", "value": edge[m],
-                            "conditions": {"setting": name, "measure": m}})
-        results += [{"variable": "mean of the outcome distribution", "value": t["mean"], "conditions": {"setting": name}},
-                    {"variable": "median of the outcome distribution", "value": t["median"], "conditions": {"setting": name}},
-                    {"variable": "share of zero outcomes", "value": float(np.mean(zeros)), "conditions": {"setting": name}},
-                    {"variable": "outcomes left out of MAPE (zeros)", "value": int(np.sum(left_out)),
-                     "conditions": {"setting": name}}]
+                            "interval": {"level": 0.99, "lower": mean - Z99 * se, "upper": mean + Z99 * se},
+                            "conditions": cond})
+            results.append({"variable": "selections at the edge of the grid", "value": edge[m], "conditions": cond})
+        sc = {"setting": name, "test-set size": n}
+        results += [{"variable": "share of zero outcomes", "value": float(np.mean(zeros)), "conditions": sc},
+                    {"variable": "outcomes left out of MAPE (zeros)", "value": int(np.sum(left_out)), "conditions": sc}]
         if name == "normal":                              # H3: MAE minus RMSE selection, per replication
             d = np.asarray(sel["MAE"]) - np.asarray(sel["RMSE"])
-            mean, half = float(d.mean()), Z99 * float(d.std(ddof=1)) / math.sqrt(d.size)
-            per["H3"] = dict(mean=mean, lower=mean - half, upper=mean + half, step=step)
+            mean, se = float(d.mean()), float(d.std(ddof=1)) / math.sqrt(d.size)
+            per[("H3", n)] = dict(mean=mean, se=se, step=step)
             results.append({"variable": "MAE minus RMSE selected forecast", "value": mean,
-                            "interval": {"level": 0.99, "lower": mean - half, "upper": mean + half},
-                            "conditions": {"setting": name}})
-    results += summaries(per)
+                            "interval": {"level": 0.99, "lower": mean - Z99 * se, "upper": mean + Z99 * se},
+                            "conditions": sc})
     return results
 
 
-def side(p, target):
-    """-1 if the interval lies wholly below the target, +1 wholly above, 0 if it reaches it (half a grid step
-    allowed on each side)."""
+
+def side(p, target, z):
+    """-1 if the interval (mean +/- z se) lies wholly below the target, +1 wholly above, 0 if it reaches it (half a
+    grid step allowed on each side)."""
     h = p["step"] / 2
-    if p["upper"] + h < target:
+    if p["mean"] + z * p["se"] + h < target:
         return -1
-    if p["lower"] - h > target:
+    if p["mean"] - z * p["se"] - h > target:
         return 1
     return 0
 
@@ -108,12 +130,13 @@ def summaries(per):
     out = []
 
     def count(hyp, measure, kinds, target, names=None):
-        rows = [p for (name, m), p in per.items() if isinstance(name, str) and m == measure and p["kind"] in kinds
-                and (names is None or name.startswith(names))]
-        sides = [side(p, p["t"][target]) for p in rows]
-        for label, v in (("settings", len(sides)), ("settings whose interval reaches the target", sides.count(0)),
-                         ("settings whose interval lies below the target", sides.count(-1)),
-                         ("settings whose interval lies above the target", sides.count(1))):
+        rows = [p for k, p in per.items() if len(k) == 3 and k[1] == measure and p["kind"] in kinds
+                and (names is None or p["name"].startswith(names))]
+        z = z_for(len(rows))
+        sides = [side(p, p["t"][target], z) for p in rows]
+        for label, v in (("intervals", len(sides)), ("intervals that reach the target", sides.count(0)),
+                         ("intervals that lie below the target", sides.count(-1)),
+                         ("intervals that lie above the target", sides.count(1)), ("Bonferroni z", z)):
             out.append({"variable": label, "value": v, "conditions": {"hypothesis": hyp}})
 
     allkinds = ("continuous", "count", "intermittent")
@@ -124,20 +147,24 @@ def summaries(per):
     count("sMAPE selects above the median", "sMAPE", ("continuous",), "median", "lognormal")
     count("MAE selects zero", "MAE", ("intermittent",), "median")
     count("sMAPE selects zero", "sMAPE", ("intermittent",), "median")
-    p = per["H3"]
-    out.append({"variable": "settings whose interval reaches the target",
-                "value": int(p["lower"] - p["step"] <= 0 <= p["upper"] + p["step"]),
-                "conditions": {"hypothesis": "RMSE and MAE select the same on normal outcomes"}})
+    rows = [p for k, p in per.items() if k[0] == "H3"]
+    z = z_for(len(rows))
+    reach = sum(p["mean"] - z * p["se"] - p["step"] <= 0 <= p["mean"] + z * p["se"] + p["step"] for p in rows)
+    hyp = "RMSE and MAE select the same on normal outcomes"
+    out += [{"variable": "intervals", "value": len(rows), "conditions": {"hypothesis": hyp}},
+            {"variable": "intervals that reach the target", "value": int(reach), "conditions": {"hypothesis": hyp}},
+            {"variable": "Bonferroni z", "value": z, "conditions": {"hypothesis": hyp}}]
     return out
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=1)
-    ap.add_argument("--reps", type=int, default=200)
-    ap.add_argument("--n", type=int, default=100_000)
+    ap.add_argument("--sizes", type=int, nargs="+", default=[10, 30, 50, 100, 500, 1000, 100_000])
+    ap.add_argument("--reps-small", type=int, default=1000, help="replications for test sets under 100,000")
+    ap.add_argument("--reps-large", type=int, default=200, help="replications for test sets of 100,000 or more")
     a = ap.parse_args()
-    results = run(a.seed, a.reps, a.n)
+    results = run(a.seed, a.sizes, a.reps_small, a.reps_large)
     path = os.environ.get("CLAIMSET_RESULTS")
     if path:
         with open(path, "w") as fh:
