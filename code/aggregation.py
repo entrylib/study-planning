@@ -34,10 +34,10 @@ def ses_fixed(y, alpha=0.1):
     return lev
 
 
-def collection(g):
-    u = g.normal(0, 0.075, (N_SMALL, T))
-    small = np.exp(math.log(100.0) + np.cumsum(u, axis=1) + g.normal(0, 0.25, (N_SMALL, T)))
-    large = np.exp(math.log(10000.0) + np.cumsum(g.normal(0, 0.05, T)))[None, :]
+def collection(g, p):
+    u = g.normal(0, p.small_level_sd, (N_SMALL, T))
+    small = np.exp(math.log(100.0) + np.cumsum(u, axis=1) + g.normal(0, p.small_noise_sd, (N_SMALL, T)))
+    large = np.exp(math.log(p.large_level) + np.cumsum(g.normal(0, p.large_sd, T)))[None, :]
     return np.vstack([small, large])
 
 
@@ -58,12 +58,12 @@ def wilson(k, n, z=Z99):
     return centre - half, centre + half
 
 
-def run(seed, collections):
+def run(seed, collections, p):
     agree_sum_large = agree_rmsse_majority = 0
     sum_picks_naive = majority_picks_ses = 0
     for c in range(collections):
         g = np.random.default_rng([seed, c])
-        rn, rs, qn, qs = scores(collection(g))
+        rn, rs, qn, qs = scores(collection(g, p))
         sum_first = "naive" if rn.sum() < rs.sum() else "SES"
         large_first = "naive" if rn[-1] < rs[-1] else "SES"
         wins = int(np.sum(rs < rn))                       # series on which SES has the lower RMSE, of 20
@@ -90,8 +90,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--collections", type=int, default=500)
+    ap.add_argument("--large-level", type=float, default=10000.0, help="starting level of the large series")
+    ap.add_argument("--large-sd", type=float, default=0.05, help="sd of the large series' log random walk")
+    ap.add_argument("--small-noise-sd", type=float, default=0.25, help="sd of the small series' log noise")
+    ap.add_argument("--small-level-sd", type=float, default=0.075, help="sd of the small series' log level steps")
     a = ap.parse_args()
-    results = run(a.seed, a.collections)
+    results = run(a.seed, a.collections, a)
     path = os.environ.get("CLAIMSET_RESULTS")
     if path:
         with open(path, "w") as fh:
