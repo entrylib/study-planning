@@ -1,38 +1,9 @@
 {
   "schema_version": "0.43",
   "paper": {
-    "title": "Evaluating forecasts and classifiers: which measures, scoring rules and tests to use",
-    "contributions": [
-      "C1",
-      "C2",
-      "C3",
-      "C4",
-      "C5",
-      "C6",
-      "C7",
-      "C8",
-      "C9",
-      "C10",
-      "C11",
-      "C12",
-      "C13",
-      "C14",
-      "C15",
-      "C16",
-      "C17",
-      "C18",
-      "C19",
-      "C20",
-      "C21",
-      "C22",
-      "C23",
-      "C24",
-      "C25",
-      "C26",
-      "C27",
-      "C28"
-    ],
-    "autonomy": "human_supervised",
+    "title": "Good practice for evaluating predictions: what the literature supports",
+    "contributions": [],
+    "autonomy": "unknown",
     "contribution_record": "complete",
     "origin": "native",
     "exploration": {
@@ -73,31 +44,7 @@
           "other_sources": 18
         }
       }
-    },
-    "licence": "CC-BY-4.0",
-    "id": "entrylib:2026.000008",
-    "correction_reason": "Version 1 labelled the review's findings and recommendations extension, with an extends relation to the very works cited as their evidence, which said they extend those works; they state what those works establish, so version 2 labels them synthesis (claimset v0.43) and drops those relations, keeping extension only for C16, the one rule that goes beyond its sources, which extends Gneiting and Raftery (2007).",
-    "summary": "How should a study measure and compare predictions? This review states what the methodological literature establishes and the rules it draws from it. A measure has to match what a prediction targets: squared error (RMSE) for forecasts of the mean, absolute error (MAE) for the median, the pinball loss for a quantile, the interval score with coverage for intervals, CRPS or the log score for distributions, and log loss or the Brier score for class probabilities. MAPE rewards forecasts that are too low, sMAPE prefers forecasts that are too high, and AUC and accuracy do not judge probabilities. Errors of series on different scales should be scaled per series before they are averaged, never summed as they are. The mean, median and quartiles of a scaled measure summarise accuracy over many series; rank-based tests (Friedman with Nemenyi, MCB) and the Diebold-Mariano test tell whether similar methods differ statistically.",
-    "classification": {
-      "keywords": [
-        "forecast evaluation",
-        "scoring rules",
-        "error measures",
-        "classifier evaluation",
-        "literature review"
-      ]
-    },
-    "declarations": {
-      "funding": [],
-      "competing_interests": "Ivan Svetunkov runs EntryLib, which publishes the study-planning guides that this claimset summarises."
-    },
-    "highlights": [
-      "C1",
-      "C26",
-      "C5",
-      "C12",
-      "C15"
-    ]
+    }
   },
   "contributors": [
     {
@@ -121,45 +68,16 @@
         "name": "Claude Code"
       },
       "label": "literature summary",
-      "record_source": "self_reported",
-      "credit_roles": [
-        "investigation",
-        "writing_original_draft"
-      ],
-      "tools": [
-        "web_search",
-        "code_execution",
-        "file_access"
-      ],
-      "ai_tasks": [
-        {
-          "task": "literature_search",
-          "extent": "full"
-        },
-        {
-          "task": "writing",
-          "extent": "full"
-        },
-        {
-          "task": "json_preparation",
-          "extent": "full"
-        }
-      ]
+      "record_source": "self_reported"
     },
     {
       "id": "P2",
       "type": "human",
       "name": "Ivan Svetunkov",
       "positions": [
-        "supervisor",
-        "guarantor"
+        "contributor"
       ],
-      "orcid": "0000-0001-7826-0281",
-      "credit_roles": [
-        "conceptualization",
-        "supervision",
-        "validation"
-      ]
+      "orcid": "0000-0001-7826-0281"
     }
   ],
   "models": [
@@ -169,8 +87,7 @@
       "name": "Claude Opus",
       "version": "5.5",
       "identifier": "claude-opus-5-5",
-      "accessed": "2026-11-13",
-      "weights": "api_only"
+      "accessed": "2026-11-13"
     }
   ],
   "definitions": [
@@ -179,140 +96,140 @@
       "term": "consistent scoring function",
       "kind": "concept",
       "definition": "A scoring function (an error measure for point forecasts) is consistent for a functional of the predictive distribution, such as the mean, the median or a quantile, when its expected value is lowest when the point forecast equals that functional.",
-      "source": "B2"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D2",
       "term": "proper scoring rule",
       "kind": "concept",
       "definition": "A scoring rule for probabilistic forecasts is proper when its expected value is best when the forecast distribution equals the distribution of the outcome, and strictly proper when it is best only then.",
-      "source": "B3"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D3",
       "term": "point forecast of the mean",
       "kind": "concept",
       "definition": "A single-valued forecast meant to equal the mean (expected value) of the outcome's distribution given the information available.",
-      "source": "B2"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D4",
       "term": "point forecast of the median",
       "kind": "concept",
       "definition": "A single-valued forecast meant to equal the median of the outcome's distribution given the information available.",
-      "source": "B2"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D5",
       "term": "RMSE",
       "kind": "variable",
       "definition": "Root mean squared error: the square root of the mean of the squared differences between outcomes and point forecasts.",
-      "source": "B6"
+      "source": "doi:10.1016/j.ijforecast.2006.03.001"
     },
     {
       "id": "D6",
       "term": "RMSSE",
       "kind": "variable",
       "definition": "Root mean squared scaled error: the RMSE of a series' forecasts divided by the in-sample RMSE of the one-step naive forecast of that series, so that series on different scales can be averaged.",
-      "source": "B9"
+      "source": "doi:10.1016/j.ijforecast.2021.11.013"
     },
     {
       "id": "D7",
       "term": "MAE",
       "kind": "variable",
       "definition": "Mean absolute error: the mean of the absolute differences between outcomes and point forecasts.",
-      "source": "B6"
+      "source": "doi:10.1016/j.ijforecast.2006.03.001"
     },
     {
       "id": "D8",
       "term": "MASE",
       "kind": "variable",
       "definition": "Mean absolute scaled error: the MAE of a series' forecasts divided by the in-sample MAE of the one-step naive forecast of that series.",
-      "source": "B6"
+      "source": "doi:10.1016/j.ijforecast.2006.03.001"
     },
     {
       "id": "D9",
       "term": "MAPE",
       "kind": "variable",
       "definition": "Mean absolute percentage error: the mean of the absolute differences between outcomes and point forecasts, each divided by the outcome.",
-      "source": "B6"
+      "source": "doi:10.1016/j.ijforecast.2006.03.001"
     },
     {
       "id": "D10",
       "term": "sMAPE",
       "kind": "variable",
       "definition": "Symmetric mean absolute percentage error: the mean of the absolute differences between outcomes and point forecasts, each divided by the mean of the absolute outcome and the absolute forecast.",
-      "source": "B11"
+      "source": "doi:10.1016/S0169-2070(99)00007-2"
     },
     {
       "id": "D11",
       "term": "median of order -1",
       "kind": "concept",
       "definition": "The beta-median with beta = -1: the point forecast that minimises the expected absolute percentage error; for positive outcomes it lies below the median.",
-      "source": "B2"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D12",
       "term": "pinball loss",
       "kind": "variable",
       "definition": "The quantile (asymmetric piecewise linear) loss at level tau: tau times the error when the outcome is above the forecast, and (1 - tau) times the absolute error when it is below.",
-      "source": "B2"
+      "source": "doi:10.1198/jasa.2011.r10138"
     },
     {
       "id": "D13",
       "term": "interval score",
       "kind": "variable",
       "definition": "The score of a central (1 - alpha) prediction interval: its width plus 2/alpha times the distance by which the outcome falls outside it.",
-      "source": "B3"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D14",
       "term": "coverage",
       "kind": "variable",
       "definition": "The share of outcomes that fall inside the prediction intervals, compared with their nominal level.",
-      "source": "B3"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D15",
       "term": "CRPS",
       "kind": "variable",
       "definition": "Continuous ranked probability score: the integral over thresholds of the squared difference between the forecast's cumulative distribution function and the step function at the outcome.",
-      "source": "B3"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D16",
       "term": "log score",
       "kind": "variable",
       "definition": "The logarithmic score: the negative logarithm of the forecast density (or probability) at the outcome.",
-      "source": "B3"
+      "source": "doi:10.1198/016214506000001437"
     },
     {
       "id": "D17",
       "term": "Brier score",
       "kind": "variable",
       "definition": "The mean squared difference between forecast probabilities of a class and the outcome coded 1 if the class occurred and 0 otherwise.",
-      "source": "B13"
+      "source": "doi:10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2"
     },
     {
       "id": "D18",
       "term": "probability integral transform",
       "kind": "concept",
       "definition": "The value of the forecast's cumulative distribution function at the outcome; for a calibrated forecast its values are uniformly distributed.",
-      "source": "B4"
+      "source": "doi:10.1111/j.1467-9868.2007.00587.x"
     },
     {
       "id": "D19",
       "term": "calibration",
       "kind": "concept",
       "definition": "Statistical consistency between forecast distributions and outcomes: events forecast with a given probability occur with that frequency.",
-      "source": "B4"
+      "source": "doi:10.1111/j.1467-9868.2007.00587.x"
     },
     {
       "id": "D20",
       "term": "sharpness",
       "kind": "concept",
       "definition": "The concentration of the forecast distributions, a property of the forecasts alone; among calibrated forecasts, sharper ones are better.",
-      "source": "B4"
+      "source": "doi:10.1111/j.1467-9868.2007.00587.x"
     },
     {
       "id": "D21",
@@ -325,49 +242,63 @@
       "term": "AUC",
       "kind": "variable",
       "definition": "The area under the ROC curve: the probability that a randomly chosen case of the positive class receives a higher score than a randomly chosen case of the negative class.",
-      "source": "B14"
+      "source": "doi:10.1007/s10994-009-5119-5"
     },
     {
       "id": "D23",
       "term": "precision-recall curve",
       "kind": "concept",
       "definition": "The curve of precision (the share of predicted positives that are positive) against recall (the share of positives predicted as positive) over the classification thresholds.",
-      "source": "B7"
+      "source": "doi:10.1371/journal.pone.0118432"
     },
     {
       "id": "D24",
       "term": "intermittent series",
       "kind": "data",
       "definition": "A time series with many zero values, such as the sales of a slow-moving item.",
-      "source": "B12"
+      "source": "doi:10.1016/j.ijforecast.2015.12.004"
     },
     {
       "id": "D25",
       "term": "Friedman test",
       "kind": "method",
       "definition": "A non-parametric test of whether several methods differ, applied to their ranks on each of several data sets.",
-      "source": "B5"
+      "source": "https://jmlr.org/papers/v7/demsar06a.html"
     },
     {
       "id": "D26",
       "term": "Nemenyi test",
       "kind": "method",
       "definition": "A post-hoc test after the Friedman test that compares every pair of methods by their mean ranks against a critical difference.",
-      "source": "B5"
+      "source": "https://jmlr.org/papers/v7/demsar06a.html"
     },
     {
       "id": "D27",
       "term": "MCB",
       "kind": "method",
       "definition": "Multiple comparisons with the best: a test, on mean ranks over series, of which methods differ significantly from the best-ranked one.",
-      "source": "B15"
+      "source": "doi:10.1016/j.ijforecast.2004.10.003"
     },
     {
       "id": "D28",
       "term": "Diebold-Mariano test",
       "kind": "method",
       "definition": "A test of equal expected loss of two competing forecasts of the same series, based on the mean loss differential and its long-run variance.",
-      "source": "B16"
+      "source": "doi:10.1080/07350015.1995.10524599"
+    },
+    {
+      "id": "D29",
+      "term": "bias adjustment",
+      "kind": "method",
+      "definition": "Correcting a forecast back-transformed from a Box-Cox or log scale so that it estimates the mean, not the median, of the forecast distribution.",
+      "source": "https://otexts.com/fpp2/transformations.html"
+    },
+    {
+      "id": "D30",
+      "term": "ETS",
+      "kind": "method",
+      "definition": "Exponential smoothing state space models with error, trend and seasonal components, each additive, multiplicative or absent.",
+      "source": "doi:10.18637/jss.v027.i03"
     }
   ],
   "claims": [
@@ -383,8 +314,8 @@
           "the functional the forecasts target is known"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -400,24 +331,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C30"
-      ],
-      "scope": {
-        "data_type": "point forecasts"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -430,8 +343,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -448,24 +361,6 @@
       "depends_on": [
         "C29",
         "C30"
-      ],
-      "scope": {
-        "data_type": "point forecasts of the mean"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -480,8 +375,8 @@
           "series on different scales"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -499,24 +394,6 @@
         "C47",
         "C29",
         "C46"
-      ],
-      "scope": {
-        "data_type": "point forecasts of the mean, over series on different scales"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -529,8 +406,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -547,24 +424,6 @@
       "depends_on": [
         "C31",
         "C29"
-      ],
-      "scope": {
-        "data_type": "point forecasts of the mean"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -579,8 +438,8 @@
           "positive outcomes"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -596,24 +455,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C32"
-      ],
-      "scope": {
-        "data_type": "point forecasts of positive outcomes"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -626,8 +467,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -643,24 +484,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C33"
-      ],
-      "scope": {
-        "data_type": "point forecasts"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -673,8 +496,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -691,24 +514,6 @@
       "depends_on": [
         "C31",
         "C46"
-      ],
-      "scope": {
-        "data_type": "point forecasts of the median"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -723,8 +528,8 @@
           "many zero outcomes"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -741,24 +546,6 @@
       "depends_on": [
         "C41",
         "C31"
-      ],
-      "scope": {
-        "data_type": "point forecasts of intermittent series"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -771,8 +558,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -788,24 +575,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C34"
-      ],
-      "scope": {
-        "data_type": "quantile forecasts"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -820,8 +589,8 @@
           "central intervals"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -837,24 +606,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C35"
-      ],
-      "scope": {
-        "data_type": "central prediction intervals"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -867,8 +618,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -884,24 +635,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C35"
-      ],
-      "scope": {
-        "data_type": "prediction intervals"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -914,8 +647,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -932,24 +665,6 @@
       "depends_on": [
         "C36",
         "C37"
-      ],
-      "scope": {
-        "data_type": "predictive distributions"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -962,8 +677,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -979,24 +694,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C39"
-      ],
-      "scope": {
-        "data_type": "predictive distributions"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1011,9 +708,9 @@
           "count data"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "synthesis",
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
       "support": [
         {
           "kind": "argument",
@@ -1030,24 +727,6 @@
         "C40",
         "C36",
         "C37"
-      ],
-      "scope": {
-        "data_type": "predictive distributions of counts"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1060,8 +739,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -1078,24 +757,6 @@
       "depends_on": [
         "C38",
         "C37"
-      ],
-      "scope": {
-        "data_type": "forecast probabilities of classes"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1110,9 +771,9 @@
           "predictions are probabilities, or the costs of errors differ"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "extension",
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "synthesis",
       "support": [
         {
           "kind": "argument",
@@ -1128,32 +789,6 @@
       "depends_on": [
         "C38",
         "C37"
-      ],
-      "scope": {
-        "data_type": "forecast class probabilities, thresholded to labels"
-      },
-      "relations": [
-        {
-          "type": "extends",
-          "reference": "B3",
-          "note": "Gneiting and Raftery (2007) show that the Brier and logarithmic scores are proper for forecast probabilities of classes."
-        }
-      ],
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L4",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "moderate",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L4: no cited work states it; it rests on an argument from the definition of accuracy."
-        }
       ]
     },
     {
@@ -1166,9 +801,9 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "synthesis",
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
       "support": [
         {
           "kind": "argument",
@@ -1183,25 +818,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C42"
-      ],
-      "scope": {
-        "data_type": "forecast class probabilities, ranked by a classifier's scores"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L1",
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "moderate",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L1: the finding it rests on was checked only in the abstract of its work; a full text could qualify it."
-        }
       ]
     },
     {
@@ -1216,8 +832,8 @@
           "imbalanced classes"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -1233,27 +849,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C43"
-      ],
-      "scope": {
-        "data_type": "binary classifiers",
-        "conditions": [
-          "imbalanced classes"
-        ]
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1268,8 +863,8 @@
           "methods target different functionals"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -1285,24 +880,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C30"
-      ],
-      "scope": {
-        "data_type": "point forecasts of methods that target different functionals"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1317,8 +894,8 @@
           "many series"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -1335,24 +912,6 @@
       "depends_on": [
         "C46",
         "C50"
-      ],
-      "scope": {
-        "data_type": "comparisons of methods over many series"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1367,8 +926,8 @@
           "many series or data sets"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -1384,24 +943,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C51"
-      ],
-      "scope": {
-        "data_type": "comparisons of several methods over many series or data sets"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1416,9 +957,9 @@
           "many series"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "synthesis",
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
       "support": [
         {
           "kind": "argument",
@@ -1433,24 +974,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C52"
-      ],
-      "scope": {
-        "data_type": "comparisons of methods over many series"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1465,9 +988,9 @@
           "one series"
         ]
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "synthesis",
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
       "support": [
         {
           "kind": "argument",
@@ -1482,24 +1005,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C53"
-      ],
-      "scope": {
-        "data_type": "two forecasts of one series"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1512,8 +1017,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -1529,24 +1034,6 @@
       "planning": "exploratory",
       "depends_on": [
         "C30"
-      ],
-      "scope": {
-        "data_type": "evaluations of point forecasts"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1559,9 +1046,9 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "synthesis",
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
       "support": [
         {
           "kind": "argument",
@@ -1577,24 +1064,6 @@
       "depends_on": [
         "C44",
         "C45"
-      ],
-      "scope": {
-        "data_type": "point forecasts over series on different scales"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1607,8 +1076,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -1626,24 +1095,6 @@
         "C44",
         "C46",
         "C47"
-      ],
-      "scope": {
-        "data_type": "point forecasts over series on different scales"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1656,8 +1107,8 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
+      "type": "descriptive",
+      "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
@@ -1675,24 +1126,6 @@
         "C48",
         "C34",
         "C44"
-      ],
-      "scope": {
-        "data_type": "quantile forecasts over series on different scales"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1705,9 +1138,9 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
-      "role": "principal",
-      "novelty": "synthesis",
+      "type": "descriptive",
+      "role": "supporting",
+      "novelty": "no_prior_found",
       "support": [
         {
           "kind": "argument",
@@ -1724,24 +1157,6 @@
         "C49",
         "C35",
         "C44"
-      ],
-      "scope": {
-        "data_type": "prediction intervals over series on different scales"
-      },
-      "ext": {
-        "review": {
-          "kind": "recommendation"
-        }
-      },
-      "limitations": [
-        "L5"
-      ],
-      "assessments": [
-        {
-          "by": "author",
-          "strength": "high",
-          "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
-        }
       ]
     },
     {
@@ -1754,13 +1169,13 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B2",
+          "reference": "B10",
           "locator": "Section 5 (Discussion); Theorem 3.1 (arXiv:0912.0902 numbering)"
         }
       ],
@@ -1774,7 +1189,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B2",
+              "reference": "B10",
               "locator": "Section 5 (Discussion); Theorem 3.1 (arXiv:0912.0902 numbering)",
               "lab_event": "XT1",
               "exact": "the squared error scoring function is consistent for the mean",
@@ -1787,14 +1202,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "point forecasts"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C30",
@@ -1806,18 +1214,14 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B2",
+          "reference": "B10",
           "locator": "Abstract (arXiv:0912.0902 numbering)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B8"
         }
       ],
       "provenance": "author_stated",
@@ -1830,7 +1234,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B2",
+              "reference": "B10",
               "locator": "Abstract (arXiv:0912.0902 numbering)",
               "lab_event": "XT2",
               "exact": "it is critical that the\n                                         scoring function be consistent for it",
@@ -1843,15 +1247,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "point forecasts"
-      },
-      "limitations": [
-        "L3",
-        "L5",
-        "L6"
-      ]
+      }
     },
     {
       "id": "C31",
@@ -1863,13 +1259,13 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B2",
+          "reference": "B10",
           "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)"
         }
       ],
@@ -1883,7 +1279,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B2",
+              "reference": "B10",
               "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)",
               "lab_event": "XT3",
               "exact": "the absolute error\nscoring function for the median",
@@ -1896,14 +1292,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "point forecasts"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C32",
@@ -1915,18 +1304,18 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B2",
+          "reference": "B10",
           "locator": "Section 5 (Discussion); the beta-median in Section 1.3 (arXiv:0912.0902 numbering)"
         },
         {
           "kind": "cited",
-          "reference": "B2",
+          "reference": "B10",
           "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)"
         }
       ],
@@ -1940,7 +1329,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B2",
+              "reference": "B10",
               "locator": "Section 5 (Discussion); the beta-median in Section 1.3 (arXiv:0912.0902 numbering)",
               "lab_event": "XT4",
               "exact": "the median of order −1",
@@ -1951,7 +1340,7 @@
               "artefact": "A1"
             },
             {
-              "reference": "B2",
+              "reference": "B10",
               "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)",
               "lab_event": "XT5",
               "exact": "severe underforecasts, as compared to the mean or median",
@@ -1964,14 +1353,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "point forecasts of positive outcomes"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C33",
@@ -1983,18 +1365,14 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B6",
+          "reference": "B14",
           "locator": "Section 2.2 (Measures based on percentage errors)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B11"
         }
       ],
       "provenance": "author_stated",
@@ -2007,7 +1385,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B6",
+              "reference": "B14",
               "locator": "Section 2.2 (Measures based on percentage errors)",
               "lab_event": "XT6",
               "exact": "has a\nheavier penalty when forecasts are low compared to when forecasts are high",
@@ -2020,15 +1398,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "point forecasts of positive outcomes"
-      },
-      "limitations": [
-        "L3",
-        "L5",
-        "L6"
-      ]
+      }
     },
     {
       "id": "C34",
@@ -2040,13 +1410,13 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B2",
+          "reference": "B10",
           "locator": "Abstract; Theorem 3.3 (arXiv:0912.0902 numbering)"
         }
       ],
@@ -2060,7 +1430,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B2",
+              "reference": "B10",
               "locator": "Abstract; Theorem 3.3 (arXiv:0912.0902 numbering)",
               "lab_event": "XT7",
               "exact": "It is consistent for a quantile if and only if it is generalized piecewise linear",
@@ -2073,14 +1443,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "quantile forecasts"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C35",
@@ -2092,18 +1455,18 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B3",
+          "reference": "B11",
           "locator": "Section 1 (Introduction)"
         },
         {
           "kind": "cited",
-          "reference": "B3",
+          "reference": "B11",
           "locator": "Abstract"
         }
       ],
@@ -2117,7 +1480,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B3",
+              "reference": "B11",
               "locator": "Section 1 (Introduction)",
               "lab_event": "XT8",
               "exact": "a scoring rule for prediction intervals that is proper",
@@ -2128,7 +1491,7 @@
               "artefact": "A2"
             },
             {
-              "reference": "B3",
+              "reference": "B11",
               "locator": "Abstract",
               "lab_event": "XT9",
               "exact": "propose the intuitively appealing interval score as a utility function in interval estimation that addresses width as well as\n           coverage",
@@ -2141,14 +1504,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "central prediction intervals"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C36",
@@ -2162,13 +1518,13 @@
           "continuous outcomes"
         ]
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B3",
+          "reference": "B11",
           "locator": "Section 4.2 (Continuous ranked probability score)"
         }
       ],
@@ -2182,7 +1538,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B3",
+              "reference": "B11",
               "locator": "Section 4.2 (Continuous ranked probability score)",
               "lab_event": "XT10",
               "exact": "The CRPS is proper relative to the class P",
@@ -2195,14 +1551,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "predictive distributions of continuous outcomes"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C37",
@@ -2214,13 +1563,13 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B3",
+          "reference": "B11",
           "locator": "Section 4.1"
         }
       ],
@@ -2234,7 +1583,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B3",
+              "reference": "B11",
               "locator": "Section 4.1",
               "lab_event": "XT11",
               "exact": "The logarithmic score is strictly proper",
@@ -2247,14 +1596,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "predictive distributions"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C38",
@@ -2266,18 +1608,14 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B3",
+          "reference": "B11",
           "locator": "Section 3, Example 1 (Quadratic or Brier score)"
-        },
-        {
-          "kind": "cited",
-          "reference": "B13"
         }
       ],
       "provenance": "author_stated",
@@ -2290,7 +1628,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B3",
+              "reference": "B11",
               "locator": "Section 3, Example 1 (Quadratic or Brier score)",
               "lab_event": "XT12",
               "exact": "Example 1 (Quadratic or Brier score)",
@@ -2303,15 +1641,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "forecast probabilities of classes"
-      },
-      "limitations": [
-        "L2",
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C39",
@@ -2323,13 +1653,13 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B4",
+          "reference": "B12",
           "locator": "Abstract"
         }
       ],
@@ -2343,7 +1673,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B4",
+              "reference": "B12",
               "locator": "Abstract",
               "lab_event": "XT13",
               "exact": "is based on the paradigm of maximizing the sharpness of\n      the predictive distributions subject to calibration",
@@ -2356,14 +1686,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "predictive distributions"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C40",
@@ -2375,33 +1698,16 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
-      "novelty": "synthesis",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B12"
-        }
-      ],
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
         "lab_event": "H47",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "predictive distributions of counts"
-      },
-      "ext": {
-        "review": {
-          "kind": "summary"
-        }
-      },
-      "limitations": [
-        "L5",
-        "L6"
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C41",
@@ -2415,18 +1721,14 @@
           "D24"
         ]
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B1",
+          "reference": "B9",
           "locator": "Point forecasts"
-        },
-        {
-          "kind": "cited",
-          "reference": "B12"
         }
       ],
       "provenance": "author_stated",
@@ -2439,7 +1741,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B1",
+              "reference": "B9",
               "locator": "Point forecasts",
               "lab_event": "XT14",
               "exact": "absolute errors, which are optimized for the median, would assign lower scores\n        (better performance) to forecasting methods that derive forecasts close to zero",
@@ -2452,14 +1754,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "point forecasts of intermittent series"
-      },
-      "limitations": [
-        "L5",
-        "L6"
-      ]
+      }
     },
     {
       "id": "C42",
@@ -2471,33 +1766,16 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
-      "novelty": "synthesis",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B14"
-        }
-      ],
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
         "lab_event": "H49",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "classifiers that score cases"
-      },
-      "ext": {
-        "review": {
-          "kind": "summary"
-        }
-      },
-      "limitations": [
-        "L1",
-        "L5"
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C43",
@@ -2511,18 +1789,18 @@
           "imbalanced data"
         ]
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B7",
+          "reference": "B15",
           "locator": "Title"
         },
         {
           "kind": "cited",
-          "reference": "B7",
+          "reference": "B15",
           "locator": "Abstract"
         }
       ],
@@ -2536,7 +1814,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B7",
+              "reference": "B15",
               "locator": "Title",
               "lab_event": "XT15",
               "exact": "The Precision-Recall Plot Is More Informative\n                                                          than the ROC Plot When Evaluating Binary\n                                                          Classifiers on Imbalanced Datasets",
@@ -2547,7 +1825,7 @@
               "artefact": "A8"
             },
             {
-              "reference": "B7",
+              "reference": "B15",
               "locator": "Abstract",
               "lab_event": "XT16",
               "exact": "can be deceptive",
@@ -2560,13 +1838,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "binary classifiers on imbalanced data"
-      },
-      "limitations": [
-        "L5"
-      ]
+      }
     },
     {
       "id": "C44",
@@ -2578,18 +1850,18 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B6",
+          "reference": "B14",
           "locator": "Section 2.1 (Scale-dependent measures)"
         },
         {
           "kind": "cited",
-          "reference": "B6",
+          "reference": "B14",
           "locator": "Section 2.4 (Relative measures)"
         }
       ],
@@ -2603,7 +1875,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B6",
+              "reference": "B14",
               "locator": "Section 2.1 (Scale-dependent measures)",
               "lab_event": "XT17",
               "exact": "should\nnot be used, for example, when comparing across data sets that have different scales",
@@ -2614,7 +1886,7 @@
               "artefact": "A7"
             },
             {
-              "reference": "B6",
+              "reference": "B14",
               "locator": "Section 2.4 (Relative measures)",
               "lab_event": "XT18",
               "exact": "It makes no sense to compute the MAE across series (due to their different scales)",
@@ -2627,14 +1899,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "error measures over series on different scales"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C45",
@@ -2646,33 +1911,16 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
-      "novelty": "synthesis",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B17"
-        }
-      ],
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
         "lab_event": "H52",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "error measures over series on different scales"
-      },
-      "ext": {
-        "review": {
-          "kind": "summary"
-        }
-      },
-      "limitations": [
-        "L5",
-        "L6"
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C46",
@@ -2684,13 +1932,13 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B6",
+          "reference": "B14",
           "locator": "Abstract; Section 3 (Scaled errors)"
         }
       ],
@@ -2704,7 +1952,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B6",
+              "reference": "B14",
               "locator": "Abstract; Section 3 (Scaled errors)",
               "lab_event": "XT19",
               "exact": "we propose that the mean absolute scaled error become the standard measure for\ncomparing forecast accuracy across multiple time series",
@@ -2717,14 +1965,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "error measures over series on different scales"
-      },
-      "limitations": [
-        "L3",
-        "L5"
-      ]
+      }
     },
     {
       "id": "C47",
@@ -2736,18 +1977,14 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B1",
+          "reference": "B9",
           "locator": "Point forecasts"
-        },
-        {
-          "kind": "cited",
-          "reference": "B9"
         }
       ],
       "provenance": "author_stated",
@@ -2760,7 +1997,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B1",
+              "reference": "B9",
               "locator": "Point forecasts",
               "lab_event": "XT20",
               "exact": "The accuracy of the point forecasts will be evaluated using the Root Mean Squared Scaled Error (RMSSE)",
@@ -2771,7 +2008,7 @@
               "artefact": "A9"
             },
             {
-              "reference": "B1",
+              "reference": "B9",
               "locator": "Point forecasts",
               "lab_event": "XT21",
               "exact": "The measure is scale independent, meaning that it can be effectively used to compare forecasts\n        across series with different scales",
@@ -2784,14 +2021,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "point forecasts in the M5 accuracy competition"
-      },
-      "limitations": [
-        "L5",
-        "L6"
-      ]
+      }
     },
     {
       "id": "C48",
@@ -2803,18 +2033,14 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B1",
+          "reference": "B9",
           "locator": "Probabilistic forecasts"
-        },
-        {
-          "kind": "cited",
-          "reference": "B10"
         }
       ],
       "provenance": "author_stated",
@@ -2827,7 +2053,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B1",
+              "reference": "B9",
               "locator": "Probabilistic forecasts",
               "lab_event": "XT22",
               "exact": "The precision of the probabilistic forecasts will be evaluated using the Scaled Pinball Loss (SPL) function",
@@ -2840,14 +2066,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "quantile forecasts in the M5 uncertainty competition"
-      },
-      "limitations": [
-        "L5",
-        "L6"
-      ]
+      }
     },
     {
       "id": "C49",
@@ -2859,33 +2078,16 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
-      "novelty": "synthesis",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B18"
-        }
-      ],
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
         "lab_event": "H56",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "prediction intervals in the M4 competition"
-      },
-      "ext": {
-        "review": {
-          "kind": "summary"
-        }
-      },
-      "limitations": [
-        "L5",
-        "L6"
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C50",
@@ -2897,13 +2099,13 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B5",
+          "reference": "B13",
           "locator": "Section 3.1 (Comparisons of two classifiers)"
         }
       ],
@@ -2917,7 +2119,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B5",
+              "reference": "B13",
               "locator": "Section 3.1 (Comparisons of two classifiers)",
               "lab_event": "XT23",
               "exact": "Averages are also susceptible to outliers",
@@ -2930,13 +2132,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "comparisons of methods over many data sets"
-      },
-      "limitations": [
-        "L5"
-      ]
+      }
     },
     {
       "id": "C51",
@@ -2950,18 +2146,18 @@
           "many data sets"
         ]
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
       "novelty": "synthesis",
       "support": [
         {
           "kind": "cited",
-          "reference": "B5",
+          "reference": "B13",
           "locator": "Section 3.2.2 (Friedman test)"
         },
         {
           "kind": "cited",
-          "reference": "B5",
+          "reference": "B13",
           "locator": "Section 5 (Conclusion)"
         }
       ],
@@ -2975,7 +2171,7 @@
         "review": {
           "extracts": [
             {
-              "reference": "B5",
+              "reference": "B13",
               "locator": "Section 3.2.2 (Friedman test)",
               "lab_event": "XT24",
               "exact": "It ranks the algorithms for each data set separately",
@@ -2986,7 +2182,7 @@
               "artefact": "A4"
             },
             {
-              "reference": "B5",
+              "reference": "B13",
               "locator": "Section 3.2.2 (Friedman test)",
               "lab_event": "XT25",
               "exact": "The Nemenyi test",
@@ -2997,7 +2193,7 @@
               "artefact": "A4"
             },
             {
-              "reference": "B5",
+              "reference": "B13",
               "locator": "Section 5 (Conclusion)",
               "lab_event": "XT26",
               "exact": "They are appropriate since they assume some, but limited commensurability",
@@ -3010,13 +2206,7 @@
           ],
           "kind": "summary"
         }
-      },
-      "scope": {
-        "data_type": "comparisons of several methods over many data sets"
-      },
-      "limitations": [
-        "L5"
-      ]
+      }
     },
     {
       "id": "C52",
@@ -3028,33 +2218,16 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
-      "novelty": "synthesis",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B15"
-        }
-      ],
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
         "lab_event": "H59",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "comparisons of the methods of the M3 competition"
-      },
-      "ext": {
-        "review": {
-          "kind": "summary"
-        }
-      },
-      "limitations": [
-        "L5",
-        "L6"
-      ]
+      "planning": "exploratory"
     },
     {
       "id": "C53",
@@ -3066,33 +2239,16 @@
         "comparator": null,
         "conditions": []
       },
-      "type": "methodological",
+      "type": "descriptive",
       "role": "supporting",
-      "novelty": "synthesis",
-      "support": [
-        {
-          "kind": "cited",
-          "reference": "B16"
-        }
-      ],
+      "novelty": "no_prior_found",
+      "support": [],
       "provenance": "author_stated",
       "hypothesis": {
         "lab_event": "H60",
         "outcome": "supported"
       },
-      "planning": "exploratory",
-      "scope": {
-        "data_type": "two forecasts of one series"
-      },
-      "ext": {
-        "review": {
-          "kind": "summary"
-        }
-      },
-      "limitations": [
-        "L5",
-        "L6"
-      ]
+      "planning": "exploratory"
     }
   ],
   "evidence": [],
@@ -3341,142 +2497,7 @@
       "text": "Interval scores of series on different scales cannot be compared unscaled; dividing each series' interval score by a positive quantity of that series that does not depend on the forecasts keeps it proper, as the mean scaled interval score of the M4 competition does."
     }
   ],
-  "limitations": [
-    {
-      "id": "L1",
-      "category": "data_quality",
-      "statement": "These claims rest only on works checked by their abstracts and bibliographic records (Brier 1950, Hand 2009: lab notes NT7 and NT8); a full text could qualify what the abstract states.",
-      "affects": [
-        "C42",
-        "C17"
-      ],
-      "impact": "could_reverse",
-      "mitigation": "none"
-    },
-    {
-      "id": "L2",
-      "category": "data_quality",
-      "statement": "Part of the support of these claims comes from a work checked only by its abstract (Brier 1950, lab note NT7); the rest comes from works read in full.",
-      "affects": [
-        "C38"
-      ],
-      "impact": "reduces_precision",
-      "mitigation": "none"
-    },
-    {
-      "id": "L3",
-      "category": "measurement",
-      "statement": "Section and theorem numbers for Gneiting 2011, Gneiting and Raftery 2007, Gneiting, Balabdaoui and Raftery 2007 and Hyndman and Koehler 2006 were read in their preprints or authors' copies (arXiv:0912.0902 and the authors' web pages), whose numbering may differ from the published versions.",
-      "affects": [
-        "C29",
-        "C30",
-        "C31",
-        "C32",
-        "C33",
-        "C34",
-        "C35",
-        "C36",
-        "C37",
-        "C38",
-        "C39",
-        "C44",
-        "C46"
-      ],
-      "impact": "reduces_precision",
-      "mitigation": "none"
-    },
-    {
-      "id": "L4",
-      "category": "other",
-      "statement": "No cited work states this recommendation or its reason; it rests on an argument from the definition of accuracy (its warrant), with the properness of the Brier and log scores as premises.",
-      "affects": [
-        "C16"
-      ],
-      "impact": "could_reverse",
-      "mitigation": "none"
-    },
-    {
-      "id": "L5",
-      "category": "researcher_position",
-      "statement": "The claims restate EntryLib's study-planning guide on prediction, drafted by an agent of the same system that checked them here, and were stated before the works were read; the works were read to confirm what the guide states, and no search was run for work that disagrees with it.",
-      "affects": [
-        "C1",
-        "C2",
-        "C3",
-        "C4",
-        "C5",
-        "C6",
-        "C7",
-        "C8",
-        "C9",
-        "C10",
-        "C11",
-        "C12",
-        "C13",
-        "C14",
-        "C15",
-        "C16",
-        "C17",
-        "C18",
-        "C19",
-        "C20",
-        "C21",
-        "C22",
-        "C23",
-        "C24",
-        "C25",
-        "C26",
-        "C27",
-        "C28",
-        "C29",
-        "C30",
-        "C31",
-        "C32",
-        "C33",
-        "C34",
-        "C35",
-        "C36",
-        "C37",
-        "C38",
-        "C39",
-        "C40",
-        "C41",
-        "C42",
-        "C43",
-        "C44",
-        "C45",
-        "C46",
-        "C47",
-        "C48",
-        "C49",
-        "C50",
-        "C51",
-        "C52",
-        "C53"
-      ],
-      "impact": "could_bias_magnitude",
-      "mitigation": "none"
-    },
-    {
-      "id": "L6",
-      "category": "data_quality",
-      "statement": "These claims rest in part on works read in full by the guarantor, not by the agent that wrote the claimset (lab note NT14); no passage of those works is quoted, so a reader checks these claims against the works themselves.",
-      "affects": [
-        "C30",
-        "C33",
-        "C40",
-        "C41",
-        "C45",
-        "C47",
-        "C48",
-        "C49",
-        "C52",
-        "C53"
-      ],
-      "impact": "reduces_precision",
-      "mitigation": "none"
-    }
-  ],
+  "limitations": [],
   "artefacts": [
     {
       "id": "A1",
@@ -3489,7 +2510,7 @@
         "reason": "legal",
         "content_hash": "sha256:6b6cc2f0fd3daa1da42506f42f05fe88425880b2806f864ceaab85fc606ab5c9"
       },
-      "reference": "B2"
+      "reference": "B10"
     },
     {
       "id": "A2",
@@ -3502,7 +2523,7 @@
         "reason": "legal",
         "content_hash": "sha256:d31a0c5f0ae8fec1a0a6544db5d056645b2d7296d71b44a2e8efb293c7d87ba2"
       },
-      "reference": "B3"
+      "reference": "B11"
     },
     {
       "id": "A3",
@@ -3515,7 +2536,7 @@
         "reason": "legal",
         "content_hash": "sha256:5ca1dc51db5fc619ed757bf1b79f3601408d579373c43d6dc06d601d51b271ea"
       },
-      "reference": "B4"
+      "reference": "B12"
     },
     {
       "id": "A4",
@@ -3528,7 +2549,32 @@
         "reason": "legal",
         "content_hash": "sha256:aa5fa1c71338d0d380e7a97e3503ce486d4e5798069647a8d39f57a1f99a7c8c"
       },
+      "reference": "B13"
+    },
+    {
+      "id": "A5",
+      "kind": "data",
+      "version": "sha256:9b9e01c88e4a74d1bdd2f06d3ed69fc3432bcb4581e1f3725c81807680aaf4b1",
+      "description": "Automatic time series forecasting: the forecast package for R (Hyndman and Khandakar 2008, JSS 27(3), doi:10.18637/jss.v027.i03) (application/pdf), saved by hand on 2026-11-13; recorded in the lab record as SR5 on 2026-11-13. venue: Journal of Statistical Software. Written by others.",
+      "uri": "lab/sources/SR5/hyndman-khandakar2008.pdf",
+      "availability": {
+        "level": "public"
+      },
+      "licence": "CC-BY-3.0",
       "reference": "B5"
+    },
+    {
+      "id": "A6",
+      "kind": "data",
+      "version": "sha256:c404cc808c095e513a03ca77f648c48224991ddb7b0101e7d75eb689a31145bc",
+      "description": "Forecasting: principles and practice, 2nd edition, section 3.2 Transformations and adjustments (Hyndman and Athanasopoulos 2018) (text/html), saved by hand on 2026-11-13; recorded in the lab record as SR6 on 2026-11-13. venue: OTexts. Written by others.",
+      "uri": "https://otexts.com/fpp2/transformations.html",
+      "availability": {
+        "level": "author_only",
+        "reason": "legal",
+        "content_hash": "sha256:c404cc808c095e513a03ca77f648c48224991ddb7b0101e7d75eb689a31145bc"
+      },
+      "reference": "B6"
     },
     {
       "id": "A7",
@@ -3541,7 +2587,7 @@
         "reason": "legal",
         "content_hash": "sha256:b86b2d78457b62195faa87e2071beb3cacea2d6cb413c296dab746b00bb90a80"
       },
-      "reference": "B6"
+      "reference": "B14"
     },
     {
       "id": "A8",
@@ -3552,8 +2598,8 @@
       "availability": {
         "level": "public"
       },
-      "reference": "B7",
-      "licence": "CC-BY-4.0"
+      "licence": "CC-BY-4.0",
+      "reference": "B15"
     },
     {
       "id": "A9",
@@ -3566,23 +2612,32 @@
         "reason": "legal",
         "content_hash": "sha256:f2650a2dbfb14d2c7d4482bda66c129ce5eec9341a76b76a833219559bf17109"
       },
-      "reference": "B1"
+      "reference": "B9"
     },
     {
       "id": "A10",
       "kind": "lab_record",
-      "uri": "https://github.com/entrylib/study-planning/blob/a7830a16616262997c341c7e8c96bf8c7b4765d0/lab/lab.jsonl",
+      "uri": "https://github.com/entrylib/study-planning/blob/e43ae03cfe4eea092b9db970501e1059acdfe198/lab/lab.jsonl",
       "version": "sha256:80799913b6759e1ce1201351e05780390a7ef6b831e17b97dcaa13b575d9a695",
       "availability": {
         "level": "public"
       },
-      "description": "Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-13; exported with claimset 0.43.0).",
-      "licence": "CC-BY-4.0"
+      "description": "Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-13; exported with claimset 0.43.0)."
     }
   ],
   "references": [
     {
-      "id": "B1",
+      "id": "B5",
+      "target": "https://www.jstatsoft.org/article/download/v027i03/255",
+      "id_type": "url"
+    },
+    {
+      "id": "B6",
+      "target": "https://otexts.com/fpp2/transformations.html",
+      "id_type": "url"
+    },
+    {
+      "id": "B9",
       "target": "https://github.com/Mcompetitions/M5-methods/blob/master/M5-Competitors-Guide.pdf",
       "id_type": "url",
       "ext": {
@@ -3596,7 +2651,7 @@
       }
     },
     {
-      "id": "B2",
+      "id": "B10",
       "target": "10.1198/jasa.2011.r10138",
       "id_type": "doi",
       "ext": {
@@ -3610,7 +2665,7 @@
       }
     },
     {
-      "id": "B3",
+      "id": "B11",
       "target": "10.1198/016214506000001437",
       "id_type": "doi",
       "ext": {
@@ -3624,7 +2679,7 @@
       }
     },
     {
-      "id": "B4",
+      "id": "B12",
       "target": "10.1111/j.1467-9868.2007.00587.x",
       "id_type": "doi",
       "ext": {
@@ -3638,7 +2693,7 @@
       }
     },
     {
-      "id": "B5",
+      "id": "B13",
       "target": "https://jmlr.org/papers/v7/demsar06a.html",
       "id_type": "url",
       "ext": {
@@ -3652,7 +2707,7 @@
       }
     },
     {
-      "id": "B6",
+      "id": "B14",
       "target": "10.1016/j.ijforecast.2006.03.001",
       "id_type": "doi",
       "ext": {
@@ -3666,7 +2721,7 @@
       }
     },
     {
-      "id": "B7",
+      "id": "B15",
       "target": "10.1371/journal.pone.0118432",
       "id_type": "doi",
       "ext": {
@@ -3680,7 +2735,7 @@
       }
     },
     {
-      "id": "B8",
+      "id": "B16",
       "target": "10.1016/j.ijforecast.2019.02.017",
       "id_type": "doi",
       "ext": {
@@ -3692,7 +2747,7 @@
       }
     },
     {
-      "id": "B9",
+      "id": "B17",
       "target": "10.1016/j.ijforecast.2021.11.013",
       "id_type": "doi",
       "ext": {
@@ -3704,7 +2759,7 @@
       }
     },
     {
-      "id": "B10",
+      "id": "B18",
       "target": "10.1016/j.ijforecast.2021.10.009",
       "id_type": "doi",
       "ext": {
@@ -3716,7 +2771,7 @@
       }
     },
     {
-      "id": "B11",
+      "id": "B19",
       "target": "10.1016/S0169-2070(99)00007-2",
       "id_type": "doi",
       "ext": {
@@ -3728,7 +2783,7 @@
       }
     },
     {
-      "id": "B12",
+      "id": "B20",
       "target": "10.1016/j.ijforecast.2015.12.004",
       "id_type": "doi",
       "ext": {
@@ -3740,7 +2795,7 @@
       }
     },
     {
-      "id": "B13",
+      "id": "B21",
       "target": "10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2",
       "id_type": "doi",
       "ext": {
@@ -3753,7 +2808,7 @@
       }
     },
     {
-      "id": "B14",
+      "id": "B22",
       "target": "10.1007/s10994-009-5119-5",
       "id_type": "doi",
       "ext": {
@@ -3766,7 +2821,7 @@
       }
     },
     {
-      "id": "B15",
+      "id": "B23",
       "target": "10.1016/j.ijforecast.2004.10.003",
       "id_type": "doi",
       "ext": {
@@ -3778,7 +2833,7 @@
       }
     },
     {
-      "id": "B16",
+      "id": "B24",
       "target": "10.1080/07350015.1995.10524599",
       "id_type": "doi",
       "ext": {
@@ -3790,7 +2845,7 @@
       }
     },
     {
-      "id": "B17",
+      "id": "B25",
       "target": "10.1016/j.ijforecast.2022.08.003",
       "id_type": "doi",
       "ext": {
@@ -3802,7 +2857,7 @@
       }
     },
     {
-      "id": "B18",
+      "id": "B26",
       "target": "10.1016/j.ijforecast.2019.04.014",
       "id_type": "doi",
       "ext": {
