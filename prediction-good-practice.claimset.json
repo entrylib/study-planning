@@ -75,7 +75,7 @@
       }
     },
     "licence": "CC-BY-4.0",
-    "summary": "How should a study measure and compare predictions? This review states what the methodological literature establishes and the rules it draws from it. A measure has to match what a prediction targets: squared error (RMSE) for forecasts of the mean, absolute error (MAE) for the median, the pinball loss for a quantile, the interval score with coverage for intervals, and a proper scoring rule for distributions and class probabilities. MAPE rewards forecasts that are too low, sMAPE forecasts that are too high, and AUC and accuracy do not judge probabilities. Errors of series on different scales should be scaled per series before they are averaged, never summed as they are. The mean, median and quartiles of a scaled measure summarise accuracy over many series, and rank tests tell whether similar methods differ.",
+    "summary": "How should a study measure and compare predictions? This review states what the methodological literature establishes and the rules it draws from it. A measure has to match what a prediction targets: squared error (RMSE) for forecasts of the mean, absolute error (MAE) for the median, the pinball loss for a quantile, the interval score with coverage for intervals, CRPS or the log score for distributions, and log loss or the Brier score for class probabilities. MAPE rewards forecasts that are too low, sMAPE prefers forecasts that are too high, and AUC and accuracy do not judge probabilities. Errors of series on different scales should be scaled per series before they are averaged, never summed as they are. The mean, median and quartiles of a scaled measure summarise accuracy over many series; rank-based tests (Friedman with Nemenyi, MCB) and the Diebold-Mariano test tell whether similar methods differ statistically.",
     "classification": {
       "keywords": [
         "forecast evaluation",
@@ -91,9 +91,9 @@
     },
     "highlights": [
       "C1",
-      "C2",
+      "C26",
       "C5",
-      "C26"
+      "C12"
     ]
   },
   "contributors": [
