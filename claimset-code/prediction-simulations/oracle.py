@@ -56,21 +56,29 @@ def grid(kind, t):
     return np.round(np.arange(0.0, top + 1e-9, STEP_ABS), 6), STEP_ABS
 
 
+TIE = 1e-9                                               # scores within this relative distance of the lowest tie
+
+
 def select(fn, y, f, step, kind, tries=20):
     """The candidate with the lowest score, extending the grid (by its own step) whenever the choice lands on an
     edge: the upper edge always, the lower edge down to zero (forecasts are not negative; for counts zero is the
-    floor). Returns (choice, whether it is still on an edge after the extensions)."""
+    floor). When several candidates tie for the lowest score (MAE is flat between the two middle observations of an
+    even sample), the midpoint of the tied ones is taken: for MAE, the usual sample median. Returns (choice, whether it
+    is still on an edge after the extensions)."""
     for _ in range(tries):
-        k = int(np.argmin(fn(y, f)))
+        s = fn(y, f)
+        low = s.min()
+        tied = np.flatnonzero(s <= low + TIE * max(abs(low), 1e-300))
+        lo, hi = int(tied[0]), int(tied[-1])
         lower_open = f[0] > 0 and kind == "continuous"
-        if k == f.size - 1:
+        if hi == f.size - 1:
             f = np.concatenate([f, f[-1] + step * np.arange(1, f.size + 1)])
-        elif k == 0 and lower_open:
+        elif lo == 0 and lower_open:
             new = f[0] - step * np.arange(f.size, 0, -1)
             f = np.concatenate([new[new > 0], f])
         else:
-            return float(f[k]), False
-    return float(f[k]), True
+            return float((f[lo] + f[hi]) / 2), False
+    return float((f[lo] + f[hi]) / 2), True
 
 
 def z_for(k, alpha=0.01):
