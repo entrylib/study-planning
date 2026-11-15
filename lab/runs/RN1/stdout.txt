@@ -1,0 +1,28 @@
+normal sd=1: done
+normal sd=5: done
+normal sd=10: done
+normal sd=15: done
+Laplace sd=1: done
+Laplace sd=2.5: done
+Laplace sd=5: done
+Laplace sd=7.5: done
+lognormal s=0.1: done
+lognormal s=0.25: done
+lognormal s=0.5: done
+lognormal s=1.0: done
+log-Laplace b=0.25: done
+log-Laplace b=0.5: done
+gamma shape=2: done
+gamma shape=5: done
+gamma shape=20: done
+normal with symmetric outliers: done
+normal with upward spikes: done
+Poisson lambda=1.5: done
+Poisson lambda=3.5: done
+Poisson lambda=10.0: done
+intermittent negative binomial mean=0.3: done
+intermittent negative binomial mean=0.5: done
+intermittent negative binomial mean=0.6: done
+intermittent Poisson lambda=0.3: done
+intermittent Poisson lambda=0.5: done
+intermittent Poisson lambda=0.65: done
