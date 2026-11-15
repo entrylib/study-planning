@@ -1,97 +1,92 @@
-"""Figures of the selection shares: one PNG per setting, one panel per measure.
+"""Figures of the choices: one PNG per outcome distribution, one panel per measure.
 
-Continuous settings: the share of test sets choosing each candidate, against the candidate's quantile level, one line
-per test-set size, with a short tick at the top for the mean quantile level of the choices (their central tendency)
-and a dashed line at the measure's preferred candidate. Counts: grouped bars, one group per candidate value."""
+In each panel, one violin per test-set size n shows the distribution, over test sets, of the candidate the measure
+ranks first: its quantile level for continuous outcomes, its value for counts. A boxplot inside each violin marks the
+median, the quartiles and the 5th and 95th percentiles. Horizontal lines mark every measure's preferred candidate (the
+lowest expected score): the panel's own as a dashed line, the other measures' as dotted lines, each labelled at the
+right, so that the gaps between the targets can be read against the spread of the choices."""
 import csv
 import json
 import os
 import re
 
 import matplotlib
+import numpy as np
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-SIZES = (10, 100, 1000, 100000)                       # the ordinal ramp passes the palette checks for four steps
-RAMP = ("#86b6ef", "#3987e5", "#1c5cab", "#0d366b")   # one hue, light to dark: small to large test sets
+FILL, EDGE = "#3987e5", "#1c5cab"                    # one series: one hue (the reference palette's blue)
 INK, MUTED, GRID, SURFACE = "#0b0b0b", "#6b6a66", "#e6e5e1", "#fcfcfb"
+SHORT = {"RMSE": "RMSE", "MAE": "MAE", "MAPE": "MAPE", "sMAPE": "sMAPE"}
 
 
-def _read(out):
-    rows = list(csv.DictReader(open(os.path.join(out, "selection_shares.csv"))))
-    res = json.load(open(os.environ.get("CLAIMSET_RESULTS") or os.path.join(out, "results.json")))
-    return rows, res
+def _samples(rows, scale):
+    """The choices over test sets, rebuilt from the shares (each share times the number of test sets is a count)."""
+    out = []
+    for r in rows:
+        k = int(round(float(r["share"]) * int(r["test sets"])))
+        out += [float(r[scale])] * k
+    return np.array(out)
 
 
 def main(out):
-    rows, res = _read(out)
-    pref = {(r["conditions"]["setting"], r["conditions"]["measure"]): r["value"] for r in res
-            if r["variable"] == "quantile level of the preferred candidate"}
-    prefv = {(r["conditions"]["setting"], r["conditions"]["measure"]): r["value"] for r in res
-             if r["variable"] == "value of the preferred candidate"}
-    central = {}
-    for r in res:
-        c = r["conditions"]
-        count = c.get("setting", "").startswith(("Poisson", "intermittent"))
-        want = "mean value of the chosen candidates" if count else "mean quantile level of the chosen candidates"
-        if r["variable"] == want:
-            central[(c["setting"], c["measure"], c["test-set size"])] = r["value"]
+    rows = list(csv.DictReader(open(os.path.join(out, "selection_shares.csv"))))
+    res = json.load(open(os.environ.get("CLAIMSET_RESULTS") or os.path.join(out, "results.json")))
     os.makedirs(os.path.join(out, "figures"), exist_ok=True)
     for setting in dict.fromkeys(r["setting"] for r in rows):
         count = setting.startswith(("Poisson", "intermittent"))
-        measures = list(dict.fromkeys(r["measure"] for r in rows if r["setting"] == setting))
-        fig, axes = plt.subplots(1, len(measures), figsize=(3.4 * len(measures), 3.0), sharey=True, facecolor=SURFACE)
-        for ax, m in zip(axes, measures):
+        scale = "value" if count else "quantile level"
+        var = "value of the preferred candidate" if count else "quantile level of the preferred candidate"
+        targets = {r["conditions"]["measure"]: r["value"] for r in res
+                   if r["variable"] == var and r["conditions"]["setting"] == setting}
+        sub = [r for r in rows if r["setting"] == setting]
+        measures = list(dict.fromkeys(r["measure"] for r in sub))
+        sizes = sorted({int(r["test-set size"]) for r in sub})
+        fig, axes = plt.subplots(len(measures), 1, figsize=(10, 2.3 * len(measures)), sharex=True, facecolor=SURFACE)
+        for ax, m in zip(np.atleast_1d(axes), measures):
             ax.set_facecolor(SURFACE)
-            sub = [r for r in rows if r["setting"] == setting and r["measure"] == m]
-            if count:
-                values = sorted({float(r["value"]) for r in sub})
-                width = 0.8 / len(SIZES)
-                for j, (n, col) in enumerate(zip(SIZES, RAMP)):
-                    share = {float(r["value"]): float(r["share"]) for r in sub if int(r["test-set size"]) == n}
-                    ax.bar([i + (j - 1.5) * width for i in range(len(values))], [share.get(v, 0) for v in values],
-                           width=width * 0.9, color=col, label=f"n = {n:,}")
-                ax.set_xticks(range(len(values)), [f"{v:g}" if v == int(v) else f"{v:.2f}" for v in values],
-                              fontsize=7, rotation=0)
-                p = prefv.get((setting, m))
-                if p is not None and p in values:
-                    ax.axvline(values.index(p), color=MUTED, lw=1, ls="--")
-                ax.set_xlabel("candidate value", fontsize=8, color=INK)
-            else:
-                for n, col in zip(SIZES, RAMP):
-                    pts = sorted((float(r["quantile level"]), float(r["share"])) for r in sub if int(r["test-set size"]) == n)
-                    if not pts:
-                        continue
-                    xs, ys, acc = [0.0], [0.0], 0.0             # cumulative share: a step at each chosen candidate
-                    for x, y in pts:
-                        xs += [x, x]
-                        ys += [acc, acc + y]
-                        acc += y
-                    xs.append(1.0)
-                    ys.append(acc)
-                    ax.plot(xs, ys, color=col, lw=2, label=f"n = {n:,}")
-                    c = central.get((setting, m, n))
-                    if c is not None:
-                        ax.plot([c, c], [1.0, 0.94], color=col, lw=2, transform=ax.get_xaxis_transform(), clip_on=False)
-                p = pref.get((setting, m))
-                if p is not None:
-                    ax.axvline(p, color=MUTED, lw=1, ls="--")
-                ax.set_xlim(0, 1)
-                ax.set_xlabel("quantile level of the chosen candidate", fontsize=8, color=INK)
-            ax.set_title(m, fontsize=9, color=INK)
+            data = [_samples([r for r in sub if r["measure"] == m and int(r["test-set size"]) == n], scale) for n in sizes]
+            pos = np.arange(len(sizes))
+            spread = [i for i, d in enumerate(data) if d.size and np.ptp(d) > 0]
+            if spread:
+                vp = ax.violinplot([data[i] for i in spread], positions=pos[spread], widths=0.85,
+                                   showextrema=False, bw_method=0.08 if count else 0.3)   # counts: bulges at values
+                for b in vp["bodies"]:
+                    b.set_facecolor(FILL)
+                    b.set_edgecolor(EDGE)
+                    b.set_linewidth(0.8)
+                    b.set_alpha(0.35)
+            ax.boxplot(data, positions=pos, widths=0.18, whis=(5, 95), showfliers=False, patch_artist=True,
+                       boxprops=dict(facecolor=SURFACE, edgecolor=INK, linewidth=0.9),
+                       medianprops=dict(color=INK, linewidth=1.6), whiskerprops=dict(color=INK, linewidth=0.9),
+                       capprops=dict(color=INK, linewidth=0.9))
+            lines = []                                    # targets closer than this share one labelled line
+            close = 1e-6 if count else 0.005
+            for o, v in sorted(targets.items(), key=lambda t: t[1]):
+                if lines and v - lines[-1][0] <= close:
+                    lines[-1][1].append(o)
+                else:
+                    lines.append([v, [o]])
+            for v, names in lines:
+                own = m in names
+                ax.axhline(v, color=INK if own else MUTED, lw=1.1 if own else 0.9, ls="--" if own else ":", zorder=0)
+                ax.text(1.005, v, " / ".join(SHORT[o] for o in names), transform=ax.get_yaxis_transform(),
+                        fontsize=7, color=INK if own else MUTED, va="center", ha="left")
+            ax.set_title(f"{m}: candidate ranked first in each test set", fontsize=9, color=INK, loc="left")
+            ax.set_ylabel("value" if count else "quantile level", fontsize=8, color=INK)
+            if not count:
+                ax.set_ylim(0, 1)
             ax.grid(axis="y", color=GRID, lw=0.6)
             ax.tick_params(colors=MUTED, labelsize=7)
             for s in ax.spines.values():
                 s.set_visible(False)
-        axes[0].set_ylabel("share of test sets choosing it" if count else
-                           "share of test sets choosing\na candidate at or below this level", fontsize=8, color=INK)
-        handles, labels = axes[0].get_legend_handles_labels()
-        fig.legend(handles, labels, fontsize=7, frameon=False, loc="center right")
-        fig.suptitle(f"{setting}: which candidate each measure ranks first" +
-                     ("; dashed: the preferred candidate" if count else
-                      "; ticks: mean level of the choices; dashed: the preferred candidate"), fontsize=9, color=INK)
-        fig.tight_layout(rect=(0, 0, 0.9, 1))
+        last = np.atleast_1d(axes)[-1]
+        last.set_xticks(np.arange(len(sizes)), [f"{n:,}" for n in sizes])
+        last.set_xlabel("test-set size n (outcomes per test set)", fontsize=8, color=INK)
+        fig.suptitle(f"{setting}: dashed, the panel's own preferred candidate; dotted, the other measures' "
+                     "(lowest expected score)", fontsize=9, color=INK)
+        fig.tight_layout(rect=(0, 0, 0.94, 1))
         fig.savefig(os.path.join(out, "figures", re.sub(r"[^A-Za-z0-9.=-]+", "_", setting) + ".png"), dpi=150)
         plt.close(fig)
 

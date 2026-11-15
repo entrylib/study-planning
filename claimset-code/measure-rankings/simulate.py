@@ -8,13 +8,17 @@ choice (a tie between k candidates counts 1/k for each). No forecast is estimate
 
 Outputs (in the run's directory when run under the lab, else in --out):
   results.json         per setting and measure: the preferred candidate (value, quantile level); per setting, measure
-                       and n: the mean value and mean quantile level of the chosen candidates with 99% intervals, and
-                       the share of test sets choosing the preferred candidate with its 99% Wilson interval
+                       and n: the 5th, 25th, 50th, 75th and 95th percentiles of the chosen candidates' quantile levels
+                       (continuous) or values (counts) over test sets; their mean with its 99% interval; the share of
+                       test sets choosing the preferred candidate; and the share of test sets whose choice lies nearer
+                       the measure's own preferred candidate than any other measure's preferred candidate (on the
+                       quantile-level scale for continuous outcomes, the value scale for counts), each share with its
+                       99% Wilson interval
   candidates.csv       every candidate: labels, value, quantile level, expected score under each measure
   selection_shares.csv per setting, measure and n: the share of test sets choosing each candidate (non-zero shares)
   figures/*.png        one figure per setting (plot.py)
 
-    python3 simulate.py --seed 1 --ref-seed 1001 --sizes 10 30 50 100 500 1000 100000 --reps-small 1000 --reps-large 200
+    python3 simulate.py --seed 1 --ref-seed 1001 --reps-small 1000 --reps-large 200
 """
 import argparse
 import csv
@@ -46,8 +50,14 @@ def choose(scores):
     return tied / tied.sum()
 
 
+SIZES = [6, 8, 12, 13, 14, 18, 24, 36, 48, 100, 250, 500, 1000, 10_000, 100_000]
+PERCENTILES = (5, 25, 50, 75, 95)
+
+
 def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_large):
     measures = [m for m in MEASURES if not (kind == "count" and m == "MAPE")]
+    scale = cand.level if kind == "continuous" else cand.values      # where "nearer" is measured
+    target = {m: float(scale[cand.preferred[m]]) for m in measures}
     results, shares = [], []
     for m in measures:
         i = cand.preferred[m]
@@ -75,21 +85,31 @@ def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_la
                 chosen_level[m][r] = w @ cand.level
         for m in measures:
             cond = {"setting": name, "measure": m, "test-set size": n}
-            stats = [("mean value of the chosen candidates", chosen_value[m])]
-            if kind == "continuous":                    # on counts many levels share one value: the value only
-                stats.append(("mean quantile level of the chosen candidates", chosen_level[m]))
-            for var, x in stats:
-                mu, se = float(x.mean()), float(x.std(ddof=1)) / math.sqrt(reps)
-                results.append({"variable": var, "value": mu,
-                                "interval": {"level": 0.99, "lower": mu - Z99 * se, "upper": mu + Z99 * se},
-                                "conditions": cond})
+            # on counts many levels share one value: the value only
+            what = "quantile level" if kind == "continuous" else "value"
+            x = chosen_level[m] if kind == "continuous" else chosen_value[m]
+            mu, se = float(x.mean()), float(x.std(ddof=1)) / math.sqrt(reps)
+            results.append({"variable": f"mean {what} of the chosen candidates", "value": mu,
+                            "interval": {"level": 0.99, "lower": mu - Z99 * se, "upper": mu + Z99 * se},
+                            "conditions": cond})
+            for p, v in zip(PERCENTILES, np.percentile(x, PERCENTILES)):
+                results.append({"variable": f"percentile of the chosen candidates' {what}s", "value": float(v),
+                                "conditions": {**cond, "percentile": p}})
             k = float(tally[m][cand.preferred[m]])
             lo, hi = wilson(k, reps)
             results.append({"variable": "share of test sets choosing the preferred candidate", "value": k / reps,
                             "interval": {"level": 0.99, "lower": lo, "upper": hi}, "conditions": cond})
+            others = [target[o] for o in measures if o != m and abs(target[o] - target[m]) > 1e-9]
+            if others:                                  # nearer its own target than any other measure's target
+                own = np.abs(x - target[m])
+                near = int(np.sum(own < np.min(np.abs(x[:, None] - np.array(others)[None, :]), axis=1)))
+                lo, hi = wilson(near, reps)
+                results.append({"variable": "share of test sets whose choice is nearer the measure's own preferred "
+                                            "candidate than any other measure's", "value": near / reps,
+                                "interval": {"level": 0.99, "lower": lo, "upper": hi}, "conditions": cond})
             for i in np.flatnonzero(tally[m]):
                 shares.append([name, m, n, " = ".join(cand.labels[i]), float(cand.values[i]), float(cand.level[i]),
-                               float(tally[m][i]) / reps])
+                               float(tally[m][i]) / reps, reps])
     if kind == "continuous":
         results.append({"variable": "outcomes at or below zero", "value": nonpositive, "conditions": {"setting": name}})
     return results, shares
@@ -99,7 +119,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--ref-seed", type=int, default=1001, help="seed of the reference samples of continuous settings")
-    ap.add_argument("--sizes", type=int, nargs="+", default=[10, 30, 50, 100, 500, 1000, 100_000])
+    ap.add_argument("--sizes", type=int, nargs="+", default=SIZES)
     ap.add_argument("--reps-small", type=int, default=1000)
     ap.add_argument("--reps-large", type=int, default=200)
     ap.add_argument("--only", nargs="*", help="run only the settings whose names start with these")
@@ -133,7 +153,7 @@ def main():
         w.writerows(cands)
     with open(os.path.join(out, "selection_shares.csv"), "w", newline="") as fh:
         w = csv.writer(fh)
-        w.writerow(["setting", "measure", "test-set size", "candidate", "value", "quantile level", "share"])
+        w.writerow(["setting", "measure", "test-set size", "candidate", "value", "quantile level", "share", "test sets"])
         w.writerows(shares)
     path = os.environ.get("CLAIMSET_RESULTS") or os.path.join(out, "results.json")
     with open(path, "w") as fh:
