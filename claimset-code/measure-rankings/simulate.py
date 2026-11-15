@@ -10,10 +10,7 @@ Outputs (in the run's directory when run under the lab, else in --out):
   results.json         per setting and measure: the preferred candidate (value, quantile level); per setting, measure
                        and n: the 5th, 25th, 50th, 75th and 95th percentiles of the chosen candidates' quantile levels
                        (continuous) or values (counts) over test sets; their mean with its 99% interval; the share of
-                       test sets choosing the preferred candidate; and the share of test sets whose choice lies nearer
-                       the measure's own preferred candidate than any other measure's preferred candidate (on the
-                       quantile-level scale for continuous outcomes, the value scale for counts), each share with its
-                       99% Wilson interval
+                       test sets choosing the preferred candidate, with its 99% Wilson interval
   candidates.csv       every candidate: labels, value, quantile level, expected score under each measure
   selection_shares.csv per setting, measure and n: the share of test sets choosing each candidate (non-zero shares)
   figures/*.png        one figure per setting (plot.py)
@@ -56,8 +53,6 @@ PERCENTILES = (5, 25, 50, 75, 95)
 
 def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_large):
     measures = [m for m in MEASURES if not (kind == "count" and m == "MAPE")]
-    scale = cand.level if kind == "continuous" else cand.values      # where "nearer" is measured
-    target = {m: float(scale[cand.preferred[m]]) for m in measures}
     results, shares = [], []
     for m in measures:
         i = cand.preferred[m]
@@ -99,14 +94,6 @@ def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_la
             lo, hi = wilson(k, reps)
             results.append({"variable": "share of test sets choosing the preferred candidate", "value": k / reps,
                             "interval": {"level": 0.99, "lower": lo, "upper": hi}, "conditions": cond})
-            others = [target[o] for o in measures if o != m and abs(target[o] - target[m]) > 1e-9]
-            if others:                                  # nearer its own target than any other measure's target
-                own = np.abs(x - target[m])
-                near = int(np.sum(own < np.min(np.abs(x[:, None] - np.array(others)[None, :]), axis=1)))
-                lo, hi = wilson(near, reps)
-                results.append({"variable": "share of test sets whose choice is nearer the measure's own preferred "
-                                            "candidate than any other measure's", "value": near / reps,
-                                "interval": {"level": 0.99, "lower": lo, "upper": hi}, "conditions": cond})
             for i in np.flatnonzero(tally[m]):
                 shares.append([name, m, n, " = ".join(cand.labels[i]), float(cand.values[i]), float(cand.level[i]),
                                float(tally[m][i]) / reps, reps])
