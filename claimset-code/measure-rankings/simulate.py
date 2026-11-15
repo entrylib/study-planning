@@ -15,7 +15,7 @@ Outputs (in the run's directory when run under the lab, else in --out):
   selection_shares.csv per setting, measure and n: the share of test sets choosing each candidate (non-zero shares)
   figures/*.png        one figure per setting (plot.py)
 
-    python3 simulate.py --seed 1 --ref-seed 1001 --reps-small 1000 --reps-large 200
+    python3 simulate.py --seed 1 --ref-seed 1001 --reps-small 1000
 """
 import argparse
 import csv
@@ -47,7 +47,7 @@ def choose(scores):
     return tied / tied.sum()
 
 
-SIZES = [6, 8, 12, 13, 14, 18, 24, 36, 48, 100, 250, 500, 1000, 10_000, 100_000]
+SIZES = [6, 8, 12, 13, 14, 18, 24, 36, 48, 100, 250, 500, 1000, 10_000]
 PERCENTILES = (5, 25, 50, 75, 95)
 
 
