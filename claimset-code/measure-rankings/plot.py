@@ -2,7 +2,8 @@
 
 In each panel, one violin per test-set size n shows the distribution, over test sets, of the candidate the measure
 ranks first: its quantile level for continuous outcomes, its value for counts. A boxplot inside each violin marks the
-median, the quartiles and the 5th and 95th percentiles. Horizontal lines mark every measure's preferred candidate (the
+median, the quartiles and the 5th and 95th percentiles, and a diamond the mean of the choices. A candidate that is not a
+quantile (the mean, a minimiser) is placed at its own quantile level, the share of the distribution at or below it. Horizontal lines mark every measure's preferred candidate (the
 lowest expected score): the panel's own as a dashed line, the other measures' as dotted lines, each labelled at the
 right, so that the gaps between the targets can be read against the spread of the choices."""
 import csv
@@ -58,6 +59,7 @@ def main(out):
                     b.set_linewidth(0.8)
                     b.set_alpha(0.35)
             ax.boxplot(data, positions=pos, widths=0.18, whis=(5, 95), showfliers=False, patch_artist=True,
+                       showmeans=True, meanprops=dict(marker="D", markersize=4, markerfacecolor=INK, markeredgecolor=INK),
                        boxprops=dict(facecolor=SURFACE, edgecolor=INK, linewidth=0.9),
                        medianprops=dict(color=INK, linewidth=1.6), whiskerprops=dict(color=INK, linewidth=0.9),
                        capprops=dict(color=INK, linewidth=0.9))
@@ -68,10 +70,17 @@ def main(out):
                     lines[-1][1].append(o)
                 else:
                     lines.append([v, [o]])
-            for v, names in lines:
+            if not count:
+                ax.set_ylim(0, 1)
+            lo, hi = ax.get_ylim()
+            spots = []                                    # label heights in axes fraction, at least GAP apart
+            for v, _ in lines:
+                y = (v - lo) / (hi - lo)
+                spots.append(max(y, spots[-1] + 0.09) if spots else y)
+            for (v, names), y in zip(lines, spots):
                 own = m in names
                 ax.axhline(v, color=INK if own else MUTED, lw=1.1 if own else 0.9, ls="--" if own else ":", zorder=0)
-                ax.text(1.005, v, " / ".join(SHORT[o] for o in names), transform=ax.get_yaxis_transform(),
+                ax.text(1.005, y, " / ".join(SHORT[o] for o in names), transform=ax.transAxes,
                         fontsize=7, color=INK if own else MUTED, va="center", ha="left")
             ax.set_title(f"{m}: candidate ranked first in each test set", fontsize=9, color=INK, loc="left")
             ax.set_ylabel("value" if count else "quantile level", fontsize=8, color=INK)

@@ -1,5 +1,5 @@
 """The outcome distributions. Continuous ones are positive (the supervisor's decision DC3): normal and Laplace sit at a
-level of 100 with standard deviation 5, twenty standard deviations above zero; the outlier settings keep their outliers
+level of 100 with standard deviations 1 to 15 (normal) and 1 to 7.5 (Laplace); the outlier settings keep their outliers
 at least six standard deviations above zero. Counts may be zero; MAPE is not computed on them."""
 import math
 
@@ -18,8 +18,10 @@ def _spikes(g, n):
 
 def continuous():
     """(name, sampler(g, n)) for the continuous settings."""
-    out = [("normal", lambda g, n: g.normal(100.0, 5.0, n)),
-           ("Laplace", lambda g, n: g.laplace(100.0, 5.0 / math.sqrt(2), n))]
+    # level 100; the standard deviation sets the coefficient of variation. Laplace stops at 7.5: its exponential tail
+    # puts a share 0.5 exp(-sqrt(2) / CV) of outcomes at or below zero (3e-9 at CV 0.075, 4e-7 at 0.1)
+    out = [(f"normal sd={sd:g}", lambda g, n, sd=sd: g.normal(100.0, sd, n)) for sd in (1, 5, 10, 15)]
+    out += [(f"Laplace sd={sd:g}", lambda g, n, sd=sd: g.laplace(100.0, sd / math.sqrt(2), n)) for sd in (1, 2.5, 5, 7.5)]
     for s in (0.1, 0.25, 0.5, 1.0):
         out.append((f"lognormal s={s}", lambda g, n, s=s: g.lognormal(math.log(100.0), s, n)))
     for b in (0.25, 0.5):
