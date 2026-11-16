@@ -10,7 +10,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 INK, MUTED, GRID, SURFACE = "#0b0b0b", "#6b6a66", "#e6e5e1", "#fcfcfb"
-MEASURE = {"sMAPE": "#1c5cab", "MAE": "#c2571a", "log-MAE": "#2f7d4f"}
+MEASURE = {"sMAPE": "#1c5cab", "MAE": "#c2571a", "RMSE": "#2f7d4f", "MAPE": "#8a5cc2"}
 FAMILY = {"lognormal": "#1c5cab", "log-Gumbel right": "#c2571a", "log-Gumbel left": "#2f7d4f"}
 
 
@@ -88,22 +88,24 @@ def main(out):
     fig.savefig(os.path.join(fig_dir, "flatness_expected_sMAPE.png"), dpi=150)
     plt.close(fig)
 
-    # 3. relative excess of forecasts away from the target
+    # 3. relative excess of forecasts away from each measure's target
+    offsets = (-1.0, -0.5, 0.5, 1.0)
     fig, axes = plt.subplots(1, 4, figsize=(13, 3.4), sharey=True, facecolor=SURFACE)
-    for ax, tau in zip(axes, (0.1, 0.25, 0.75, 0.9)):
+    for ax, k in zip(axes, offsets):
         _style(ax)
         for m, col in MEASURE.items():
             pts = _series(res, "excess expected score over the target, relative", "lognormal", measure=m,
-                          **{"quantile level of the forecast": tau})
+                          **{"offset in sigma": k})
+            pts = [p for p in pts if p[1] > 0]
             if pts:
                 ax.plot([p[0] for p in pts], [p[1] for p in pts], color=col, marker="o", ms=3, lw=1.4, label=m)
         ax.set_xscale("log")
         ax.set_yscale("log")
-        ax.set_title(f"forecast at quantile level {tau:g}", fontsize=8, color=INK, loc="left")
+        ax.set_title(f"forecast = target x exp({k:+g} sigma)", fontsize=8, color=INK, loc="left")
         ax.set_xlabel("sigma of ln y", fontsize=8, color=INK)
     axes[0].set_ylabel("excess expected score / score at the target", fontsize=8, color=INK)
     axes[-1].legend(fontsize=7, frameon=False)
-    fig.suptitle("Lognormal outcomes: how much worse a forecast away from the target scores, by measure", fontsize=9,
+    fig.suptitle("Lognormal outcomes: how much worse a forecast away from each measure's target scores", fontsize=9,
                  color=INK)
     fig.tight_layout()
     fig.savefig(os.path.join(fig_dir, "flatness_sensitivity.png"), dpi=150)
@@ -114,24 +116,26 @@ def main(out):
     if sizes:
         fig, axes = plt.subplots(2, len(sizes), figsize=(3.3 * len(sizes), 5.6), sharex=True, sharey=True,
                                  facecolor=SURFACE)
-        for row, tau in enumerate((0.25, 0.75)):
+        for row, k in enumerate((-0.5, 0.5)):
             for col_i, n in enumerate(sizes):
                 ax = axes[row, col_i]
                 _style(ax)
                 for m, col in MEASURE.items():
                     pts = _series(res, "ranking agreement", "lognormal", measure=m,
-                                  **{"test-set size": n, "quantile level of the forecast": tau})
+                                  **{"test-set size": n, "offset in sigma": k})
+                    if not pts:
+                        continue
                     s_, v, lo, hi = map(np.array, zip(*pts))
                     ax.fill_between(s_, lo, hi, color=col, alpha=0.18, lw=0)
                     ax.plot(s_, v, color=col, lw=1.4, marker="o", ms=2.5, label=m)
                 ax.axhline(0.5, color=MUTED, ls=":", lw=0.9)
                 ax.set_xscale("log")
-                ax.set_ylim(0.4, 1.0)
-                ax.set_title(f"n={n}, median vs quantile {tau:g}", fontsize=8, color=INK, loc="left")
+                ax.set_ylim(0, 1.0)
+                ax.set_title(f"n={n}, target vs target x exp({k:+g} sigma)", fontsize=8, color=INK, loc="left")
         axes[0, -1].legend(fontsize=7, frameon=False, loc="lower left")
         fig.supxlabel("sigma of ln y (lognormal outcomes)", fontsize=8, color=INK)
-        fig.supylabel("share of test sets scoring the median lower", fontsize=8, color=INK)
-        fig.suptitle("Ranking agreement: whether a test set prefers the target to a forecast away from it "
+        fig.supylabel("share of test sets scoring the target lower", fontsize=8, color=INK)
+        fig.suptitle("Ranking agreement: whether a test set prefers a measure's target to a forecast away from it "
                      "(99% intervals; 0.5 is chance)", fontsize=9, color=INK)
         fig.tight_layout()
         fig.savefig(os.path.join(fig_dir, "flatness_agreement.png"), dpi=150)

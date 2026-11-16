@@ -51,10 +51,4 @@ def smape(t, f, chunk=16):
     return out
 
 
-def log_mae(t, f):
-    """100 mean |ln y - ln f| (positive outcomes and forecasts): the small-error limit of sMAPE (H9), unbounded."""
-    lf = np.log(np.asarray(f, dtype=float))
-    return 100 * np.abs(np.log(t.y)[None, :] - lf[:, None]).mean(axis=1)
-
-
 MEASURES = {"RMSE": mse, "MAE": mae, "MAPE": mape, "sMAPE": smape}

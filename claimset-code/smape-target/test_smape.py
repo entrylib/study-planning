@@ -10,7 +10,7 @@ import numpy as np
 import dists
 import minimiser
 import theory
-from measures import MEASURES, TestSet, log_mae
+from measures import MEASURES, TestSet
 
 
 def brute(name, y, f):
@@ -36,10 +36,6 @@ class TestMeasures(unittest.TestCase):
                     self.assertTrue(np.all(np.isinf(fn(t, f))))
                     continue
                 np.testing.assert_allclose(fn(t, f), brute(m, y, f), rtol=1e-9, atol=1e-9, err_msg=m)
-
-    def test_log_mae(self):
-        y = np.array([50.0, 100.0, 400.0])
-        np.testing.assert_allclose(log_mae(TestSet(y), np.array([100.0])), [100 * (math.log(2) + math.log(4)) / 3])
 
 
 class TestMinimiser(unittest.TestCase):
