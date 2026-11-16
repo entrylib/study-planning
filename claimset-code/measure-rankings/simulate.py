@@ -1,0 +1,183 @@
+"""Which fixed candidate forecast does each error measure rank first, in the limit and in test sets of n outcomes?
+
+For each outcome distribution (settings.py) the candidates are fixed first (reference.py): the quantiles at levels
+0.01 to 0.99, the mean, and the minimisers of the expected MAPE and sMAPE. Their expected scores give each measure's
+preferred candidate. Then, for each test-set size n and each of R replications, a test set of n outcomes is drawn,
+every candidate is scored by every measure, and the candidate with the lowest score is counted as that measure's
+choice (a tie between k candidates counts 1/k for each). No forecast is estimated from a test set.
+
+Outputs (in the run's directory when run under the lab, else in --out):
+  results.json         per setting and measure: the preferred candidate (value, quantile level); per setting, measure
+                       and n: the 5th, 25th, 50th, 75th and 95th percentiles of the chosen candidates' quantile levels
+                       (continuous) or values (counts) over test sets; their mean with its 99% interval; the share of
+                       test sets choosing the preferred candidate, with its 99% Wilson interval
+  candidates.csv       every candidate: labels, value, quantile level, expected score under each measure
+  selection_shares.csv per setting, measure and n: the share of test sets choosing each candidate (non-zero shares)
+  figures/*.png        one figure per setting (plot.py)
+
+    python3 simulate.py --seed 1 --ref-seed 1001 --reps-small 1000
+"""
+import argparse
+import csv
+import json
+import math
+import os
+
+import numpy as np
+
+import reference
+import settings
+from measures import MEASURES, TestSet
+
+Z99 = 2.5758293035489004
+TIE = 1e-10
+
+
+def wilson(k, n, z=Z99):
+    p = k / n
+    c = (p + z * z / (2 * n)) / (1 + z * z / n)
+    h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / (1 + z * z / n)
+    return max(0.0, c - h), min(1.0, c + h)
+
+
+def choose(scores):
+    """Weights of the chosen candidates: 1 for the lowest score, 1/k each for a tie of k; None when every score is
+    infinite (MAPE on a test set holding a zero outcome), so that no candidate is chosen."""
+    low = scores.min()
+    if not np.isfinite(low):
+        return None
+    tied = scores <= low + TIE * max(abs(low), 1e-300)
+    return tied / tied.sum()
+
+
+SIZES = [6, 8, 12, 13, 14, 18, 24, 36, 48, 100, 250, 500, 1000, 10_000]
+PERCENTILES = (5, 25, 50, 75, 95)
+
+
+def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_large):
+    measures = [m for m in MEASURES if not (kind == "count" and m == "MAPE")]
+    results, shares = [], []
+    for m in measures:
+        cond = {"setting": name, "measure": m}
+        if m not in cand.preferred:                     # every candidate's expected score is infinite
+            results.append({"variable": "candidates whose expected score is infinite",
+                            "value": int(np.sum(~np.isfinite(cand.expected[m]))), "conditions": cond})
+            continue
+        i = cand.preferred[m]
+        e = cand.expected[m]                             # candidates are in increasing order of value
+        inner = [j for j in range(1, e.size - 1) if e[j] < e[j - 1] and e[j] < e[j + 1]]
+        ends = ([0] if e.size > 1 and e[0] < e[1] else []) + ([e.size - 1] if e.size > 1 and e[-1] < e[-2] else [])
+        for rank, j in enumerate(sorted(inner + ends, key=lambda j: e[j]), 1):
+            results.append({"variable": "value of a local minimum of the expected score", "value": float(cand.values[j]),
+                            "conditions": {**cond, "rank": rank, "expected score": float(e[j])}})
+        results += [{"variable": "value of the preferred candidate", "value": float(cand.values[i]),
+                     "conditions": {**cond, "candidate": " = ".join(cand.labels[i])}},
+                    {"variable": "quantile level of the preferred candidate", "value": float(cand.level[i]),
+                     "conditions": {**cond, "candidate": " = ".join(cand.labels[i])}}]
+    nonpositive = 0
+    for n in sizes:
+        reps = reps_large if n >= 100_000 else reps_small
+        g = np.random.default_rng([seed, idx, n])
+        tally = {m: np.zeros(cand.values.size) for m in measures}
+        chosen_value = {m: np.empty(reps) for m in measures}
+        chosen_level = {m: np.empty(reps) for m in measures}
+        infinite = {m: 0 for m in measures}
+        for r in range(reps):
+            y = sampler(g, n)
+            if kind == "continuous":
+                nonpositive += int(np.sum(y <= 0))
+            t = TestSet(y)
+            for m in measures:
+                w = choose(MEASURES[m](t, cand.values))
+                if w is None:
+                    infinite[m] += 1
+                    chosen_value[m][r] = chosen_level[m][r] = np.nan
+                    continue
+                tally[m] += w
+                chosen_value[m][r] = w @ cand.values
+                chosen_level[m][r] = w @ cand.level
+        for m in measures:
+            cond = {"setting": name, "measure": m, "test-set size": n}
+            # on counts many levels share one value: the value only
+            what = "quantile level" if kind == "continuous" else "value"
+            x = chosen_level[m] if kind == "continuous" else chosen_value[m]
+            if infinite[m]:
+                results.append({"variable": "test sets in which every candidate's score is infinite",
+                                "value": infinite[m], "conditions": cond})
+            x = x[np.isfinite(x)]
+            if x.size < 2:
+                continue
+            mu, se = float(x.mean()), float(x.std(ddof=1)) / math.sqrt(x.size)
+            results.append({"variable": f"mean {what} of the chosen candidates", "value": mu,
+                            "interval": {"level": 0.99, "lower": mu - Z99 * se, "upper": mu + Z99 * se},
+                            "conditions": cond})
+            for p, v in zip(PERCENTILES, np.percentile(x, PERCENTILES)):
+                results.append({"variable": f"percentile of the chosen candidates' {what}s", "value": float(v),
+                                "conditions": {**cond, "percentile": p}})
+            if m in cand.preferred:
+                k = float(tally[m][cand.preferred[m]])
+                lo, hi = wilson(k, reps)
+                results.append({"variable": "share of test sets choosing the preferred candidate", "value": k / reps,
+                                "interval": {"level": 0.99, "lower": lo, "upper": hi}, "conditions": cond})
+            for i in np.flatnonzero(tally[m]):
+                shares.append([name, m, n, " = ".join(cand.labels[i]), float(cand.values[i]), float(cand.level[i]),
+                               float(tally[m][i]) / reps, reps])
+    if kind == "continuous":
+        results.append({"variable": "outcomes at or below zero", "value": nonpositive, "conditions": {"setting": name}})
+    return results, shares
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--ref-seed", type=int, default=1001, help="seed of the reference samples of continuous settings")
+    ap.add_argument("--sizes", type=int, nargs="+", default=SIZES)
+    ap.add_argument("--reps-small", type=int, default=1000)
+    ap.add_argument("--reps-large", type=int, default=200)
+    ap.add_argument("--only", nargs="*", help="run only the settings whose names start with these")
+    ap.add_argument("--set", choices=("first", "second"), default="first",
+                    help="first: the settings of plan PL1; second: those of the second plan (settings.second())")
+    ap.add_argument("--out", default=".")
+    a = ap.parse_args()
+    out = os.environ.get("CLAIMSET_RUN_DIR", a.out)
+    if a.set == "first":
+        all_settings = [(name, "continuous", s, None, {}) for name, s in settings.continuous()] + \
+                       [(name, "count", s, pmf, {}) for name, s, pmf in settings.counts()]
+    else:
+        all_settings = [(name, "continuous", s, None, flags) for name, s, flags in settings.second()]
+    results, shares, cands = [], [], []
+    for idx, (name, kind, sampler, pmf, flags) in enumerate(all_settings):
+        if a.only and not name.startswith(tuple(a.only)):
+            continue
+        if kind == "continuous":
+            cand, _ = reference.continuous(sampler, [a.ref_seed, idx], flags.get("mape_infinite", False))
+        else:
+            cand = reference.counts(pmf)
+        results += [{"variable": "mean of the outcome distribution", "value": cand.mean, "conditions": {"setting": name}},
+                    {"variable": "median of the outcome distribution", "value": cand.median, "conditions": {"setting": name}}]
+        if cand.zero_share is not None:
+            results.append({"variable": "share of zero outcomes", "value": cand.zero_share, "conditions": {"setting": name}})
+        for i in range(cand.values.size):
+            cands.append([name, " = ".join(cand.labels[i]), float(cand.values[i]), float(cand.level[i])]
+                         + [float(cand.expected[m][i]) if m in cand.expected else "" for m in MEASURES])
+        r, sh = one_setting(idx, name, kind, cand, sampler, a.seed, a.sizes, a.reps_small, a.reps_large)
+        results += r
+        shares += sh
+        print(f"{name}: done", flush=True)
+    with open(os.path.join(out, "candidates.csv"), "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["setting", "candidate", "value", "quantile level"] + [f"expected {m}" for m in MEASURES])
+        w.writerows(cands)
+    with open(os.path.join(out, "selection_shares.csv"), "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["setting", "measure", "test-set size", "candidate", "value", "quantile level", "share", "test sets"])
+        w.writerows(shares)
+    path = os.environ.get("CLAIMSET_RESULTS") or os.path.join(out, "results.json")
+    with open(path, "w") as fh:
+        json.dump(results, fh)
+    import plot
+    plot.main(out)
+
+
+if __name__ == "__main__":
+    main()

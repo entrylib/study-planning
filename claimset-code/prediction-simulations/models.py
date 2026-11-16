@@ -73,7 +73,7 @@ def fit_forecast(x):
     return mean, sd ** 2, float(m.model_["par"][0])
 
 
-def run(seed, series, sizes, noises=NOISES):
+def run(seed, series, sizes, noises=NOISES, per_size=False):
     results, diffs = [], {"MSE": [], "MAE": []}
     for family in noises:
         for j, s in enumerate((0.25, 0.5)):
@@ -98,7 +98,7 @@ def run(seed, series, sizes, noises=NOISES):
                                       ("MAE", "scaled MAE of the median forecast minus that of the mean forecast", d_mae)):
                     d = np.asarray(d)
                     mu, se = float(d.mean()), float(d.std(ddof=1)) / math.sqrt(d.size)
-                    diffs[key].append((mu, se))
+                    diffs[key].append((mu, se, size))
                     results.append({"variable": label, "value": mu,
                                     "interval": {"level": 0.99, "lower": mu - Z99 * se, "upper": mu + Z99 * se},
                                     "conditions": cond})
@@ -109,14 +109,18 @@ def run(seed, series, sizes, noises=NOISES):
                             {"variable": "series whose alpha is at a bound (below 0.001 or above 0.999)",
                              "value": int(np.sum((a < 0.001) | (a > 0.999))), "conditions": cond}]
     for key, hyp in (("MSE", "RMSE ranks the mean forecast first"), ("MAE", "MAE ranks the median forecast first")):
-        rows = diffs[key]
-        z = z_for(len(rows))
-        below = sum(mu + z * se < 0 for mu, se in rows)
-        above = sum(mu - z * se > 0 for mu, se in rows)
-        for label, v in (("intervals", len(rows)), ("intervals that lie below zero", below),
-                         ("intervals that lie above zero", above), ("intervals that reach zero", len(rows) - below - above),
-                         ("Bonferroni z", z)):
-            results.append({"variable": label, "value": v, "conditions": {"hypothesis": hyp}})
+        # per hypothesis, or with per_size per hypothesis and in-sample size, each at the Bonferroni level for its
+        # own number of intervals
+        groups = ([(n, [r for r in diffs[key] if r[2] == n]) for n in sizes] if per_size else [(None, diffs[key])])
+        for n, rows in groups:
+            z = z_for(len(rows))
+            below = sum(mu + z * se < 0 for mu, se, _ in rows)
+            above = sum(mu - z * se > 0 for mu, se, _ in rows)
+            cond = {"hypothesis": hyp} if n is None else {"hypothesis": hyp, "in-sample size": n}
+            for label, v in (("intervals", len(rows)), ("intervals that lie below zero", below),
+                             ("intervals that lie above zero", above),
+                             ("intervals that reach zero", len(rows) - below - above), ("Bonferroni z", z)):
+                results.append({"variable": label, "value": v, "conditions": cond})
     return results
 
 
@@ -138,8 +142,9 @@ def main():
     ap.add_argument("--series", type=int, default=2000)
     ap.add_argument("--sizes", type=int, nargs="+", default=[10, 30, 50, 100, 500, 1000])
     ap.add_argument("--noises", nargs="+", choices=NOISES, default=list(NOISES))
+    ap.add_argument("--per-size", action="store_true", help="count intervals per hypothesis and in-sample size")
     a = ap.parse_args()
-    results = run(a.seed, a.series, a.sizes, a.noises)
+    results = run(a.seed, a.series, a.sizes, a.noises, a.per_size)
     path = os.environ.get("CLAIMSET_RESULTS")
     if path:
         with open(path, "w") as fh:

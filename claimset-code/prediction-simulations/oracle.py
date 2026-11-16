@@ -56,21 +56,29 @@ def grid(kind, t):
     return np.round(np.arange(0.0, top + 1e-9, STEP_ABS), 6), STEP_ABS
 
 
+TIE = 1e-9                                               # scores within this relative distance of the lowest tie
+
+
 def select(fn, y, f, step, kind, tries=20):
     """The candidate with the lowest score, extending the grid (by its own step) whenever the choice lands on an
     edge: the upper edge always, the lower edge down to zero (forecasts are not negative; for counts zero is the
-    floor). Returns (choice, whether it is still on an edge after the extensions)."""
+    floor). When several candidates tie for the lowest score (MAE is flat between the two middle observations of an
+    even sample), the midpoint of the tied ones is taken: for MAE, the usual sample median. Returns (choice, whether it
+    is still on an edge after the extensions)."""
     for _ in range(tries):
-        k = int(np.argmin(fn(y, f)))
+        s = fn(y, f)
+        low = s.min()
+        tied = np.flatnonzero(s <= low + TIE * max(abs(low), 1e-300))
+        lo, hi = int(tied[0]), int(tied[-1])
         lower_open = f[0] > 0 and kind == "continuous"
-        if k == f.size - 1:
+        if hi == f.size - 1:
             f = np.concatenate([f, f[-1] + step * np.arange(1, f.size + 1)])
-        elif k == 0 and lower_open:
+        elif lo == 0 and lower_open:
             new = f[0] - step * np.arange(f.size, 0, -1)
             f = np.concatenate([new[new > 0], f])
         else:
-            return float(f[k]), False
-    return float(f[k]), True
+            return float((f[lo] + f[hi]) / 2), False
+    return float((f[lo] + f[hi]) / 2), True
 
 
 def z_for(k, alpha=0.01):
@@ -83,7 +91,7 @@ def z_for(k, alpha=0.01):
     return (lo + hi) / 2
 
 
-def run(seed, sizes, reps_small, reps_large, large=100_000):
+def run(seed, sizes, reps_small, reps_large, per_size=False, large=100_000):
     results, per = [], {}
     for name, _kind, t, _draw in settings():
         results += [{"variable": "mean of the outcome distribution", "value": t["mean"], "conditions": {"setting": name}},
@@ -92,7 +100,7 @@ def run(seed, sizes, reps_small, reps_large, large=100_000):
     for n in sizes:
         reps = reps_large if n >= large else reps_small
         results += one_size(seed, n, reps, per)
-    results += summaries(per)
+    results += summaries(per, per_size)
     return results
 
 
@@ -150,19 +158,29 @@ def side(p, target, z):
     return 0
 
 
-def summaries(per):
-    """Per hypothesis: how many settings fall on each side of its target."""
+def summaries(per, per_size=False):
+    """Per hypothesis: how many intervals fall on each side of its target. With per_size, per hypothesis and test-set
+    size, each size at the Bonferroni level for its own number of intervals (its settings)."""
     out = []
 
+    def groups(keys):
+        sizes = sorted({k[-1] for k in keys})
+        return [(n, [k for k in keys if k[-1] == n]) for n in sizes] if per_size else [(None, list(keys))]
+
+    def cond(hyp, n):
+        return {"hypothesis": hyp} if n is None else {"hypothesis": hyp, "test-set size": n}
+
     def count(hyp, measure, kinds, target, names=None):
-        rows = [p for k, p in per.items() if len(k) == 3 and k[0] != "H3" and k[1] == measure and p["kind"] in kinds
+        keys = [k for k, p in per.items() if len(k) == 3 and k[0] != "H3" and k[1] == measure and p["kind"] in kinds
                 and (names is None or p["name"].startswith(names))]
-        z = z_for(len(rows))
-        sides = [side(p, p["t"][target], z) for p in rows]
-        for label, v in (("intervals", len(sides)), ("intervals that reach the target", sides.count(0)),
-                         ("intervals that lie below the target", sides.count(-1)),
-                         ("intervals that lie above the target", sides.count(1)), ("Bonferroni z", z)):
-            out.append({"variable": label, "value": v, "conditions": {"hypothesis": hyp}})
+        for n, ks in groups(keys):
+            rows = [per[k] for k in ks]
+            z = z_for(len(rows))
+            sides = [side(p, p["t"][target], z) for p in rows]
+            for label, v in (("intervals", len(sides)), ("intervals that reach the target", sides.count(0)),
+                             ("intervals that lie below the target", sides.count(-1)),
+                             ("intervals that lie above the target", sides.count(1)), ("Bonferroni z", z)):
+                out.append({"variable": label, "value": v, "conditions": cond(hyp, n)})
 
     allkinds = ("continuous", "count", "intermittent")
     count("RMSE selects the mean", "RMSE", allkinds, "mean")
@@ -173,13 +191,14 @@ def summaries(per):
     count("sMAPE selects above the median", "sMAPE", ("continuous",), "median", skewed)
     count("MAE selects zero", "MAE", ("intermittent",), "median")
     count("sMAPE selects zero", "sMAPE", ("intermittent",), "median")
-    rows = [p for k, p in per.items() if k[0] == "H3"]
-    z = z_for(len(rows))
-    reach = sum(p["mean"] - z * p["se"] - p["step"] <= 0 <= p["mean"] + z * p["se"] + p["step"] for p in rows)
     hyp = "RMSE and MAE select the same on symmetric outcomes"
-    out += [{"variable": "intervals", "value": len(rows), "conditions": {"hypothesis": hyp}},
-            {"variable": "intervals that reach the target", "value": int(reach), "conditions": {"hypothesis": hyp}},
-            {"variable": "Bonferroni z", "value": z, "conditions": {"hypothesis": hyp}}]
+    for n, ks in groups([k for k in per if k[0] == "H3"]):
+        rows = [per[k] for k in ks]
+        z = z_for(len(rows))
+        reach = sum(p["mean"] - z * p["se"] - p["step"] <= 0 <= p["mean"] + z * p["se"] + p["step"] for p in rows)
+        out += [{"variable": "intervals", "value": len(rows), "conditions": cond(hyp, n)},
+                {"variable": "intervals that reach the target", "value": int(reach), "conditions": cond(hyp, n)},
+                {"variable": "Bonferroni z", "value": z, "conditions": cond(hyp, n)}]
     return out
 
 
@@ -189,8 +208,9 @@ def main():
     ap.add_argument("--sizes", type=int, nargs="+", default=[10, 30, 50, 100, 500, 1000, 100_000])
     ap.add_argument("--reps-small", type=int, default=1000, help="replications for test sets under 100,000")
     ap.add_argument("--reps-large", type=int, default=200, help="replications for test sets of 100,000 or more")
+    ap.add_argument("--per-size", action="store_true", help="count intervals per hypothesis and test-set size")
     a = ap.parse_args()
-    results = run(a.seed, a.sizes, a.reps_small, a.reps_large)
+    results = run(a.seed, a.sizes, a.reps_small, a.reps_large, a.per_size)
     path = os.environ.get("CLAIMSET_RESULTS")
     if path:
         with open(path, "w") as fh:
