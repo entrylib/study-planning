@@ -149144,7 +149144,7 @@
     {
       "id": "A2",
       "kind": "lab_record",
-      "uri": "https://github.com/entrylib/study-planning/blob/3588861153eb275f0093d16c922bf23dfdcab604/lab/lab.jsonl",
+      "uri": "https://github.com/entrylib/study-planning/blob/b272fb72497d4240d24e7151d8db00abe82acfd0/lab/lab.jsonl",
       "version": "sha256:9002b217868b901ee158a56b67f8c075de9fcb948443e7e610d4c0695bd856fb",
       "availability": {
         "level": "public"
