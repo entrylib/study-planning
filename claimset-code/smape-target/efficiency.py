@@ -55,6 +55,7 @@ def main():
             {"variable": "large-sample n Var of ln(sample median)", "value": v_m, "conditions": cond},
             {"variable": "large-sample n Var of ln(sMAPE minimiser)", "value": v_s, "conditions": cond},
             {"variable": "asymptotic relative efficiency", "value": v_m / v_s, "conditions": cond},
+            {"variable": "quadrature mass of the density", "value": T.mass, "conditions": cond},
             {"variable": "quantile level of the sMAPE target", "value": float(T.level(np.array([math.exp(T.minima_plus[0][0])]))[0]),
              "conditions": cond},
         ]

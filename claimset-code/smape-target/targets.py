@@ -99,6 +99,7 @@ def derived(d, T, cand, smape_minima, mape_min):
         res += [{"variable": "derived local minimum of expected sMAPE", "value": float(f), "conditions": c},
                 {"variable": "quantile level of a derived local minimum of expected sMAPE", "value": lv, "conditions": c},
                 {"variable": "expected sMAPE at a derived local minimum", "value": float(v), "conditions": c}]
+    res.append({"variable": "quadrature mass of the density", "value": T.mass, "conditions": cond})
     if d.kind != "straddling":
         D, tau1 = T.one_step()
         res += [{"variable": "pull from above minus pull from below at the median", "value": D, "conditions": cond},

@@ -121,6 +121,7 @@ class PositiveTheory:
         self.d = d
         self.p0 = d.p0
         self.grid = gr = Grid(d)
+        self.mass = gr.mass                           # the density's integral over the support: 1 up to truncation
         self.S_plus = gr.smape_all()                  # expected sMAPE on the positive part, at every grid point
         # only the central part of the grid is searched: there the FFT result is accurate and minima can lie
         inner = (gr.cdf > 1e-6) & (gr.cdf < 1 - 1e-6)
@@ -268,7 +269,8 @@ class StraddlingTheory:
         self.y = np.linspace(lo, hi, n)
         self.w = _trapz_weights(n, self.y[1] - self.y[0])
         self.gw = d.pdf_y(self.y) * self.w
-        self.gw /= self.gw.sum()
+        self.mass = float(self.gw.sum())
+        self.gw /= self.mass
         self.cdf = np.cumsum(self.gw)
 
     def smape_at(self, f):

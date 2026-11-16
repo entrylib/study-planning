@@ -61,7 +61,8 @@ def distribution_side(d, T, cond):
             {"variable": "expected sMAPE at the target", "value": s_t, "conditions": cond},
             {"variable": "large-spread approximation of expected sMAPE at the target",
              "value": float(T.flat_approximation(c_t)), "conditions": cond},
-            {"variable": "local minima of expected sMAPE", "value": len(T.minima_plus), "conditions": cond}]
+            {"variable": "local minima of expected sMAPE", "value": len(T.minima_plus), "conditions": cond},
+            {"variable": "quadrature mass of the density", "value": T.mass, "conditions": cond}]
     median = float(T.quantiles([0.5])[0])
     f = T.quantiles(np.array(TAUS))
     exp = T.expected(np.concatenate([[target, median], f]))
