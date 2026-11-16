@@ -96,16 +96,15 @@ forecast has the lowest expected sMAPE.
 
 **Proof.**
 
-1. By the triangle inequality, $|y - f| \le |y| + |f|$, so $s \le 1$. And $s \ge 0$. The expectation of a quantity
-   between 0 and 1 is between 0 and 1, so the expected sMAPE is between 0 and 200. No moment of the actuals is needed.
-2. Write $\mathrm E[s(Y,f)]$ for the expected contribution, the expectation over the random actual $Y$. For a positive
-   actual $y$, $s(y,f)$ approaches 1 as $f$ approaches 0 or grows without bound: by H1, $r = y/f$ then grows without
-   bound or approaches 0. And $s(y,f)$ is below 1 for every positive $f$ (H3).
-3. The same holds for $\mathrm E[s(Y,f)]$. It also changes continuously with $f$. These properties pass from $s$ to its
-   expectation because $s$ is bounded.
-4. A forecast of 0 or a negative forecast scores 1 on every positive actual (H8), the worst value.
-5. So $\mathrm E[s(Y,f)]$ starts near 1 for small $f$, is below 1 in between, and returns towards 1 for large $f$. A
-   continuous function with this shape reaches a lowest value at some $f > 0$.
+1. *Finite.* For positive values, $s = \tanh(|\ln y - \ln f|/2)$ (H3), which lies between 0 and 1. For any signs,
+   $|y - f| \le |y| + |f|$, so again $s \le 1$. A quantity between 0 and 1 has an expectation between 0 and 1, so the
+   expected sMAPE is between 0 and 200, whatever the actuals.
+2. *A best forecast.* Write $\mathrm E[s(Y,f)]$ for the expectation over the random actual $Y$. As $f$ approaches 0 or
+   grows without bound, $|\ln y - \ln f|$ grows for every positive $y$, so $s$ approaches 1 (H3), and so does its
+   expectation. For every positive $f$ it is below 1. It changes continuously with $f$, because $s$ does and is at most 1
+   (bounded convergence). A continuous function that is
+   below 1 in between and returns towards 1 at both ends reaches a lowest value at some $f > 0$. A forecast of 0 or a
+   negative forecast scores 1 on every positive actual (H8), so it is never better.
 
 So the expected sMAPE is always finite, whatever the tails of the actuals. For positive actuals, a forecast with the
 lowest expected sMAPE always exists. ∎
@@ -129,8 +128,13 @@ $y/f$ moves away from 1 in either direction (Figure 1).
 *Where the target lies.* Put the forecast at the median $m$ of $Y$. Compare the total weight of the actuals above $m$
 with that of the actuals below it. Suppose the expected sMAPE has a single local minimum. Then the target lies above the
 median when the actuals above carry more weight. It lies below the median when those below carry more. When the two
-weights are equal, the expected sMAPE is flat at the median: the median is the target if it is a local minimum, but it
-can also be a flat point of inflection, with the target elsewhere.
+weights are equal, the expected sMAPE is flat at the median. The median is then the target if, in addition,
+
+$$2\,g(\ln m) > \mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln Y - \ln m}{2}\Big)\tanh\Big(\frac{|\ln Y - \ln m|}{2}\Big)\Big],$$
+
+where $g$ is the density of $\ln Y$, continuous at $\ln m$. It says that enough actuals lie near the median, relative to
+the pull of those further away. Without this condition the median can be a flat point of inflection, with the target
+elsewhere.
 
 **Proof.**
 
@@ -154,14 +158,25 @@ can also be a flat point of inflection, with the target elsewhere.
    $m$. If the actuals above carry more weight, the derivative is negative: the expected sMAPE is decreasing at the
    median. By step 6, the median then lies before the minimum, so the target is above the median. The case where the
    actuals below carry more weight is the mirror image.
-8. If the two weights are equal, the derivative at the median is 0. A point where the derivative is 0 can be a minimum,
-   but it can also be a flat point of inflection, where expected sMAPE keeps falling on one side and rising on the other.
-   The independent checker built such a case: a mixture whose only minimum lies far below the median. So equal weights
-   alone do not make the median the target.
+8. *The second derivative.* Measure the forecast on the log scale, $c = \ln f$, so that the expected contribution is
+   $\mathrm E[\tanh(|\ln Y - c|/2)]$ (H3). The derivative of $\tanh(|x - c|/2)$ in $c$ is
+   $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$ for $c < x$ and $+\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$
+   for $c > x$: it jumps by 1 at $c = x$. Differentiating again and taking the expectation over $x = \ln Y$, the jumps
+   add the density $g$ of $\ln Y$ at $c$, and elsewhere the second derivative is
+   $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)\tanh\big(\tfrac{|x-c|}{2}\big)$. So the second derivative of
+   the expected contribution is
+   $$g(c) - \tfrac12\,\mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln Y - c}{2}\Big)\tanh\Big(\frac{|\ln Y - c|}{2}\Big)\Big].$$
+9. *The sufficient condition.* If the two weights are equal, the first derivative at the median is 0 (step 3). If, in
+   addition, the stated inequality holds, the second derivative at $c = \ln m$ is positive (step 8), so the median is a
+   strict local minimum. With a single local minimum, it is the target.
+10. Without the inequality, a point where the first derivative is 0 can be a flat point of inflection, where the expected
+    sMAPE keeps falling on one side and rising on the other. The independent checker built such a case: a mixture whose
+    only minimum lies far below the median. So equal weights alone do not make the median the target.
 
 So sMAPE targets a weighted median of the actuals. Each actual is weighted by how close it is to the forecast by ratio.
 The target is above the median when the actuals above the median carry more of this weight, and below it when those
-below carry more. When the two balance, the median is the target only if it is a local minimum. ∎
+below carry more. When the two balance, the median is the target if, in addition, enough actuals lie near it,
+relative to the pull of those further away, as the stated inequality says. ∎
 
 ## H6. When the log of the actual is symmetric, sMAPE targets the median
 
@@ -215,10 +230,8 @@ $\mathrm E[\tanh(|\ln Y - m - c|/2)]$, a function of $c$.
    $\dfrac{\tanh(a/2)}{1 + \tanh^2(a/2)} < \tanh(a/2)$. The mode is better.
 3. The expected $s$ changes continuously as the groups widen from points, because $s$ is bounded and continuous. So the
    mode is still better for narrow groups.
-4. *Why the median is a local maximum.* The derivative of $\tanh(|x - c|/2)$ in $c$ is
-   $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$ for $c < x$ and $+\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$
-   for $c > x$. It jumps by 1 at $c = x$. Differentiate again and take the expectation over $x = \ln Y$. The jumps add the
-   density $g$ of $\ln Y$ at the forecast. So the second derivative at the median is
+4. *Why the median is a local maximum.* By H5, step 8, the second derivative of the expected contribution at the median
+   is
    $$g(m) - \tfrac12\,\mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln Y - m}{2}\Big)\tanh\Big(\frac{|\ln Y - m|}{2}\Big)\Big].$$
 5. By symmetry the first derivative at the median is 0. When the groups narrow, few actuals lie near the median, so
    $g(m)$ tends to 0. Meanwhile the expectation tends to $\operatorname{sech}^2(a/2)\tanh(a/2) > 0$. So the second

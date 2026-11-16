@@ -144,3 +144,14 @@ and possibly a flat inflection; that is what holds, and my counterexample (singl
 at 1) is an instance. Needs Y positive with no atoms, as stated." On H31 it kept CK9, and noted that step 5 relied on a
 bounded density the statement does not assume; the study replaced that reason with the one it suggested
 (P(|μ + ε| < √δ) ≤ P(|ε| < √δ) for a symmetric unimodal ε).
+
+## Stage 5: the sufficient condition (H4.R4) and the shortened proof of H13
+
+At the supervisor's request, record H4 gained a sufficient condition for the median to be the target when the weights
+balance (paper H5, steps 8 and 9), and the proof of paper H4 (record H13) was shortened. The checker recorded **CK13**
+(H4, confirmed, full): "Checked the added sufficient condition against my own derivation and the revised proofs.md
+(paper H5, steps 8 to 10). The second derivative of the expected term in ln f is g(c) - E[sech^2 tanh]/2, as I derived
+independently; zero first derivative plus the stated strict inequality gives a strict local minimum at the median, which
+is the target when there is a single local minimum. The clause needs ln Y to have a density continuous at ln m, as
+stated; my counterexample sits at equality, consistent with it." For H13 it kept CK4, noting that step 2 asserted
+continuity in f without a reason (bounded convergence), which the study then added.
