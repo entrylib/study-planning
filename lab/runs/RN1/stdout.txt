@@ -1,0 +1,34 @@
+inverse Gaussian shape=1000: done
+inverse Gaussian shape=200: done
+inverse Gaussian shape=100: done
+inverse Gaussian shape=50: done
+inverse Gaussian shape=20: done
+inverse Gaussian shape=10: done
+log-skewed left sd=0.5 skew=-2: done
+log-skewed left sd=0.5 skew=-1: done
+log-skewed left sd=0.5 skew=-0.5: done
+log-skewed right sd=0.5 skew=+2: done
+log-skewed right sd=0.5 skew=+1: done
+log-skewed right sd=0.5 skew=+0.5: done
+lognormal sigma=0.5: done
+log-skewed left sd=1 skew=-2: done
+log-skewed left sd=1 skew=-1: done
+log-skewed left sd=1 skew=-0.5: done
+log-skewed right sd=1 skew=+2: done
+log-skewed right sd=1 skew=+1: done
+log-skewed right sd=1 skew=+0.5: done
+lognormal sigma=1: done
+bimodal equal modes: done
+bimodal left mode higher: done
+bimodal right mode higher: done
+normal straddling zero mean=0: done
+normal straddling zero mean=0.5: done
+normal straddling zero mean=1: done
+lognormal sigma=0.5 with zeros p0=0.25: done
+lognormal sigma=0.5 with zeros p0=0.42: done
+lognormal sigma=0.5 with zeros p0=0.47: done
+lognormal sigma=0.5 with zeros p0=0.6: done
+lognormal sigma=1 with zeros p0=0.25: done
+lognormal sigma=1 with zeros p0=0.37: done
+lognormal sigma=1 with zeros p0=0.42: done
+lognormal sigma=1 with zeros p0=0.6: done
