@@ -26,6 +26,7 @@ import os
 import numpy as np
 
 import dists
+import encode
 import minimiser
 import theory
 from measures import MEASURES, TestSet
@@ -138,6 +139,8 @@ def main():
     ap.add_argument("--reps", type=int, default=10000)
     ap.add_argument("--only", nargs="*")
     ap.add_argument("--out", default=".")
+    ap.add_argument("--derived-only", action="store_true",
+                    help="write only the values derived from the distributions, every one a number (encode.py)")
     a = ap.parse_args()
     out = os.environ.get("CLAIMSET_RUN_DIR", a.out)
     results, curves = [], []
@@ -149,10 +152,18 @@ def main():
         r, cv, tg = distribution_side(d, T, cond)
         results += r
         curves += cv
+        if a.derived_only:
+            print(f"{d.name}: derived", flush=True)
+            continue
         if d.family == "lognormal":
             results += agreement(d, tg, np.random.default_rng([a.seed, idx, 1]), a.reps, cond)
         results += minimiser_levels(d, T, np.random.default_rng([a.seed, idx, 2]), a.reps, cond)
         print(f"{d.name}: done", flush=True)
+    if a.derived_only:
+        path = os.environ.get("CLAIMSET_RESULTS") or os.path.join(out, "results.json")
+        with open(path, "w") as fh:
+            json.dump(encode.numeric(results), fh)
+        return
     with open(os.path.join(out, "expected_smape_curves.csv"), "w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["setting", "quantile level of the forecast", "expected sMAPE"])

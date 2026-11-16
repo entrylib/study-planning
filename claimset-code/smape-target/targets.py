@@ -22,6 +22,7 @@ import os
 import numpy as np
 
 import dists
+import encode
 import theory
 from measures import MEASURES, TestSet
 
@@ -175,6 +176,8 @@ def main():
     ap.add_argument("--reps", type=int, default=1000)
     ap.add_argument("--only", nargs="*", help="run only the settings whose names start with these")
     ap.add_argument("--out", default=".")
+    ap.add_argument("--derived-only", action="store_true",
+                    help="write only the values derived from the distributions, every one a number (encode.py)")
     a = ap.parse_args()
     out = os.environ.get("CLAIMSET_RUN_DIR", a.out)
     results, shares, rows = [], [], []
@@ -187,6 +190,9 @@ def main():
         cand = candidates(d, T, sm, mape_min)
         res, exp = derived(d, T, cand, sm, mape_min)
         results += res
+        if a.derived_only:
+            print(f"{d.name}: derived", flush=True)
+            continue
         preferred = {}
         for m in MEASURES:
             key = exp[m][1]
@@ -199,6 +205,11 @@ def main():
         results += r
         shares += sh
         print(f"{d.name}: done", flush=True)
+    if a.derived_only:
+        path = os.environ.get("CLAIMSET_RESULTS") or os.path.join(out, "results.json")
+        with open(path, "w") as fh:
+            json.dump(encode.numeric(results), fh)
+        return
     with open(os.path.join(out, "candidates.csv"), "w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["setting", "candidate", "value", "quantile level"] + [f"expected {m}" for m in MEASURES])
