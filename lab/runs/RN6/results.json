@@ -1,0 +1,466 @@
+[
+ {
+  "variable": "sign of the global minimiser of expected sMAPE",
+  "value": -1,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.5
+  }
+ },
+ {
+  "variable": "distance of the global minimiser from 0",
+  "value": 0.9838400000280525,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.5
+  }
+ },
+ {
+  "variable": "lowest expected sMAPE term",
+  "value": 0.5226669005099526,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.5
+  }
+ },
+ {
+  "variable": "local minima of expected sMAPE",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.5
+  }
+ },
+ {
+  "variable": "smallest distance of any local minimiser from 0",
+  "value": 0.5848599999891386,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.5
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9948167729984441,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.5,
+   "forecast": -0.001
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9957323092326056,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.5,
+   "forecast": 0.001
+  }
+ },
+ {
+  "variable": "sign of the global minimiser of expected sMAPE",
+  "value": -1,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.2
+  }
+ },
+ {
+  "variable": "distance of the global minimiser from 0",
+  "value": 0.8370799999998861,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.2
+  }
+ },
+ {
+  "variable": "lowest expected sMAPE term",
+  "value": 0.6090044176901609,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.2
+  }
+ },
+ {
+  "variable": "local minima of expected sMAPE",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.2
+  }
+ },
+ {
+  "variable": "smallest distance of any local minimiser from 0",
+  "value": 0.6789999999768632,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.2
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9946413346275466,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.2,
+   "forecast": -0.001
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.995033674851002,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.2,
+   "forecast": 0.001
+  }
+ },
+ {
+  "variable": "sign of the global minimiser of expected sMAPE",
+  "value": -1,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.05
+  }
+ },
+ {
+  "variable": "distance of the global minimiser from 0",
+  "value": 0.7730000000276007,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.05
+  }
+ },
+ {
+  "variable": "lowest expected sMAPE term",
+  "value": 0.6524874758113254,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.05
+  }
+ },
+ {
+  "variable": "local minima of expected sMAPE",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.05
+  }
+ },
+ {
+  "variable": "smallest distance of any local minimiser from 0",
+  "value": 0.7335399999934675,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.05
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9947052252136078,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.05,
+   "forecast": -0.001
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.994804423056774,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.05,
+   "forecast": 0.001
+  }
+ },
+ {
+  "variable": "sign of the global minimiser of expected sMAPE",
+  "value": -1,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.01
+  }
+ },
+ {
+  "variable": "distance of the global minimiser from 0",
+  "value": 0.7569400000078677,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.01
+  }
+ },
+ {
+  "variable": "lowest expected sMAPE term",
+  "value": 0.663980338063008,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.01
+  }
+ },
+ {
+  "variable": "local minima of expected sMAPE",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.01
+  }
+ },
+ {
+  "variable": "smallest distance of any local minimiser from 0",
+  "value": 0.7490599999878147,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.01
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9947394622165406,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.01,
+   "forecast": -0.001
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.994759503335906,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": -0.01,
+   "forecast": 0.001
+  }
+ },
+ {
+  "variable": "sign of the global minimiser of expected sMAPE",
+  "value": 1,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.01
+  }
+ },
+ {
+  "variable": "distance of the global minimiser from 0",
+  "value": 0.7569400000010509,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.01
+  }
+ },
+ {
+  "variable": "lowest expected sMAPE term",
+  "value": 0.663980338063008,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.01
+  }
+ },
+ {
+  "variable": "local minima of expected sMAPE",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.01
+  }
+ },
+ {
+  "variable": "smallest distance of any local minimiser from 0",
+  "value": 0.7490600000034269,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.01
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.994759503335906,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.01,
+   "forecast": -0.001
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9947394622165404,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.01,
+   "forecast": 0.001
+  }
+ },
+ {
+  "variable": "sign of the global minimiser of expected sMAPE",
+  "value": 1,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.05
+  }
+ },
+ {
+  "variable": "distance of the global minimiser from 0",
+  "value": 0.7729999999964721,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.05
+  }
+ },
+ {
+  "variable": "lowest expected sMAPE term",
+  "value": 0.6524874758113254,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.05
+  }
+ },
+ {
+  "variable": "local minima of expected sMAPE",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.05
+  }
+ },
+ {
+  "variable": "smallest distance of any local minimiser from 0",
+  "value": 0.7336000000054161,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.05
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9948044230567743,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.05,
+   "forecast": -0.001
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9947052252136076,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.05,
+   "forecast": 0.001
+  }
+ },
+ {
+  "variable": "sign of the global minimiser of expected sMAPE",
+  "value": 1,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.2
+  }
+ },
+ {
+  "variable": "distance of the global minimiser from 0",
+  "value": 0.8370799999881733,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.2
+  }
+ },
+ {
+  "variable": "lowest expected sMAPE term",
+  "value": 0.6090044176901612,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.2
+  }
+ },
+ {
+  "variable": "local minima of expected sMAPE",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.2
+  }
+ },
+ {
+  "variable": "smallest distance of any local minimiser from 0",
+  "value": 0.679000000006774,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.2
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9950336748510021,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.2,
+   "forecast": -0.001
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.994641334627547,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.2,
+   "forecast": 0.001
+  }
+ },
+ {
+  "variable": "sign of the global minimiser of expected sMAPE",
+  "value": 1,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.5
+  }
+ },
+ {
+  "variable": "distance of the global minimiser from 0",
+  "value": 0.983840000006055,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.5
+  }
+ },
+ {
+  "variable": "lowest expected sMAPE term",
+  "value": 0.5226669005099525,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.5
+  }
+ },
+ {
+  "variable": "local minima of expected sMAPE",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.5
+  }
+ },
+ {
+  "variable": "smallest distance of any local minimiser from 0",
+  "value": 0.5849199999934609,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.5
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9957323092326054,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.5,
+   "forecast": -0.001
+  }
+ },
+ {
+  "variable": "expected sMAPE term at a forecast near 0",
+  "value": 0.9948167729984441,
+  "conditions": {
+   "hypothesis": "H31",
+   "mean": 0.5,
+   "forecast": 0.001
+  }
+ }
+]

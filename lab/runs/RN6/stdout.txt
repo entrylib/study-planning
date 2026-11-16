@@ -1,0 +1,8 @@
+mu=-0.5: global minimiser -0.9838 (expected term 0.5227); minima [np.float64(-0.9838), np.float64(0.5849)]
+mu=-0.2: global minimiser -0.8371 (expected term 0.6090); minima [np.float64(-0.8371), np.float64(0.679)]
+mu=-0.05: global minimiser -0.7730 (expected term 0.6525); minima [np.float64(-0.773), np.float64(0.7335)]
+mu=-0.01: global minimiser -0.7569 (expected term 0.6640); minima [np.float64(-0.7569), np.float64(0.7491)]
+mu=+0.01: global minimiser +0.7569 (expected term 0.6640); minima [np.float64(0.7569), np.float64(-0.7491)]
+mu=+0.05: global minimiser +0.7730 (expected term 0.6525); minima [np.float64(0.773), np.float64(-0.7336)]
+mu=+0.2: global minimiser +0.8371 (expected term 0.6090); minima [np.float64(0.8371), np.float64(-0.679)]
+mu=+0.5: global minimiser +0.9838 (expected term 0.5227); minima [np.float64(0.9838), np.float64(-0.5849)]
