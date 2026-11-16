@@ -1,0 +1,34 @@
+inverse Gaussian shape=1000: derived
+inverse Gaussian shape=200: derived
+inverse Gaussian shape=100: derived
+inverse Gaussian shape=50: derived
+inverse Gaussian shape=20: derived
+inverse Gaussian shape=10: derived
+log-skewed left sd=0.5 skew=-2: derived
+log-skewed left sd=0.5 skew=-1: derived
+log-skewed left sd=0.5 skew=-0.5: derived
+log-skewed right sd=0.5 skew=+2: derived
+log-skewed right sd=0.5 skew=+1: derived
+log-skewed right sd=0.5 skew=+0.5: derived
+lognormal sigma=0.5: derived
+log-skewed left sd=1 skew=-2: derived
+log-skewed left sd=1 skew=-1: derived
+log-skewed left sd=1 skew=-0.5: derived
+log-skewed right sd=1 skew=+2: derived
+log-skewed right sd=1 skew=+1: derived
+log-skewed right sd=1 skew=+0.5: derived
+lognormal sigma=1: derived
+bimodal equal modes: derived
+bimodal left mode higher: derived
+bimodal right mode higher: derived
+normal straddling zero mean=0: derived
+normal straddling zero mean=0.5: derived
+normal straddling zero mean=1: derived
+lognormal sigma=0.5 with zeros p0=0.25: derived
+lognormal sigma=0.5 with zeros p0=0.42: derived
+lognormal sigma=0.5 with zeros p0=0.47: derived
+lognormal sigma=0.5 with zeros p0=0.6: derived
+lognormal sigma=1 with zeros p0=0.25: derived
+lognormal sigma=1 with zeros p0=0.37: derived
+lognormal sigma=1 with zeros p0=0.42: derived
+lognormal sigma=1 with zeros p0=0.6: derived
