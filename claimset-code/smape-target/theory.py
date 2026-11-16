@@ -144,6 +144,18 @@ class PositiveTheory:
         fn = lambda x: np.tanh(np.abs(x - c) / 2) * d.pdf_x(x)
         return 200.0 * sum(_gauss(fn, a, b, PANELS) for a, b in zip(cuts[:-1], cuts[1:])) / mass
 
+    def balance_exact(self, c):
+        """E[w(Y, e^c) (1{Y < e^c} - 1{Y > e^c})] on the positive part, w = sech^2(z/2) / 2 (H4: f S'(f) / 200), by
+        Gauss-Legendre quadrature split at c and at the density's kinks."""
+        d, mass = self.d, self.grid.mass
+        lo, hi = d.support
+        cut = min(max(c, lo), hi)
+        kinks = [k for k in d.kinks if lo < k < hi]
+        w = lambda x: 0.5 / np.cosh((x - c) / 2) ** 2 * d.pdf_x(x)
+        below = sum(_gauss(w, a, b, PANELS) for a, b in zip(*(lambda e: (e[:-1], e[1:]))(sorted({lo, cut, *[k for k in kinks if k < cut]}))))
+        above = sum(_gauss(w, a, b, PANELS) for a, b in zip(*(lambda e: (e[:-1], e[1:]))(sorted({cut, hi, *[k for k in kinks if k > cut]}))))
+        return (below - above) / mass
+
     # ---------------------------------------------------------------- the target of sMAPE (H4-H8, H13)
     def smape_minima(self):
         """[(forecast, expected sMAPE)] of every local minimum over forecasts >= 0, lowest first. With zeros, the
