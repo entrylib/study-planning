@@ -142507,7 +142507,8 @@
    ],
    "artefacts": [
     "A1",
-    "A3"
+    "A3",
+    "A4"
    ],
    "setup": {
     "studied": [
@@ -142678,7 +142679,7 @@
   {
    "id": "A2",
    "kind": "lab_record",
-   "uri": "https://github.com/entrylib/study-planning/blob/9c3943085ddffd1a2ef3846ee4a8c7e5db6fe07e/lab/lab.jsonl",
+   "uri": "https://github.com/entrylib/study-planning/blob/d1983814517df25013253b31e5dc31fc37d138aa/lab/lab.jsonl",
    "version": "sha256:d346aa71f1512effcdd06ab8d653864542b15482d3cd823c7c19bc52500cb45b",
    "availability": {
     "level": "public"
@@ -142691,6 +142692,16 @@
    "kind": "code",
    "path_or_uri": "https://github.com/entrylib/study-planning/tree/a98e5f5151a4caea7df3404da01c95e6350dc5af/claimset-code/measure-rankings",
    "description": "The simulation code at the commit run RN1 ran: settings.py (the 28 outcome distributions), reference.py (the candidate forecasts and their expected scores), measures.py (the four measures on fixed candidates), simulate.py (the selection design), plot.py (the figures) and test_rankings.py (checks against exact results).",
+   "licence": "CC-BY-4.0",
+   "availability": {
+    "level": "public"
+   }
+  },
+  {
+   "id": "A4",
+   "kind": "figure",
+   "path_or_uri": "https://github.com/entrylib/study-planning/tree/b57ec4f1c4a7fb57c6f4d7fd5d0524789153499a/lab/runs/RN1/figures",
+   "description": "One figure per outcome distribution (28), as run RN1 wrote them: for each measure, one violin per test-set size of the candidates it ranked first over 1,000 test sets (their quantile levels, or values for counts), a boxplot inside (median, quartiles, 5th and 95th percentiles) with the mean of the choices, and every measure's preferred candidate as a labelled line.",
    "licence": "CC-BY-4.0",
    "availability": {
     "level": "public"
