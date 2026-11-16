@@ -46,9 +46,10 @@ def main():
     add("H2", "maximum absolute difference between the ratio and its reciprocal",
         float(np.max(np.abs(200 * np.abs(r - 1) / (r + 1) - 200 * np.abs(1 / r - 1) / (1 / r + 1)))))
     add("H3", "maximum absolute difference from 200 tanh(|z|/2)", float(np.max(np.abs(s - 200 * np.tanh(np.abs(z) / 2)))))
-    t = np.linspace(0, 30, 300001)               # beyond |z| = 36 tanh(|z|/2) rounds to 1 in floating point
+    # on |z| <= 12 the steps of 200 tanh(|z|/2) stay far above floating-point resolution (beyond about 30 it rounds to 200)
+    t = np.linspace(0, 12, 120001)
     h = 200 * np.tanh(t / 2)
-    add("H3", "violations of monotonicity, concavity or the bound 200",
+    add("H3", "violations of monotonicity, concavity or the bound 200 on 0 <= |z| <= 12",
         int(np.sum(np.diff(h) <= 0) + np.sum(np.diff(h, 2) > 1e-12) + np.sum(h > 200)))
     small = np.abs(z) < 0.5
     gap = 100 * np.abs(z) - s
