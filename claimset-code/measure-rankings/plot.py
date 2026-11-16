@@ -83,6 +83,12 @@ def main(out):
                 ax.text(1.005, y, " / ".join(SHORT[o] for o in names), transform=ax.transAxes,
                         fontsize=7, color=INK if own else MUTED, va="center", ha="left")
             ax.set_title(f"{m}: candidate ranked first in each test set", fontsize=9, color=INK, loc="left")
+            if m not in targets:                          # no preferred candidate: say why, in the panel
+                inf = [r for r in res if r["variable"] == "candidates whose expected score is infinite"
+                       and r["conditions"]["setting"] == setting and r["conditions"]["measure"] == m]
+                if inf:
+                    ax.text(0.5, 0.92, f"expected {m} is infinite for every candidate (Inf): no preferred candidate",
+                            transform=ax.transAxes, ha="center", fontsize=8, color=INK)
             ax.set_ylabel("value" if count else "quantile level", fontsize=8, color=INK)
             if not count:
                 ax.set_ylim(0, 1)

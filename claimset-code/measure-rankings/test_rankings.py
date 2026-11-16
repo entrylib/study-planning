@@ -81,5 +81,40 @@ class TestSettings(unittest.TestCase):
                 self.assertGreater(float(pmf(np.array([0]))[0]), 0.5, name)
 
 
+class TestSecondSet(unittest.TestCase):
+    def test_mape_takes_either_sign_and_shows_infinity(self):
+        y = np.array([-3.0, -1.0, 2.0, 5.0])
+        f = np.array([-2.0, 0.0, 1.0, 4.0])
+        expect = [100 * np.mean(np.abs(y - x) / np.abs(y)) for x in f]
+        np.testing.assert_allclose(MEASURES["MAPE"](TestSet(y), f), expect, rtol=1e-12)
+        self.assertTrue(np.all(np.isinf(MEASURES["MAPE"](TestSet(np.array([0.0, 1.0, 2.0])), f))))
+
+    def test_the_settings_are_what_they_say(self):
+        g = np.random.default_rng(4)
+        for name, s, flags in settings.second():
+            y = s(g, 400_000)
+            if flags.get("mape_infinite"):
+                self.assertTrue(np.any(y < 0), name)                     # straddles zero
+                continue
+            self.assertTrue(np.all(y > 0), name)
+            if name.startswith("log-skewed"):
+                x = np.log(y)
+                sd = float(name.split("sd=")[1].split()[0])
+                skew = float(name.split("skew=")[1])
+                d = x - x.mean()
+                self.assertAlmostEqual(x.std(), sd, delta=0.02 * sd, msg=name)
+                self.assertAlmostEqual(float(np.mean(d ** 3) / np.mean(d ** 2) ** 1.5), skew, delta=0.1, msg=name)
+
+    def test_infinite_expected_mape_has_no_preferred_candidate(self):
+        ref, reference.REF = reference.REF, 100_000
+        try:
+            c, _ = reference.continuous(lambda g, n: g.normal(0.5, 1.0, n), 3, mape_infinite=True)
+        finally:
+            reference.REF = ref
+        self.assertTrue(np.all(np.isinf(c.expected["MAPE"])))
+        self.assertNotIn("MAPE", c.preferred)
+        self.assertIn("sMAPE", c.preferred)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -41,8 +41,11 @@ def wilson(k, n, z=Z99):
 
 
 def choose(scores):
-    """Weights of the chosen candidates: 1 for the lowest score, 1/k each for a tie of k."""
+    """Weights of the chosen candidates: 1 for the lowest score, 1/k each for a tie of k; None when every score is
+    infinite (MAPE on a test set holding a zero outcome), so that no candidate is chosen."""
     low = scores.min()
+    if not np.isfinite(low):
+        return None
     tied = scores <= low + TIE * max(abs(low), 1e-300)
     return tied / tied.sum()
 
@@ -55,8 +58,18 @@ def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_la
     measures = [m for m in MEASURES if not (kind == "count" and m == "MAPE")]
     results, shares = [], []
     for m in measures:
-        i = cand.preferred[m]
         cond = {"setting": name, "measure": m}
+        if m not in cand.preferred:                     # every candidate's expected score is infinite
+            results.append({"variable": "candidates whose expected score is infinite",
+                            "value": int(np.sum(~np.isfinite(cand.expected[m]))), "conditions": cond})
+            continue
+        i = cand.preferred[m]
+        e = cand.expected[m]                             # candidates are in increasing order of value
+        inner = [j for j in range(1, e.size - 1) if e[j] < e[j - 1] and e[j] < e[j + 1]]
+        ends = ([0] if e.size > 1 and e[0] < e[1] else []) + ([e.size - 1] if e.size > 1 and e[-1] < e[-2] else [])
+        for rank, j in enumerate(sorted(inner + ends, key=lambda j: e[j]), 1):
+            results.append({"variable": "value of a local minimum of the expected score", "value": float(cand.values[j]),
+                            "conditions": {**cond, "rank": rank, "expected score": float(e[j])}})
         results += [{"variable": "value of the preferred candidate", "value": float(cand.values[i]),
                      "conditions": {**cond, "candidate": " = ".join(cand.labels[i])}},
                     {"variable": "quantile level of the preferred candidate", "value": float(cand.level[i]),
@@ -68,6 +81,7 @@ def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_la
         tally = {m: np.zeros(cand.values.size) for m in measures}
         chosen_value = {m: np.empty(reps) for m in measures}
         chosen_level = {m: np.empty(reps) for m in measures}
+        infinite = {m: 0 for m in measures}
         for r in range(reps):
             y = sampler(g, n)
             if kind == "continuous":
@@ -75,6 +89,10 @@ def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_la
             t = TestSet(y)
             for m in measures:
                 w = choose(MEASURES[m](t, cand.values))
+                if w is None:
+                    infinite[m] += 1
+                    chosen_value[m][r] = chosen_level[m][r] = np.nan
+                    continue
                 tally[m] += w
                 chosen_value[m][r] = w @ cand.values
                 chosen_level[m][r] = w @ cand.level
@@ -83,17 +101,24 @@ def one_setting(idx, name, kind, cand, sampler, seed, sizes, reps_small, reps_la
             # on counts many levels share one value: the value only
             what = "quantile level" if kind == "continuous" else "value"
             x = chosen_level[m] if kind == "continuous" else chosen_value[m]
-            mu, se = float(x.mean()), float(x.std(ddof=1)) / math.sqrt(reps)
+            if infinite[m]:
+                results.append({"variable": "test sets in which every candidate's score is infinite",
+                                "value": infinite[m], "conditions": cond})
+            x = x[np.isfinite(x)]
+            if x.size < 2:
+                continue
+            mu, se = float(x.mean()), float(x.std(ddof=1)) / math.sqrt(x.size)
             results.append({"variable": f"mean {what} of the chosen candidates", "value": mu,
                             "interval": {"level": 0.99, "lower": mu - Z99 * se, "upper": mu + Z99 * se},
                             "conditions": cond})
             for p, v in zip(PERCENTILES, np.percentile(x, PERCENTILES)):
                 results.append({"variable": f"percentile of the chosen candidates' {what}s", "value": float(v),
                                 "conditions": {**cond, "percentile": p}})
-            k = float(tally[m][cand.preferred[m]])
-            lo, hi = wilson(k, reps)
-            results.append({"variable": "share of test sets choosing the preferred candidate", "value": k / reps,
-                            "interval": {"level": 0.99, "lower": lo, "upper": hi}, "conditions": cond})
+            if m in cand.preferred:
+                k = float(tally[m][cand.preferred[m]])
+                lo, hi = wilson(k, reps)
+                results.append({"variable": "share of test sets choosing the preferred candidate", "value": k / reps,
+                                "interval": {"level": 0.99, "lower": lo, "upper": hi}, "conditions": cond})
             for i in np.flatnonzero(tally[m]):
                 shares.append([name, m, n, " = ".join(cand.labels[i]), float(cand.values[i]), float(cand.level[i]),
                                float(tally[m][i]) / reps, reps])
@@ -110,17 +135,22 @@ def main():
     ap.add_argument("--reps-small", type=int, default=1000)
     ap.add_argument("--reps-large", type=int, default=200)
     ap.add_argument("--only", nargs="*", help="run only the settings whose names start with these")
+    ap.add_argument("--set", choices=("first", "second"), default="first",
+                    help="first: the settings of plan PL1; second: those of the second plan (settings.second())")
     ap.add_argument("--out", default=".")
     a = ap.parse_args()
     out = os.environ.get("CLAIMSET_RUN_DIR", a.out)
-    all_settings = [(name, "continuous", s, None) for name, s in settings.continuous()] + \
-                   [(name, "count", s, pmf) for name, s, pmf in settings.counts()]
+    if a.set == "first":
+        all_settings = [(name, "continuous", s, None, {}) for name, s in settings.continuous()] + \
+                       [(name, "count", s, pmf, {}) for name, s, pmf in settings.counts()]
+    else:
+        all_settings = [(name, "continuous", s, None, flags) for name, s, flags in settings.second()]
     results, shares, cands = [], [], []
-    for idx, (name, kind, sampler, pmf) in enumerate(all_settings):
+    for idx, (name, kind, sampler, pmf, flags) in enumerate(all_settings):
         if a.only and not name.startswith(tuple(a.only)):
             continue
         if kind == "continuous":
-            cand, _ = reference.continuous(sampler, [a.ref_seed, idx])
+            cand, _ = reference.continuous(sampler, [a.ref_seed, idx], flags.get("mape_infinite", False))
         else:
             cand = reference.counts(pmf)
         results += [{"variable": "mean of the outcome distribution", "value": cand.mean, "conditions": {"setting": name}},

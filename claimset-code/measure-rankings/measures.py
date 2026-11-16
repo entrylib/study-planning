@@ -12,8 +12,11 @@ class TestSet:
         self.n = self.y.size
         self.cs = np.concatenate([[0.0], np.cumsum(self.y)])
         self.mean = float(self.y.mean())
-        positive = self.y > 0
-        self.inv = np.concatenate([[0.0], np.cumsum(np.where(positive, 1.0 / np.where(positive, self.y, 1.0), 0.0))])
+        nonzero = self.y != 0
+        self.has_zero = not bool(np.all(nonzero))
+        absy = np.abs(np.where(nonzero, self.y, 1.0))
+        self.inv = np.concatenate([[0.0], np.cumsum(np.where(nonzero, 1.0 / absy, 0.0))])          # sums of 1 / |y|
+        self.sgn = np.concatenate([[0.0], np.cumsum(np.where(nonzero, np.sign(self.y), 0.0))])     # sums of y / |y|
         self.vals, self.counts = np.unique(self.y, return_counts=True)
 
 
@@ -28,9 +31,13 @@ def mae(t, f):
 
 
 def mape(t, f):
-    """100 mean |y - f| / y; for positive outcomes only (the caller does not compute it on counts)."""
+    """100 mean |y - f| / |y|. An outcome equal to zero makes it infinite for every forecast (returned as inf: MAPE
+    fails, and the failure is shown, not hidden). Outcomes of either sign are allowed."""
+    if t.has_zero:
+        return np.full(np.shape(f), np.inf)
     k = np.searchsorted(t.y, f, side="left")
-    return 100 * (f * t.inv[k] - k + (t.n - k) - f * (t.inv[-1] - t.inv[k])) / t.n
+    # below f: (f - y) / |y| = f / |y| - sign(y); at or above f: (y - f) / |y| = sign(y) - f / |y|
+    return 100 * (f * t.inv[k] - t.sgn[k] + (t.sgn[-1] - t.sgn[k]) - f * (t.inv[-1] - t.inv[k])) / t.n
 
 
 def smape(t, f, chunk=16):

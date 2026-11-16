@@ -59,3 +59,38 @@ def counts():
         out.append((f"intermittent Poisson lambda={lam}",
                     lambda g, n, lam=lam: g.poisson(lam, n).astype(float), _pois(lam)))
     return out
+
+
+# ------------------------------------------------------------------ the second set (plan PL2)
+
+def _log_skewed(k, sd, sign):
+    """y = 100 exp(X), X = sign * sd * (G - k) / sqrt(k), G ~ Gamma(k, 1): ln y has standard deviation sd and
+    skewness sign * 2 / sqrt(k) (right-skewed for sign +1, left-skewed for -1)."""
+    def draw(g, n):
+        return 100.0 * np.exp(sign * sd * (g.gamma(k, 1.0, n) - k) / math.sqrt(k))
+    return draw
+
+
+def _bimodal(p):
+    """y = 100 exp(X), X ~ N(-1, 0.25^2) with probability p, N(+1, 0.25^2) otherwise: two modes, at about 37 and 272."""
+    def draw(g, n):
+        return 100.0 * np.exp(np.where(g.random(n) < p, g.normal(-1.0, 0.25, n), g.normal(1.0, 0.25, n)))
+    return draw
+
+
+def second():
+    """(name, sampler(g, n), flags) for the settings of the second plan. flags["mape_infinite"]: the distribution
+    has positive density at zero, so the expected MAPE of every forecast is infinite."""
+    out = []
+    for lam in (1000.0, 200.0, 100.0, 50.0, 20.0, 10.0):          # mean 100, CV sqrt(100 / lam): 0.32 to 3.16
+        out.append((f"inverse Gaussian shape={lam:g}", lambda g, n, lam=lam: g.wald(100.0, lam, n), {}))
+    for sd in (0.5, 1.0):                                          # ln y: standard deviation sd, skewness -2 .. +2
+        for sign, side in ((-1, "left"), (1, "right")):
+            for k in (1.0, 4.0, 16.0):
+                out.append((f"log-skewed {side} sd={sd:g} skew={sign * 2 / math.sqrt(k):+g}", _log_skewed(k, sd, sign), {}))
+        out.append((f"log-skewed symmetric sd={sd:g} skew=0", lambda g, n, sd=sd: g.lognormal(math.log(100.0), sd, n), {}))
+    for p, what in ((0.5, "equal modes"), (0.65, "left mode higher"), (0.35, "right mode higher")):
+        out.append((f"bimodal {what}", _bimodal(p), {}))
+    for mu in (0.0, 0.5, 1.0):                                     # standard deviation 1: 50%, 31%, 16% negative
+        out.append((f"normal straddling zero mean={mu:g}", lambda g, n, mu=mu: g.normal(mu, 1.0, n), {"mape_infinite": True}))
+    return out

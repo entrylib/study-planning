@@ -67,7 +67,9 @@ def _merge(pairs):
     return labels, np.array(values)
 
 
-def continuous(sampler, seed):
+def continuous(sampler, seed, mape_infinite=False):
+    """mape_infinite: the distribution has positive density at zero, so the expected MAPE of every candidate is
+    infinite; it is recorded as inf and MAPE has no minimiser and no preferred candidate."""
     g = np.random.default_rng(seed)
     ref = TestSet(sampler(g, REF))
     q = np.quantile(ref.y, LEVELS)
@@ -75,13 +77,16 @@ def continuous(sampler, seed):
     pairs[49] = ("median (q0.50)", pairs[49][1])
     pairs.append(("mean", ref.mean))
     tol = (q[-1] - q[0]) * 1e-7                             # the search grid is the 99 quantiles themselves
-    pairs.append(("MAPE minimiser", _minimise(lambda f: MEASURES["MAPE"](ref, f), q, tol)))
+    if not mape_infinite:
+        pairs.append(("MAPE minimiser", _minimise(lambda f: MEASURES["MAPE"](ref, f), q, tol)))
     pairs.append(("sMAPE minimiser", _minimise(lambda f: MEASURES["sMAPE"](ref, f, chunk=1), q, tol)))
     labels, values = _merge(pairs)
     level = np.searchsorted(ref.y, values, side="right") / ref.n
     expected = {m: (fn(ref, values, chunk=1) if m == "sMAPE" else fn(ref, values)) for m, fn in MEASURES.items()}
     expected["RMSE"] = np.sqrt(expected["RMSE"] + float(ref.y.var()))
-    preferred = {m: int(np.argmin(s)) for m, s in expected.items()}
+    if mape_infinite:
+        expected["MAPE"] = np.full(values.size, np.inf)
+    preferred = {m: int(np.argmin(s)) for m, s in expected.items() if np.isfinite(s).any()}
     return Candidates(labels, values, level, expected, preferred, ref.mean, float(np.median(ref.y))), ref
 
 
