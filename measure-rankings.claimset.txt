@@ -26,21 +26,29 @@ C2 [descriptive; principal; support: simulation E1 (E1.T2.r1, E1.T2.r5, E1.T2.r9
   scope: data_type: fixed candidate point forecasts | conditions: outcomes from the 28 distributions studied
   supports claimset entrylib:2026.000008@v2#C2: C2 recommends squared error, as in RMSE, for point forecasts of the mean.
   supports claimset entrylib:2026.000008@v2#C29: C29 states that squared error is consistent for the mean.
+  supports B1, at Section 5 (Discussion); Theorem 3.1 (arXiv:0912.0902 numbering): Gneiting (2011) shows that squared error is consistent for the mean.
+  supports B2: Kolassa (2020) shows that which point forecast has the lowest expected error depends on the error measure, so a measure rewards the forecast of the functional it is consistent for.
 C3 [descriptive; principal; support: simulation E1 (E1.T2.r2, E1.T2.r6, E1.T2.r10, E1.T2.r14, E1.T2.r18, E1.T2.r22, E1.T2.r26, E1.T2.r30, E1.T2.r34, E1.T2.r38, E1.T2.r42, E1.T2.r46, E1.T2.r50, E1.T2.r54, E1.T2.r58, E1.T2.r62, E1.T2.r66, E1.T2.r70, E1.T2.r74, E1.T2.r78, E1.T2.r81, E1.T2.r84, E1.T2.r87, E1.T2.r90, E1.T2.r93, E1.T2.r96, E1.T2.r99, E1.T2.r102); uses C1; strength high (author); planning exploratory]
   On every outcome distribution studied, the [[D7:preferred candidate]] of [[D2:MAE]] is the median of the distribution, counts and intermittent counts included.
   scope: data_type: fixed candidate point forecasts | conditions: outcomes from the 28 distributions studied
   supports claimset entrylib:2026.000008@v2#C7: C7 recommends absolute error, as in MAE, for point forecasts of the median.
   supports claimset entrylib:2026.000008@v2#C31: C31 states that absolute error is consistent for the median.
   supports claimset entrylib:2026.000008@v2#C4: C4 says MAE and MASE can be the main measure only when the mean and median forecasts coincide.
+  supports B1, at Section 5 (Discussion) (arXiv:0912.0902 numbering): Gneiting (2011) shows that absolute error is consistent for the median.
+  supports B2: Kolassa (2020) shows that which point forecast has the lowest expected error depends on the error measure, so a measure rewards the forecast of the functional it is consistent for.
 C4 [descriptive; principal; support: simulation E1 (E1.T2.r3, E1.T2.r7, E1.T2.r11, E1.T2.r15, E1.T2.r19, E1.T2.r23, E1.T2.r27, E1.T2.r31, E1.T2.r35, E1.T2.r39, E1.T2.r43, E1.T2.r47, E1.T2.r51, E1.T2.r55, E1.T2.r59, E1.T2.r63, E1.T2.r67, E1.T2.r71, E1.T2.r75); uses C1; strength high (author); planning exploratory]
   On every positive continuous outcome distribution studied, the [[D7:preferred candidate]] of [[D3:MAPE]] lies below the median, the further the more the outcomes vary: at quantile level 0.496 for normal outcomes with standard deviation 1, 0.159 for lognormal outcomes with s = 1 and 0.153 for gamma outcomes with shape 2.
   scope: data_type: fixed candidate point forecasts | conditions: positive continuous outcomes
   supports claimset entrylib:2026.000008@v2#C5: C5 says MAPE should not be the measure for point forecasts of the mean or the median.
   supports claimset entrylib:2026.000008@v2#C32: C32 states that MAPE is consistent for the median of order -1, which supports severe underforecasts.
+  supports B1, at Section 5 (Discussion); the beta-median in Section 1.3 (arXiv:0912.0902 numbering): Gneiting (2011) shows that MAPE is consistent for the median of order -1, which supports severe underforecasts compared with the mean or the median.
+  supports B2: Kolassa (2020) shows that which point forecast has the lowest expected error depends on the error measure, so a measure rewards the forecast of the functional it is consistent for.
 C5 [descriptive; principal; support: simulation E1 (E1.T2.r4, E1.T2.r8, E1.T2.r12, E1.T2.r16, E1.T2.r20, E1.T2.r24, E1.T2.r28, E1.T2.r32, E1.T2.r36, E1.T2.r40, E1.T2.r44, E1.T2.r48, E1.T2.r52, E1.T2.r56, E1.T2.r60, E1.T2.r64, E1.T2.r68, E1.T2.r72, E1.T2.r76, E1.T2.r73); uses C1; strength high (author); planning exploratory]
   The [[D7:preferred candidate]] of [[D4:sMAPE]] is the median on lognormal and log-Laplace outcomes, and on the other positive continuous distributions studied it lies close to the median, at quantile levels from 0.494 to 0.52, and never at the mean.
   scope: data_type: fixed candidate point forecasts | conditions: positive continuous outcomes
   disputes_evidence claimset entrylib:2026.000008@v2#C6: C6 says sMAPE should not be the measure for point forecasts; its warrant W6 reasons that because sMAPE penalises a forecast below an outcome more than one above it (C33), it rewards forecasts that are too high. In expectation over the outcome's distribution it does not: it rewards the median or a forecast close to it.
+  qualifies B3: Goodwin and Lawton (1999) show that, for the same outcome, sMAPE penalises a forecast below the outcome more heavily than a forecast above it.
+  qualifies B4, at Section 2.2 (Measures based on percentage errors): Hyndman and Koehler (2006) state that sMAPE has a heavier penalty when forecasts are low than when they are high.
 C6 [descriptive; principal; support: simulation E1 (E1.T2.r79, E1.T2.r82, E1.T2.r85, E1.T2.r88, E1.T2.r91, E1.T2.r94, E1.T2.r97, E1.T2.r100, E1.T2.r103, E1.T1.r20); uses C1; strength high (author); planning exploratory]
   On counts, the [[D7:preferred candidate]] of [[D4:sMAPE]] is zero when more than half the outcomes are zero. In the three count distributions studied with fewer than half zeros (Poisson with means 1.5, 3.5 and 10), it is the median of the non-zero outcomes (2, 3 and 10), which for the mean 1.5 lies above the mean.
   scope: data_type: fixed candidate point forecasts | conditions: count outcomes
@@ -51,6 +59,7 @@ C7 [descriptive; principal; support: simulation E1 (E1.T2.r87, E1.T2.r90, E1.T2.
   scope: data_type: fixed candidate point forecasts | conditions: intermittent counts, more than half zeros
   supports claimset entrylib:2026.000008@v2#C41: C41 states that absolute-error measures give their best scores to forecasts close to zero on intermittent series.
   supports claimset entrylib:2026.000008@v2#C8: C8 says absolute-error measures should be avoided on intermittent series.
+  supports B5: Kolassa (2016) shows that on intermittent series absolute-error measures give their best scores to forecasts close to zero.
 C8 [descriptive; principal; support: simulation E1 (E1.T3.r2901, E1.T3.r2903, E1.T3.r2905, E1.T3.r2906, E1.T3.r2908, E1.T3.r2910, E1.T3.r2981, E1.T3.r2983, E1.T3.r2985, E1.T3.r3041, E1.T3.r3043, E1.T3.r3045, E1.T2.r41, E1.T2.r42); uses C1; strength high (author); planning exploratory]
   In test sets of a few outcomes, the candidate a measure ranks first varies so widely that its spread covers the other measures' preferred candidates: on lognormal outcomes with s = 0.5, the 5th to 95th percentiles of the quantile levels [[D1:RMSE]] ranks first span 0.43 to 0.75 at n = 18 around its preferred level 0.60, and those of [[D2:MAE]] 0.325 to 0.685 around 0.50; for RMSE they narrow to 0.53 to 0.67 at n = 100 and 0.58 to 0.62 at n = 1000.
   scope: data_type: fixed candidate point forecasts | conditions: test sets of 6 to 10000 independent outcomes
@@ -10328,3 +10337,10 @@ A1 [data] Every result of the lab record (10546 results of 2 runs) at full preci
 A2 [lab_record] Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-15; exported with claimset 0.44.0).
 A3 [code] The simulation code at the commit run RN1 ran: settings.py (the 28 outcome distributions), reference.py (the candidate forecasts and their expected scores), measures.py (the four measures on fixed candidates), simulate.py (the selection design), plot.py (the figures) and test_rankings.py (checks against exact results).
 A4 [figure, data_plot] One figure per outcome distribution (28), as run RN1 wrote them: for each measure, one violin per test-set size of the candidates it ranked first over 1000 test sets (their quantile levels, or values for counts), a boxplot inside (median, quartiles, 5th and 95th percentiles) with the mean of the choices, and every measure's preferred candidate as a labelled line. shows E1.T2, E1.T3
+
+REFERENCES
+B1 10.1198/jasa.2011.r10138 (doi)
+B2 10.1016/j.ijforecast.2019.02.017 (doi)
+B3 10.1016/S0169-2070(99)00007-2 (doi)
+B4 10.1016/j.ijforecast.2006.03.001 (doi)
+B5 10.1016/j.ijforecast.2015.12.004 (doi)

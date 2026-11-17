@@ -1,6 +1,7 @@
 {
  "schema_version": "0.44",
  "paper": {
+  "id": "entrylib:2026.000009",
   "title": "Which forecast does each error measure reward? A simulation study of the functionals targeted by RMSE, MAE, MAPE and sMAPE",
   "contributions": [
    "C2",
@@ -64,7 +65,8 @@
   "declarations": {
    "funding": [],
    "competing_interests": "Ivan Svetunkov runs EntryLib and wrote the review (entrylib:2026.000008) whose recommendations this study tests."
-  }
+  },
+  "correction_reason": "Version 1 cited no work. Version 2 adds the works its findings concern, all cited by the review it tests (entrylib:2026.000008): Gneiting (2011) and Kolassa (2020) on the functionals that RMSE, MAE and MAPE reward (C2, C3, C4), Goodwin and Lawton (1999) and Hyndman and Koehler (2006) on the asymmetry of sMAPE (C5), and Kolassa (2016) on absolute error and counts with many zeros (C7), each related to the claim it bears on. No statement, evidence or result changes."
  },
  "contributors": [
   {
@@ -388,6 +390,17 @@
      "target": "entrylib:2026.000008@v2#C29",
      "id_type": "claimset",
      "note": "C29 states that squared error is consistent for the mean."
+    },
+    {
+     "type": "supports",
+     "reference": "B1",
+     "locator": "Section 5 (Discussion); Theorem 3.1 (arXiv:0912.0902 numbering)",
+     "note": "Gneiting (2011) shows that squared error is consistent for the mean."
+    },
+    {
+     "type": "supports",
+     "reference": "B2",
+     "note": "Kolassa (2020) shows that which point forecast has the lowest expected error depends on the error measure, so a measure rewards the forecast of the functional it is consistent for."
     }
    ]
   },
@@ -478,6 +491,17 @@
      "target": "entrylib:2026.000008@v2#C4",
      "id_type": "claimset",
      "note": "C4 says MAE and MASE can be the main measure only when the mean and median forecasts coincide."
+    },
+    {
+     "type": "supports",
+     "reference": "B1",
+     "locator": "Section 5 (Discussion) (arXiv:0912.0902 numbering)",
+     "note": "Gneiting (2011) shows that absolute error is consistent for the median."
+    },
+    {
+     "type": "supports",
+     "reference": "B2",
+     "note": "Kolassa (2020) shows that which point forecast has the lowest expected error depends on the error measure, so a measure rewards the forecast of the functional it is consistent for."
     }
    ]
   },
@@ -553,6 +577,17 @@
      "target": "entrylib:2026.000008@v2#C32",
      "id_type": "claimset",
      "note": "C32 states that MAPE is consistent for the median of order -1, which supports severe underforecasts."
+    },
+    {
+     "type": "supports",
+     "reference": "B1",
+     "locator": "Section 5 (Discussion); the beta-median in Section 1.3 (arXiv:0912.0902 numbering)",
+     "note": "Gneiting (2011) shows that MAPE is consistent for the median of order -1, which supports severe underforecasts compared with the mean or the median."
+    },
+    {
+     "type": "supports",
+     "reference": "B2",
+     "note": "Kolassa (2020) shows that which point forecast has the lowest expected error depends on the error measure, so a measure rewards the forecast of the functional it is consistent for."
     }
    ]
   },
@@ -624,6 +659,17 @@
      "target": "entrylib:2026.000008@v2#C6",
      "id_type": "claimset",
      "note": "C6 says sMAPE should not be the measure for point forecasts; its warrant W6 reasons that because sMAPE penalises a forecast below an outcome more than one above it (C33), it rewards forecasts that are too high. In expectation over the outcome's distribution it does not: it rewards the median or a forecast close to it."
+    },
+    {
+     "type": "qualifies",
+     "reference": "B3",
+     "note": "Goodwin and Lawton (1999) show that, for the same outcome, sMAPE penalises a forecast below the outcome more heavily than a forecast above it."
+    },
+    {
+     "type": "qualifies",
+     "reference": "B4",
+     "locator": "Section 2.2 (Measures based on percentage errors)",
+     "note": "Hyndman and Koehler (2006) state that sMAPE has a heavier penalty when forecasts are low than when they are high."
     }
    ]
   },
@@ -765,6 +811,11 @@
      "target": "entrylib:2026.000008@v2#C8",
      "id_type": "claimset",
      "note": "C8 says absolute-error measures should be avoided on intermittent series."
+    },
+    {
+     "type": "supports",
+     "reference": "B5",
+     "note": "Kolassa (2016) shows that on intermittent series absolute-error measures give their best scores to forecasts close to zero."
     }
    ]
   },
@@ -142700,6 +142751,33 @@
    "availability": {
     "level": "public"
    }
+  }
+ ],
+ "references": [
+  {
+   "id": "B1",
+   "target": "10.1198/jasa.2011.r10138",
+   "id_type": "doi"
+  },
+  {
+   "id": "B2",
+   "target": "10.1016/j.ijforecast.2019.02.017",
+   "id_type": "doi"
+  },
+  {
+   "id": "B3",
+   "target": "10.1016/S0169-2070(99)00007-2",
+   "id_type": "doi"
+  },
+  {
+   "id": "B4",
+   "target": "10.1016/j.ijforecast.2006.03.001",
+   "id_type": "doi"
+  },
+  {
+   "id": "B5",
+   "target": "10.1016/j.ijforecast.2015.12.004",
+   "id_type": "doi"
   }
  ],
  "open_questions": [
