@@ -1,0 +1,48 @@
+away from zero  lognormal sigma=0.5                           sMAPE   target 100 level 0.5000 score 38.3771
+away from zero  lognormal sigma=0.5                           msMAPE  target 99.9986 level 0.5000 score 38.3579
+away from zero  lognormal sigma=1                             sMAPE   target 100 level 0.5000 score 69.9427
+away from zero  lognormal sigma=1                             msMAPE  target 99.9817 level 0.4999 score 69.9078
+away from zero  inverse Gaussian shape=10                     sMAPE   target 14.0167 level 0.4387 score 95.7497
+away from zero  inverse Gaussian shape=10                     msMAPE  target 13.9788 level 0.4380 score 95.4966
+away from zero  inverse Gaussian shape=100                    sMAPE   target 66.5308 level 0.4929 score 61.9694
+away from zero  inverse Gaussian shape=100                    msMAPE  target 66.5223 level 0.4929 score 61.9250
+away from zero  log-skewed left sd=1 skew=-1                  sMAPE   target 128.265 level 0.5362 score 66.4242
+away from zero  log-skewed left sd=1 skew=-1                  msMAPE  target 128.238 level 0.5361 score 66.3927
+away from zero  log-skewed right sd=1 skew=+1                 sMAPE   target 77.9634 level 0.4638 score 66.4242
+away from zero  log-skewed right sd=1 skew=+1                 msMAPE  target 77.9595 level 0.4638 score 66.3909
+near zero       lognormal median=1 sigma=1                    sMAPE   target 1 level 0.5000 score 69.9427
+near zero       lognormal median=1 sigma=1                    msMAPE  target 0.984639 level 0.4938 score 66.6493
+near zero       lognormal median=1 sigma=1 with zeros p0=0.2  sMAPE   target 1 level 0.6000 score 95.9542
+near zero       lognormal median=1 sigma=1 with zeros p0=0.2  msMAPE  target 0.905403 level 0.5683 score 89.4916
+near zero       lognormal median=1 sigma=1 with zeros p0=0.4  sMAPE   target 0 level 0.4000 score 120.0000
+near zero       lognormal median=1 sigma=1 with zeros p0=0.4  msMAPE  target 0.17022 level 0.4230 score 94.4534
+near zero       lognormal median=1 sigma=1 with zeros p0=0.6  sMAPE   target 0 level 0.6000 score 80.0000
+near zero       lognormal median=1 sigma=1 with zeros p0=0.6  msMAPE  target 0 level 0.6000 score 65.9046
+near zero       lognormal median=1 sigma=1 with zeros p0=0.8  sMAPE   target 0 level 0.8000 score 40.0000
+near zero       lognormal median=1 sigma=1 with zeros p0=0.8  msMAPE  target 0 level 0.8000 score 32.9523
+near zero       lognormal median=100 sigma=1                  sMAPE   target 100 level 0.5000 score 69.9427
+near zero       lognormal median=100 sigma=1                  msMAPE  target 99.9817 level 0.4999 score 69.9078
+near zero       lognormal median=100 sigma=1 with zeros p0=0.2 sMAPE   target 100 level 0.6000 score 95.9542
+near zero       lognormal median=100 sigma=1 with zeros p0=0.2 msMAPE  target 99.8907 level 0.5997 score 95.8862
+near zero       lognormal median=100 sigma=1 with zeros p0=0.4 sMAPE   target 0 level 0.4000 score 120.0000
+near zero       lognormal median=100 sigma=1 with zeros p0=0.4 msMAPE  target 0 level 0.4000 score 119.8030
+near zero       lognormal median=100 sigma=1 with zeros p0=0.6 sMAPE   target 0 level 0.6000 score 80.0000
+near zero       lognormal median=100 sigma=1 with zeros p0=0.6 msMAPE  target 0 level 0.6000 score 79.8687
+near zero       lognormal median=100 sigma=1 with zeros p0=0.8 sMAPE   target 0 level 0.8000 score 40.0000
+near zero       lognormal median=100 sigma=1 with zeros p0=0.8 msMAPE  target 0 level 0.8000 score 39.9343
+counts          Poisson mean=0.3                              sMAPE   target 0 level 0.7408 score 51.8364
+counts          Poisson mean=0.3                              msMAPE  target 0 level 0.7408 score 47.4552
+counts          Poisson mean=0.5                              sMAPE   target 0 level 0.6065 score 78.6939
+counts          Poisson mean=0.5                              msMAPE  target 0 level 0.6065 score 72.3680
+counts          Poisson mean=1                                sMAPE   target 1 level 0.7358 score 94.3036
+counts          Poisson mean=1                                msMAPE  target 1 level 0.7358 score 87.0258
+counts          Poisson mean=1.5                              sMAPE   target 2 level 0.8088 score 76.7652
+counts          Poisson mean=1.5                              msMAPE  target 2 level 0.8088 score 73.7479
+counts          Poisson mean=3                                sMAPE   target 3 level 0.6472 score 49.9137
+counts          Poisson mean=3                                msMAPE  target 3 level 0.6472 score 48.8588
+counts          Poisson mean=10                               sMAPE   target 10 level 0.5830 score 25.8707
+counts          Poisson mean=10                               msMAPE  target 10 level 0.5830 score 25.7309
+zero threshold, lognormal median 1 sigma 1, sMAPE: 0.39404
+zero threshold, lognormal median 1 sigma 1, msMAPE: 0.47003
+zero threshold, lognormal median 100 sigma 1, sMAPE: 0.39404
+zero threshold, lognormal median 100 sigma 1, msMAPE: 0.39374
