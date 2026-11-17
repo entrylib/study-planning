@@ -165,7 +165,7 @@
    "C15",
    "C6"
   ],
-  "summary": "Which forecast does sMAPE reward? sMAPE depends only on the ratio of actual to forecast and is a hyperbolic tangent of the log error, so its expected value is always finite. Its target is a weighted median of the actuals, each weighted by how close it is to the forecast by ratio: the median when the log of the actual is symmetric and unimodal, otherwise on the side of the median that carries more weight. With two separate groups of actuals the median is a local maximum; with enough zeros the target is 0; across zero it jumps. As the actuals spread out, expected sMAPE flattens towards its bound and the target moves to the mode of the log. Where sMAPE and MAE both target the median, a test set's sMAPE minimiser estimates it much less precisely than the sample median.",
+  "summary": "Which forecast does sMAPE reward? So far, this was known only in special cases. For positive values, sMAPE depends only on the ratio of actual to forecast. Forecasts of double and half the actual score the same. Its asymmetry holds only for equal absolute errors. Because sMAPE is bounded, its expected value is always finite. It rewards a median of the actuals, weighted by their closeness to the forecast. This is the plain median when the logarithms are symmetric with one peak. Otherwise, the target can lie on either side. With two separate groups of actuals, the median can be worse than forecasts near either group. With enough zeros, sMAPE rewards a zero forecast, even when most actuals are positive. On widely spread actuals, all forecasts score almost equally badly. Even where sMAPE targets the median, it estimates it less precisely than MAE. Its variant msMAPE differs only near zero.",
   "classification": {
    "keywords": [
     "forecast evaluation",
@@ -929,7 +929,7 @@
    },
    "type": "formal",
    "role": "principal",
-   "novelty": "no_prior_found",
+   "novelty": "extension",
    "support": [
     {
      "kind": "formal_proof",
@@ -978,9 +978,9 @@
      "reference": "B5"
     },
     {
-     "type": "refines",
+     "type": "extends",
      "reference": "B13",
-     "note": "Kolassa (2026) shows sMAPE elicits a zero forecast for sufficiently intermittent actuals; C7 gives the share of zeros at which it does, which is below one half."
+     "note": "Kolassa (2026) shows that sMAPE elicits a zero forecast for sufficiently intermittent actuals; C7 gives the share of zeros at which it does, which is below one half."
     }
    ],
    "depends_on": [
