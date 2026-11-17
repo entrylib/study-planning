@@ -1,0 +1,780 @@
+CLAIMSET What does sMAPE reward? An analytical and simulation study
+summary Which forecast does sMAPE reward? sMAPE depends only on the ratio of actual to forecast and is a hyperbolic tangent of the log error, so its expected value is always finite. Its target is a weighted median of the actuals, each weighted by how close it is to the forecast by ratio: the median when the log of the actual is symmetric and unimodal, otherwise on the side of the median that carries more weight. With two separate groups of actuals the median is a local maximum; with enough zeros the target is 0; across zero it jumps. As the actuals spread out, expected sMAPE flattens towards its bound and the target moves to the mode of the log. Where sMAPE and MAE both target the median, a test set's sMAPE minimiser estimates it much less precisely than the sample median.
+licence CC-BY-4.0; contributions C1, C12, C4, C15, C6, C3, C9, C10, C7, C17; highlights C1, C12, C4, C15, C6
+declarations funding: none | competing interests: Ivan Svetunkov runs EntryLib and wrote the review (entrylib:2026.000008) whose claims about sMAPE this study tests.
+exploration 2 questions; hypotheses 17: 13 supported, 4 inconclusive, 1 from exploration; tests 27: 23 supported, 4 inconclusive; runs 11: 8 confirmatory, 3 exploratory; lab record A7; not claimed: H1 under PL5 (supported; reworded, into C1), H2 under PL5 (supported; reworded, into C2), H3 under PL5 (supported; reworded, into C3), H4 under PL5 (supported; reworded, into C4), H5 under PL5 (supported; reworded, into C5), H16 under PL5 (inconclusive; revised, into C4), H18 under PL5 (supported; reworded, into C6), H8 under PL5 (supported; reworded, into C7), H9 under PL5 (inconclusive; revised, into C3), H10 under PL5 (inconclusive; revised, into C2), H11 under PL5 (inconclusive; abandoned), H12 under PL5 (supported; reworded, into C8), H13 under PL5 (supported; reworded, into C9), H19 under PL5 (supported; reworded, into C10)
+
+DEFINITIONS
+D1 [variable] sMAPE term: The contribution of one actual $y$ and one point forecast $f$ to sMAPE: $s(y,f) = |y-f|/(|y|+|f|)$, between 0 and 1, with $s = 0$ when $y = f$ (including $y = f = 0$, where the fraction is $0/0$). sMAPE is 200 times its mean.
+D2 [variable] sMAPE: Symmetric mean absolute percentage error of a point forecast $f$ over a test set of actuals $y_1, \dots, y_n$: $\frac{200}{n}\sum_t s(y_t, f)$, 200 times the mean of the sMAPE terms. Introduced as the symmetric MAPE by Makridakis (1993), whose denominator had no absolute values; for positive actuals and forecasts the two agree. [source B8]
+D3 [variable] expected sMAPE: The expected sMAPE of a fixed forecast $f$ under the distribution of the actual $Y$: $200\,\mathrm{E}[s(Y, f)]$. Computed from the distribution (by integration or exact sums), never from a sample.
+D4 [variable] log error: For a positive outcome y and a positive forecast f, $z = \ln y - \ln f$.
+D5 [variable] weight: For a positive actual $y$ and a positive forecast $f$, $w(y,f) = y/(y+f)^2$: how much the actual pulls the forecast that minimises expected sMAPE, since the derivative of $\mathrm E[s(Y,f)]$ in $f$ is $2\,\mathrm E[w(Y,f)(\mathbf 1\{Y<f\} - \mathbf 1\{Y>f\})]$. Largest at $y = f$, the same for $y/f = r$ and $1/r$.
+D6 [concept] sMAPE target: The value or values of $f$ that minimise expected sMAPE for a given distribution of the actual $Y$, $\arg\min_f \mathrm E[s(Y,f)]$: the functional sMAPE rewards. It may be a single value or several.
+D7 [concept] quantile profile: For an outcome distribution with quantile function Q and a forecast f, the pull of the outcome at each quantile level u, $u \mapsto w(Q(u), f)$ on $(0,1)$; the minimiser's quantile level balances its integrals below and above.
+D8 [variable] sMAPE minimiser of a test set: The forecast that minimises the sMAPE of one test set, found numerically (the sample counterpart of the sMAPE target).
+D9 [variable] relative efficiency: For a test-set size n and an outcome distribution where sMAPE and MAE both target the median: $\mathrm{RE}(n) = \operatorname{Var}(\ln \hat m_n) / \operatorname{Var}(\ln \hat f_n)$ over test sets, where $\hat m_n$ is the sample median (the MAE minimiser) and $\hat f_n$ the sMAPE minimiser of the same test set. Above 1, sMAPE's minimiser varies less; below 1, MAE's does.
+D10 [variable] RMSE: Root mean squared error of a point forecast f over a test set: $\sqrt{\frac1n\sum_t (y_t-f)^2}$.
+D11 [variable] MAE: Mean absolute error of a point forecast f over a test set: $\frac1n\sum_t |y_t-f|$.
+D12 [variable] MAPE: Mean absolute percentage error of a point forecast f over a test set: $\frac{100}{n}\sum_t |y_t-f|/|y_t|$; infinite when an outcome is zero.
+D13 [concept] candidate forecast: A point forecast fixed from the outcome distribution before any test set is drawn and the same for every test set: a quantile at a level from 0.01 to 0.99, the mean, the forecast 0, the log-mode, the minimiser of expected MAPE, or a local minimiser of expected sMAPE. It is never estimated from a sample.
+D14 [concept] preferred candidate: Of the candidate forecasts for one distribution, the one a measure gives the lowest expected score, or, where every expected score is infinite but their differences are finite, the one the differences rank first (H12); none where no forecast is ranked first.
+D15 [concept] derived value: A value computed from the outcome distribution itself by numerical integration of its density (Gauss-Legendre quadrature and a convolution on a grid of 524288 points of ln y), never from a sample: the expected scores, the local minima of expected sMAPE, the formulas of the hypotheses.
+D16 [method] selection design: For each outcome distribution: derive the candidate forecasts and their expected scores; then, for each test-set size n, draw test sets of n independent outcomes, score every candidate by every measure on each test set, and count the candidate with the lowest score as the measure's choice (a tie of k candidates counts 1/k each; a test set in which every candidate scores infinite chooses none).
+D17 [method] efficiency design: For each outcome distribution and test-set size n: draw test sets of n independent outcomes; in each, compute the sample median and the exact sMAPE minimiser (an outcome of the test set, since the test set's sMAPE is concave in ln f between consecutive outcomes); over test sets, compare the variances of their logarithms.
+D18 [method] flatness design: For families whose spread of ln y grows from 0.1 to 10: derive the sMAPE target, the expected sMAPE of forecasts at fixed quantile levels and the large-spread approximation of H14; on test sets, count how often each measure scores the target lower than a forecast away from it, and where the test set's sMAPE minimiser falls.
+D19 [variable] log-MAE: 100 times the mean absolute error of $\ln f$ as a forecast of $\ln y$: $\frac{100}{n}\sum_t |\ln y_t - \ln f|$. Unbounded; sMAPE's small-error limit (H9); minimised by the median.
+D20 [variable] ranking agreement: For one distribution, one measure, a test-set size n, the measure's target and a forecast at another quantile level: the probability that a test set of n outcomes gives the target the strictly lower score (ties count as disagreement); 0.5 is a coin toss.
+D21 [population] inverse Gaussian outcomes: Inverse Gaussian outcomes with mean 100 and shape 1000, 200, 100, 50, 20 or 10 (coefficient of variation 0.32 to 3.16): positive, skewed right, every moment and E[1/Y] finite.
+D22 [population] log-skewed outcomes: $y = 100 e^x$ with $x = s\,\mathrm{sd}\,(G-k)/\sqrt k$, $G \sim$ Gamma$(k, 1)$: ln y with standard deviation sd (0.5 or 1) and skewness $2s/\sqrt k$ (-2, -1, -0.5, +0.5, +1, +2), and the lognormal of the same sd (skewness 0). Some have infinite moments: E Y infinite (sd 1, skewness +2), E Y^2 infinite (sd 0.5, skewness +2; sd 1, skewness +1), E[1/Y] infinite (sd 1, skewness -2).
+D23 [population] bimodal outcomes: $y = 100 e^x$, x normal with mean -1 (probability p) or +1, standard deviation 0.25; p = 0.5 (equal modes), 0.65 (left mode higher), 0.35 (right mode higher).
+D24 [population] outcomes straddling zero: Normal outcomes with standard deviation 1 and mean 0, 0.5 or 1: 50%, 31% and 16% negative; E[1/|Y|] infinite.
+D25 [population] zero-inflated outcomes: Lognormal outcomes (median 100, sigma 0.5 or 1) replaced by 0 with probability p0: 0.25, 0.42, 0.47, 0.6 for sigma 0.5 and 0.25, 0.37, 0.42, 0.6 for sigma 1, on both sides of the zero threshold of H8 (0.4469 and 0.3940).
+D26 [population] log-symmetric outcomes: Lognormal outcomes with sigma, and log-Laplace outcomes with scale b, each 0.25, 0.5, 1, 1.5, 2, 3, 4 or 6, median 100: ln y symmetric and strictly unimodal, so that sMAPE and MAE both target the median (H5).
+D27 [population] widening outcomes: $\ln y = \ln 100 + \sigma\varepsilon$ with $\varepsilon$ standard normal (lognormal), standard Gumbel (log-Gumbel right, ln y skewed right) or minus standard Gumbel (log-Gumbel left), for sigma 0.1, 0.25, 0.5, 1, 1.5, 2, 3, 4, 6 and 10.
+D28 [variable] msMAPE term: The contribution of one actual $y$ and one forecast $f$ to the modified sMAPE: $m(y,f) = |y-f|/\max(|y|+|f|+\epsilon,\ 0.5+\epsilon)$ with $\epsilon = 0.1$; msMAPE is 200 times its mean over a test set. It replaces the denominator $|y|+|f|$ of the [[TM1:sMAPE term]] (proposed by Suilin, 2017, in code for a Kaggle competition; defined in print by Hewamalage, Bergmeir and Bandara, 2021, Eq. 15, who write the factor 2 into the measure differently; a constant factor changes no property here). [source B14]
+D29 [concept] msMAPE target: The value or values of $f$ that minimise the expected [[TM32:msMAPE term]] for a given distribution of the actual: the functional msMAPE rewards, as the [[TM6:sMAPE target]] is the one sMAPE rewards.
+D30 [population] Poisson counts: Poisson outcomes with means 0.3, 0.5, 1, 1.5, 3 and 10: counts whose share of zeros falls from 0.74 to almost 0.
+D31 [method] formula checks: Numerical checks of the formulas of the formal claims (claimset-code/smape-target/check_formulas.py, seed 6; check_jump.py for C11): identities and inequalities on 200000 random pairs, derivatives against finite differences, minimisers, balances and thresholds against quadrature and bisection on every setting of the selection design, and the large-spread expansion against its bound.
+
+CLAIMS
+C1 [formal; principal; extension; support: formal_proof E18, empirical_quant E1; verification agent_checked; planning confirmatory; outcome supported]
+  For $y > 0$ and $f > 0$, the [[D1:sMAPE term]] $s(y,f) = |y-f|/(|y|+|f|)$ depends on $y$ and $f$ only through their ratio $r = y/f$: $s = |r - 1|/(r + 1)$.
+  extends B12: Tofallis (2015) lists the sMAPE term, (f-g)/[(f+g)/2], among Tornqvist et al.'s measures of relative change; C1 shows it depends on the actual and the forecast only through their ratio.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C3 [formal; principal; extension; support: formal_proof E20, empirical_quant E1; uses C1; verification agent_checked; planning confirmatory; outcome supported]
+  For $y > 0$ and $f > 0$, the [[D1:sMAPE term]] is $s = \tanh(|\ln y - \ln f|/2)$ ([[D4:log error]] $\ln y - \ln f$). (a) It is 0 when $y = f$, strictly increasing and concave in $|\ln y - \ln f|$, and bounded by 1, which it approaches as $|\ln y - \ln f|$ grows. (b) $0 \le \tfrac12|\ln y - \ln f| - s \le \tfrac1{24}|\ln y - \ln f|^3$; so when all errors are small, sMAPE is about 100 times the mean absolute error of $\ln f$ as a forecast of $\ln y$, and like it is minimised by the median.
+  extends B12: Tofallis (2015) relates sMAPE to the log accuracy ratio among relative measures; C3 shows the sMAPE term is exactly the hyperbolic tangent of half the absolute log ratio.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C4 [formal; principal; support: formal_proof E22, empirical_quant E1; uses C3, C9; verification agent_checked; planning confirmatory; outcome supported]
+  Let $Y$ be positive and take no single value with positive probability. A forecast $f$ has the lowest expected sMAPE only if the actuals below $f$ and those above it carry equal total [[D5:weight]] $w(y,f) = y/(y+f)^2$:
+$$\mathrm E[w(Y,f)\,\mathbf 1\{Y<f\}] = \mathrm E[w(Y,f)\,\mathbf 1\{Y>f\}].$$
+ So the [[D6:sMAPE target]] is a median of the actuals weighted by $w$. An actual's weight is largest when it equals the forecast, is the same for $y/f = r$ and $1/r$, and falls as $y/f$ moves away from 1 in either direction. If expected sMAPE has a single local minimum, the target lies above the median $m$ when, with the forecast at $m$, the actuals above $m$ carry more weight than those below it; below the median when those below carry more; and when the two weights are equal, the median is a point where expected sMAPE is flat. The median is then the target if, in addition,
+$$2g(\ln m) > \mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln Y - \ln m}{2}\Big)\tanh\Big(\frac{|\ln Y - \ln m|}{2}\Big)\Big],$$
+where $g$ is the density of $\ln Y$, continuous at $\ln m$; this makes the median a strict local minimum. Without it, the median can be a flat point of inflection, with the target elsewhere.
+  explains B4: C5 found sMAPE's preferred candidate close to the median on other distributions; C4 shows why: the target is a weighted median, on the side of the median that carries more weight.
+  addresses B12: Tofallis (2015) states that minimising sMAPE does not produce an established measure of location; C4 identifies the target as a median weighted by y/(y+f)^2.
+  qualifies B10: Hewamalage et al. (2023) say sMAPE may tend towards selecting a slightly overestimating model; C4 shows the target lies on the side of the median that carries more weight, above or below it.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C6 [formal; principal; support: formal_proof E24, empirical_quant E1; uses C3, C4, C9; verification agent_checked; planning confirmatory; outcome supported]
+  Let $\ln Y$ have two modes, at $m - a$ and $m + a$ ($a > 0$), with the actuals concentrated near them: a mixture of a distribution near $m - a$ and its mirror image about $m$, with weights $p$ and $1 - p$. (a) With equal weights the median $e^m$ lies in the gap between the two groups; when the groups are narrow enough it has a higher [[D3:expected sMAPE]] than forecasts near either mode, and it is a local maximum of expected sMAPE; there is a minimiser on each side of the median, and these approach $e^{m-a}$ and $e^{m+a}$ as the groups narrow. (b) With unequal weights and narrow groups, the best forecast is near the mode of the larger group.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C7 [formal; principal; support: formal_proof E25, empirical_quant E1; uses C9; verification agent_checked; planning confirmatory; outcome supported]
+  A forecast of the opposite sign to the actual, a zero forecast of a non-zero actual, and a non-zero forecast of a zero actual all give the [[D1:sMAPE term]] its largest value, 1. Let $Y$ be 0 with probability $p_0$ and otherwise positive, and $m_+$ the lowest expected $s$ a positive forecast reaches on the positive actuals. The forecast 0 is the [[D6:sMAPE target]] when $p_0 > (1 - m_+)/(2 - m_+)$, and a positive forecast does when the inequality is reversed; the threshold is below $1/2$ whenever $m_+ > 0$.
+  refines B5: C6 found sMAPE preferring zero on counts with more than half zeros; C7 gives the exact threshold, which is below one half whenever the positive outcomes vary.
+  refines B13: Kolassa (2026) shows sMAPE elicits a zero forecast for sufficiently intermittent actuals; C7 gives the share of zeros at which it does, which is below one half.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C9 [formal; principal; extension; support: formal_proof E21, empirical_quant E1; uses C3; verification agent_checked; planning confirmatory; outcome supported]
+  For actuals and forecasts of any sign, $0 \le s \le 1$. So the [[D3:expected sMAPE]] of every forecast is finite, between 0 and 200, whatever the distribution of the actuals and without any moment of it being finite (unlike RMSE, MAE and MAPE, C8). For a positive random actual $Y$, at least one forecast has the lowest expected sMAPE.
+  extends B10: Hewamalage et al. (2023) note that sMAPE is bounded by 200; C9 adds that its expected value is therefore finite for every distribution and that a best forecast exists.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C10 [formal; principal; support: formal_proof E28, empirical_quant E1; uses C3; verification agent_checked; planning confirmatory; outcome supported]
+  Let $\ln Y = \mu + \sigma\varepsilon$, where $\varepsilon$ has a fixed density $g$ with bounded continuous first and second derivatives, and write a forecast as $f = e^{\mu + \sigma c}$ (its quantile level, the probability that $\varepsilon \le c$, does not depend on $\sigma$). As $\sigma$ grows, $\mathrm E[s(Y,f)] = 1 - 4\ln 2\,g(c)/\sigma + O(\sigma^{-3})$ uniformly in $c$. (a) The [[D3:expected sMAPE]] of every forecast tends to its bound 200, and the difference between forecasts at two fixed quantile levels shrinks like $1/\sigma$. (b) When $g$ has a single highest point $c_0$, the quantile level of the [[D6:sMAPE target]] tends to that of $c_0$, the mode of $\ln Y$, which differs from 1/2 when the mode of $\varepsilon$ is not its median. (c) As $\sigma \to 0$, when $\varepsilon$ has a unique median and a finite $\mathrm E|\varepsilon|^3$, the quantile level of the target tends to 1/2: sMAPE targets the median for narrow distributions and the mode of $\ln Y$ for wide ones.
+  supports B6: C6 recommends against sMAPE for point forecasts; C10 shows that on widely spread actuals every forecast scores close to the worst value and the target moves to the mode of ln Y.
+  supports B13: Kolassa (2026) concludes that sMAPE should not be used; C10 shows that on widely spread actuals every forecast scores close to the worst value.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C12 [formal; principal; support: formal_proof E29, empirical_quant E1; uses C4, C5, C9; verification agent_checked; planning confirmatory; outcome supported]
+  The forecast with the lowest expected sMAPE is the median $m$ of the actuals in each of two cases. (a) $\ln Y$ has a density symmetric about $\ln m$ and unimodal. (b) More generally, $Y$ is positive, takes no single value with positive probability, and its expected sMAPE has a single local minimum; with the forecast at $m$, the actuals above and below $m$ carry equal total weight $y/(y+f)^2$; and
+$$2g(\ln m) > \mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln Y - \ln m}{2}\Big)\tanh\Big(\frac{|\ln Y - \ln m|}{2}\Big)\Big],$$
+where $g$ is the density of $\ln Y$, continuous at $\ln m$. In both cases the [[D6:sMAPE target]] is the median.
+  explains B4: C5 found by simulation that sMAPE prefers the median on lognormal and log-Laplace outcomes; C12 proves it for every symmetric unimodal ln Y.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C15 [descriptive; principal; support: empirical_quant E15 (E15.T1.r1, E15.T1.r8, E15.T1.r9, E15.T1.r16); limitations L2; planning planned_estimate]
+  Where sMAPE and MAE both target the median ([[D26:log-symmetric outcomes]]), the [[D8:sMAPE minimiser of a test set]] varies more than the sample median for every spread and test-set size studied: its [[D9:relative efficiency]] is below 1 and falls as the actuals spread out, at $n = 10000$ from 0.97 to 0.03 on lognormal actuals as $\sigma$ grows from 0.25 to 6, and from 1.00 to 0.34 on log-Laplace actuals as $b$ grows from 0.25 to 6, close to the large-sample values.
+  scope: data_type: test sets of independent draws from known distributions | conditions: lognormal and log-Laplace outcomes, spread 0.25 to 6; test sets of 6 to 10000 outcomes
+  supports B7: C11 found sMAPE's choices in short test sets spreading more than MAE's; C15 measures the loss of precision for test sets of 6 to 10000 outcomes.
+  supports B6: C6 recommends against sMAPE for point forecasts; C15 shows that even where it targets the median it estimates it less precisely than the sample median.
+  supports B13: Kolassa (2026) concludes that sMAPE should not be used; C15 shows that even where it targets the median it estimates it less precisely than the sample median.
+  planned estimate: re = D9 (table: every value); asymptotic_re = asymptotic relative efficiency (table: every value); var_median = variance of ln(sample median) (table: every value); var_smape = variance of ln(sMAPE minimiser) (table: every value); mse_ratio = ratio of mean squared errors about the true median (table: every value); bias = mean of ln(sMAPE minimiser) minus ln(median) (table: every value); flags code_changed_after_plan
+  plan: lab plan PL2; planned 2026-11-16T13:46:20Z; anchor git_remote
+C17 [formal; principal; extension; support: formal_proof E30, empirical_quant E17; verification agent_checked; planning confirmatory; outcome supported]
+  The [[D28:msMAPE term]] has the properties of the [[D1:sMAPE term]] except near zero. (a) Where $|y|+|f| \ge 0.5$, $m(y,f) = s(y,f)\,\frac{|y|+|f|}{|y|+|f|+\epsilon}$: the sMAPE term shrunk by a factor between $5/6$ and 1 that tends to 1 as $|y|+|f|$ grows. So for actuals and forecasts large compared with $\epsilon$, $m$ is close to $s$, though no longer exactly a function of the ratio $y/f$; on counts, where every actual is 0 or at least 1, this case covers every pair except a zero actual with $|f| < 0.5$. (b) Where $|y|+|f| < 0.5$, $m(y,f) = |y-f|/(0.5+\epsilon)$, an absolute error: a zero forecast of a zero actual scores 0, and a forecast $f$ with $|f| < 0.5$ of a zero actual scores $|f|/(0.5+\epsilon)$, where the sMAPE term gives every non-zero forecast of a zero actual its largest value, 1. (c) $0 \le m < 1$ everywhere, so the expected msMAPE of every forecast is finite.
+  extends B14: Hewamalage, Bergmeir and Bandara (2021) evaluate forecasts with msMAPE, Suilin's modification of sMAPE for series with values near zero; C17 shows that it keeps sMAPE's behaviour away from zero and becomes an absolute error near zero.
+  test: formal; supported if The proof of H35 is complete, every step naming what it rests on; the independent checker AC4 records a check of H35 as worded with outcome confirmed; and the deciding run's checks meet these tolerances: identities within 1e-12, counts of violations 0, the msMAPE term of a zero forecast of a zero actual 0.; not supported if A counterexample to H35 as worded, found by the proof, the checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL10; planned 2026-11-17T11:22:08Z; anchor git_remote
+C5 [formal; supporting; replication; support: formal_proof E23, empirical_quant E1; uses C3; verification agent_checked; planning confirmatory; outcome supported]
+  Let $\ln Y$ have a density $g$ symmetric about $m$, $g(m+v) = g(m-v)$, and unimodal: $g(m+u) \ge g(m+v)$ whenever $|u| \le |v|$, strictly on a set of positive probability. Then the median $e^m$ of $Y$ is the only [[D6:sMAPE target]].
+  replicates B2: C5 is an elementary case of Anderson's theorem on symmetric unimodal densities, proved here directly for the expected sMAPE.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C2 [formal; secondary; support: formal_proof E19, empirical_quant E1; uses C1; verification agent_checked; planning confirmatory; outcome supported]
+  For $y > 0$ and $f > 0$: (a) replacing $r = y/f$ by $1/r$ leaves the [[D1:sMAPE term]] unchanged, so a forecast $k$ times too high ($f = ky$) and one $k$ times too low ($f = y/k$) score the same; (b) of two forecasts the same absolute distance $e$ from $y$ ($0 < e < y$), the higher one scores better:
+$$s(y, y+e) = \frac{e}{2y+e} < \frac{e}{2y-e} = s(y, y-e).$$
+  qualifies B3: C33 says sMAPE penalises a forecast below the outcome more than one above it. That holds for two forecasts the same absolute distance away (C2 b); a forecast k times too low and one k times too high score the same (C2 a).
+  refines B1: Goodwin and Lawton (1999) showed that sMAPE is asymmetric: for the same absolute error it scores a forecast above the actual better than one below. C2 proves this (b) and shows that by ratio sMAPE is symmetric (a).
+  refines B9: Hyndman and Koehler (2006) note that for the same actual sMAPE penalises low forecasts more heavily than high ones; C2 shows this holds for equal absolute errors and not for equal ratios.
+  refines B10: Hewamalage et al. (2023) note that sMAPE penalises underestimates more than overestimates for the same actual; C2 shows this holds for equal absolute errors and not for equal ratios.
+  refines B11: Chen et al. (2017) show a heavier penalty on a forecast 10% under the actual than on one 10% over; C2 shows that forecasts the same factor too high and too low score the same.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C8 [formal; secondary; support: formal_proof E27, empirical_quant E1; verification agent_checked; planning confirmatory; outcome supported]
+  For a positive actual $Y$: (a) [[D10:RMSE]]: $\mathrm E[(Y-f)^2]$ is finite exactly when $\mathrm E[Y^2]$ is; when $\mathrm E[Y^2]$ is infinite but $\mathrm E[Y]$ finite, every difference
+$$\mathrm E[(Y-f)^2 - (Y-g)^2] = (f-g)(f+g-2\,\mathrm E[Y])$$
+is finite and the mean is preferred to every other forecast; when $\mathrm E[Y]$ is infinite no forecast is preferred to all others. (b) [[D11:MAE]]: $\mathrm E|Y-f|$ is finite exactly when $\mathrm E[Y]$ is; otherwise differences are finite and a median is still preferred. (c) [[D12:MAPE]]: when $\mathrm E[1/Y]$ is finite, the expected MAPE is finite and minimised by a median of the actuals weighted by $1/Y$; when $\mathrm E[1/Y]$ is infinite, every positive forecast has infinite expected MAPE while the forecast 0 has MAPE 100, so MAPE targets 0; when $Y$ is 0 with positive probability, MAPE is infinite or undefined for every forecast and targets nothing.
+  test: formal; supported if The proof of the hypothesis, as now worded, in the study's final proof document (proofs.md, AR1.R2) is complete, every step naming what it rests on; the independent checker AC4 has a check of the current wording with outcome confirmed; and the deciding run's numerical checks of its formulas meet the tolerances of PL5: identities on random pairs within 1e-9 (on the scale of sMAPE), quantities computed by quadrature within 1e-4 relative (or absolute, for a residual the proof says is zero), counts of violations 0, and the expansion's error times sigma^3 below the proof's bound.; not supported if A counterexample to the statement as now worded, found by the proof, a checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL9; planned 2026-11-17T09:21:09Z; anchor git_remote
+C11 [formal; secondary; support: formal_proof E26, empirical_quant E11; uses C7, C9; verification agent_checked; planning confirmatory; outcome supported]
+  Let the actuals be $\mu + \varepsilon$, where $\varepsilon$ is symmetric about 0 and its density decreases away from 0 (for example, normal). If $\mu > 0$, every forecast with the lowest expected sMAPE is positive; if $\mu < 0$, every one is negative. These forecasts stay away from 0 as $\mu$ approaches 0. So as $\mu$ moves from slightly below 0 to slightly above, the [[D6:sMAPE target]] jumps from a negative forecast to a positive one.
+  test: formal; supported if The proof of H31 in the study's proof document is complete, every step naming what it rests on; the independent checker AC4 records a check with outcome confirmed; and in the deciding run, for normal actuals with standard deviation 1, the global minimiser has the sign of the mean for every mean in the grid, and no local minimiser is within 0.1 of zero.; not supported if A counterexample to H31 as recorded, found by the proof, the checker, the supervisor or the deciding run, that a correction of the proof cannot remove.; verdict judged
+  plan: lab plan PL7; planned 2026-11-16T17:35:25Z; anchor git_remote
+C13 [descriptive; secondary; support: empirical_quant E13 (E13.T1.r6, E13.T1.r14, E13.T1.r1, E13.T3.r20, E13.T3.r6, E13.T1.r29, E13.T3.r27); limitations L1; planning planned_estimate]
+  Computed from the distributions themselves, the [[D6:sMAPE target]] on the 34 outcome distributions of plan PL1 is the median on lognormal outcomes, lies below it when $\ln Y$ is skewed right and above it when skewed left (quantile levels from 0.439 to 0.556 on the unimodal positive distributions), is two forecasts, one near each mode, on equal bimodal outcomes and the larger mode's on unequal ones, lies away from zero on the side of the mean on normal outcomes straddling zero, and switches to 0 at shares of zero outcomes from 0.343 to 0.468, all below one half. On test sets the forecast sMAPE ranks first spreads widely when they are small: on lognormal outcomes with $\sigma = 1$, its quantile level runs from 0.16 to 0.82 (5th to 95th percentile over test sets) with 6 outcomes and from 0.47 to 0.53 with 1000.
+  scope: data_type: outcome distributions given exactly (no data) | conditions: 34 distributions: inverse Gaussian, log-skewed, lognormal, bimodal, normal straddling zero, zero-inflated lognormal
+  supports C4: Computed on 34 distributions, the target lies on the side of the median that carries more weight, as C4 proves.
+  planned estimate: smape_minima = derived local minimum of expected sMAPE (table: every value); smape_minima_level = quantile level of a derived local minimum of expected sMAPE (table: every value); smape_minima_score = expected sMAPE at a derived local minimum (table: every value); pull_difference = pull from above minus pull from below at the median (table: every value); one_step = one-step quantile level of the sMAPE target (table: every value); zero_threshold = zero threshold of sMAPE (table: every value); log_mode_level = quantile level of the log-mode (table: every value); mape_target = derived MAPE target (table: every value); infinite = candidates whose expected score is infinite (table: every value); preferred_value = value of the preferred candidate (table: every value); preferred_level = quantile level of the preferred candidate (table: every value); chosen_level = mean quantile level of the chosen candidates (table: every value); chosen_level_percentiles = percentile of the chosen candidates' quantile levels (table: every value); preferred_share = share of test sets choosing the preferred candidate (table: every value); all_infinite = test sets in which every candidate's score is infinite (table: every value); flags code_changed_after_plan
+  plan: lab plan PL1; planned 2026-11-16T13:46:18Z; anchor git_remote
+C14 [descriptive; secondary; support: empirical_quant E14 (E14.T1.r1, E14.T1.r28, E14.T1.r29, E14.T1.r2, E14.T1.r24, E14.T2.r5); planning planned_estimate]
+  As the spread $\sigma$ of $\ln Y$ grows from 0.1 to 10, the [[D3:expected sMAPE]] at the [[D6:sMAPE target]] rises towards its bound 200 (from 7.97 to 178.2 on lognormal outcomes), the target's quantile level moves from the median to that of the mode of $\ln Y$ (0.372 against the mode's 0.368 at $\sigma = 10$ on log-Gumbel outcomes skewed right), and the [[D20:ranking agreement]] of sMAPE, for its target against a forecast half a $\sigma$ away, is lower than that of [[D11:MAE]]: at $\sigma = 4$ with test sets of 12 outcomes it ranks its target first in 0.61 of the test sets, MAE in 0.82.
+  scope: data_type: outcome distributions given exactly, and test sets drawn from them | conditions: lognormal and log-Gumbel outcomes, spread of ln y from 0.1 to 10; test sets of 12 to 1000 outcomes
+  supports C10: Computed for spreads of ln Y from 0.1 to 10, expected sMAPE flattens and the target moves to the mode of ln Y, as C10 proves for large spreads.
+  planned estimate: target_level = quantile level of the sMAPE target (table: every value); log_mode_level = quantile level of the log-mode (table: every value); at_target = expected sMAPE at the target (table: every value); approximation = large-spread approximation of expected sMAPE at the target (table: every value); minima = local minima of expected sMAPE (table: every value); relative_excess = excess expected score over the target, relative (table: every value); absolute_excess = excess expected sMAPE over the target (table: every value); agreement = D20 (table: every value); minimiser_level = mean quantile level of the sMAPE minimiser of a test set (table: every value); minimiser_percentiles = percentile of the quantile level of the sMAPE minimiser of a test set (table: every value)
+  plan: lab plan PL4; planned 2026-11-16T14:20:48Z; anchor git_remote
+C16 [descriptive; secondary; support: empirical_quant E16 (E16.T1.r7, E16.T2.r1, E16.T2.r2); planning planned_estimate]
+  Computed from the distributions themselves, the [[D29:msMAPE target]] differs little from the [[D6:sMAPE target]] away from zero and on counts, and differs near zero: it is within 0.3% of the sMAPE target on the six distributions with median about 100, and the same as the sMAPE target on every [[D30:Poisson counts]] distribution studied; on lognormal actuals with median 1 and $\sigma = 1$ it is 0.985 instead of 1, and the share of zeros at which it switches to the forecast 0 is 0.470 instead of sMAPE's 0.394, while at median 100 the two shares are 0.3937 and 0.3940.
+  scope: data_type: outcome distributions given exactly (no data) | conditions: positive distributions at median about 100, lognormal with zeros at medians 1 and 100, Poisson counts with means 0.3 to 10
+  supports C17: Computed on actual distributions, msMAPE's target stays at sMAPE's away from zero and moves near zero, as C17's two cases imply.
+  planned estimate: target = target (table: every value); level = quantile level of the target (table: every value); difference = relative difference of the msMAPE target from the sMAPE target (table: every value); zero_threshold = zero threshold (table: every value)
+  plan: lab plan PL11; planned 2026-11-17T11:22:08Z; anchor git_remote
+
+EVIDENCE
+E1 [quant; design other] Numerical checks of the formulas of the formal claims ([[D31:formula checks]]), lab run RN8 under the formal plan that decided them; every check is within the plan's tolerances. They check the formulas on concrete numbers; the proofs are the evidence for the claims. The rows are labelled by the hypotheses of the record's first plan, whose wording kept the factor 200: H1 checks C1; H2 and H10 check C2; H3 and H9 check C3; H4 and H6 check C4; H5 checks C5; H7 checks C6; H8 checks C7; H12 checks C8; H13 checks C9; H14 checks C10; the two results E1.R1 and E1.R2 check a large-sample variance that the paper reports by simulation instead (C15).
+  setup: studied D1, D3, D4, D5, D6; procedure D31
+  E1.R1 simulated n Var(ln sMAPE minimiser) / large-sample value, lognormal sigma=1 = 0.9944 99% confidence interval 0.9353981515994695 to 1.0598078456840363 {hypothesis: H11, test-set size: 1000, test sets: 4000}
+  E1.R2 simulated n Var(ln sMAPE minimiser) / large-sample value, lognormal sigma=1 = 1.022 99% confidence interval 0.9396347019298308 to 1.0981626206556903 {hypothesis: H11, test-set size: 10000, test sets: 2000}
+  E1.R3 maximum absolute difference from the ratio form = 8.527e-14 {hypothesis: H1}
+  E1.R4 maximum absolute difference between the ratio and its reciprocal = 8.527e-14 {hypothesis: H2}
+  E1.R5 maximum absolute difference from 200 tanh(|z|/2) = 8.527e-14 {hypothesis: H3}
+  E1.R6 violations of monotonicity, concavity or the bound 200 on 0 <= |z| <= 12 = 0 {hypothesis: H3}
+  E1.R7 violations of 0 <= 100|z| - s <= 25|z|^3/3 = 0 {hypothesis: H9}
+  E1.R8 maximum of |s - 100|z| + 25|z|^3/3| / |z|^5 for 0.05 < |z| < 0.5 = 0.8331 {hypothesis: H9}
+  E1.R9 violations of s(y, y+e) < s(y, y-e) = 0 {hypothesis: H10}
+  E1.R10 maximum absolute difference between s(y, ky) and s(y, y/k) = 1.137e-13 {hypothesis: H10}
+  E1.R11 maximum relative difference between the formula for S' and a numerical derivative = 4.823e-08 {hypothesis: H4}
+  E1.R12 maximum distance in ln f between the minimiser and the median = 8.641e-08 {hypothesis: H5}
+  E1.R13 number of local minima, lognormal sigma=1 and log-Laplace b=1 = 1 {hypothesis: H5}
+  E1.R14 maximum balance residual at the minimiser (pull below minus pull above) = 8.633e-09 {hypothesis: H6}
+  E1.R15 settings with one local minimum where the sign of D misplaces the target = 0 {hypothesis: H6}
+  E1.R16 maximum distance between the one-step and the exact quantile level = 0.002514 {hypothesis: H6}
+  E1.R17 2 g(m) - E[sech^2(Z/2) tanh(|Z|/2)] for the equal-mode bimodal setting (negative: median a local maximum) = -0.3475 {hypothesis: H7}
+  E1.R18 number of local minima of the equal-mode bimodal setting = 2 {hypothesis: H7}
+  E1.R19 difference between the two minimal expected sMAPEs, equal-mode bimodal setting = 1.421e-14 {hypothesis: H7}
+  E1.R20 maximum distance between the formula and the bisected threshold = 5.551e-17 {hypothesis: H8}
+  E1.R21 opposite-sign or one-zero pairs not scoring 200 = 0 {hypothesis: H8}
+  E1.R22 relative distance between the 1/y-weighted median and the minimiser of expected MAPE = 6.745e-05 {hypothesis: H12}
+  E1.R23 difference of expected squared errors minus (f-g)(f+g-2EY) = 0 {hypothesis: H12}
+  E1.R24 sMAPE terms outside [0, 200] = 0 {hypothesis: H13}
+  E1.R25 expected sMAPE at f = 1e-6 and f = 1e10 (both near 200) = 200 {hypothesis: H13}
+  E1.R26 the proof's bound on the error times sigma^3, 600 zeta(3) max|g''|, log-Gumbel = 309.9 {hypothesis: H14}
+  E1.R27 limit of sigma^3 times the relative efficiency for normal log-outcomes, from the proof = 7.226 {hypothesis: H14}
+  E1.T1 zero threshold by setting; hypothesis: H8 (lab runs RN8) {hypothesis: H8}
+  | row | setting | zero threshold |
+  | r1 | lognormal sigma=0.3 | 0.4687 |
+  | r2 | lognormal sigma=0.5 | 0.4469 |
+  | r3 | lognormal sigma=1 | 0.394 |
+  | r4 | lognormal sigma=2 | 0.3075 |
+  E1.T2 maximum |S - (200 - 800 ln2 g)| times sigma^3, log-Gumbel right, sigma^3 times the asymptotic relative efficiency, lognormal by sigma; hypothesis: H14 (lab runs RN8) {hypothesis: H14}
+  | row | sigma | maximum |S - (200 - 800 ln2 g)| times sigma^3, log-Gumbel right | sigma^3 times the asymptotic relative efficiency, lognormal |
+  | r1 | 5.0 | 264.5 | 5.613 |
+  | r2 | 10.0 | 292.3 | 6.743 |
+  | r3 | 20.0 | 300.1 | 7.099 |
+  | r4 | 40.0 | 302.1 | 7.193 |
+E11 [quant; design other] Numerical checks of the formulas of C11 ([[D31:formula checks]]), lab run RN6 under the formal plan that decided C11; every check is within the plan's tolerances. They check the formulas on concrete numbers; the proof is the evidence for the claim.
+  setup: studied D6; procedure D31
+  E11.T1 sign of the global minimiser of expected sMAPE, distance of the global minimiser from 0, lowest expected sMAPE term, local minima of expected sMAPE, smallest distance of any local minimiser from 0 by mean; hypothesis: H31 (lab runs RN6) {hypothesis: H31}
+  | row | mean | sign of the global minimiser of expected sMAPE | distance of the global minimiser from 0 | lowest expected sMAPE term | local minima of expected sMAPE | smallest distance of any local minimiser from 0 |
+  | r1 | -0.5 | -1 | 0.9838 | 0.5227 | 2 | 0.5849 |
+  | r2 | -0.2 | -1 | 0.8371 | 0.609 | 2 | 0.679 |
+  | r3 | -0.05 | -1 | 0.773 | 0.6525 | 2 | 0.7335 |
+  | r4 | -0.01 | -1 | 0.7569 | 0.664 | 2 | 0.7491 |
+  | r5 | 0.01 | 1 | 0.7569 | 0.664 | 2 | 0.7491 |
+  | r6 | 0.05 | 1 | 0.773 | 0.6525 | 2 | 0.7336 |
+  | r7 | 0.2 | 1 | 0.8371 | 0.609 | 2 | 0.679 |
+  | r8 | 0.5 | 1 | 0.9838 | 0.5227 | 2 | 0.5849 |
+  E11.T2 expected sMAPE term at a forecast near 0 by mean, forecast; hypothesis: H31 (lab runs RN6) {hypothesis: H31}
+  | row | mean | forecast | expected sMAPE term at a forecast near 0 |
+  | r1 | -0.5 | -0.001 | 0.9948 |
+  | r2 | -0.5 | 0.001 | 0.9957 |
+  | r3 | -0.2 | -0.001 | 0.9946 |
+  | r4 | -0.2 | 0.001 | 0.995 |
+  | r5 | -0.05 | -0.001 | 0.9947 |
+  | r6 | -0.05 | 0.001 | 0.9948 |
+  | r7 | -0.01 | -0.001 | 0.9947 |
+  | r8 | -0.01 | 0.001 | 0.9948 |
+  | r9 | 0.01 | -0.001 | 0.9948 |
+  | r10 | 0.01 | 0.001 | 0.9947 |
+  | r11 | 0.05 | -0.001 | 0.9948 |
+  | r12 | 0.05 | 0.001 | 0.9947 |
+  | r13 | 0.2 | -0.001 | 0.995 |
+  | r14 | 0.2 | 0.001 | 0.9946 |
+  | r15 | 0.5 | -0.001 | 0.9957 |
+  | r16 | 0.5 | 0.001 | 0.9948 |
+E13 [quant; design other] Lab runs RN1 under plan PL1. Design: Selection design (D16) on 33 outcome distributions: inverse Gaussian (6), log-skewed (12) and lognormal (2), bimodal (3), straddling zero (3), zero-inflated lognormal (8). For each: the derived values (D15) of every local minimum of expected sMAPE with its quantile level and expected score; the one-step quantile level of H6 and the pull difference D at the median; the zero threshold of H8; the quantile level of the log-mode; which moments are finite (H12); the MAPE target (H12); each measure's preferred candidate (D14), ranked by finite differences where expected scores are infinite. Candidates: quantiles at levels 0.01 to 0.99, the mean (when finite), 0, the log-mode, the MAPE minimiser (when it exists and is not 0) and every local minimiser of expected sMAPE, merged when within 1e-4 (relative). Test sets of n = 6, 8, 12, 13, 14, 18, 24, 36, 48, 100, 250, 500, 1000 and 10000 outcomes, 1000 test sets per size, seed 3 with the setting's index and n. Measures RMSE, MAE, MAPE, sMAPE on every setting. python3 claimset-code/smape-target/targets.py --seed 3 --reps 1000 (numpy 2.5.3, matplotlib 3.11.2). Analysis: Per distribution: the derived values listed in the design. Per distribution, measure and n, over test sets, of the candidate ranked first: its quantile level's mean with a 99% confidence interval and 5th, 25th, 50th, 75th and 95th percentiles; the share choosing each candidate; the share choosing the preferred candidate with its 99% Wilson interval; the number of test sets in which every candidate scores infinite. Figures: one per distribution, a panel per measure, violins of the chosen quantile levels over n with boxplots and the mean, lines at every measure's preferred candidate and at further local minima of expected sMAPE, and a note in the panel of a measure that targets nothing. These are compared with what H4 to H8, H12 and H13 predict; no test is made and no threshold is set.
+  setup: studied D10, D11, D12, D2; cases D21, D22, D23, D24, D25; procedure D16, D15; lens D13, D14, D6, D3, D5, D7
+  E13.T1 The sMAPE target and related values derived from each distribution: the lowest local minimum of expected sMAPE (rank 1), its quantile level and expected sMAPE, its one-step approximation, the pull from above minus the pull from below at the median, the share of zeros at which the target switches to 0, the quantile level of the log-mode, and the MAPE target
+  | row | setting | derived local minimum of expected sMAPE {rank: 1} | quantile level of a derived local minimum of expected sMAPE {rank: 1} | expected sMAPE at a derived local minimum {rank: 1} | one-step quantile level of the sMAPE target | pull from above minus pull from below at the median | zero threshold of sMAPE | quantile level of the log-mode | median of the outcome distribution | mean of the outcome distribution |
+  | r1 | inverse Gaussian shape=1000 | 95.27 | 0.4999 | 24.36 | 0.4999 | -7.522e-05 | 0.4676 | 0.498 | 95.27 | 100 |
+  | r2 | inverse Gaussian shape=200 | 80.14 | 0.4978 | 48.68 | 0.4978 | -0.001851 | 0.4307 | 0.4822 | 80.43 | 100 |
+  | r3 | inverse Gaussian shape=100 | 66.53 | 0.4929 | 61.97 | 0.4929 | -0.005184 | 0.4083 | 0.4597 | 67.58 | 100 |
+  | r4 | inverse Gaussian shape=50 | 48.86 | 0.482 | 75.05 | 0.482 | -0.01136 | 0.3845 | 0.4233 | 51.42 | 100 |
+  | r5 | inverse Gaussian shape=20 | 25.9 | 0.4578 | 88.96 | 0.457 | -0.02237 | 0.357 | 0.3726 | 30.11 | 100 |
+  | r6 | inverse Gaussian shape=10 | 14.02 | 0.4387 | 95.75 | 0.4362 | -0.03001 | 0.3426 | 0.3471 | 17.85 | 100 |
+  | r7 | log-skewed left sd=0.5 skew=-2 | 119 | 0.5211 | 32.31 | 0.5211 | 0.01967 | 0.4561 | 1 | 116.6 | 109.9 |
+  | r8 | log-skewed left sd=0.5 skew=-1 | 110.2 | 0.513 | 36.74 | 0.513 | 0.01171 | 0.4494 | 0.6472 | 108.5 | 111.3 |
+  | r9 | log-skewed left sd=0.5 skew=-0.5 | 105.1 | 0.5068 | 37.96 | 0.5068 | 0.006115 | 0.4476 | 0.5681 | 104.2 | 112.2 |
+  | r10 | log-skewed right sd=0.5 skew=+2 | 84.02 | 0.4789 | 32.31 | 0.4789 | -0.01967 | 0.4561 | 0 | 85.78 | 121.3 |
+  | r11 | log-skewed right sd=0.5 skew=+1 | 90.72 | 0.487 | 36.74 | 0.487 | -0.01171 | 0.4494 | 0.3528 | 92.13 | 116.3 |
+  | r12 | log-skewed right sd=0.5 skew=+0.5 | 95.13 | 0.4932 | 37.96 | 0.4932 | -0.006115 | 0.4476 | 0.4319 | 95.93 | 114.6 |
+  | r13 | lognormal sigma=0.5 | 100 | 0.5 | 38.38 | 0.5 | -8.965e-15 | 0.4469 | 0.5 | 100 | 113.3 |
+  | r14 | log-skewed left sd=1 skew=-2 | 151.2 | 0.5562 | 57.04 | 0.5572 | 0.04564 | 0.4168 | 1 | 135.9 | 135.9 |
+  | r15 | log-skewed left sd=1 skew=-1 | 128.3 | 0.5362 | 66.42 | 0.5365 | 0.02609 | 0.4004 | 0.6472 | 117.8 | 146 |
+  | r16 | log-skewed left sd=1 skew=-0.5 | 113.9 | 0.5191 | 69.05 | 0.5192 | 0.01332 | 0.3957 | 0.5681 | 108.7 | 153.7 |
+  | r17 | log-skewed right sd=1 skew=+2 | 66.14 | 0.4438 | 57.04 | 0.4428 | -0.04564 | 0.4168 | 0 | 73.58 |  |
+  | r18 | log-skewed right sd=1 skew=+1 | 77.96 | 0.4638 | 66.42 | 0.4635 | -0.02609 | 0.4004 | 0.3528 | 84.88 | 216.5 |
+  | r19 | log-skewed right sd=1 skew=+0.5 | 87.79 | 0.4809 | 69.05 | 0.4808 | -0.01332 | 0.3957 | 0.4319 | 92.03 | 182.7 |
+  | r20 | lognormal sigma=1 | 100 | 0.5 | 69.94 | 0.5 | -2.606e-14 | 0.394 | 0.5 | 100 | 164.9 |
+  | r21 | bimodal equal modes | 43.49 | 0.3742 | 83.84 | 0.5 | -1.532e-11 | 0.3674 | 0.25 | 100 | 159.2 |
+  | r22 | bimodal left mode higher | 39.84 | 0.4063 | 65.21 | 0.4042 | -0.08387 | 0.4026 | 0.325 | 44.22 | 122.8 |
+  | r23 | bimodal right mode higher | 251 | 0.5937 | 65.21 | 0.5958 | 0.08387 | 0.4026 | 0.675 | 226.1 | 195.6 |
+  | r24 | normal straddling zero mean=0 | -0.753 | 0.2257 | 133.4 |  |  |  |  | -3e-05 | 0 |
+  | r25 | normal straddling zero mean=0.5 | 0.9838 | 0.6858 | 104.5 |  |  |  |  | 0.5 | 0.5 |
+  | r26 | normal straddling zero mean=1 | 1.287 | 0.6128 | 78.51 |  |  |  |  | 1 | 1 |
+  | r27 | lognormal sigma=0.5 with zeros p0=0.25 | 100 | 0.625 | 78.78 | 0.5 | -8.965e-15 | 0.4469 | 0.625 | 80.62 | 84.99 |
+  | r28 | lognormal sigma=0.5 with zeros p0=0.42 | 100 | 0.71 | 106.3 | 0.5 | -8.965e-15 | 0.4469 | 0.71 | 57.99 | 65.72 |
+  | r29 | lognormal sigma=0.5 with zeros p0=0.47 | 0 | 0.47 | 106 | 0.5 | -8.965e-15 | 0.4469 | 0.735 | 45.3 | 60.06 |
+  | r30 | lognormal sigma=0.5 with zeros p0=0.6 | 0 | 0.6 | 80 | 0.5 | -8.965e-15 | 0.4469 | 0.8 | 0 | 45.33 |
+  | r31 | lognormal sigma=1 with zeros p0=0.25 | 100 | 0.625 | 102.5 | 0.5 | -2.606e-14 | 0.394 | 0.625 | 65 | 123.7 |
+  | r32 | lognormal sigma=1 with zeros p0=0.37 | 100 | 0.685 | 118.1 | 0.5 | -2.606e-14 | 0.394 | 0.685 | 44.08 | 103.9 |
+  | r33 | lognormal sigma=1 with zeros p0=0.42 | 0 | 0.42 | 116 | 0.5 | -2.606e-14 | 0.394 | 0.71 | 33.63 | 95.63 |
+  | r34 | lognormal sigma=1 with zeros p0=0.6 | 0 | 0.6 | 80 | 0.5 | -2.606e-14 | 0.394 | 0.8 | 0 | 65.95 |
+  E13.T2 The second local minimum of expected sMAPE, where there is one (rank 2)
+  | row | setting | derived local minimum of expected sMAPE {rank: 2} | quantile level of a derived local minimum of expected sMAPE {rank: 2} | expected sMAPE at a derived local minimum {rank: 2} |
+  | r1 | bimodal equal modes | 229.9 | 0.6258 | 83.84 |
+  | r2 | normal straddling zero mean=0 | 0.753 | 0.7743 | 133.4 |
+  | r3 | normal straddling zero mean=0.5 | -0.5849 | 0.139 | 159.9 |
+  | r4 | normal straddling zero mean=1 | -0.4649 | 0.07148 | 179.8 |
+  | r5 | lognormal sigma=0.5 with zeros p0=0.25 | 0 | 0.25 | 150 |
+  | r6 | lognormal sigma=0.5 with zeros p0=0.42 | 0 | 0.42 | 116 |
+  | r7 | lognormal sigma=0.5 with zeros p0=0.47 | 100 | 0.735 | 114.3 |
+  | r8 | lognormal sigma=0.5 with zeros p0=0.6 | 100 | 0.8 | 135.4 |
+  | r9 | lognormal sigma=1 with zeros p0=0.25 | 0 | 0.25 | 150 |
+  | r10 | lognormal sigma=1 with zeros p0=0.37 | 0 | 0.37 | 126 |
+  | r11 | lognormal sigma=1 with zeros p0=0.42 | 100 | 0.71 | 124.6 |
+  | r12 | lognormal sigma=1 with zeros p0=0.6 | 100 | 0.8 | 148 |
+  E13.T3 Each measure's preferred candidate (the candidate forecast with the lowest expected score): its quantile level, and the number of candidates whose expected score is infinite
+  | row | setting | quantile level of the preferred candidate {measure: RMSE} | quantile level of the preferred candidate {measure: MAE} | quantile level of the preferred candidate {measure: MAPE} | quantile level of the preferred candidate {measure: sMAPE} | candidates whose expected score is infinite {measure: RMSE} | candidates whose expected score is infinite {measure: MAPE} |
+  | r1 | inverse Gaussian shape=1000 | 0.5616 | 0.4999 | 0.3786 | 0.4999 | 0 | 0 |
+  | r2 | inverse Gaussian shape=200 | 0.6277 | 0.5 | 0.2659 | 0.4978 | 0 | 0 |
+  | r3 | inverse Gaussian shape=100 | 0.6681 | 0.5 | 0.2158 | 0.4929 | 0 | 0 |
+  | r4 | inverse Gaussian shape=50 | 0.7138 | 0.5 | 0.1773 | 0.482 | 0 | 0 |
+  | r5 | inverse Gaussian shape=20 | 0.7768 | 0.5 | 0.1474 | 0.4578 | 0 | 0 |
+  | r6 | inverse Gaussian shape=10 | 0.8219 | 0.5 | 0.136 | 0.4387 | 0 | 0 |
+  | r7 | log-skewed left sd=0.5 skew=-2 | 0.4444 | 0.5 | 0.25 | 0.5211 | 0 | 0 |
+  | r8 | log-skewed left sd=0.5 skew=-1 | 0.5215 | 0.5 | 0.2799 | 0.513 | 0 | 0 |
+  | r9 | log-skewed left sd=0.5 skew=-0.5 | 0.5603 | 0.5 | 0.2941 | 0.5068 | 0 | 0 |
+  | r10 | log-skewed right sd=0.5 skew=+2 | 0.75 | 0.5 | 0.37 | 0.4789 | 102 | 0 |
+  | r11 | log-skewed right sd=0.5 skew=+1 | 0.6748 | 0.5 | 0.3388 | 0.487 | 0 | 0 |
+  | r12 | log-skewed right sd=0.5 skew=+0.5 | 0.6368 | 0.5 | 0.3234 | 0.4932 | 0 | 0 |
+  | r13 | lognormal sigma=0.5 | 0.5987 | 0.5 | 0.3085 | 0.5 | 0 | 0 |
+  | r14 | log-skewed left sd=1 skew=-2 | 0.5 | 0.5 | 0 | 0.5562 | 0 | 101 |
+  | r15 | log-skewed left sd=1 skew=-1 | 0.5928 | 0.5 | 0.0655 | 0.5362 | 0 | 0 |
+  | r16 | log-skewed left sd=1 skew=-0.5 | 0.6413 | 0.5 | 0.1155 | 0.5191 | 0 | 0 |
+  | r17 | log-skewed right sd=1 skew=+2 |  | 0.5 | 0.2929 | 0.4438 | 103 | 0 |
+  | r18 | log-skewed right sd=1 skew=+1 | 0.8034 | 0.5 | 0.2314 | 0.4638 | 104 | 0 |
+  | r19 | log-skewed right sd=1 skew=+0.5 | 0.7446 | 0.5 | 0.1968 | 0.4809 | 0 | 0 |
+  | r20 | lognormal sigma=1 | 0.6915 | 0.5 | 0.1587 | 0.5 | 0 | 0 |
+  | r21 | bimodal equal modes | 0.5081 | 0.5 | 0.2341 | 0.3742 | 0 | 0 |
+  | r22 | bimodal left mode higher | 0.6503 | 0.5 | 0.2841 | 0.4063 | 0 | 0 |
+  | r23 | bimodal right mode higher | 0.4111 | 0.5 | 0.1848 | 0.5937 | 0 | 0 |
+  | r24 | normal straddling zero mean=0 | 0.5 | 0.5 | 0.5 | 0.7743 | 0 | 100 |
+  | r25 | normal straddling zero mean=0.5 | 0.5 | 0.5 | 0.3085 | 0.6858 | 0 | 101 |
+  | r26 | normal straddling zero mean=1 | 0.5 | 0.5 | 0.1587 | 0.6128 | 0 | 101 |
+  | r27 | lognormal sigma=0.5 with zeros p0=0.25 | 0.5293 | 0.5 |  | 0.625 | 0 | 77 |
+  | r28 | lognormal sigma=0.5 with zeros p0=0.42 | 0.5364 | 0.5 |  | 0.71 | 0 | 59 |
+  | r29 | lognormal sigma=0.5 with zeros p0=0.47 | 0.5516 | 0.5 |  | 0.47 | 0 | 55 |
+  | r30 | lognormal sigma=0.5 with zeros p0=0.6 | 0.6227 | 0.6 |  | 0.6 | 0 | 41 |
+  | r31 | lognormal sigma=1 with zeros p0=0.25 | 0.6881 | 0.5 |  | 0.625 | 0 | 77 |
+  | r32 | lognormal sigma=1 with zeros p0=0.37 | 0.6945 | 0.5 |  | 0.685 | 0 | 65 |
+  | r33 | lognormal sigma=1 with zeros p0=0.42 | 0.6997 | 0.5 |  | 0.42 | 0 | 59 |
+  | r34 | lognormal sigma=1 with zeros p0=0.6 | 0.7354 | 0.6 |  | 0.6 | 0 | 41 |
+  E13.T4 The candidates a measure ranks first over test sets, for four of the distributions at test-set sizes 6, 100 and 1000: the mean and the 5th, 50th and 95th percentiles of their quantile levels, the share of test sets choosing the preferred candidate, and (MAPE) the test sets in which every candidate's score is infinite; every distribution and size is in the run's CSV and its figure
+  | row | setting | measure | test-set size | mean quantile level of the chosen candidates | percentile of the chosen candidates' quantile levels {percentile: 5} | percentile of the chosen candidates' quantile levels {percentile: 50} | percentile of the chosen candidates' quantile levels {percentile: 95} | share of test sets choosing the preferred candidate | test sets in which every candidate's score is infinite |
+  | r1 | lognormal sigma=1 | RMSE | 6 | 0.6287 | 0.3495 | 0.64 | 0.88 | 0.012 |  |
+  | r2 | lognormal sigma=1 | RMSE | 100 | 0.6868 | 0.61 | 0.68 | 0.77 | 0.041 |  |
+  | r3 | lognormal sigma=1 | RMSE | 1000 | 0.6911 | 0.67 | 0.6915 | 0.7105 | 0.14 |  |
+  | r4 | lognormal sigma=1 | MAE | 6 | 0.4987 | 0.2264 | 0.505 | 0.7566 | 0.02217 |  |
+  | r5 | lognormal sigma=1 | MAE | 100 | 0.4987 | 0.42 | 0.5 | 0.58 | 0.07333 |  |
+  | r6 | lognormal sigma=1 | MAE | 1000 | 0.5002 | 0.47 | 0.5 | 0.53 | 0.256 |  |
+  | r7 | lognormal sigma=1 | MAPE | 6 | 0.237 | 0.0195 | 0.21 | 0.5805 | 0.006 |  |
+  | r8 | lognormal sigma=1 | MAPE | 100 | 0.1614 | 0.09 | 0.1587 | 0.24 | 0.041 |  |
+  | r9 | lognormal sigma=1 | MAPE | 1000 | 0.1594 | 0.13 | 0.16 | 0.19 | 0.123 |  |
+  | r10 | lognormal sigma=1 | sMAPE | 6 | 0.4988 | 0.16 | 0.51 | 0.82 | 0.007 |  |
+  | r11 | lognormal sigma=1 | sMAPE | 100 | 0.4991 | 0.4 | 0.5 | 0.6 | 0.063 |  |
+  | r12 | lognormal sigma=1 | sMAPE | 1000 | 0.5003 | 0.47 | 0.5 | 0.53 | 0.201 |  |
+  | r13 | inverse Gaussian shape=10 | RMSE | 6 | 0.7076 | 0.4 | 0.73 | 0.94 | 0.014 |  |
+  | r14 | inverse Gaussian shape=10 | RMSE | 100 | 0.8129 | 0.74 | 0.82 | 0.87 | 0.053 |  |
+  | r15 | inverse Gaussian shape=10 | RMSE | 1000 | 0.8203 | 0.8 | 0.8219 | 0.84 | 0.175 |  |
+  | r16 | inverse Gaussian shape=10 | MAE | 6 | 0.49 | 0.2355 | 0.48 | 0.7677 | 0.01921 |  |
+  | r17 | inverse Gaussian shape=10 | MAE | 100 | 0.4979 | 0.415 | 0.5 | 0.58 | 0.08996 |  |
+  | r18 | inverse Gaussian shape=10 | MAE | 1000 | 0.5 | 0.47 | 0.5 | 0.52 | 0.25 |  |
+  | r19 | inverse Gaussian shape=10 | MAPE | 6 | 0.1991 | 0.01 | 0.17 | 0.49 | 0.008 |  |
+  | r20 | inverse Gaussian shape=10 | MAPE | 100 | 0.1397 | 0.08 | 0.136 | 0.2 | 0.049 |  |
+  | r21 | inverse Gaussian shape=10 | MAPE | 1000 | 0.1369 | 0.12 | 0.136 | 0.16 | 0.157 |  |
+  | r22 | inverse Gaussian shape=10 | sMAPE | 6 | 0.4576 | 0.1398 | 0.4387 | 0.8305 | 0.008 |  |
+  | r23 | inverse Gaussian shape=10 | sMAPE | 100 | 0.4392 | 0.32 | 0.4387 | 0.56 | 0.025 |  |
+  | r24 | inverse Gaussian shape=10 | sMAPE | 1000 | 0.439 | 0.4 | 0.4387 | 0.48 | 0.084 |  |
+  | r25 | bimodal equal modes | RMSE | 6 | 0.5355 | 0.49 | 0.5081 | 0.69 | 0.223 |  |
+  | r26 | bimodal equal modes | RMSE | 100 | 0.5121 | 0.5081 | 0.5081 | 0.53 | 0.53 |  |
+  | r27 | bimodal equal modes | RMSE | 1000 | 0.5088 | 0.5081 | 0.5081 | 0.51 | 0.65 |  |
+  | r28 | bimodal equal modes | MAE | 6 | 0.4963 | 0.226 | 0.4967 | 0.76 | 0.01697 |  |
+  | r29 | bimodal equal modes | MAE | 100 | 0.5012 | 0.42 | 0.506 | 0.5852 | 0.04309 |  |
+  | r30 | bimodal equal modes | MAE | 1000 | 0.4994 | 0.47 | 0.5 | 0.53 | 0.06 |  |
+  | r31 | bimodal equal modes | MAPE | 6 | 0.255 | 0.04 | 0.25 | 0.47 | 0.011 |  |
+  | r32 | bimodal equal modes | MAPE | 100 | 0.2342 | 0.18 | 0.2341 | 0.29 | 0.056 |  |
+  | r33 | bimodal equal modes | MAPE | 1000 | 0.2344 | 0.21 | 0.2341 | 0.25 | 0.164 |  |
+  | r34 | bimodal equal modes | sMAPE | 6 | 0.4952 | 0.14 | 0.47 | 0.84 | 0.011 |  |
+  | r35 | bimodal equal modes | sMAPE | 100 | 0.5065 | 0.31 | 0.585 | 0.7 | 0.024 |  |
+  | r36 | bimodal equal modes | sMAPE | 1000 | 0.4998 | 0.35 | 0.6 | 0.65 | 0.077 |  |
+  | r37 | lognormal sigma=1 with zeros p0=0.42 | RMSE | 6 | 0.6545 | 0.44 | 0.65 | 0.89 | 0.013 |  |
+  | r38 | lognormal sigma=1 with zeros p0=0.42 | RMSE | 100 | 0.6942 | 0.62 | 0.69 | 0.77 | 0.052 |  |
+  | r39 | lognormal sigma=1 with zeros p0=0.42 | RMSE | 1000 | 0.699 | 0.68 | 0.6997 | 0.72 | 0.124 |  |
+  | r40 | lognormal sigma=1 with zeros p0=0.42 | MAE | 6 | 0.5375 | 0.42 | 0.51 | 0.7502 | 0.02274 |  |
+  | r41 | lognormal sigma=1 with zeros p0=0.42 | MAE | 100 | 0.4988 | 0.42 | 0.495 | 0.585 | 0.07538 |  |
+  | r42 | lognormal sigma=1 with zeros p0=0.42 | MAE | 1000 | 0.4995 | 0.47 | 0.5 | 0.53 | 0.248 |  |
+  | r43 | lognormal sigma=1 with zeros p0=0.42 | MAPE | 6 | 0.5524 | 0.43 | 0.56 | 0.688 |  | 963 |
+  | r44 | lognormal sigma=1 with zeros p0=0.42 | MAPE | 100 |  |  |  |  |  | 1000 |
+  | r45 | lognormal sigma=1 with zeros p0=0.42 | MAPE | 1000 |  |  |  |  |  | 1000 |
+  | r46 | lognormal sigma=1 with zeros p0=0.42 | sMAPE | 6 | 0.5533 | 0.42 | 0.42 | 0.89 | 0.539 |  |
+  | r47 | lognormal sigma=1 with zeros p0=0.42 | sMAPE | 100 | 0.5086 | 0.42 | 0.42 | 0.75 | 0.695 |  |
+  | r48 | lognormal sigma=1 with zeros p0=0.42 | sMAPE | 1000 | 0.4346 | 0.42 | 0.42 | 0.433 | 0.95 |  |
+  E13.T5 The MAPE target derived from each distribution (a median of the actuals weighted by 1/y), where it is finite
+  | row | setting | derived MAPE target |
+  | r1 | inverse Gaussian shape=1000 | 86.51 |
+  | r2 | inverse Gaussian shape=200 | 53.48 |
+  | r3 | inverse Gaussian shape=100 | 34.69 |
+  | r4 | inverse Gaussian shape=50 | 19.7 |
+  | r5 | inverse Gaussian shape=20 | 8.334 |
+  | r6 | inverse Gaussian shape=10 | 4.21 |
+  | r7 | log-skewed left sd=0.5 skew=-2 | 82.43 |
+  | r8 | log-skewed left sd=0.5 skew=-1 | 79.93 |
+  | r9 | log-skewed left sd=0.5 skew=-0.5 | 78.8 |
+  | r10 | log-skewed right sd=0.5 skew=+2 | 76.42 |
+  | r11 | log-skewed right sd=0.5 skew=+1 | 76.67 |
+  | r12 | log-skewed right sd=0.5 skew=+0.5 | 77.17 |
+  | r13 | lognormal sigma=0.5 | 77.88 |
+  | r14 | log-skewed left sd=1 skew=-2 | 0 |
+  | r15 | log-skewed left sd=1 skew=-1 | 18.79 |
+  | r16 | log-skewed left sd=1 skew=-0.5 | 29.44 |
+  | r17 | log-skewed right sd=1 skew=+2 | 52.02 |
+  | r18 | log-skewed right sd=1 skew=+1 | 46.02 |
+  | r19 | log-skewed right sd=1 skew=+0.5 | 42.04 |
+  | r20 | lognormal sigma=1 | 36.79 |
+  | r21 | bimodal equal modes | 36.06 |
+  | r22 | bimodal left mode higher | 35.36 |
+  | r23 | bimodal right mode higher | 37.44 |
+  | r24 | normal straddling zero mean=0 | 0 |
+  | r25 | normal straddling zero mean=0.5 | 0 |
+  | r26 | normal straddling zero mean=1 | 0 |
+  E13.T6 The value of each measure's preferred candidate, for the four distributions of T4
+  | row | setting | measure | value of the preferred candidate |
+  | r1 | lognormal sigma=1 | RMSE | 164.9 |
+  | r2 | lognormal sigma=1 | MAE | 100 |
+  | r3 | lognormal sigma=1 | MAPE | 36.79 |
+  | r4 | lognormal sigma=1 | sMAPE | 100 |
+  | r5 | inverse Gaussian shape=10 | RMSE | 100 |
+  | r6 | inverse Gaussian shape=10 | MAE | 17.85 |
+  | r7 | inverse Gaussian shape=10 | MAPE | 4.21 |
+  | r8 | inverse Gaussian shape=10 | sMAPE | 14.02 |
+  | r9 | bimodal equal modes | RMSE | 159.2 |
+  | r10 | bimodal equal modes | MAE | 100 |
+  | r11 | bimodal equal modes | MAPE | 36.06 |
+  | r12 | bimodal equal modes | sMAPE | 43.49 |
+  | r13 | lognormal sigma=1 with zeros p0=0.42 | RMSE | 95.63 |
+  | r14 | lognormal sigma=1 with zeros p0=0.42 | MAE | 33.63 |
+  | r15 | lognormal sigma=1 with zeros p0=0.42 | sMAPE | 0 |
+E14 [quant; design other] Lab runs RN2 under plan PL4. Design: Flatness design (D18) on 30 distributions (D27): lognormal, log-Gumbel right and log-Gumbel left, with sigma 0.1, 0.25, 0.5, 1, 1.5, 2, 3, 4, 6, 10. Derived (D15) from each: the quantile levels of the sMAPE target and of the log-mode; expected sMAPE at the target and the approximation of H14 there; the number of local minima; for each measure (RMSE, MAE, MAPE, sMAPE) and forecasts e^(k sigma) times its own target (k = -1, -0.5, +0.5, +1: half and one standard deviation of ln y away), the excess expected score over the target's, relative to the target's, where both are finite, and sMAPE's absolute excess; expected sMAPE at quantile levels 0.01 to 0.99. On test sets (10000 per case, seed 5 with the setting's index): the ranking agreement (D20) of each measure between its target and those four forecasts, on the lognormal family (on which every measure has a target), at n = 12, 48, 250 and 1000; the quantile level of the sMAPE minimiser of a test set at n = 48 and 1000 on every distribution. python3 claimset-code/smape-target/flatness.py --seed 5 --reps 10000 (numpy 2.5.3, matplotlib 3.11.2). Analysis: The derived values listed in the design, with 'none' and its reason where a measure targets nothing or its expected score is infinite; the ranking agreement with its 99% Wilson interval; the mean quantile level of the test sets' sMAPE minimisers with a 99% confidence interval and its 5th, 25th, 50th, 75th and 95th percentiles. Figures: the target's quantile level over sigma beside the log-mode's and the median; expected sMAPE over the quantile level of the forecast, a line per sigma; the relative excess over sigma by measure; ranking agreement over sigma by measure and n; the spread of the test sets' sMAPE minimisers over sigma. Compared with H14 (i) and (ii), and with the other measures; no test is made and no threshold is set.
+  setup: studied D10, D11, D12, D2; cases D27; procedure D18, D15; lens D3, D6, D20, D8
+  E14.T1 The sMAPE target as the spread of ln y grows: its quantile level beside the log-mode's, the expected sMAPE there and its large-spread approximation
+  | row | setting | quantile level of the sMAPE target | quantile level of the log-mode | expected sMAPE at the target | large-spread approximation of expected sMAPE at the target | local minima of expected sMAPE |
+  | r1 | lognormal sigma=0.1 | 0.5 | 0.5 | 7.966 | -2012 | 1 |
+  | r2 | log-Gumbel right sigma=0.1 | 0.4989 | 0.3679 | 9.643 | -1724 | 1 |
+  | r3 | log-Gumbel left sigma=0.1 | 0.5011 | 0.6321 | 9.643 | -1724 | 1 |
+  | r4 | lognormal sigma=0.25 | 0.5 | 0.5 | 19.74 | -684.9 | 1 |
+  | r5 | log-Gumbel right sigma=0.25 | 0.494 | 0.3679 | 23.66 | -572.7 | 1 |
+  | r6 | log-Gumbel left sigma=0.25 | 0.506 | 0.6321 | 23.66 | -572.7 | 1 |
+  | r7 | lognormal sigma=0.5 | 0.5 | 0.5 | 38.38 | -242.4 | 1 |
+  | r8 | log-Gumbel right sigma=0.5 | 0.4811 | 0.3679 | 44.85 | -190.4 | 1 |
+  | r9 | log-Gumbel left sigma=0.5 | 0.5189 | 0.6321 | 44.85 | -190.4 | 1 |
+  | r10 | lognormal sigma=1 | 0.5 | 0.5 | 69.94 | -21.22 | 1 |
+  | r11 | log-Gumbel right sigma=1 | 0.4544 | 0.3679 | 77.99 | 1.246 | 1 |
+  | r12 | log-Gumbel left sigma=1 | 0.5456 | 0.6321 | 77.99 | 1.246 | 1 |
+  | r13 | lognormal sigma=1.5 | 0.5 | 0.5 | 93.66 | 52.52 | 1 |
+  | r14 | log-Gumbel right sigma=1.5 | 0.4337 | 0.3679 | 101.2 | 66.06 | 1 |
+  | r15 | log-Gumbel left sigma=1.5 | 0.5663 | 0.6321 | 101.2 | 66.06 | 1 |
+  | r16 | lognormal sigma=2 | 0.5 | 0.5 | 111.2 | 89.39 | 1 |
+  | r17 | log-Gumbel right sigma=2 | 0.4187 | 0.3679 | 117.9 | 98.93 | 1 |
+  | r18 | log-Gumbel left sigma=2 | 0.5813 | 0.6321 | 117.9 | 98.93 | 1 |
+  | r19 | lognormal sigma=3 | 0.5 | 0.5 | 134.4 | 126.3 | 1 |
+  | r20 | log-Gumbel right sigma=3 | 0.3999 | 0.3679 | 139.5 | 132.3 | 1 |
+  | r21 | log-Gumbel left sigma=3 | 0.6001 | 0.6321 | 139.5 | 132.3 | 1 |
+  | r22 | lognormal sigma=4 | 0.5 | 0.5 | 148.5 | 144.7 | 1 |
+  | r23 | log-Gumbel right sigma=4 | 0.3894 | 0.3679 | 152.5 | 149.1 | 1 |
+  | r24 | log-Gumbel left sigma=4 | 0.6106 | 0.6321 | 152.5 | 149.1 | 1 |
+  | r25 | lognormal sigma=6 | 0.5 | 0.5 | 164.4 | 163.1 | 1 |
+  | r26 | log-Gumbel right sigma=6 | 0.3792 | 0.3679 | 167.1 | 166 | 1 |
+  | r27 | log-Gumbel left sigma=6 | 0.6208 | 0.6321 | 167.1 | 166 | 1 |
+  | r28 | lognormal sigma=10 | 0.5 | 0.5 | 178.2 | 177.9 | 1 |
+  | r29 | log-Gumbel right sigma=10 | 0.3724 | 0.3679 | 179.9 | 179.6 | 1 |
+  | r30 | log-Gumbel left sigma=10 | 0.6276 | 0.6321 | 179.9 | 179.6 | 1 |
+  E14.T2 Ranking agreement: the share of test sets that give a measure's target a lower score than a forecast half a sigma above it, for three of the settings; every setting, offset and size is in the run's CSV and its figure
+  | row | setting | test-set size | D20 {measure: RMSE, offset in sigma: 0.5} | D20 {measure: MAE, offset in sigma: 0.5} | D20 {measure: MAPE, offset in sigma: 0.5} | D20 {measure: sMAPE, offset in sigma: 0.5} |
+  | r1 | lognormal sigma=0.5 | 12 | 0.8282 | 0.7772 | 0.7396 | 0.7557 |
+  | r2 | lognormal sigma=0.5 | 48 | 0.9659 | 0.9421 | 0.9118 | 0.9233 |
+  | r3 | lognormal sigma=0.5 | 250 | 0.9998 | 0.9999 | 0.9994 | 0.9994 |
+  | r4 | lognormal sigma=0.5 | 1000 | 1 | 1 | 1 | 1 |
+  | r5 | lognormal sigma=4 | 12 | 0.9826 | 0.8226 | 0.0012 | 0.605 |
+  | r6 | lognormal sigma=4 | 48 | 0.9792 | 0.9705 | 0.0059 | 0.6989 |
+  | r7 | lognormal sigma=4 | 250 | 0.9759 | 1 | 0.0337 | 0.8823 |
+  | r8 | lognormal sigma=4 | 1000 | 0.9771 | 1 | 0.0928 | 0.9909 |
+  E14.T3 How much worse a forecast half a sigma or one sigma below or above the target scores, as a share of the score at the target, for lognormal outcomes
+  | row | setting | offset in sigma | excess expected score over the target, relative {measure: RMSE} | excess expected score over the target, relative {measure: MAE} | excess expected score over the target, relative {measure: MAPE} | excess expected score over the target, relative {measure: sMAPE} | excess expected sMAPE over the target {measure: sMAPE} |
+  | r1 | lognormal sigma=0.5 | -1.0 | 0.243 | 0.3083 | 0.3083 | 0.4212 | 16.17 |
+  | r2 | lognormal sigma=0.5 | -0.5 | 0.08271 | 0.09554 | 0.09555 | 0.1131 | 4.34 |
+  | r3 | lognormal sigma=0.5 | 0.5 | 0.1331 | 0.1331 | 0.1331 | 0.1131 | 4.34 |
+  | r4 | lognormal sigma=0.5 | 1.0 | 0.5753 | 0.594 | 0.594 | 0.4212 | 16.17 |
+  | r5 | lognormal sigma=2 | -1.0 | 0.00695 | 0.03174 | 0.03174 | 0.2279 | 25.34 |
+  | r6 | lognormal sigma=2 | -0.5 | 0.003721 | 0.01468 | 0.01469 | 0.06482 | 7.207 |
+  | r7 | lognormal sigma=2 | 0.5 | 0.02717 | 0.05527 | 0.05527 | 0.06482 | 7.207 |
+  | r8 | lognormal sigma=2 | 1.0 | 0.3273 | 0.4305 | 0.4304 | 0.2279 | 25.34 |
+  | r9 | lognormal sigma=6 | -1.0 | 0 | 1.945e-09 | 1.986e-09 | 0.08104 | 13.32 |
+  | r10 | lognormal sigma=6 | -0.5 | 0 | 1.603e-09 | 1.639e-09 | 0.02395 | 3.937 |
+  | r11 | lognormal sigma=6 | 0.5 | 4.241e-14 | 8.113e-08 | 8.152e-08 | 0.02395 | 3.937 |
+  | r12 | lognormal sigma=6 | 1.0 | 1.878e-11 | 3.623e-06 | 3.649e-06 | 0.08104 | 13.32 |
+  E14.T4 Where the sMAPE minimiser of a test set falls: the mean and the 5th, 50th and 95th percentiles of its quantile level over test sets
+  | row | setting | test-set size | mean quantile level of the sMAPE minimiser of a test set | percentile of the quantile level of the sMAPE minimiser of a test set {percentile: 5} | percentile of the quantile level of the sMAPE minimiser of a test set {percentile: 50} | percentile of the quantile level of the sMAPE minimiser of a test set {percentile: 95} |
+  | r1 | lognormal sigma=0.1 | 48 | 0.5004 | 0.3764 | 0.4998 | 0.6251 |
+  | r2 | lognormal sigma=0.1 | 1000 | 0.5 | 0.4742 | 0.4997 | 0.5263 |
+  | r3 | log-Gumbel right sigma=0.1 | 48 | 0.4896 | 0.3697 | 0.4893 | 0.6081 |
+  | r4 | log-Gumbel right sigma=0.1 | 1000 | 0.4986 | 0.4724 | 0.4987 | 0.5245 |
+  | r5 | log-Gumbel left sigma=0.1 | 48 | 0.5091 | 0.3897 | 0.5093 | 0.6263 |
+  | r6 | log-Gumbel left sigma=0.1 | 1000 | 0.5012 | 0.4752 | 0.5013 | 0.5275 |
+  | r7 | lognormal sigma=0.25 | 48 | 0.5 | 0.3762 | 0.499 | 0.6242 |
+  | r8 | lognormal sigma=0.25 | 1000 | 0.4997 | 0.4729 | 0.4999 | 0.526 |
+  | r9 | log-Gumbel right sigma=0.25 | 48 | 0.4897 | 0.3741 | 0.4892 | 0.6057 |
+  | r10 | log-Gumbel right sigma=0.25 | 1000 | 0.4942 | 0.4682 | 0.4941 | 0.5206 |
+  | r11 | log-Gumbel left sigma=0.25 | 48 | 0.5116 | 0.3929 | 0.5116 | 0.6293 |
+  | r12 | log-Gumbel left sigma=0.25 | 1000 | 0.5062 | 0.4801 | 0.5064 | 0.5321 |
+  | r13 | lognormal sigma=0.5 | 48 | 0.5003 | 0.3776 | 0.5002 | 0.624 |
+  | r14 | lognormal sigma=0.5 | 1000 | 0.4999 | 0.4728 | 0.4999 | 0.5274 |
+  | r15 | log-Gumbel right sigma=0.5 | 48 | 0.483 | 0.3603 | 0.482 | 0.6085 |
+  | r16 | log-Gumbel right sigma=0.5 | 1000 | 0.4809 | 0.4529 | 0.481 | 0.5087 |
+  | r17 | log-Gumbel left sigma=0.5 | 48 | 0.5175 | 0.3935 | 0.518 | 0.6407 |
+  | r18 | log-Gumbel left sigma=0.5 | 1000 | 0.5187 | 0.4908 | 0.5189 | 0.5467 |
+  | r19 | lognormal sigma=1 | 48 | 0.4996 | 0.359 | 0.4995 | 0.6414 |
+  | r20 | lognormal sigma=1 | 1000 | 0.5001 | 0.4681 | 0.5002 | 0.5316 |
+  | r21 | log-Gumbel right sigma=1 | 48 | 0.4558 | 0.3164 | 0.4545 | 0.6006 |
+  | r22 | log-Gumbel right sigma=1 | 1000 | 0.4546 | 0.4229 | 0.4544 | 0.4874 |
+  | r23 | log-Gumbel left sigma=1 | 48 | 0.5438 | 0.3957 | 0.5461 | 0.684 |
+  | r24 | log-Gumbel left sigma=1 | 1000 | 0.5458 | 0.5131 | 0.5458 | 0.5776 |
+  | r25 | lognormal sigma=1.5 | 48 | 0.5002 | 0.3364 | 0.4996 | 0.6636 |
+  | r26 | lognormal sigma=1.5 | 1000 | 0.4997 | 0.4613 | 0.4995 | 0.5376 |
+  | r27 | log-Gumbel right sigma=1.5 | 48 | 0.4367 | 0.2755 | 0.4325 | 0.6074 |
+  | r28 | log-Gumbel right sigma=1.5 | 1000 | 0.4341 | 0.395 | 0.434 | 0.4726 |
+  | r29 | log-Gumbel left sigma=1.5 | 48 | 0.5617 | 0.3874 | 0.5637 | 0.7247 |
+  | r30 | log-Gumbel left sigma=1.5 | 1000 | 0.566 | 0.5268 | 0.5666 | 0.604 |
+  | r31 | lognormal sigma=2 | 48 | 0.5024 | 0.3106 | 0.5019 | 0.6923 |
+  | r32 | lognormal sigma=2 | 1000 | 0.5001 | 0.4536 | 0.5001 | 0.5468 |
+  | r33 | log-Gumbel right sigma=2 | 48 | 0.4254 | 0.25 | 0.4194 | 0.6192 |
+  | r34 | log-Gumbel right sigma=2 | 1000 | 0.4191 | 0.3732 | 0.4189 | 0.4667 |
+  | r35 | log-Gumbel left sigma=2 | 48 | 0.5719 | 0.3763 | 0.5772 | 0.751 |
+  | r36 | log-Gumbel left sigma=2 | 1000 | 0.5808 | 0.5333 | 0.5815 | 0.6256 |
+  | r37 | lognormal sigma=3 | 48 | 0.4977 | 0.2756 | 0.4992 | 0.7205 |
+  | r38 | lognormal sigma=3 | 1000 | 0.4994 | 0.4346 | 0.4991 | 0.5664 |
+  | r39 | log-Gumbel right sigma=3 | 48 | 0.4154 | 0.2121 | 0.4074 | 0.6461 |
+  | r40 | log-Gumbel right sigma=3 | 1000 | 0.4013 | 0.3385 | 0.4005 | 0.4676 |
+  | r41 | log-Gumbel left sigma=3 | 48 | 0.5845 | 0.3526 | 0.5917 | 0.7901 |
+  | r42 | log-Gumbel left sigma=3 | 1000 | 0.5986 | 0.5307 | 0.5998 | 0.6617 |
+  | r43 | lognormal sigma=4 | 48 | 0.4985 | 0.2581 | 0.4984 | 0.7413 |
+  | r44 | lognormal sigma=4 | 1000 | 0.4998 | 0.4134 | 0.4999 | 0.5844 |
+  | r45 | log-Gumbel right sigma=4 | 48 | 0.4088 | 0.1874 | 0.4003 | 0.6567 |
+  | r46 | log-Gumbel right sigma=4 | 1000 | 0.3917 | 0.3132 | 0.3895 | 0.4769 |
+  | r47 | log-Gumbel left sigma=4 | 48 | 0.5887 | 0.3387 | 0.5973 | 0.8117 |
+  | r48 | log-Gumbel left sigma=4 | 1000 | 0.6082 | 0.5207 | 0.6106 | 0.6879 |
+  | r49 | lognormal sigma=6 | 48 | 0.4987 | 0.2382 | 0.4976 | 0.7646 |
+  | r50 | lognormal sigma=6 | 1000 | 0.5004 | 0.3866 | 0.5013 | 0.613 |
+  | r51 | log-Gumbel right sigma=6 | 48 | 0.4083 | 0.1684 | 0.3992 | 0.6722 |
+  | r52 | log-Gumbel right sigma=6 | 1000 | 0.3839 | 0.2797 | 0.3811 | 0.4981 |
+  | r53 | log-Gumbel left sigma=6 | 48 | 0.5899 | 0.3167 | 0.5986 | 0.8314 |
+  | r54 | log-Gumbel left sigma=6 | 1000 | 0.6157 | 0.5036 | 0.6187 | 0.7188 |
+  | r55 | lognormal sigma=10 | 48 | 0.4999 | 0.2216 | 0.5004 | 0.7798 |
+  | r56 | lognormal sigma=10 | 1000 | 0.5001 | 0.3594 | 0.4997 | 0.6419 |
+  | r57 | log-Gumbel right sigma=10 | 48 | 0.4071 | 0.153 | 0.3956 | 0.698 |
+  | r58 | log-Gumbel right sigma=10 | 1000 | 0.3805 | 0.2529 | 0.3767 | 0.5195 |
+  | r59 | log-Gumbel left sigma=10 | 48 | 0.5915 | 0.304 | 0.5986 | 0.8482 |
+  | r60 | log-Gumbel left sigma=10 | 1000 | 0.6188 | 0.4813 | 0.6227 | 0.7469 |
+E15 [quant; design other] Lab runs RN7 under plan PL2. Design: Efficiency design (D17) on 16 log-symmetric distributions (D26): lognormal sigma and log-Laplace b, each 0.25, 0.5, 1, 1.5, 2, 3, 4, 6. Test sets of n = 6, 8, 12, 13, 14, 18, 24, 36, 48, 100, 250, 500, 1000 and 10000 outcomes, 10000 test sets per size, seed 4 with the setting's index and n. In each test set: the sample median and the exact sMAPE minimiser (D8). From each distribution, derived (D15): the large-sample n Var of ln of each, from H11, and their ratio. python3 claimset-code/smape-target/efficiency.py --seed 4 --reps 10000 (numpy 2.5.3, matplotlib 3.11.2). Analysis: Per distribution and n, over test sets: the variances of ln(sample median) and ln(sMAPE minimiser); the relative efficiency (D9) with a 99% bootstrap percentile interval (2000 resamples of test sets); the ratio of their mean squared errors about the true median; the mean of ln(sMAPE minimiser) minus ln(median). Per distribution: the asymptotic relative efficiency. Figure: relative efficiency over n, a panel per distribution, with its band, the asymptotic value dashed and 1 dotted. Compared with H11 and H14 (iii); no test is made and no threshold is set.
+  setup: studied D8, D11; cases D26; procedure D17, D15; lens D9
+  E15.T1 Relative efficiency of the sMAPE minimiser of a test set against the sample median, at test-set sizes 6, 12, 100, 1000 and 10000, beside its large-sample value
+  | row | setting | D9 {test-set size: 6} | D9 {test-set size: 12} | D9 {test-set size: 100} | D9 {test-set size: 1000} | D9 {test-set size: 10000} | asymptotic relative efficiency |
+  | r1 | lognormal sigma=0.25 | 0.6059 | 0.7026 | 0.8996 | 0.9662 | 0.9701 | 0.9696 |
+  | r2 | lognormal sigma=0.5 | 0.611 | 0.7083 | 0.8802 | 0.885 | 0.8906 | 0.8881 |
+  | r3 | lognormal sigma=1 | 0.6067 | 0.6555 | 0.6524 | 0.6659 | 0.6565 | 0.6601 |
+  | r4 | lognormal sigma=1.5 | 0.5484 | 0.5123 | 0.4595 | 0.4633 | 0.45 | 0.454 |
+  | r5 | lognormal sigma=2 | 0.501 | 0.4392 | 0.323 | 0.3077 | 0.3043 | 0.3073 |
+  | r6 | lognormal sigma=3 | 0.4381 | 0.3646 | 0.2058 | 0.1557 | 0.1513 | 0.1474 |
+  | r7 | lognormal sigma=4 | 0.4148 | 0.3272 | 0.1561 | 0.08898 | 0.07892 | 0.07778 |
+  | r8 | lognormal sigma=6 | 0.3933 | 0.3027 | 0.1229 | 0.05076 | 0.03174 | 0.0279 |
+  | r9 | log-Laplace b=0.25 | 0.7049 | 0.8268 | 0.9769 | 0.9918 | 0.9969 | 0.9969 |
+  | r10 | log-Laplace b=0.5 | 0.6989 | 0.819 | 0.9448 | 0.9779 | 0.9753 | 0.9765 |
+  | r11 | log-Laplace b=1 | 0.667 | 0.6887 | 0.8479 | 0.8763 | 0.8853 | 0.8953 |
+  | r12 | log-Laplace b=1.5 | 0.5766 | 0.5947 | 0.6989 | 0.7789 | 0.7804 | 0.8035 |
+  | r13 | log-Laplace b=2 | 0.5179 | 0.5036 | 0.612 | 0.683 | 0.7079 | 0.7206 |
+  | r14 | log-Laplace b=3 | 0.4672 | 0.4365 | 0.4586 | 0.5257 | 0.5628 | 0.5902 |
+  | r15 | log-Laplace b=4 | 0.4353 | 0.3764 | 0.3496 | 0.4267 | 0.4803 | 0.4968 |
+  | r16 | log-Laplace b=6 | 0.4167 | 0.3492 | 0.2667 | 0.2896 | 0.3441 | 0.3753 |
+  E15.T2 Bias and variance at test-set sizes 12 and 1000, for spreads 0.25, 1 and 6: the mean of ln(sMAPE minimiser) minus ln(median), and the variances of ln(sample median) and ln(sMAPE minimiser); every setting and size is in the run's CSV
+  | row | setting | test-set size | mean of ln(sMAPE minimiser) minus ln(median) | variance of ln(sample median) | variance of ln(sMAPE minimiser) | ratio of mean squared errors about the true median |
+  | r1 | lognormal sigma=0.25 | 12 | 0.0008431 | 0.007228 | 0.01029 | 0.7026 |
+  | r2 | lognormal sigma=0.25 | 1000 | 3.788e-05 | 9.802e-05 | 0.0001015 | 0.9662 |
+  | r3 | lognormal sigma=1 | 12 | 0.0007662 | 0.1159 | 0.1768 | 0.6555 |
+  | r4 | lognormal sigma=1 | 1000 | 9.852e-05 | 0.001587 | 0.002383 | 0.6659 |
+  | r5 | lognormal sigma=6 | 12 | 0.002108 | 4.287 | 14.17 | 0.3027 |
+  | r6 | lognormal sigma=6 | 1000 | -0.02091 | 0.05714 | 1.126 | 0.05074 |
+  | r7 | log-Laplace b=0.25 | 12 | -0.0004367 | 0.007304 | 0.008834 | 0.8268 |
+  | r8 | log-Laplace b=0.25 | 1000 | 0.0001574 | 6.678e-05 | 6.733e-05 | 0.9918 |
+  | r9 | log-Laplace b=1 | 12 | 0.001393 | 0.1191 | 0.173 | 0.6887 |
+  | r10 | log-Laplace b=1 | 1000 | 0.0003075 | 0.001055 | 0.001204 | 0.8764 |
+  | r11 | log-Laplace b=6 | 12 | 0.02118 | 4.267 | 12.22 | 0.3492 |
+  | r12 | log-Laplace b=6 | 1000 | 0.002973 | 0.03773 | 0.1303 | 0.2896 |
+E16 [quant; design other] Lab runs RN10 under plan PL11. Design: Exact computation, with no sampling, of the forecasts that minimise the expected msMAPE term and the expected sMAPE term (claimset-code/smape-target/msmape_targets.py, run once): by Gauss-Legendre quadrature of the density of ln y for continuous distributions (with zeros added as a point mass) and by sums for counts, minimised over forecasts f >= 0 on a grid of 0 and 4000 log-spaced points refined by golden section. Settings: away from zero, lognormal sigma 0.5 and 1, inverse Gaussian shape 10 and 100 and log-skewed sd 1 with skewness -1 and +1, all at median about 100; near zero, lognormal sigma 1 at median 1 and at median 100 with shares of zeros 0, 0.2, 0.4, 0.6 and 0.8; counts, Poisson with means 0.3, 0.5, 1, 1.5, 3 and 10. For the lognormal sigma 1 at medians 1 and 100, the share of zeros at which each measure switches to the forecast 0, by bisection. Analysis: For each setting and measure: the target, its quantile level and the expected score there; for each setting, the relative difference of the msMAPE target from the sMAPE target; and the two zero thresholds. Reported as tables, with no decision rule.
+  setup: studied D28, D1; cases D25, D30; procedure D15; lens D29, D6
+  E16.T1 The msMAPE target beside the sMAPE target, with their quantile levels and the relative difference of the msMAPE target from the sMAPE target
+  | row | setting | target {measure: sMAPE} | target {measure: msMAPE} | quantile level of the target {measure: sMAPE} | quantile level of the target {measure: msMAPE} | relative difference of the msMAPE target from the sMAPE target | share of zero outcomes |
+  | r1 | lognormal sigma=0.5 | 100 | 100 | 0.5 | 0.5 | -1.403e-05 | 0 |
+  | r2 | lognormal sigma=1 | 100 | 99.98 | 0.5 | 0.4999 | -0.0001834 | 0 |
+  | r3 | inverse Gaussian shape=10 | 14.02 | 13.98 | 0.4387 | 0.438 | -0.002701 | 0 |
+  | r4 | inverse Gaussian shape=100 | 66.53 | 66.52 | 0.4929 | 0.4929 | -0.0001284 | 0 |
+  | r5 | log-skewed left sd=1 skew=-1 | 128.3 | 128.2 | 0.5362 | 0.5361 | -0.0002099 | 0 |
+  | r6 | log-skewed right sd=1 skew=+1 | 77.96 | 77.96 | 0.4638 | 0.4638 | -4.995e-05 | 0 |
+  | r7 | lognormal median=1 sigma=1 | 1 | 0.9846 | 0.5 | 0.4938 | -0.01536 | 0 |
+  | r8 | lognormal median=1 sigma=1 with zeros p0=0.2 | 1 | 0.9054 | 0.6 | 0.5683 | -0.0946 | 0.2 |
+  | r9 | lognormal median=1 sigma=1 with zeros p0=0.4 | 0 | 0.1702 | 0.4 | 0.423 |  | 0.4 |
+  | r10 | lognormal median=1 sigma=1 with zeros p0=0.6 | 0 | 0 | 0.6 | 0.6 | 0 | 0.6 |
+  | r11 | lognormal median=1 sigma=1 with zeros p0=0.8 | 0 | 0 | 0.8 | 0.8 | 0 | 0.8 |
+  | r12 | lognormal median=100 sigma=1 | 100 | 99.98 | 0.5 | 0.4999 | -0.0001834 | 0 |
+  | r13 | lognormal median=100 sigma=1 with zeros p0=0.2 | 100 | 99.89 | 0.6 | 0.5997 | -0.001093 | 0.2 |
+  | r14 | lognormal median=100 sigma=1 with zeros p0=0.4 | 0 | 0 | 0.4 | 0.4 | 0 | 0.4 |
+  | r15 | lognormal median=100 sigma=1 with zeros p0=0.6 | 0 | 0 | 0.6 | 0.6 | 0 | 0.6 |
+  | r16 | lognormal median=100 sigma=1 with zeros p0=0.8 | 0 | 0 | 0.8 | 0.8 | 0 | 0.8 |
+  | r17 | Poisson mean=0.3 | 0 | 0 | 0.7408 | 0.7408 | 0 | 0.7408 |
+  | r18 | Poisson mean=0.5 | 0 | 0 | 0.6065 | 0.6065 | 0 | 0.6065 |
+  | r19 | Poisson mean=1 | 1 | 1 | 0.7358 | 0.7358 | 0 | 0.3679 |
+  | r20 | Poisson mean=1.5 | 2 | 2 | 0.8088 | 0.8088 | 0 | 0.2231 |
+  | r21 | Poisson mean=3 | 3 | 3 | 0.6472 | 0.6472 | 0 | 0.04979 |
+  | r22 | Poisson mean=10 | 10 | 10 | 0.583 | 0.583 | 0 | 4.54e-05 |
+  E16.T2 The share of zeros at which each measure's target switches to the forecast 0, for lognormal outcomes with sigma 1
+  | row | setting | zero threshold {measure: sMAPE} | zero threshold {measure: msMAPE} |
+  | r1 | lognormal median=1 sigma=1 | 0.394 | 0.47 |
+  | r2 | lognormal median=100 sigma=1 | 0.394 | 0.3937 |
+E17 [quant; design other] Numerical checks of the formulas of C17 ([[D31:formula checks]]), lab run RN9 under the formal plan that decided it: parts (a), (b) and (c) on 200000 random pairs of any sign and scale, with exact zeros and pairs near the switch at |y|+|f| = 0.5; every check is within the plan's tolerances.
+  setup: studied D28, D1; procedure D31
+  E17.T1 maximum absolute difference between m and s (|y|+|f|)/(|y|+|f|+eps) where |y|+|f| >= 0.5, violations of 5/6 <= (|y|+|f|)/(|y|+|f|+eps) <= 1 where |y|+|f| >= 0.5, maximum absolute difference between m and |y-f|/(0.5+eps) where |y|+|f| < 0.5, violations of 0 <= m < 1, msMAPE term of a zero forecast of a zero actual, maximum absolute difference between m(0, f) and |f|/(0.5+eps) for 0 < |f| < 0.5, pairs with |y|+|f| >= 0.5, pairs with |y|+|f| < 0.5; pairs: 200000, seed: 7 (lab runs RN9) {pairs: 200000, seed: 7}
+  | row | maximum absolute difference between m and s (|y|+|f|)/(|y|+|f|+eps) where |y|+|f| >= 0.5 | violations of 5/6 <= (|y|+|f|)/(|y|+|f|+eps) <= 1 where |y|+|f| >= 0.5 | maximum absolute difference between m and |y-f|/(0.5+eps) where |y|+|f| < 0.5 | violations of 0 <= m < 1 | msMAPE term of a zero forecast of a zero actual | maximum absolute difference between m(0, f) and |f|/(0.5+eps) for 0 < |f| < 0.5 | pairs with |y|+|f| >= 0.5 | pairs with |y|+|f| < 0.5 |
+  | r1 | 1.11e-16 | 0 | 0 | 0 | 0 | 0 | 132884 | 67116 |
+E18 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C1 (section H1 of the proof document A1, rendered in A2). Only the ratio of the actual to the forecast matters, not their size.
+  S1 Since $y$ and $f$ are positive, $|y| + |f| = y + f$. So $s = |y - f|/(y + f)$. (by D1; algebra)
+  S2 Dividing the numerator and the denominator by $f > 0$ gives $\dfrac{|y-f|/f}{(y+f)/f}$. Since $f > 0$, $|y - f|/f = |(y - f)/f| = |r - 1|$. And $(y+f)/f = r + 1$. (by S1; algebra)
+  S3 So $s = |r - 1|/(r + 1)$. The contribution depends only on the ratio of actual to forecast. (by S2; conclusion)
+E19 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C2 (section H2 of the proof document A1, rendered in A2). SMAPE is symmetric in ratios. It favours a high forecast only when errors are compared in absolute terms.
+  S1 By C1, $s = |r - 1|/(r + 1)$. Replacing $r$ by $1/r$ gives $\dfrac{|1/r - 1|}{1/r + 1}$. Multiplying the numerator and the denominator by $r > 0$ gives $\dfrac{|1 - r|}{1 + r}$, the same value. (by C1; algebra)
+  S2 The forecast $f = ky$ has $r = 1/k$, and $f = y/k$ has $r = k$. By step 1 they score the same. This is (a). (by S1; algebra)
+  S3 The forecasts $y + e$ and $y - e$ are both $e$ away from $y$, so both numerators are $e$. The denominators are $y + (y + e) = 2y + e$ and $y + (y - e) = 2y - e > 0$. The larger denominator gives the smaller value. This is (b). (by S2; algebra)
+  S4 So sMAPE treats a forecast $k$ times too high and one $k$ times too low alike. It favours the high forecast only when the two are equally wrong in absolute terms. (by S3; conclusion)
+E20 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C3 (section H3 of the proof document A1, rendered in A2). SMAPE measures the error on the log scale. For small errors it is half the absolute log error; for large errors it levels off.
+  S1 Write $z = \ln y - \ln f$, so that $r = y/f = e^z$. By C1, $s = \dfrac{|e^z - 1|}{e^z + 1}$. (by C1; definition)
+  S2 Multiplying the numerator and the denominator of $\dfrac{e^z - 1}{e^z + 1}$ by $e^{-z/2}$ gives $\dfrac{e^{z/2} - e^{-z/2}}{e^{z/2} + e^{-z/2}} = \tanh(z/2)$. The denominator is positive, so $s = |\tanh(z/2)|$. (by S1; algebra)
+  S3 $\tanh$ changes only its sign when its argument changes sign: $\tanh(-x) = -\tanh(x)$, as the definition shows. So $|\tanh(z/2)| = \tanh(|z|/2)$, which is the stated form. (by S2; algebra)
+  S4 For (a): $\tanh$ is 0 at 0. On $[0, \infty)$ it is strictly increasing and concave, and it approaches 1 as its argument grows; its derivative $1 - \tanh^2 x$ is positive and decreasing for $x > 0$. With the argument $|\ln y - \ln f|/2$, $s$ has these properties in $|\ln y - \ln f|$. (by S3; monotonicity)
+  S5 For (b): for every $x \ge 0$, $x - x^3/3 \le \tanh x \le x$. Putting $x = |\ln y - \ln f|/2$ gives the bounds. (by S4; algebra)
+  S6 The mean of $|\ln y_t - \ln f|$ over a test set is minimised when $\ln f$ is a median of the $\ln y_t$. Since the logarithm is increasing, this is when $f$ is a median of the $y_t$. (by S5; monotonicity)
+  S7 So $s = \tanh(|\ln y - \ln f|/2)$. It rises from 0 like half the absolute log error and levels off at 1. (by S6; conclusion)
+E21 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C9 (section H4 of the proof document A1, rendered in A2). The expected values of RMSE, MAE and MAPE become infinite for every forecast when the actuals have an infinite moment, such as an infinite mean (a heavy tail, C8). The expected sMAPE never does, and there is always a best forecast.
+  S1 Finite. For positive values, $s = \tanh(|\ln y - \ln f|/2)$ (C3), which lies between 0 and 1. For any signs, $|y - f| \le |y| + |f|$, so again $s \le 1$. A quantity between 0 and 1 has an expectation between 0 and 1, so the expected sMAPE is between 0 and 200, whatever the actuals. (by C3; earlier result)
+  S2 A best forecast. Write $\mathrm E[s(Y,f)]$ for the expectation over the random actual $Y$. As $f$ approaches 0 or grows without bound, $|\ln y - \ln f|$ grows for every positive $y$, so $s$ approaches 1 (C3), and so does its expectation. For every positive $f$ it is below 1. It changes continuously with $f$, because $s$ does and is at most 1 (bounded convergence). A continuous function that is below 1 in between and returns towards 1 at both ends reaches a lowest value at some $f > 0$. A forecast of 0 or a negative forecast scores 1 on every positive actual, so it is never better. (by C3, D1; bounded convergence)
+  S3 So the expected sMAPE is always finite, whatever the tails of the actuals. For positive actuals, a forecast with the lowest expected sMAPE always exists. (by S2; conclusion)
+E22 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C4 (section H5 of the proof document A1, rendered in A2). For any distribution, the best forecast balances the actuals below it and above it. Each actual is weighted by how close it is to the forecast by ratio. This also says where the target lies relative to the median.
+  S1 The derivative of $s$. When $y > f > 0$, $s = (y - f)/(y + f)$. By the quotient rule its derivative in $f$ is $\dfrac{-(y+f) - (y-f)}{(y+f)^2} = -2w(y,f)$. When $f > y > 0$, $s = (f - y)/(y + f)$, and in the same way its derivative is $2w(y,f)$. Together: for $y \ne f$, the derivative is $2w(y,f)(\mathbf 1\{y < f\} - \mathbf 1\{y > f\})$. (by D1; quotient rule)
+  S2 A bound on it. Since $(y+f)^2 \ge 4yf$, $w(y,f) \le 1/(4f)$. So the derivative of $s$ is at most $1/(2f)$ in size, whatever $y$. The only actual at which $s$ has no derivative is $y = f$, which has probability zero. (by S1; algebra)
+  S3 The derivative of the expectation. With this bound, the derivative may be taken inside the expectation (dominated convergence):
+$$\frac{d}{df}\,\mathrm E[s(Y,f)] = 2\,\mathrm E\big[w(Y,f)\,(\mathbf 1\{Y < f\} - \mathbf 1\{Y > f\})\big].$$ (by S2; dominated convergence)
+  S4 The balance. A forecast with the lowest expected sMAPE exists (C9). There this derivative is 0, which is the stated balance: half the total weight lies below $f$ and half above. (by C9; earlier result)
+  S5 The weight. With $r = y/f$, $w(y,f) = \dfrac1f\cdot\dfrac{r}{(1+r)^2} = \dfrac1f\cdot\dfrac{1}{r + 2 + 1/r}$. The sum $r + 1/r$ is the same for $r$ and $1/r$. It is smallest, 2, at $r = 1$, and grows as $r$ moves away from 1. So $w$ is largest at $y = f$ and falls as $y/f$ moves away from 1, equally for $r$ and $1/r$. (by S4; algebra)
+  S6 The shape of expected sMAPE. With a single local minimum, the expected sMAPE decreases up to it and increases after it. Otherwise it would turn again, at a local maximum. After that turn it would have to fall and then rise once more, because it returns towards 1 at both ends (C9). That would give a second local minimum. (by C9; earlier result)
+  S7 Where the target lies. At $f = m$, by step 3 the derivative is twice the weight below $m$ minus the weight above $m$. If the actuals above carry more weight, the derivative is negative: the expected sMAPE is decreasing at the median. By step 6, the median then lies before the minimum, so the target is above the median. The case where the actuals below carry more weight is the mirror image. (by S3, S6; symmetry)
+  S8 The second derivative. Measure the forecast on the log scale, $c = \ln f$, so that the expected contribution is $\mathrm E[\tanh(|\ln Y - c|/2)]$ (C3). The derivative of $\tanh(|x - c|/2)$ in $c$ is $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$ for $c < x$ and $+\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$ for $c > x$: it jumps by 1 at $c = x$. Differentiating again and taking the expectation over $x = \ln Y$, the jumps add the density $g$ of $\ln Y$ at $c$, and elsewhere the second derivative is $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)\tanh\big(\tfrac{|x-c|}{2}\big)$. So the second derivative of the expected contribution is
+$$g(c) - \tfrac12\,\mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln Y - c}{2}\Big)\tanh\Big(\frac{|\ln Y - c|}{2}\Big)\Big].$$ (by C3; earlier result)
+  S9 The sufficient condition. If the two weights are equal, the first derivative at the median is 0 (step 3). If, in addition, the stated inequality holds, the second derivative at $c = \ln m$ is positive (step 8), so the median is a strict local minimum. With a single local minimum, it is the target. (by S3, S8; algebra)
+  S10 Without the inequality, a point where the first derivative is 0 can be a flat point of inflection, where the expected sMAPE keeps falling on one side and rising on the other. The independent checker built such a case: a mixture whose only minimum lies far below the median. So equal weights alone do not make the median the target. (by S9; logical argument)
+  S11 So sMAPE targets a weighted median of the actuals. Each actual is weighted by how close it is to the forecast by ratio. The target is above the median when the actuals above the median carry more of this weight, and below it when those below carry more. When the two balance, the median is the target if, in addition, enough actuals lie near it, relative to the pull of those further away, as the stated inequality says. (by S10; conclusion)
+E23 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C5 (section H6 of the proof document A1, rendered in A2). This is the case of C4 in which the weights balance at the median.
+  S1 By C3, $\mathrm E[s(Y,f)] = \mathrm E\big[\tanh\big(|\ln Y - \ln f|/2\big)\big]$. Take a forecast $f = e^{m+t}$ with $t > 0$; the case $t < 0$ is the mirror image. We show that its expected sMAPE is larger than that of $e^m$. (by C3; setup)
+  S2 Write both expectations as integrals over $v$, the distance of $\ln y$ from $\ln f$. For the forecast $e^{m+t}$, $\ln y = m + t + v$; for $e^m$, $\ln y = m + v$. Their difference is
+$$\Delta = \int \tanh(|v|/2)\,\big[g(m+t+v) - g(m+v)\big]\,dv.$$ (by S1; definition)
+  S3 Write $\phi(v) = g(m+t+v) - g(m+v)$. By the symmetry of $g$ about $m$, $\phi(-t-v) = g(m-v) - g(m-t-v) = g(m+v) - g(m+t+v) = -\phi(v)$. So reflecting $v$ about $-t/2$ reverses the sign of $\phi$. (by S2; definition)
+  S4 Split the integral at $-t/2$ and reflect its left part onto the right. This gives
+$$\Delta = \int_{v > -t/2} \big[\tanh(|v|/2) - \tanh(|v+t|/2)\big]\,\phi(v)\,dv.$$ (by S3; algebra)
+  S5 For $v > -t/2$, $v$ is closer to 0 than $v + t$ is: $|v| < |v + t|$. So the bracket is negative, because $\tanh$ is increasing (C3). And $\phi(v) \le 0$ by unimodality: $g(m+t+v) \le g(m+v)$. Their product is $\ge 0$, and $> 0$ on a set of positive probability. So $\Delta > 0$. (by C3; monotonicity)
+  S6 So every forecast other than the median has a larger expected sMAPE. The median is the only forecast that minimises it. (by S5; conclusion)
+E24 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C6 (section H7 of the proof document A1, rendered in A2). When the actuals form two separate groups, the median falls in the gap between them, far from both. So sMAPE scores it worse than forecasts near either group.
+  S1 Write forecasts on the log scale as $\ln f = m + c$. By C3, the expected contribution is $\mathrm E[\tanh(|\ln Y - m - c|/2)]$, a function of $c$. (by C3; setup)
+  S2 Why the median is bad. Take the groups to be single points first. A forecast at the median is $a$ away, on the log scale, from every actual. So its expected $s$ is $\tanh(a/2)$. (by S1; case analysis)
+  S3 A forecast at the mode $m + a$ is exact for half the actuals and $2a$ away from the other half. So its expected $s$ is $\tfrac12\tanh(a)$. Since $\tanh(a) = \dfrac{2\tanh(a/2)}{1 + \tanh^2(a/2)}$, this is $\dfrac{\tanh(a/2)}{1 + \tanh^2(a/2)} < \tanh(a/2)$. The mode is better. (by S2; algebra)
+  S4 The expected $s$ changes continuously as the groups widen from points, because $s$ is bounded and continuous. So the mode is still better for narrow groups. (by S3; continuity)
+  S5 Why the median is a local maximum. By C4, step 8, the second derivative of the expected contribution at the median is
+$$g(m) - \tfrac12\,\mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln Y - m}{2}\Big)\tanh\Big(\frac{|\ln Y - m|}{2}\Big)\Big].$$ (by C4; earlier result)
+  S6 By symmetry the first derivative at the median is 0. When the groups narrow, few actuals lie near the median, so $g(m)$ tends to 0. Meanwhile the expectation tends to $\operatorname{sech}^2(a/2)\tanh(a/2) > 0$. So the second derivative becomes negative, and the median is a local maximum. (by S5; symmetry)
+  S7 A minimiser on each side. The expected sMAPE has a lowest point (C9). It is not at the local maximum $c = 0$. By symmetry, if $c^*$ is a minimiser, so is $-c^*$. (by C9; symmetry)
+  S8 Near the modes. Write $\tanh(|z|/2) = 1 - 2k(z)$, with $k(z) = 1/(1 + e^{|z|})$. The function $k$ is largest at 0 and falls as $|z|$ grows, more slowly the larger $|z|$ is. Minimising the expected $s$ is maximising $\mathrm E[k(\ln Y - m - c)]$. As the groups narrow, this approaches $p\,k(c + a) + (1 - p)\,k(c - a)$, uniformly in $c$. (by S7; definition)
+  S9 With equal weights, take $0 < c < a$. The derivative of this limit is half the rate at which $k$ falls at distance $a - c$, minus half the rate at distance $a + c$. It is positive, because $k$ falls faster nearer 0. For $c > a$ the limit decreases. So on $c > 0$ its only maximum is at $c = a$, and the minimisers on that side approach $a$. By symmetry, those on the other side approach $-a$. This proves (a). (by S8; symmetry)
+  S10 Unequal weights. The limit increases up to $c = -a$ and decreases after $c = a$. In between it is convex, by the argument of step 9. So its maximum is at $-a$ or at $a$. The difference between these two values is $(2p - 1)\big(k(0) - k(2a)\big)$, which is positive when $p > 1/2$. So the maximum, and with it the best forecast for narrow groups, is at the mode of the larger group. This proves (b). (by S9; convexity)
+  S11 So with two separate groups of actuals, the median is a hump of the expected sMAPE. The best forecasts are near the modes, and with unequal groups the larger one wins. As the weights pass through equality, the target jumps from one mode to the other. (by S10; conclusion)
+E25 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C7 (section H8 of the proof document A1, rendered in A2). The worst possible score goes to forecasts of the wrong sign and to zero forecasts. With enough zeros among the actuals, sMAPE prefers the forecast 0. The share of zeros needed is below one half.
+  S1 When $y$ and $f$ have opposite signs, $|y - f| = |y| + |f|$, so $s = 1$. When exactly one of them is 0, the numerator and the denominator both equal the absolute value of the other one, so $s = 1$. (by D1; algebra)
+  S2 A positive forecast scores 1 on every zero actual (step 1). So its expected $s$ is $p_0$ plus $(1 - p_0)$ times its expected $s$ on the positive actuals. This is at least $p_0 + (1-p_0)\,m_+$, with equality at the best positive forecasts, which exist (C9). (by S1, C9; earlier result)
+  S3 The forecast 0 scores 0 on zero actuals and 1 on positive ones. So its expected $s$ is $1 - p_0$. A negative forecast scores 1 on every actual, which is never better than 0. (by S2; algebra)
+  S4 The forecast 0 is better when $1 - p_0 < p_0 + (1 - p_0)m_+$. Collecting the terms in $p_0$ gives $1 - m_+ < p_0(2 - m_+)$. Since $2 - m_+ > 0$, this is the stated inequality. (by S3; algebra)
+  S5 Compare the threshold with $1/2$: $\dfrac{1 - m_+}{2 - m_+} < \dfrac12$ exactly when $2 - 2m_+ < 2 - m_+$, that is, when $m_+ > 0$. And $m_+ > 0$ unless the positive actuals are all one value. (by S4; algebra)
+  S6 So sMAPE switches to the forecast 0 once zeros are frequent enough, and the share needed is below one half. At the threshold, the target jumps from a positive forecast to 0. (by S5; conclusion)
+E26 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C11 (section H9 of the proof document A1, rendered in A2). When actuals can be negative or positive, sMAPE's target is never near zero. It is on the same side of zero as the mean. So a small shift of the mean across zero makes the target jump from a negative value to a positive one.
+  S1 A positive forecast against its mirror image. Take $f > 0$ and compare it with $-f$. An actual $y > 0$ has the sign of $f$, so it scores less than 1 with $f$, and exactly 1 with $-f$ (C7). (by C7; symmetry)
+  S2 The mirror actual $-y$ scores 1 with $f$. By symmetry, it scores the same amount less than 1 with $-f$. So each pair of actuals $y$ and $-y$ favours $f$ when $y$ is the more likely of the two, and $-f$ otherwise. (by S1; symmetry)
+  S3 When $\mu > 0$, every positive actual $y$ is more likely than $-y$, because $y$ is closer to $\mu$ and the density of the actuals falls away from $\mu$. So every pair favours $f$, and $f$ has the lower expected sMAPE. Every best forecast is therefore positive. The case $\mu < 0$ is the mirror image. (by S2; symmetry)
+  S4 Best forecasts exist on each side. For a forecast $f > 0$, the actuals of its sign score below 1 and have positive probability, so its expected $s$ is below 1. As $f$ approaches 0 or grows without bound, every non-zero actual scores close to 1, so the expected $s$ approaches 1. As in C9, the expected $s$ is continuous in $f$ and so reaches a lowest value for $f > 0$; the same holds for $f < 0$. (by C9; continuity)
+  S5 Away from zero, uniformly. Fix a forecast $f_1 > 0$. For every $\mu$ in a range around 0, say $|\mu| \le 1$, its expected $s$ is at most some value $q < 1$, since it changes continuously with $\mu$. For a forecast $f$ with $|f| \le \delta$, every actual with $|y| \ge \sqrt\delta$ scores at least $(\sqrt\delta - \delta)/(\sqrt\delta + \delta)$, which approaches 1 as $\delta$ shrinks; and the share of actuals with $|y| < \sqrt\delta$ is small for every such $\mu$: since $\varepsilon$ is symmetric and its density decreases away from 0, an interval of a given length around 0 holds at least as much of its probability as any other interval of that length, so $P(|\mu + \varepsilon| < \sqrt\delta) \le P(|\varepsilon| < \sqrt\delta)$, which tends to 0 as $\delta$ shrinks. So for $\delta$ small enough, every forecast within $\delta$ of 0 has an expected $s$ above $q$, for every $\mu$ in the range: it is worse than $f_1$ (or its mirror image). The best forecasts therefore stay at least $\delta$ from 0. (by S4; symmetry)
+  S6 So the target is always on the same side of zero as the mean, and never near zero. It jumps from negative to positive as the mean crosses zero. (by S5; conclusion)
+E27 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C8 (section H10 of the proof document A1, rendered in A2). Each of the other three measures has an infinite expected value, for every forecast, when a moment it needs is infinite. What it then rewards depends on the measure.
+  S1 (a) RMSE. If $\mathrm E[Y^2]$ is finite, so is $\mathrm E[Y]$. Expanding the square gives $\mathrm E[(Y-f)^2] = \mathrm E[Y^2] - 2f\,\mathrm E[Y] + f^2$, which is finite. Conversely, $Y^2 \le 2(Y - f)^2 + 2f^2$. So a finite $\mathrm E[(Y-f)^2]$ makes $\mathrm E[Y^2]$ finite. (by D10; algebra)
+  S2 Expanding both squares gives $(Y - f)^2 - (Y - g)^2 = (g - f)(2Y - f - g)$. Its expectation is finite when $\mathrm E[Y]$ is, and equals $(f - g)(f + g - 2\,\mathrm E[Y]) = (f - \mathrm E[Y])^2 - (g - \mathrm E[Y])^2$. (by S1; algebra)
+  S3 For $f = \mathrm E[Y]$ this is negative for every $g \ne \mathrm E[Y]$. So the mean is preferred. (by S2; algebra)
+  S4 If $\mathrm E[Y]$ is infinite, then for $g > f$ the expectation in step 2 is $+\infty$. Every forecast is beaten by any larger one, so none is preferred to all others. (by S2; algebra)
+  S5 (b) MAE. Since $|Y - f| \ge Y - f$, $\mathrm E|Y - f|$ is infinite when $\mathrm E[Y]$ is. Otherwise it is at most $\mathrm E[Y] + |f|$. (by D11; algebra)
+  S6 The difference $|Y - f| - |Y - g|$ is at most $|f - g|$ in size, so its expectation is finite. (by S5; algebra)
+  S7 Its derivative in $f$ is $\mathbf 1\{Y < f\} - \mathbf 1\{Y > f\}$. The expectation of this is $P(Y < f) - P(Y > f)$, which is negative below a median and positive above it. So a median is preferred. (by S6; algebra)
+  S8 (c) MAPE. For $f > 0$, the contribution of an actual to MAPE, divided by 100, is $|Y - f|/Y = |1 - f/Y|$. This is at least $f/Y - 1$. So the expected MAPE is infinite when $\mathrm E[1/Y]$ is, and at most $1 + f\,\mathrm E[1/Y]$ otherwise. (by D12; algebra)
+  S9 As a function of $f$, $|1 - f/Y|$ is convex. Its derivative is $(1/Y)(\mathbf 1\{Y < f\} - \mathbf 1\{Y > f\})$. Its expectation is 0 where the actuals below $f$ and those above it have equal total weight $1/Y$: at a median of the actuals weighted by $1/Y$. (by S8; convexity)
+  S10 The forecast 0 gives $|1 - 0| = 1$ for every actual, so MAPE 100. A negative forecast gives more than 1. So when $\mathrm E[1/Y]$ is infinite, 0 is the only forecast with a finite expected MAPE. (by S9; algebra)
+  S11 If $Y = 0$ with positive probability: for $f \ne 0$ that actual contributes $|f|/0$, which is infinite. For $f = 0$ it contributes $0/0$, which is undefined. (by S10; algebra)
+  S12 So each of RMSE, MAE and MAPE has an infinite expected value when a moment it needs is infinite. RMSE and MAE still rank forecasts by their differences. MAPE turns to the forecast 0, and with zero actuals it targets nothing. (by S11; conclusion)
+E28 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C10 (section H11 of the proof document A1, rendered in A2). For widely spread actuals, every forecast scores close to the worst value. The differences between forecasts shrink, and the target moves from the median to the mode of $\ln Y$.
+  S1 Rewrite the expectation. By C3, and since $\tanh(|x|/2) = 1 - \dfrac{2}{1 + e^{|x|}}$, $\mathrm E[s(Y,f)] = 1 - \mathrm E\big[2/(1 + e^{|\ln Y - \ln f|})\big]$. The density of $\ln Y$ at $x$ is $g\big((x - \mu)/\sigma\big)/\sigma$. Substituting $x = \ln f + v$ in the integral gives
+$$\mathrm E[s(Y,f)] = 1 - \frac1\sigma\int \frac{2}{1 + e^{|v|}}\,g\Big(c + \frac v\sigma\Big)\,dv.$$ (by C3; change of variables)
+  S2 Expand $g$. By Taylor's theorem, $g(c + v/\sigma) = g(c) + g'(c)\,v/\sigma + \tfrac12 g''(\xi)\,v^2/\sigma^2$ for some $\xi$ between $c$ and $c + v/\sigma$. (by S1; Taylor's theorem)
+  S3 The first term integrates to $4\ln 2\,g(c)$, since $\int \frac{2}{1+e^{|v|}}\,dv = 4\ln 2$. Over $v > 0$, $\int 2/(1 + e^v)\,dv = 2\ln 2$. (by S2; algebra)
+  S4 The second term integrates to 0: its factor $v$ changes sign with $v$, while the rest does not. (by S3; algebra)
+  S5 The third term is at most $\tfrac12\max|g''|$ times $\int \frac{2v^2}{1+e^{|v|}}\,dv = 6\zeta(3) \approx 7.21$, divided by $\sigma^2$. This integral is a standard Fermi–Dirac integral. With the factor $1/\sigma$ of step 1, this gives the expansion. (by S1; standard integral)
+  S6 (a). The expansion tends to 1, so the expected sMAPE tends to 200. Two forecasts at fixed quantile levels have fixed positions $c_1$ and $c_2$. So their difference is $4\ln 2\,[g(c_2) - g(c_1)]/\sigma + O(\sigma^{-3})$. (by S5; algebra)
+  S7 (b). Minimising the expansion over $c$ is maximising $g(c)$, up to a term that shrinks like $\sigma^{-2}$ for every $c$ at once. A density with a bounded derivative tends to 0 far out. So its single highest point $c_0$ stands clear of every other point, and the minimisers' positions tend to $c_0$. So do their quantile levels. (by S6; algebra)
+  S8 (c). By C3 (b), $\tfrac12\sigma|\varepsilon - c| - s$ lies between 0 and $\tfrac1{24}\sigma^3|\varepsilon - c|^3$. So for $c$ in any bounded range, $\mathrm E[s]/\sigma = \tfrac12\mathrm E|\varepsilon - c| + O(\sigma^2)$. This uses $\mathrm E|\varepsilon|^3 < \infty$. And $\mathrm E|\varepsilon - c|$ is smallest at the median of $\varepsilon$. (by C3; earlier result)
+  S9 The minimisers also stay in a bounded range. For large $|c|$, most actuals have $\varepsilon$ at least $|c|/2$ from $c$. And $\tanh x \ge x\tanh 1$ for $0 \le x \le 1$. So $\mathrm E[s]/\sigma$ grows with $|c|$, or exceeds a multiple of $1/\sigma$, beyond its value at the median. So the minimisers' positions tend to the median of $\varepsilon$, whose quantile level is $1/2$. (by S8; algebra)
+  S10 So as the actuals spread out, the expected sMAPE flattens towards its bound. Differences between forecasts vanish like $1/\sigma$. The target moves from the median to the mode of $\ln Y$. (by S9; conclusion)
+E29 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C12 from the proofs of C5 and C4 (sections H6 and H5 of the proof document A1): the two cases in which the median of the actuals is the sMAPE target.
+  S1 Case (a): when $\ln Y$ has a density symmetric about $\ln m$ and unimodal, the median $m$ is the only forecast with the lowest expected sMAPE. (by C5; earlier result)
+  S2 Case (b): for positive $Y$ that takes no single value with positive probability, the derivative of $\mathrm E[s(Y,f)]$ in $f$ is $2\,\mathrm E[w(Y,f)(\mathbf 1\{Y<f\} - \mathbf 1\{Y>f\})]$ with $w(y,f) = y/(y+f)^2$ (C4, its proof's step 3). (by C4; earlier result)
+  S3 When the actuals above and below $m$ carry equal total weight with the forecast at $m$, this derivative is 0 at $f = m$. (by S2; substitution)
+  S4 With $c = \ln f$, the second derivative of the expected contribution at $c = \ln m$ is $g(\ln m) - \tfrac12\mathrm E[\operatorname{sech}^2((\ln Y - \ln m)/2)\tanh(|\ln Y - \ln m|/2)]$ (C4, its proof's step 8). The stated inequality makes it positive, so $m$ is a strict local minimum. (by C4, S3; second-derivative test)
+  S5 A forecast with the lowest expected sMAPE exists (C9). When expected sMAPE has a single local minimum, that minimum is the lowest value, so it is at $m$. (by C9, S4; logical argument)
+  S6 In both cases the median $m$ is the sMAPE target. (by S1, S5; conclusion)
+E30 [formal; foundation Kolmogorov probability axioms and real analysis] Proof of C17 (the proof document A5). msMAPE behaves like sMAPE except near zero, where it becomes an absolute error.
+  S1 Which branch of the maximum. $t + \epsilon \ge 0.5 + \epsilon$ exactly when $t \ge 0.5$. So the denominator of $m$ is $t + \epsilon$ when $t \ge 0.5$, and $0.5 + \epsilon$ when $t < 0.5$. (by D1; algebra)
+  S2 (a), the identity. When $t \ge 0.5$, $t > 0$, so $s = |y-f|/t$ and $|y-f| = s\,t$. By step 1, $m = |y-f|/(t+\epsilon) = s\,t/(t+\epsilon)$. (by S1; algebra)
+  S3 (a), the factor. The function $t \mapsto t/(t+\epsilon) = 1 - \epsilon/(t+\epsilon)$ is increasing in $t$, below 1, and tends to 1 as $t$ grows. At $t = 0.5$ it equals $0.5/0.6 = 5/6$. So for $t \ge 0.5$ it lies in $[5/6, 1)$. (by S2; monotonicity)
+  S4 (a), close to $s$, but not a function of the ratio. By steps 2 and 3, $0 \le s - m = s\,\epsilon/(t+\epsilon) \le \epsilon/(t+\epsilon)$, since $s \le 1$ (step 7). So $m$ is within $\epsilon/(t+\epsilon)$ of $s$, which shrinks as $t$ grows. But $m$ depends on the scale: $(y,f) = (1,2)$ and $(10,20)$ have the same ratio and the same $s = 1/3$, while $m = 1/3.1$ and $10/30.1$. So $m$ is not a function of $y/f$ alone. (by S2; algebra)
+  S5 (a), counts. If $y \ge 1$, then $t \ge 1 \ge 0.5$. If $y = 0$, then $t = |f|$, which is at least 0.5 unless $|f| < 0.5$. So on counts only a zero actual with $|f| < 0.5$ has $t < 0.5$. (by S4; algebra)
+  S6 (b). When $t < 0.5$, by step 1, $m = |y-f|/(0.5+\epsilon)$. For $y = f = 0$ this is 0. For $y = 0$ and $|f| < 0.5$ it is $|f|/(0.5+\epsilon)$. And $s(0,f) = |f|/|f| = 1$ for $f \ne 0$, the largest value of $s$ (step 7). (by S1; algebra)
+  S7 (c). $|y - f| \le |y| + |f| = t$ (the triangle inequality), so $s \le 1$. When $t \ge 0.5$, $m \le t/(t+\epsilon) < 1$ (step 3). When $t < 0.5$, $m \le t/(0.5+\epsilon) < 0.5/0.6 < 1$. And $m \ge 0$ because it is a ratio of a non-negative number to a positive one. A quantity between 0 and 1 has an expectation between 0 and 1, whatever the joint distribution of actuals and forecasts, so the expected msMAPE is between 0 and 200. (by S3; algebra)
+  S8 So msMAPE is the sMAPE term shrunk by a factor between 5/6 and 1 wherever $|y| + |f| \ge 0.5$, and an absolute error where $|y| + |f| < 0.5$: it differs from sMAPE in kind only near zero. (by S7; conclusion)
+
+LIMITATIONS
+L1 [analytic_flexibility; affects C13; could_bias_magnitude; mitigation none] Lab run RN1 deviated from plan PL1: RN1 ran at commit 3cb6c7c, not the plan's 92cd9a5. Between them only flatness.py and plot_flatness.py (plan PL3), test_smape.py and measures.py changed; in measures.py the unused function log_mae was removed (the supervisor dropped log-MAE from PL3, DC3). targets.py, theory.py, dists.py and the measures targets.py uses are unchanged. Reason: The commit of the PL3 revision came between PL1's plan and its run; it does not touch what PL1 runs.
+L2 [analytic_flexibility; affects C15; could_bias_magnitude; mitigation none] Lab run RN7 deviated from plan PL2: RN7 ran efficiency.py at commit fa0ce62, not the plan's 92cd9a5: the script runs its 16 settings in parallel processes (one per core) instead of one after another; theory.py also gained a function (balance_exact) that efficiency.py does not use. Each (setting, test-set size) draws from its own seed as before, and on a subset the parallel code and the plan's code gave byte-identical results.json. Reason: Three earlier attempts on one core (over an hour) were killed by container restarts before the lab recorded them (notes NT2.R2, NT5, NT6); in parallel the run finished in about 20 minutes. The analysis, the settings, the seeds and the results are unchanged.
+L3 [sampling; affects C14, C15; reduces_transferability; mitigation none] The test sets are independent draws from a fixed distribution. Real forecast errors are often correlated and their distribution can change over a test period, so a real test set carries less information than the same number of outcomes here.
+L4 [model_specification; affects C13, C14, C15, C16; reduces_transferability; mitigation none] Only the distribution families studied were computed; the formal claims (C4, C10) say what holds beyond them, the simulations only illustrate it.
+
+ARTEFACTS
+A1 [proof] Proofs of the study's formal results (paper numbering H1 to H11; record H1, H2, H3, H13, H4, H5, H7, H8, H31, H12, H14), in Markdown with LaTeX; final version, checked independently by AC4 (proof-check-report.md) and by the supervisor.
+A2 [proof] The same proofs rendered as PDF, final version.
+A3 [figure, diagram] Figure 1 of the proofs: the weight y/(y+f)^2 of an actual on the forecast that minimises expected sMAPE, against y/f on a log scale, relative to its largest value, beside MAE's constant weight; drawn by claimset-code/smape-target/plot_weights.py.
+A4 [other] The independent checker's reports on the proofs (Claude Fable 5.2, lab actor AC4): derivations from the statements alone, then comparisons with the proofs, with its counterexamples and the corrections they led to.
+A5 [proof] Proof of H35 (msMAPE beside sMAPE), in Markdown with LaTeX; checked independently by AC4 (CK26), whose suggested steps 4 and 7 were added after its check.
+A6 [data] Every result of the lab record (15996 results of 10 runs) at full precision: the lab result's ID, its run, the quantity as the run's script named it, its conditions and its value (both as JSON). The evidence's tables give the values to four significant digits.
+A7 [lab_record] Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-16; exported with claimset 0.44.3).
+A8 [data] Every result of lab run RN1 (PL1: the targets of RMSE, MAE, MAPE and sMAPE on 34 distributions) at full precision, one row per result, sorted by setting: the lab result's ID, its run, the quantity, its conditions and its value (both as JSON). The evidence's tables give selected values to four significant digits.
+A9 [figure, data_plot] inverse Gaussian shape=1000: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/inverse_Gaussian_shape=1000.png). shows A8, E13.T3.r1
+A10 [figure, data_plot] inverse Gaussian shape=200: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/inverse_Gaussian_shape=200.png). shows A8, E13.T3.r2
+A11 [figure, data_plot] inverse Gaussian shape=100: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/inverse_Gaussian_shape=100.png). shows A8, E13.T3.r3
+A12 [figure, data_plot] inverse Gaussian shape=50: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/inverse_Gaussian_shape=50.png). shows A8, E13.T3.r4
+A13 [figure, data_plot] inverse Gaussian shape=20: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/inverse_Gaussian_shape=20.png). shows A8, E13.T3.r5
+A14 [figure, data_plot] inverse Gaussian shape=10: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/inverse_Gaussian_shape=10.png). shows A8, E13.T3.r6, E13.T4
+A15 [figure, data_plot] log-skewed left sd=0.5 skew=-2: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_left_sd=0.5_skew=-2.png). shows A8, E13.T3.r7
+A16 [figure, data_plot] log-skewed left sd=0.5 skew=-1: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_left_sd=0.5_skew=-1.png). shows A8, E13.T3.r8
+A17 [figure, data_plot] log-skewed left sd=0.5 skew=-0.5: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_left_sd=0.5_skew=-0.5.png). shows A8, E13.T3.r9
+A18 [figure, data_plot] log-skewed right sd=0.5 skew=+2: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_right_sd=0.5_skew=_2.png). shows A8, E13.T3.r10
+A19 [figure, data_plot] log-skewed right sd=0.5 skew=+1: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_right_sd=0.5_skew=_1.png). shows A8, E13.T3.r11
+A20 [figure, data_plot] log-skewed right sd=0.5 skew=+0.5: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_right_sd=0.5_skew=_0.5.png). shows A8, E13.T3.r12
+A21 [figure, data_plot] lognormal sigma=0.5: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=0.5.png). shows A8, E13.T3.r13
+A22 [figure, data_plot] log-skewed left sd=1 skew=-2: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_left_sd=1_skew=-2.png). shows A8, E13.T3.r14
+A23 [figure, data_plot] log-skewed left sd=1 skew=-1: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_left_sd=1_skew=-1.png). shows A8, E13.T3.r15
+A24 [figure, data_plot] log-skewed left sd=1 skew=-0.5: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_left_sd=1_skew=-0.5.png). shows A8, E13.T3.r16
+A25 [figure, data_plot] log-skewed right sd=1 skew=+2: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_right_sd=1_skew=_2.png). shows A8, E13.T3.r17
+A26 [figure, data_plot] log-skewed right sd=1 skew=+1: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_right_sd=1_skew=_1.png). shows A8, E13.T3.r18
+A27 [figure, data_plot] log-skewed right sd=1 skew=+0.5: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/log-skewed_right_sd=1_skew=_0.5.png). shows A8, E13.T3.r19
+A28 [figure, data_plot] lognormal sigma=1: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=1.png). shows A8, E13.T3.r20, E13.T4
+A29 [figure, data_plot] bimodal equal modes: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/bimodal_equal_modes.png). shows A8, E13.T3.r21, E13.T4
+A30 [figure, data_plot] bimodal left mode higher: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/bimodal_left_mode_higher.png). shows A8, E13.T3.r22
+A31 [figure, data_plot] bimodal right mode higher: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/bimodal_right_mode_higher.png). shows A8, E13.T3.r23
+A32 [figure, data_plot] normal straddling zero mean=0: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/normal_straddling_zero_mean=0.png). shows A8, E13.T3.r24
+A33 [figure, data_plot] normal straddling zero mean=0.5: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/normal_straddling_zero_mean=0.5.png). shows A8, E13.T3.r25
+A34 [figure, data_plot] normal straddling zero mean=1: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/normal_straddling_zero_mean=1.png). shows A8, E13.T3.r26
+A35 [figure, data_plot] lognormal sigma=0.5 with zeros p0=0.25: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=0.5_with_zeros_p0=0.25.png). shows A8, E13.T3.r27
+A36 [figure, data_plot] lognormal sigma=0.5 with zeros p0=0.42: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=0.5_with_zeros_p0=0.42.png). shows A8, E13.T3.r28
+A37 [figure, data_plot] lognormal sigma=0.5 with zeros p0=0.47: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=0.5_with_zeros_p0=0.47.png). shows A8, E13.T3.r29
+A38 [figure, data_plot] lognormal sigma=0.5 with zeros p0=0.6: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=0.5_with_zeros_p0=0.6.png). shows A8, E13.T3.r30
+A39 [figure, data_plot] lognormal sigma=1 with zeros p0=0.25: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=1_with_zeros_p0=0.25.png). shows A8, E13.T3.r31
+A40 [figure, data_plot] lognormal sigma=1 with zeros p0=0.37: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=1_with_zeros_p0=0.37.png). shows A8, E13.T3.r32
+A41 [figure, data_plot] lognormal sigma=1 with zeros p0=0.42: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=1_with_zeros_p0=0.42.png). shows A8, E13.T3.r33, E13.T4
+A42 [figure, data_plot] lognormal sigma=1 with zeros p0=0.6: for each measure (RMSE, MAE, MAPE, sMAPE), one violin per test-set size showing how the candidate the measure ranks first is spread over 1000 test sets, as its quantile level, with a boxplot of its median, quartiles and 5th and 95th percentiles and a diamond at its mean; a dashed line marks the measure's preferred candidate and dotted lines the other measures'. Drawn by lab run RN1 from its own results (lab/runs/RN1/figures/lognormal_sigma=1_with_zeros_p0=0.6.png). shows A8, E13.T3.r34
+A43 [data] Every result of lab run RN2 (PL3: flatness of expected sMAPE as the spread of ln y grows) at full precision, one row per result, sorted by setting: the lab result's ID, its run, the quantity, its conditions and its value (both as JSON). The evidence's tables give selected values to four significant digits.
+A44 [figure, data_plot] The quantile level of the sMAPE target against the spread sigma of ln y, for lognormal and log-Gumbel outcomes, beside the level of the log-mode: the target moves from the median to the mode of ln y as the spread grows. Drawn by lab run RN2 from its own results (lab/runs/RN2/figures/flatness_target.png). shows A43, E14.T1
+A45 [figure, data_plot] Expected sMAPE against the quantile level of the forecast, one curve per spread sigma, for each family: the curve flattens towards 200 as sigma grows. Drawn by lab run RN2 from its own results (lab/runs/RN2/figures/flatness_expected_sMAPE.png). shows A43, E14.T1
+A46 [figure, data_plot] Lognormal outcomes: how much worse a forecast half a sigma or one sigma away from each measure's target scores, as a share of the score at the target, against sigma. Drawn by lab run RN2 from its own results (lab/runs/RN2/figures/flatness_sensitivity.png). shows A43, E14.T3
+A47 [figure, data_plot] Ranking agreement: the share of test sets that prefer each measure's target to a forecast away from it, against sigma, for several test-set sizes. Drawn by lab run RN2 from its own results (lab/runs/RN2/figures/flatness_agreement.png). shows A43, E14.T2
+A48 [figure, data_plot] Where the sMAPE minimiser of a test set falls, and how widely it spreads: its quantile level over test sets against sigma, for each family. Drawn by lab run RN2 from its own results (lab/runs/RN2/figures/flatness_minimiser.png). shows A43, E14.T4
+A49 [data] Every result of lab run RN7 (PL2: efficiency of the sMAPE minimiser against the sample median) at full precision, one row per result, sorted by setting: the lab result's ID, its run, the quantity, its conditions and its value (both as JSON). The evidence's tables give selected values to four significant digits.
+A50 [figure, data_plot] lognormal outcomes: relative efficiency of the sMAPE minimiser of a test set against the sample median, against test-set size, one panel per spread, with its 99% band and the large-sample value as a dashed line; below 1 the sMAPE minimiser varies more than the sample median. Drawn by lab run RN7 from its own results (lab/runs/RN7/figures/efficiency_lognormal.png). shows A49, E15.T1
+A51 [figure, data_plot] log-Laplace outcomes: relative efficiency of the sMAPE minimiser of a test set against the sample median, against test-set size, one panel per spread, with its 99% band and the large-sample value as a dashed line; below 1 the sMAPE minimiser varies more than the sample median. Drawn by lab run RN7 from its own results (lab/runs/RN7/figures/efficiency_log-Laplace.png). shows A49, E15.T1
+A52 [data] Every result of lab run RN10 (PL11: the msMAPE and sMAPE targets) at full precision, one row per result, sorted by setting: the lab result's ID, its run, the quantity, its conditions and its value (both as JSON). The evidence's tables give selected values to four significant digits.
+A53 [figure, data_plot] msMAPE beside sMAPE: near zero, the two targets as a share of the median against the share of zeros, for lognormal outcomes at medians 1 and 100, with the zero thresholds at median 1; away from zero, the relative difference of the msMAPE target from the sMAPE target for each distribution; on Poisson counts, the two targets against the mean. Drawn by lab run RN11 from the recorded results of RN10 (lab/runs/RN11/figures/msmape_targets.png). shows E16.T1, E16.T2
+A54 [code] The study's code: the distributions, the exact quadrature of expected sMAPE, the formula checks, and the three simulations (targets.py, efficiency.py, flatness.py).
+
+REFERENCES
+B1 10.1016/S0169-2070(99)00007-2 (doi)
+B2 10.1090/S0002-9939-1955-0069229-1 (doi)
+B3 entrylib:2026.000008@v2#C33 (claimset)
+B4 entrylib:2026.000009@v1#C5 (claimset)
+B5 entrylib:2026.000009@v1#C6 (claimset)
+B6 entrylib:2026.000008@v2#C6 (claimset)
+B7 entrylib:2026.000009@v1#C11 (claimset)
+B8 10.1016/0169-2070(93)90079-3 (doi)
+B9 10.1016/j.ijforecast.2006.03.001 (doi)
+B10 10.1007/s10618-022-00894-5 (doi)
+B11 10.1371/journal.pone.0174202 (doi)
+B12 10.1057/jors.2014.103 (doi)
+B13 10.3390/forecast8020024 (doi)
+B14 10.1016/j.ijforecast.2020.06.008 (doi)

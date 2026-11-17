@@ -1,0 +1,202 @@
+lab_result,run,quantity,conditions,value
+RS15944,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=0.3""}",47.45524703415207
+RS15941,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=0.3""}",51.83635586365642
+RS15946,RN10,median of the outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=0.3""}",0.0
+RS15943,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=0.3""}",0.7408182206817179
+RS15940,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=0.3""}",0.7408182206817179
+RS15945,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""counts"", ""setting"": ""Poisson mean=0.3""}",0.0
+RS15947,RN10,share of zero outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=0.3""}",0.7408182206817179
+RS15942,RN10,target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=0.3""}",0.0
+RS15939,RN10,target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=0.3""}",0.0
+RS15953,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=0.5""}",72.36799943861409
+RS15950,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=0.5""}",78.69386805747332
+RS15955,RN10,median of the outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=0.5""}",0.0
+RS15952,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=0.5""}",0.6065306597126334
+RS15949,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=0.5""}",0.6065306597126334
+RS15954,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""counts"", ""setting"": ""Poisson mean=0.5""}",0.0
+RS15956,RN10,share of zero outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=0.5""}",0.6065306597126334
+RS15951,RN10,target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=0.5""}",0.0
+RS15948,RN10,target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=0.5""}",0.0
+RS15962,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=1""}",87.02577394091261
+RS15959,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=1""}",94.30355293715385
+RS15964,RN10,median of the outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=1""}",1.0
+RS15961,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=1""}",0.7357588823428847
+RS15958,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=1""}",0.7357588823428847
+RS15963,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""counts"", ""setting"": ""Poisson mean=1""}",0.0
+RS15965,RN10,share of zero outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=1""}",0.36787944117144233
+RS15960,RN10,target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=1""}",1.0
+RS15957,RN10,target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=1""}",1.0
+RS15971,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=1.5""}",73.74791987627414
+RS15968,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=1.5""}",76.76515025850507
+RS15973,RN10,median of the outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=1.5""}",1.0
+RS15970,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=1.5""}",0.8088468305380582
+RS15967,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=1.5""}",0.8088468305380582
+RS15972,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""counts"", ""setting"": ""Poisson mean=1.5""}",0.0
+RS15974,RN10,share of zero outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=1.5""}",0.22313016014842982
+RS15969,RN10,target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=1.5""}",2.0
+RS15966,RN10,target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=1.5""}",2.0
+RS15989,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=10""}",25.73092834322433
+RS15986,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=10""}",25.870705499962288
+RS15991,RN10,median of the outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=10""}",10.0
+RS15988,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=10""}",0.5830397501929873
+RS15985,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=10""}",0.5830397501929873
+RS15990,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""counts"", ""setting"": ""Poisson mean=10""}",0.0
+RS15992,RN10,share of zero outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=10""}",4.5399929762484854e-05
+RS15987,RN10,target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=10""}",10.0
+RS15984,RN10,target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=10""}",10.0
+RS15980,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=3""}",48.85882379198666
+RS15977,RN10,expected score at the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=3""}",49.91370794632732
+RS15982,RN10,median of the outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=3""}",3.0
+RS15979,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=3""}",0.6472318887822313
+RS15976,RN10,quantile level of the target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=3""}",0.6472318887822313
+RS15981,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""counts"", ""setting"": ""Poisson mean=3""}",0.0
+RS15983,RN10,share of zero outcomes,"{""group"": ""counts"", ""setting"": ""Poisson mean=3""}",0.049787068367863944
+RS15978,RN10,target,"{""group"": ""counts"", ""measure"": ""msMAPE"", ""setting"": ""Poisson mean=3""}",3.0
+RS15975,RN10,target,"{""group"": ""counts"", ""measure"": ""sMAPE"", ""setting"": ""Poisson mean=3""}",3.0
+RS15819,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""inverse Gaussian shape=10""}",95.49663569812832
+RS15816,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""inverse Gaussian shape=10""}",95.7497285969575
+RS15821,RN10,median of the outcomes,"{""group"": ""away from zero"", ""setting"": ""inverse Gaussian shape=10""}",17.85010118532069
+RS15818,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""inverse Gaussian shape=10""}",0.4380453284107947
+RS15815,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""inverse Gaussian shape=10""}",0.4387455820384618
+RS15820,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""away from zero"", ""setting"": ""inverse Gaussian shape=10""}",-0.002701017166784545
+RS15822,RN10,share of zero outcomes,"{""group"": ""away from zero"", ""setting"": ""inverse Gaussian shape=10""}",0.0
+RS15817,RN10,target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""inverse Gaussian shape=10""}",13.978797149337382
+RS15814,RN10,target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""inverse Gaussian shape=10""}",14.016656378837542
+RS15828,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""inverse Gaussian shape=100""}",61.92499545652046
+RS15825,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""inverse Gaussian shape=100""}",61.9694066069735
+RS15830,RN10,median of the outcomes,"{""group"": ""away from zero"", ""setting"": ""inverse Gaussian shape=100""}",67.58413056952394
+RS15827,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""inverse Gaussian shape=100""}",0.4928847278067345
+RS15824,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""inverse Gaussian shape=100""}",0.49294246367574995
+RS15829,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""away from zero"", ""setting"": ""inverse Gaussian shape=100""}",-0.0001284039071102462
+RS15831,RN10,share of zero outcomes,"{""group"": ""away from zero"", ""setting"": ""inverse Gaussian shape=100""}",0.0
+RS15826,RN10,target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""inverse Gaussian shape=100""}",66.52229252603286
+RS15823,RN10,target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""inverse Gaussian shape=100""}",66.5308353452345
+RS15837,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""log-skewed left sd=1 skew=-1""}",66.3926826198891
+RS15834,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""log-skewed left sd=1 skew=-1""}",66.42419993753802
+RS15839,RN10,median of the outcomes,"{""group"": ""away from zero"", ""setting"": ""log-skewed left sd=1 skew=-1""}",117.81785280533546
+RS15836,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""log-skewed left sd=1 skew=-1""}",0.5360807861403373
+RS15833,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""log-skewed left sd=1 skew=-1""}",0.5361713601068708
+RS15838,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""away from zero"", ""setting"": ""log-skewed left sd=1 skew=-1""}",-0.00020991891917436655
+RS15840,RN10,share of zero outcomes,"{""group"": ""away from zero"", ""setting"": ""log-skewed left sd=1 skew=-1""}",0.0
+RS15835,RN10,target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""log-skewed left sd=1 skew=-1""}",128.23841874990936
+RS15832,RN10,target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""log-skewed left sd=1 skew=-1""}",128.26534407230454
+RS15846,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""log-skewed right sd=1 skew=+1""}",66.390902675133
+RS15843,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""log-skewed right sd=1 skew=+1""}",66.42419993753802
+RS15848,RN10,median of the outcomes,"{""group"": ""away from zero"", ""setting"": ""log-skewed right sd=1 skew=+1""}",84.8767802323006
+RS15845,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""log-skewed right sd=1 skew=+1""}",0.46380709924151453
+RS15842,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""log-skewed right sd=1 skew=+1""}",0.46382865229627135
+RS15847,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""away from zero"", ""setting"": ""log-skewed right sd=1 skew=+1""}",-4.995461120181393e-05
+RS15849,RN10,share of zero outcomes,"{""group"": ""away from zero"", ""setting"": ""log-skewed right sd=1 skew=+1""}",0.0
+RS15844,RN10,target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""log-skewed right sd=1 skew=+1""}",77.95948947612828
+RS15841,RN10,target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""log-skewed right sd=1 skew=+1""}",77.96338410666931
+RS15855,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1""}",66.64930411155994
+RS15852,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1""}",69.94273010679035
+RS15857,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1""}",0.9999999999999999
+RS15854,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1""}",0.49382465422600436
+RS15851,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1""}",0.5000000057288416
+RS15856,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1""}",-0.015360730650174471
+RS15858,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1""}",0.0
+RS15853,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1""}",0.9846392834893205
+RS15850,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1""}",1.0000000143600762
+RS15994,RN10,zero threshold,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1""}",0.4700318098068237
+RS15993,RN10,zero threshold,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1""}",0.39404478549957267
+RS15864,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",89.49156380158463
+RS15861,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",95.95418408543227
+RS15866,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",0.7271377340966326
+RS15863,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",0.5683362104670104
+RS15860,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",0.6000000045830733
+RS15865,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",-0.09459690101644513
+RS15867,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",0.2
+RS15862,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",0.9054031119852124
+RS15859,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.2""}",1.0000000143600762
+RS15873,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.4""}",94.45344350585965
+RS15870,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.4""}",120.0
+RS15874,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.4""}",0.38006173987580083
+RS15872,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.4""}",0.4229849888741238
+RS15869,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.4""}",0.4
+RS15875,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.4""}",0.4
+RS15871,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.4""}",0.17021996334096295
+RS15868,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.4""}",0.0
+RS15881,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",65.90458230097718
+RS15878,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",80.0
+RS15883,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",0.0
+RS15880,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",0.6
+RS15877,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",0.6
+RS15882,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",0.0
+RS15884,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",0.6
+RS15879,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",0.0
+RS15876,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.6""}",0.0
+RS15890,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",32.95229115048858
+RS15887,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",39.99999999999999
+RS15892,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",0.0
+RS15889,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",0.8
+RS15886,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",0.8
+RS15891,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",0.0
+RS15893,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",0.8
+RS15888,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",0.0
+RS15885,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=1 sigma=1 with zeros p0=0.8""}",0.0
+RS15899,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1""}",69.90778033188539
+RS15896,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1""}",69.94273010679035
+RS15901,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1""}",99.99999999999999
+RS15898,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1""}",0.49992683489541756
+RS15895,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1""}",0.5000000029272409
+RS15900,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1""}",-0.00018338824071678
+RS15902,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1""}",0.0
+RS15897,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1""}",99.98166190954433
+RS15894,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1""}",100.00000073375057
+RS15996,RN10,zero threshold,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1""}",0.3937445497512817
+RS15995,RN10,zero threshold,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1""}",0.39404478549957267
+RS15908,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",95.88623873518081
+RS15905,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",95.95418408543227
+RS15910,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",72.71377340966329
+RS15907,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",0.5996510203077339
+RS15904,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",0.6000000023417927
+RS15909,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",-0.0010928629001816282
+RS15911,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",0.2
+RS15906,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",99.89071444293052
+RS15903,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.2""}",100.00000073375057
+RS15917,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",119.8030289730207
+RS15914,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",120.0
+RS15919,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",38.00617398758011
+RS15916,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",0.4
+RS15913,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",0.4
+RS15918,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",0.0
+RS15920,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",0.4
+RS15915,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",0.0
+RS15912,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.4""}",0.0
+RS15926,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",79.86868598201382
+RS15923,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",80.0
+RS15928,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",0.0
+RS15925,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",0.6
+RS15922,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",0.6
+RS15927,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",0.0
+RS15929,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",0.6
+RS15924,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",0.0
+RS15921,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.6""}",0.0
+RS15935,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",39.93434299100689
+RS15932,RN10,expected score at the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",39.99999999999999
+RS15937,RN10,median of the outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",0.0
+RS15934,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",0.8
+RS15931,RN10,quantile level of the target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",0.8
+RS15936,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",0.0
+RS15938,RN10,share of zero outcomes,"{""group"": ""near zero"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",0.8
+RS15933,RN10,target,"{""group"": ""near zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",0.0
+RS15930,RN10,target,"{""group"": ""near zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal median=100 sigma=1 with zeros p0=0.8""}",0.0
+RS15801,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal sigma=0.5""}",38.35789629887251
+RS15798,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal sigma=0.5""}",38.37707426143574
+RS15803,RN10,median of the outcomes,"{""group"": ""away from zero"", ""setting"": ""lognormal sigma=0.5""}",99.99999999999999
+RS15800,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal sigma=0.5""}",0.49998880666109946
+RS15797,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal sigma=0.5""}",0.5000000032572445
+RS15802,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""away from zero"", ""setting"": ""lognormal sigma=0.5""}",-1.4032753779940952e-05
+RS15804,RN10,share of zero outcomes,"{""group"": ""away from zero"", ""setting"": ""lognormal sigma=0.5""}",0.0
+RS15799,RN10,target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal sigma=0.5""}",99.99859713285134
+RS15796,RN10,target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal sigma=0.5""}",100.00000040823507
+RS15810,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal sigma=1""}",69.90778033188539
+RS15807,RN10,expected score at the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal sigma=1""}",69.94273010679035
+RS15812,RN10,median of the outcomes,"{""group"": ""away from zero"", ""setting"": ""lognormal sigma=1""}",99.99999999999999
+RS15809,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal sigma=1""}",0.49992683489541756
+RS15806,RN10,quantile level of the target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal sigma=1""}",0.5000000029272409
+RS15811,RN10,relative difference of the msMAPE target from the sMAPE target,"{""group"": ""away from zero"", ""setting"": ""lognormal sigma=1""}",-0.00018338824071678
+RS15813,RN10,share of zero outcomes,"{""group"": ""away from zero"", ""setting"": ""lognormal sigma=1""}",0.0
+RS15808,RN10,target,"{""group"": ""away from zero"", ""measure"": ""msMAPE"", ""setting"": ""lognormal sigma=1""}",99.98166190954433
+RS15805,RN10,target,"{""group"": ""away from zero"", ""measure"": ""sMAPE"", ""setting"": ""lognormal sigma=1""}",100.00000073375057
