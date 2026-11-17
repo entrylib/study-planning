@@ -318,31 +318,31 @@
    "id": "D3",
    "term": "expected sMAPE",
    "kind": "variable",
-   "definition": "The expected sMAPE of a fixed forecast $f$ under the distribution of the actual $Y$: $200\\,\\mathrm{E}[s(Y, f)]$. Computed from the distribution (by integration or exact sums), never from a sample."
+   "definition": "The expected sMAPE of a fixed forecast $f$ under the distribution of the actual $y$: $200\\,\\mathrm{E}[s(y, f)]$, where $\\mathrm E$ is the expectation over the random actual $y$. Computed from the distribution (by integration or exact sums), never from a sample."
   },
   {
    "id": "D4",
    "term": "log error",
    "kind": "variable",
-   "definition": "For a positive outcome y and a positive forecast f, $z = \\ln y - \\ln f$."
+   "definition": "For a positive actual $y$ and a positive forecast $f$, $z = \\ln y - \\ln f$."
   },
   {
    "id": "D5",
    "term": "weight",
    "kind": "variable",
-   "definition": "For a positive actual $y$ and a positive forecast $f$, $w(y,f) = y/(y+f)^2$: how much the actual pulls the forecast that minimises expected sMAPE, since the derivative of $\\mathrm E[s(Y,f)]$ in $f$ is $2\\,\\mathrm E[w(Y,f)(\\mathbf 1\\{Y<f\\} - \\mathbf 1\\{Y>f\\})]$. Largest at $y = f$, the same for $y/f = r$ and $1/r$."
+   "definition": "For a positive actual $y$ and a positive forecast $f$, $w(y,f) = y/(y+f)^2$: how much the actual pulls the forecast that minimises expected sMAPE, since the derivative of $\\mathrm E[s(y,f)]$ in $f$ is $2\\,\\mathrm E[w(y,f)(\\mathbf 1\\{y<f\\} - \\mathbf 1\\{y>f\\})]$. Largest at $y = f$, the same for $y/f = r$ and $1/r$."
   },
   {
    "id": "D6",
    "term": "sMAPE target",
    "kind": "concept",
-   "definition": "The value or values of $f$ that minimise expected sMAPE for a given distribution of the actual $Y$, $\\arg\\min_f \\mathrm E[s(Y,f)]$: the functional sMAPE rewards. It may be a single value or several."
+   "definition": "The value or values of $f$ that minimise expected sMAPE for a given distribution of the actual $y$, $\\arg\\min_f \\mathrm E[s(y,f)]$: the functional sMAPE rewards. It may be a single value or several."
   },
   {
    "id": "D7",
    "term": "quantile profile",
    "kind": "concept",
-   "definition": "For an outcome distribution with quantile function Q and a forecast f, the pull of the outcome at each quantile level u, $u \\mapsto w(Q(u), f)$ on $(0,1)$; the minimiser's quantile level balances its integrals below and above."
+   "definition": "For an outcome distribution with quantile function $Q$ and a forecast $f$, the pull of the outcome at each quantile level $u$, $u \\mapsto w(Q(u), f)$ on $(0,1)$; the minimiser's quantile level balances its integrals below and above."
   },
   {
    "id": "D8",
@@ -354,25 +354,25 @@
    "id": "D9",
    "term": "relative efficiency",
    "kind": "variable",
-   "definition": "For a test-set size n and an outcome distribution where sMAPE and MAE both target the median: $\\mathrm{RE}(n) = \\operatorname{Var}(\\ln \\hat m_n) / \\operatorname{Var}(\\ln \\hat f_n)$ over test sets, where $\\hat m_n$ is the sample median (the MAE minimiser) and $\\hat f_n$ the sMAPE minimiser of the same test set. Above 1, sMAPE's minimiser varies less; below 1, MAE's does."
+   "definition": "For a test-set size $n$ and an outcome distribution where sMAPE and MAE both target the median: $\\mathrm{RE}(n) = \\operatorname{Var}(\\ln \\hat m_n) / \\operatorname{Var}(\\ln \\hat f_n)$ over test sets, where $\\hat m_n$ is the sample median (the MAE minimiser) and $\\hat f_n$ the sMAPE minimiser of the same test set. Above 1, sMAPE's minimiser varies less; below 1, MAE's does."
   },
   {
    "id": "D10",
    "term": "RMSE",
    "kind": "variable",
-   "definition": "Root mean squared error of a point forecast f over a test set: $\\sqrt{\\frac1n\\sum_t (y_t-f)^2}$."
+   "definition": "Root mean squared error of a point forecast $f$ over a test set of actuals $y_1, \\dots, y_n$: $\\sqrt{\\frac1n\\sum_t (y_t-f)^2}$."
   },
   {
    "id": "D11",
    "term": "MAE",
    "kind": "variable",
-   "definition": "Mean absolute error of a point forecast f over a test set: $\\frac1n\\sum_t |y_t-f|$."
+   "definition": "Mean absolute error of a point forecast $f$ over a test set of actuals $y_1, \\dots, y_n$: $\\frac1n\\sum_t |y_t-f|$."
   },
   {
    "id": "D12",
    "term": "MAPE",
    "kind": "variable",
-   "definition": "Mean absolute percentage error of a point forecast f over a test set: $\\frac{100}{n}\\sum_t |y_t-f|/|y_t|$; infinite when an outcome is zero."
+   "definition": "Mean absolute percentage error of a point forecast $f$ over a test set of actuals $y_1, \\dots, y_n$: $\\frac{100}{n}\\sum_t |y_t-f|/|y_t|$; infinite when an actual is zero."
   },
   {
    "id": "D13",
@@ -384,98 +384,98 @@
    "id": "D14",
    "term": "preferred candidate",
    "kind": "concept",
-   "definition": "Of the candidate forecasts for one distribution, the one a measure gives the lowest expected score, or, where every expected score is infinite but their differences are finite, the one the differences rank first (H12); none where no forecast is ranked first."
+   "definition": "Of the candidate forecasts for one distribution, the one a measure gives the lowest expected score, or, where every expected score is infinite but their differences are finite, the one the differences rank first (C8); none where no forecast is ranked first."
   },
   {
    "id": "D15",
    "term": "derived value",
    "kind": "concept",
-   "definition": "A value computed from the outcome distribution itself by numerical integration of its density (Gauss-Legendre quadrature and a convolution on a grid of 524288 points of ln y), never from a sample: the expected scores, the local minima of expected sMAPE, the formulas of the hypotheses."
+   "definition": "A value computed from the outcome distribution itself by numerical integration of its density (Gauss-Legendre quadrature and a convolution on a grid of 524288 points of $\\ln y$), never from a sample: the expected scores, the local minima of expected sMAPE, the formulas of the hypotheses."
   },
   {
    "id": "D16",
    "term": "selection design",
    "kind": "method",
-   "definition": "For each outcome distribution: derive the candidate forecasts and their expected scores; then, for each test-set size n, draw test sets of n independent outcomes, score every candidate by every measure on each test set, and count the candidate with the lowest score as the measure's choice (a tie of k candidates counts 1/k each; a test set in which every candidate scores infinite chooses none)."
+   "definition": "For each outcome distribution: derive the candidate forecasts and their expected scores; then, for each test-set size $n$, draw test sets of $n$ independent outcomes, score every candidate by every measure on each test set, and count the candidate with the lowest score as the measure's choice (a tie of $j$ candidates counts $1/j$ each; a test set in which every candidate scores infinite chooses none)."
   },
   {
    "id": "D17",
    "term": "efficiency design",
    "kind": "method",
-   "definition": "For each outcome distribution and test-set size n: draw test sets of n independent outcomes; in each, compute the sample median and the exact sMAPE minimiser (an outcome of the test set, since the test set's sMAPE is concave in ln f between consecutive outcomes); over test sets, compare the variances of their logarithms."
+   "definition": "For each outcome distribution and test-set size $n$: draw test sets of $n$ independent outcomes; in each, compute the sample median and the exact sMAPE minimiser (an outcome of the test set, since the test set's sMAPE is concave in $\\ln f$ between consecutive outcomes); over test sets, compare the variances of their logarithms."
   },
   {
    "id": "D18",
    "term": "flatness design",
    "kind": "method",
-   "definition": "For families whose spread of ln y grows from 0.1 to 10: derive the sMAPE target, the expected sMAPE of forecasts at fixed quantile levels and the large-spread approximation of H14; on test sets, count how often each measure scores the target lower than a forecast away from it, and where the test set's sMAPE minimiser falls."
+   "definition": "For families whose spread $\\sigma$ of $\\ln y$ grows from 0.1 to 10: derive the sMAPE target, the expected sMAPE of forecasts at fixed quantile levels and the large-spread approximation of C10; on test sets, count how often each measure scores the target lower than a forecast away from it, and where the test set's sMAPE minimiser falls."
   },
   {
    "id": "D19",
    "term": "log-MAE",
    "kind": "variable",
-   "definition": "100 times the mean absolute error of $\\ln f$ as a forecast of $\\ln y$: $\\frac{100}{n}\\sum_t |\\ln y_t - \\ln f|$. Unbounded; sMAPE's small-error limit (H9); minimised by the median."
+   "definition": "100 times the mean absolute error of $\\ln f$ as a forecast of $\\ln y$: $\\frac{100}{n}\\sum_t |\\ln y_t - \\ln f|$. Unbounded; sMAPE's small-error limit (C3); minimised by the median."
   },
   {
    "id": "D20",
    "term": "ranking agreement",
    "kind": "variable",
-   "definition": "For one distribution, one measure, a test-set size n, the measure's target and a forecast at another quantile level: the probability that a test set of n outcomes gives the target the strictly lower score (ties count as disagreement); 0.5 is a coin toss."
+   "definition": "For one distribution, one measure, a test-set size $n$, the measure's target and a forecast at another quantile level: the probability that a test set of $n$ outcomes gives the target the strictly lower score (ties count as disagreement); 0.5 is a coin toss."
   },
   {
    "id": "D21",
    "term": "inverse Gaussian outcomes",
    "kind": "population",
-   "definition": "Inverse Gaussian outcomes with mean 100 and shape 1000, 200, 100, 50, 20 or 10 (coefficient of variation 0.32 to 3.16): positive, skewed right, every moment and E[1/Y] finite."
+   "definition": "Inverse Gaussian outcomes with mean 100 and shape 1000, 200, 100, 50, 20 or 10 (coefficient of variation 0.32 to 3.16): positive, skewed right, every moment and $\\mathrm E[1/y]$ finite."
   },
   {
    "id": "D22",
    "term": "log-skewed outcomes",
    "kind": "population",
-   "definition": "$y = 100 e^x$ with $x = s\\,\\mathrm{sd}\\,(G-k)/\\sqrt k$, $G \\sim$ Gamma$(k, 1)$: ln y with standard deviation sd (0.5 or 1) and skewness $2s/\\sqrt k$ (-2, -1, -0.5, +0.5, +1, +2), and the lognormal of the same sd (skewness 0). Some have infinite moments: E Y infinite (sd 1, skewness +2), E Y^2 infinite (sd 0.5, skewness +2; sd 1, skewness +1), E[1/Y] infinite (sd 1, skewness -2)."
+   "definition": "$y = 100\\,e^x$ with $x = \\pm\\sigma(G-\\alpha)/\\sqrt\\alpha$, $G \\sim \\mathrm{Gamma}(\\alpha, 1)$: $\\ln y$ with standard deviation $\\sigma$ (0.5 or 1; sd in the settings' names) and skewness $\\pm 2/\\sqrt\\alpha$ (-2, -1, -0.5, +0.5, +1, +2), and the lognormal of the same $\\sigma$ (skewness 0). Some have infinite moments: $\\mathrm E[y]$ infinite ($\\sigma = 1$, skewness +2), $\\mathrm E[y^2]$ infinite ($\\sigma = 0.5$, skewness +2; $\\sigma = 1$, skewness +1), $\\mathrm E[1/y]$ infinite ($\\sigma = 1$, skewness -2)."
   },
   {
    "id": "D23",
    "term": "bimodal outcomes",
    "kind": "population",
-   "definition": "$y = 100 e^x$, x normal with mean -1 (probability p) or +1, standard deviation 0.25; p = 0.5 (equal modes), 0.65 (left mode higher), 0.35 (right mode higher)."
+   "definition": "$y = 100\\,e^x$, $x$ normal with mean $-1$ (probability $p$) or $+1$, standard deviation 0.25; $p = 0.5$ (equal modes), 0.65 (left mode higher), 0.35 (right mode higher)."
   },
   {
    "id": "D24",
    "term": "outcomes straddling zero",
    "kind": "population",
-   "definition": "Normal outcomes with standard deviation 1 and mean 0, 0.5 or 1: 50%, 31% and 16% negative; E[1/|Y|] infinite."
+   "definition": "Normal outcomes with standard deviation 1 and mean 0, 0.5 or 1: 50%, 31% and 16% negative; $\\mathrm E[1/|y|]$ infinite."
   },
   {
    "id": "D25",
    "term": "zero-inflated outcomes",
    "kind": "population",
-   "definition": "Lognormal outcomes (median 100, sigma 0.5 or 1) replaced by 0 with probability p0: 0.25, 0.42, 0.47, 0.6 for sigma 0.5 and 0.25, 0.37, 0.42, 0.6 for sigma 1, on both sides of the zero threshold of H8 (0.4469 and 0.3940)."
+   "definition": "Lognormal outcomes (median 100, $\\sigma$ 0.5 or 1) replaced by 0 with probability $p_0$: 0.25, 0.42, 0.47, 0.6 for $\\sigma = 0.5$ and 0.25, 0.37, 0.42, 0.6 for $\\sigma = 1$, on both sides of the zero threshold of C7 (0.4469 and 0.3940)."
   },
   {
    "id": "D26",
    "term": "log-symmetric outcomes",
    "kind": "population",
-   "definition": "Lognormal outcomes with sigma, and log-Laplace outcomes with scale b, each 0.25, 0.5, 1, 1.5, 2, 3, 4 or 6, median 100: ln y symmetric and strictly unimodal, so that sMAPE and MAE both target the median (H5)."
+   "definition": "Lognormal outcomes with $\\sigma$, and log-Laplace outcomes with scale $b$, each 0.25, 0.5, 1, 1.5, 2, 3, 4 or 6, median 100: $\\ln y$ symmetric and strictly unimodal, so that sMAPE and MAE both target the median (C5)."
   },
   {
    "id": "D27",
    "term": "widening outcomes",
    "kind": "population",
-   "definition": "$\\ln y = \\ln 100 + \\sigma\\varepsilon$ with $\\varepsilon$ standard normal (lognormal), standard Gumbel (log-Gumbel right, ln y skewed right) or minus standard Gumbel (log-Gumbel left), for sigma 0.1, 0.25, 0.5, 1, 1.5, 2, 3, 4, 6 and 10."
+   "definition": "$\\ln y = \\ln 100 + \\sigma\\varepsilon$ with $\\varepsilon$ standard normal (lognormal), standard Gumbel (log-Gumbel right, $\\ln y$ skewed right) or minus standard Gumbel (log-Gumbel left), for $\\sigma$ = 0.1, 0.25, 0.5, 1, 1.5, 2, 3, 4, 6 and 10."
   },
   {
    "id": "D28",
    "term": "msMAPE term",
    "kind": "variable",
-   "definition": "The contribution of one actual $y$ and one forecast $f$ to the modified sMAPE: $m(y,f) = |y-f|/\\max(|y|+|f|+\\epsilon,\\ 0.5+\\epsilon)$ with $\\epsilon = 0.1$; msMAPE is 200 times its mean over a test set. It replaces the denominator $|y|+|f|$ of the [[TM1:sMAPE term]] (proposed by Suilin, 2017, in code for a Kaggle competition; defined in print by Hewamalage, Bergmeir and Bandara, 2021, Eq. 15, who write the factor 2 into the measure differently; a constant factor changes no property here).",
+   "definition": "The contribution of one actual $y$ and one forecast $f$ to the modified sMAPE:\n$$\\tilde s(y,f) = \\frac{|y-f|}{\\max(|y|+|f|+\\delta,\\ 0.5+\\delta)}, \\qquad \\delta = 0.1;$$\nmsMAPE is 200 times its mean over a test set. It replaces the denominator $|y|+|f|$ of the [[D1:sMAPE term]] (proposed by Suilin, 2017, in code for a Kaggle competition; defined in print by Hewamalage, Bergmeir and Bandara, 2021, Eq. 15, who write the constant $\\delta$ as $\\epsilon$ and the factor 2 into the measure differently; a constant factor changes no property here).",
    "source": "B14"
   },
   {
    "id": "D29",
    "term": "msMAPE target",
    "kind": "concept",
-   "definition": "The value or values of $f$ that minimise the expected [[TM32:msMAPE term]] for a given distribution of the actual: the functional msMAPE rewards, as the [[TM6:sMAPE target]] is the one sMAPE rewards."
+   "definition": "The value or values of $f$ that minimise the expected [[D28:msMAPE term]] for a given distribution of the actual: the functional msMAPE rewards, as the [[D6:sMAPE target]] is the one sMAPE rewards."
   },
   {
    "id": "D30",
@@ -549,13 +549,13 @@
     {
      "type": "extends",
      "reference": "B12",
-     "note": "Tofallis (2015) lists the sMAPE term, (f-g)/[(f+g)/2], among Tornqvist et al.'s measures of relative change; C1 shows it depends on the actual and the forecast only through their ratio."
+     "note": "Tofallis (2015) lists the sMAPE term, |y-f|/[(|y|+|f|)/2], among Tornqvist et al.'s measures of relative change; C1 shows it depends on the actual and the forecast only through their ratio."
     }
    ]
   },
   {
    "id": "C2",
-   "statement": "For $y > 0$ and $f > 0$: (a) replacing $r = y/f$ by $1/r$ leaves the [[D1:sMAPE term]] unchanged, so a forecast $k$ times too high ($f = ky$) and one $k$ times too low ($f = y/k$) score the same; (b) of two forecasts the same absolute distance $e$ from $y$ ($0 < e < y$), the higher one scores better:\n$$s(y, y+e) = \\frac{e}{2y+e} < \\frac{e}{2y-e} = s(y, y-e).$$",
+   "statement": "For $y > 0$ and $f > 0$: (a) replacing $r = y/f$ by $1/r$ leaves the [[D1:sMAPE term]] unchanged, so a forecast $k$ times too high ($f = ky$) and one $k$ times too low ($f = y/k$) score the same; (b) of two forecasts the same absolute distance $d$ from $y$ ($0 < d < y$), the higher one scores better:\n$$s(y, y+d) = \\frac{d}{2y+d} < \\frac{d}{2y-d} = s(y, y-d).$$",
    "about": {
     "subject": "D1",
     "relation": "is symmetric in",
@@ -705,7 +705,7 @@
   },
   {
    "id": "C4",
-   "statement": "Let $Y$ be positive and take no single value with positive probability. A forecast $f$ has the lowest expected sMAPE only if the actuals below $f$ and those above it carry equal total [[D5:weight]] $w(y,f) = y/(y+f)^2$:\n$$\\mathrm E[w(Y,f)\\,\\mathbf 1\\{Y<f\\}] = \\mathrm E[w(Y,f)\\,\\mathbf 1\\{Y>f\\}].$$\n So the [[D6:sMAPE target]] is a median of the actuals weighted by $w$. An actual's weight is largest when it equals the forecast, is the same for $y/f = r$ and $1/r$, and falls as $y/f$ moves away from 1 in either direction. If expected sMAPE has a single local minimum, the target lies above the median $m$ when, with the forecast at $m$, the actuals above $m$ carry more weight than those below it; below the median when those below carry more; and when the two weights are equal, the median is a point where expected sMAPE is flat. The median is then the target if, in addition,\n$$2g(\\ln m) > \\mathrm E\\Big[\\operatorname{sech}^2\\Big(\\frac{\\ln Y - \\ln m}{2}\\Big)\\tanh\\Big(\\frac{|\\ln Y - \\ln m|}{2}\\Big)\\Big],$$\nwhere $g$ is the density of $\\ln Y$, continuous at $\\ln m$; this makes the median a strict local minimum. Without it, the median can be a flat point of inflection, with the target elsewhere.",
+   "statement": "Let the actual $y$ be positive and take no single value with positive probability. A forecast $f$ has the lowest expected sMAPE only if the actuals below $f$ and those above it carry equal total [[D5:weight]] $w(y,f) = y/(y+f)^2$:\n$$\\mathrm E[w(y,f)\\,\\mathbf 1\\{y<f\\}] = \\mathrm E[w(y,f)\\,\\mathbf 1\\{y>f\\}].$$\n So the [[D6:sMAPE target]] is a median of the actuals weighted by $w$. An actual's weight is largest when it equals the forecast, is the same for $y/f = r$ and $1/r$, and falls as $y/f$ moves away from 1 in either direction. If expected sMAPE has a single local minimum, the target lies above the median $m$ when, with the forecast at $m$, the actuals above $m$ carry more weight than those below it; below the median when those below carry more; and when the two weights are equal, the median is a point where expected sMAPE is flat. The median is then the target if, in addition,\n$$2g(\\ln m) > \\mathrm E\\Big[\\operatorname{sech}^2\\Big(\\frac{\\ln y - \\ln m}{2}\\Big)\\tanh\\Big(\\frac{|\\ln y - \\ln m|}{2}\\Big)\\Big],$$\nwhere $g$ is the density of $\\ln y$, continuous at $\\ln m$; this makes the median a strict local minimum. Without it, the median can be a flat point of inflection, with the target elsewhere.",
    "about": {
     "subject": "D6",
     "relation": "is a weighted median with weights",
@@ -794,7 +794,7 @@
   },
   {
    "id": "C5",
-   "statement": "Let $\\ln Y$ have a density $g$ symmetric about $m$, $g(m+v) = g(m-v)$, and unimodal: $g(m+u) \\ge g(m+v)$ whenever $|u| \\le |v|$, strictly on a set of positive probability. Then the median $e^m$ of $Y$ is the only [[D6:sMAPE target]].",
+   "statement": "Let $\\ln y$ have a density $g$ symmetric about $\\ln m$, $g(\\ln m+v) = g(\\ln m-v)$, and unimodal: $g(\\ln m+v_1) \\ge g(\\ln m+v_2)$ whenever $|v_1| \\le |v_2|$, strictly on a set of positive probability. Then the median $m$ of $y$ is the only [[D6:sMAPE target]].",
    "about": {
     "subject": "D6",
     "relation": "equals",
@@ -859,7 +859,7 @@
   },
   {
    "id": "C6",
-   "statement": "Let $\\ln Y$ have two modes, at $m - a$ and $m + a$ ($a > 0$), with the actuals concentrated near them: a mixture of a distribution near $m - a$ and its mirror image about $m$, with weights $p$ and $1 - p$. (a) With equal weights the median $e^m$ lies in the gap between the two groups; when the groups are narrow enough it has a higher [[D3:expected sMAPE]] than forecasts near either mode, and it is a local maximum of expected sMAPE; there is a minimiser on each side of the median, and these approach $e^{m-a}$ and $e^{m+a}$ as the groups narrow. (b) With unequal weights and narrow groups, the best forecast is near the mode of the larger group.",
+   "statement": "Let $\\ln y$ have two modes, at $\\ln m - a$ and $\\ln m + a$ ($a > 0$), with the actuals concentrated near them: a mixture of a distribution near $\\ln m - a$ and its mirror image about $\\ln m$, with weights $p$ and $1 - p$. (a) With equal weights the median $m$ lies in the gap between the two groups; when the groups are narrow enough it has a higher [[D3:expected sMAPE]] than forecasts near either mode, and it is a local maximum of expected sMAPE; there is a minimiser on each side of the median, and these approach $m\\,e^{-a}$ and $m\\,e^{a}$ as the groups narrow. (b) With unequal weights and narrow groups, the best forecast is near the mode of the larger group.",
    "about": {
     "subject": "D3",
     "relation": "can have",
@@ -919,7 +919,7 @@
   },
   {
    "id": "C7",
-   "statement": "A forecast of the opposite sign to the actual, a zero forecast of a non-zero actual, and a non-zero forecast of a zero actual all give the [[D1:sMAPE term]] its largest value, 1. Let $Y$ be 0 with probability $p_0$ and otherwise positive, and $m_+$ the lowest expected $s$ a positive forecast reaches on the positive actuals. The forecast 0 is the [[D6:sMAPE target]] when $p_0 > (1 - m_+)/(2 - m_+)$, and a positive forecast does when the inequality is reversed; the threshold is below $1/2$ whenever $m_+ > 0$.",
+   "statement": "A forecast of the opposite sign to the actual, a zero forecast of a non-zero actual, and a non-zero forecast of a zero actual all give the [[D1:sMAPE term]] its largest value, 1. Let the actual $y$ be 0 with probability $p_0$ and otherwise positive, and $s_+$ the lowest expected $s$ a positive forecast reaches on the positive actuals. The forecast 0 is the [[D6:sMAPE target]] when $p_0 > (1 - s_+)/(2 - s_+)$, and a positive forecast does when the inequality is reversed; the threshold is below $1/2$ whenever $s_+ > 0$.",
    "about": {
     "subject": "D6",
     "relation": "is zero or a positive forecast, by",
@@ -989,7 +989,7 @@
   },
   {
    "id": "C8",
-   "statement": "For a positive actual $Y$: (a) [[D10:RMSE]]: $\\mathrm E[(Y-f)^2]$ is finite exactly when $\\mathrm E[Y^2]$ is; when $\\mathrm E[Y^2]$ is infinite but $\\mathrm E[Y]$ finite, every difference\n$$\\mathrm E[(Y-f)^2 - (Y-g)^2] = (f-g)(f+g-2\\,\\mathrm E[Y])$$\nis finite and the mean is preferred to every other forecast; when $\\mathrm E[Y]$ is infinite no forecast is preferred to all others. (b) [[D11:MAE]]: $\\mathrm E|Y-f|$ is finite exactly when $\\mathrm E[Y]$ is; otherwise differences are finite and a median is still preferred. (c) [[D12:MAPE]]: when $\\mathrm E[1/Y]$ is finite, the expected MAPE is finite and minimised by a median of the actuals weighted by $1/Y$; when $\\mathrm E[1/Y]$ is infinite, every positive forecast has infinite expected MAPE while the forecast 0 has MAPE 100, so MAPE targets 0; when $Y$ is 0 with positive probability, MAPE is infinite or undefined for every forecast and targets nothing.",
+   "statement": "For a positive random actual $y$: (a) [[D10:RMSE]]: $\\mathrm E[(y-f)^2]$ is finite exactly when $\\mathrm E[y^2]$ is; when $\\mathrm E[y^2]$ is infinite but $\\mathrm E[y]$ finite, every difference between two forecasts $f_1$ and $f_2$,\n$$\\mathrm E[(y-f_1)^2 - (y-f_2)^2] = (f_1-f_2)(f_1+f_2-2\\,\\mathrm E[y]),$$\nis finite and the mean is preferred to every other forecast; when $\\mathrm E[y]$ is infinite no forecast is preferred to all others. (b) [[D11:MAE]]: $\\mathrm E|y-f|$ is finite exactly when $\\mathrm E[y]$ is; otherwise differences are finite and a median is still preferred. (c) [[D12:MAPE]]: when $\\mathrm E[1/y]$ is finite, the expected MAPE is finite and minimised by a median of the actuals weighted by $1/y$; when $\\mathrm E[1/y]$ is infinite, every positive forecast has infinite expected MAPE while the forecast 0 has MAPE 100, so MAPE targets 0; when $y$ is 0 with positive probability, MAPE is infinite or undefined for every forecast and targets nothing.",
    "about": {
     "subject": "the forecast RMSE, MAE and MAPE target",
     "relation": "fails with",
@@ -1044,7 +1044,7 @@
   },
   {
    "id": "C9",
-   "statement": "For actuals and forecasts of any sign, $0 \\le s \\le 1$. So the [[D3:expected sMAPE]] of every forecast is finite, between 0 and 200, whatever the distribution of the actuals and without any moment of it being finite (unlike RMSE, MAE and MAPE, C8). For a positive random actual $Y$, at least one forecast has the lowest expected sMAPE.",
+   "statement": "For actuals and forecasts of any sign, $0 \\le s \\le 1$. So the [[D3:expected sMAPE]] of every forecast is finite, between 0 and 200, whatever the distribution of the actuals and without any moment of it being finite (unlike RMSE, MAE and MAPE, C8). For a positive random actual $y$, at least one forecast has the lowest expected sMAPE.",
    "about": {
     "subject": "D3",
     "relation": "is always finite and has a minimiser",
@@ -1109,7 +1109,7 @@
   },
   {
    "id": "C10",
-   "statement": "Let $\\ln Y = \\mu + \\sigma\\varepsilon$, where $\\varepsilon$ has a fixed density $g$ with bounded continuous first and second derivatives, and write a forecast as $f = e^{\\mu + \\sigma c}$ (its quantile level, the probability that $\\varepsilon \\le c$, does not depend on $\\sigma$). As $\\sigma$ grows, $\\mathrm E[s(Y,f)] = 1 - 4\\ln 2\\,g(c)/\\sigma + O(\\sigma^{-3})$ uniformly in $c$. (a) The [[D3:expected sMAPE]] of every forecast tends to its bound 200, and the difference between forecasts at two fixed quantile levels shrinks like $1/\\sigma$. (b) When $g$ has a single highest point $c_0$, the quantile level of the [[D6:sMAPE target]] tends to that of $c_0$, the mode of $\\ln Y$, which differs from 1/2 when the mode of $\\varepsilon$ is not its median. (c) As $\\sigma \\to 0$, when $\\varepsilon$ has a unique median and a finite $\\mathrm E|\\varepsilon|^3$, the quantile level of the target tends to 1/2: sMAPE targets the median for narrow distributions and the mode of $\\ln Y$ for wide ones.",
+   "statement": "Let $\\ln y = \\mu + \\sigma\\varepsilon$, where $\\varepsilon$ has a fixed density $h$ with bounded continuous first and second derivatives, and write a forecast as $f = e^{\\mu + \\sigma c}$ (its quantile level, the probability that $\\varepsilon \\le c$, does not depend on $\\sigma$). As $\\sigma$ grows, $\\mathrm E[s(y,f)] = 1 - 4\\ln 2\\,h(c)/\\sigma + O(\\sigma^{-3})$ uniformly in $c$. (a) The [[D3:expected sMAPE]] of every forecast tends to its bound 200, and the difference between forecasts at two fixed quantile levels shrinks like $1/\\sigma$. (b) When $h$ has a single highest point $c_0$, the quantile level of the [[D6:sMAPE target]] tends to that of $c_0$, the mode of $\\ln y$, which differs from 1/2 when the mode of $\\varepsilon$ is not its median. (c) As $\\sigma \\to 0$, when $\\varepsilon$ has a unique median and a finite $\\mathrm E|\\varepsilon|^3$, the quantile level of the target tends to 1/2: sMAPE targets the median for narrow distributions and the mode of $\\ln y$ for wide ones.",
    "about": {
     "subject": "D3",
     "relation": "flattens towards its bound as the spread of log actuals grows, with",
@@ -1164,7 +1164,7 @@
    "relations": [
     {
      "type": "supports",
-     "note": "C6 recommends against sMAPE for point forecasts; C10 shows that on widely spread actuals every forecast scores close to the worst value and the target moves to the mode of ln Y.",
+     "note": "C6 recommends against sMAPE for point forecasts; C10 shows that on widely spread actuals every forecast scores close to the worst value and the target moves to the mode of ln y.",
      "reference": "B6"
     },
     {
@@ -1238,7 +1238,7 @@
   },
   {
    "id": "C12",
-   "statement": "The forecast with the lowest expected sMAPE is the median $m$ of the actuals in each of two cases. (a) $\\ln Y$ has a density symmetric about $\\ln m$ and unimodal. (b) More generally, $Y$ is positive, takes no single value with positive probability, and its expected sMAPE has a single local minimum; with the forecast at $m$, the actuals above and below $m$ carry equal total weight $y/(y+f)^2$; and\n$$2g(\\ln m) > \\mathrm E\\Big[\\operatorname{sech}^2\\Big(\\frac{\\ln Y - \\ln m}{2}\\Big)\\tanh\\Big(\\frac{|\\ln Y - \\ln m|}{2}\\Big)\\Big],$$\nwhere $g$ is the density of $\\ln Y$, continuous at $\\ln m$. In both cases the [[D6:sMAPE target]] is the median.",
+   "statement": "The forecast with the lowest expected sMAPE is the median $m$ of the actuals in each of two cases. (a) $\\ln y$ has a density symmetric about $\\ln m$ and unimodal. (b) More generally, $y$ is positive, takes no single value with positive probability, and its expected sMAPE has a single local minimum; with the forecast at $m$, the actuals above and below $m$ carry equal total weight $y/(y+f)^2$; and\n$$2g(\\ln m) > \\mathrm E\\Big[\\operatorname{sech}^2\\Big(\\frac{\\ln y - \\ln m}{2}\\Big)\\tanh\\Big(\\frac{|\\ln y - \\ln m|}{2}\\Big)\\Big],$$\nwhere $g$ is the density of $\\ln y$, continuous at $\\ln m$. In both cases the [[D6:sMAPE target]] is the median.",
    "about": {
     "subject": "D6",
     "relation": "equals",
@@ -1287,7 +1287,7 @@
    "relations": [
     {
      "type": "explains",
-     "note": "C5 found by simulation that sMAPE prefers the median on lognormal and log-Laplace outcomes; C12 proves it for every symmetric unimodal ln Y.",
+     "note": "C5 found by simulation that sMAPE prefers the median on lognormal and log-Laplace outcomes; C12 proves it for every symmetric unimodal ln y.",
      "reference": "B4"
     }
    ],
@@ -1299,7 +1299,7 @@
   },
   {
    "id": "C13",
-   "statement": "Computed from the distributions themselves, the [[D6:sMAPE target]] on the 34 outcome distributions of plan PL1 is the median on lognormal outcomes, lies below it when $\\ln Y$ is skewed right and above it when skewed left (quantile levels from 0.439 to 0.556 on the unimodal positive distributions), is two forecasts, one near each mode, on equal bimodal outcomes and the larger mode's on unequal ones, lies away from zero on the side of the mean on normal outcomes straddling zero, and switches to 0 at shares of zero outcomes from 0.343 to 0.468, all below one half. On test sets the forecast sMAPE ranks first spreads widely when they are small: on lognormal outcomes with $\\sigma = 1$, its quantile level runs from 0.16 to 0.82 (5th to 95th percentile over test sets) with 6 outcomes and from 0.47 to 0.53 with 1000.",
+   "statement": "Computed from the distributions themselves, the [[D6:sMAPE target]] on the 34 outcome distributions of plan PL1 is the median on lognormal outcomes, lies below it when $\\ln y$ is skewed right and above it when skewed left (quantile levels from 0.439 to 0.556 on the unimodal positive distributions), is two forecasts, one near each mode, on equal bimodal outcomes and the larger mode's on unequal ones, lies away from zero on the side of the mean on normal outcomes straddling zero, and switches to 0 at shares of zero outcomes from 0.343 to 0.468, all below one half. On test sets the forecast sMAPE ranks first spreads widely when they are small: on lognormal outcomes with $\\sigma = 1$, its quantile level runs from 0.16 to 0.82 (5th to 95th percentile over test sets) with 6 outcomes and from 0.47 to 0.53 with 1000.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1418,7 +1418,7 @@
   },
   {
    "id": "C14",
-   "statement": "As the spread $\\sigma$ of $\\ln Y$ grows from 0.1 to 10, the [[D3:expected sMAPE]] at the [[D6:sMAPE target]] rises towards its bound 200 (from 7.97 to 178.2 on lognormal outcomes), the target's quantile level moves from the median to that of the mode of $\\ln Y$ (0.372 against the mode's 0.368 at $\\sigma = 10$ on log-Gumbel outcomes skewed right), and the [[D20:ranking agreement]] of sMAPE, for its target against a forecast half a $\\sigma$ away, is lower than that of [[D11:MAE]]: at $\\sigma = 4$ with test sets of 12 outcomes it ranks its target first in 0.61 of the test sets, MAE in 0.82.",
+   "statement": "As the spread $\\sigma$ of $\\ln y$ grows from 0.1 to 10, the [[D3:expected sMAPE]] at the [[D6:sMAPE target]] rises towards its bound 200 (from 7.97 to 178.2 on lognormal outcomes), the target's quantile level moves from the median to that of the mode of $\\ln y$ (0.372 against the mode's 0.368 at $\\sigma = 10$ on log-Gumbel outcomes skewed right), and the [[D20:ranking agreement]] of sMAPE, for its target against a forecast half a $\\sigma$ away, is lower than that of [[D11:MAE]]: at $\\sigma = 4$ with test sets of 12 outcomes it ranks its target first in 0.61 of the test sets, MAE in 0.82.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1505,7 +1505,7 @@
      "type": "supports",
      "target": "C10",
      "id_type": "local",
-     "note": "Computed for spreads of ln Y from 0.1 to 10, expected sMAPE flattens and the target moves to the mode of ln Y, as C10 proves for large spreads."
+     "note": "Computed for spreads of ln y from 0.1 to 10, expected sMAPE flattens and the target moves to the mode of ln y, as C10 proves for large spreads."
     }
    ]
   },
@@ -1670,7 +1670,7 @@
   },
   {
    "id": "C17",
-   "statement": "The [[D28:msMAPE term]] has the properties of the [[D1:sMAPE term]] except near zero. (a) Where $|y|+|f| \\ge 0.5$, $m(y,f) = s(y,f)\\,\\frac{|y|+|f|}{|y|+|f|+\\epsilon}$: the sMAPE term shrunk by a factor between $5/6$ and 1 that tends to 1 as $|y|+|f|$ grows. So for actuals and forecasts large compared with $\\epsilon$, $m$ is close to $s$, though no longer exactly a function of the ratio $y/f$; on counts, where every actual is 0 or at least 1, this case covers every pair except a zero actual with $|f| < 0.5$. (b) Where $|y|+|f| < 0.5$, $m(y,f) = |y-f|/(0.5+\\epsilon)$, an absolute error: a zero forecast of a zero actual scores 0, and a forecast $f$ with $|f| < 0.5$ of a zero actual scores $|f|/(0.5+\\epsilon)$, where the sMAPE term gives every non-zero forecast of a zero actual its largest value, 1. (c) $0 \\le m < 1$ everywhere, so the expected msMAPE of every forecast is finite.",
+   "statement": "The [[D28:msMAPE term]] has the properties of the [[D1:sMAPE term]] except near zero. (a) Where $|y|+|f| \\ge 0.5$,\n$$\\tilde s(y,f) = s(y,f)\\,\\frac{|y|+|f|}{|y|+|f|+\\delta}:$$\nthe sMAPE term shrunk by a factor between $5/6$ and 1 that tends to 1 as $|y|+|f|$ grows. So for actuals and forecasts large compared with $\\delta$, $\\tilde s$ is close to $s$, though no longer exactly a function of the ratio $y/f$; on counts, where every actual is 0 or at least 1, this case covers every pair except a zero actual with $|f| < 0.5$. (b) Where $|y|+|f| < 0.5$, $\\tilde s(y,f) = |y-f|/(0.5+\\delta)$, an absolute error: a zero forecast of a zero actual scores 0, and a forecast $f$ with $|f| < 0.5$ of a zero actual scores $|f|/(0.5+\\delta)$, where the sMAPE term gives every non-zero forecast of a zero actual its largest value, 1. (c) $0 \\le \\tilde s < 1$ everywhere, so the expected msMAPE of every forecast is finite.",
    "type": "formal",
    "role": "principal",
    "novelty": "extension",
@@ -1932,7 +1932,7 @@
     },
     {
      "id": "R23",
-     "variable": "difference of expected squared errors minus (f-g)(f+g-2EY)",
+     "variable": "difference of expected squared errors minus (f1-f2)(f1+f2-2E[y])",
      "value": 0.0,
      "conditions": {
       "hypothesis": "H12"
@@ -2026,7 +2026,7 @@
     },
     {
      "id": "T2",
-     "description": "maximum |S - (200 - 800 ln2 g)| times sigma^3, log-Gumbel right, sigma^3 times the asymptotic relative efficiency, lognormal by sigma; hypothesis: H14 (lab runs RN8)",
+     "description": "maximum |S - (200 - 800 ln2 h)| times sigma^3, log-Gumbel right, sigma^3 times the asymptotic relative efficiency, lognormal by sigma; hypothesis: H14 (lab runs RN8)",
      "conditions": {
       "hypothesis": "H14"
      },
@@ -2034,7 +2034,7 @@
       "sigma"
      ],
      "columns": [
-      "maximum |S - (200 - 800 ln2 g)| times sigma^3, log-Gumbel right",
+      "maximum |S - (200 - 800 ln2 h)| times sigma^3, log-Gumbel right",
       "sigma^3 times the asymptotic relative efficiency, lognormal"
      ],
      "rows": [
@@ -7598,19 +7598,19 @@
    "tables": [
     {
      "id": "T1",
-     "description": "maximum absolute difference between m and s (|y|+|f|)/(|y|+|f|+eps) where |y|+|f| >= 0.5, violations of 5/6 <= (|y|+|f|)/(|y|+|f|+eps) <= 1 where |y|+|f| >= 0.5, maximum absolute difference between m and |y-f|/(0.5+eps) where |y|+|f| < 0.5, violations of 0 <= m < 1, msMAPE term of a zero forecast of a zero actual, maximum absolute difference between m(0, f) and |f|/(0.5+eps) for 0 < |f| < 0.5, pairs with |y|+|f| >= 0.5, pairs with |y|+|f| < 0.5; pairs: 200000, seed: 7 (lab runs RN9)",
+     "description": "maximum absolute difference between s~ and s (|y|+|f|)/(|y|+|f|+delta) where |y|+|f| >= 0.5, violations of 5/6 <= (|y|+|f|)/(|y|+|f|+delta) <= 1 where |y|+|f| >= 0.5, maximum absolute difference between s~ and |y-f|/(0.5+delta) where |y|+|f| < 0.5, violations of 0 <= m < 1, msMAPE term of a zero forecast of a zero actual, maximum absolute difference between s~(0, f) and |f|/(0.5+delta) for 0 < |f| < 0.5, pairs with |y|+|f| >= 0.5, pairs with |y|+|f| < 0.5; pairs: 200000, seed: 7 (lab runs RN9)",
      "conditions": {
       "pairs": 200000,
       "seed": 7
      },
      "row_labels": [],
      "columns": [
-      "maximum absolute difference between m and s (|y|+|f|)/(|y|+|f|+eps) where |y|+|f| >= 0.5",
-      "violations of 5/6 <= (|y|+|f|)/(|y|+|f|+eps) <= 1 where |y|+|f| >= 0.5",
-      "maximum absolute difference between m and |y-f|/(0.5+eps) where |y|+|f| < 0.5",
+      "maximum absolute difference between s~ and s (|y|+|f|)/(|y|+|f|+delta) where |y|+|f| >= 0.5",
+      "violations of 5/6 <= (|y|+|f|)/(|y|+|f|+delta) <= 1 where |y|+|f| >= 0.5",
+      "maximum absolute difference between s~ and |y-f|/(0.5+delta) where |y|+|f| < 0.5",
       "violations of 0 <= m < 1",
       "msMAPE term of a zero forecast of a zero actual",
-      "maximum absolute difference between m(0, f) and |f|/(0.5+eps) for 0 < |f| < 0.5",
+      "maximum absolute difference between s~(0, f) and |f|/(0.5+delta) for 0 < |f| < 0.5",
       "pairs with |y|+|f| >= 0.5",
       "pairs with |y|+|f| < 0.5"
      ],
@@ -7695,7 +7695,7 @@
   {
    "id": "E19",
    "profile": "formal",
-   "description": "Proof of C2 (section H2 of the proof document A1, rendered in A2). SMAPE is symmetric in ratios. It favours a high forecast only when errors are compared in absolute terms.",
+   "description": "Proof of C2 (section H2 of the proof document A1, rendered in A2). sMAPE is symmetric in ratios. It favours a high forecast only when errors are compared in absolute terms.",
    "foundation": "Kolmogorov probability axioms and real analysis",
    "steps": [
     {
@@ -7716,7 +7716,7 @@
     },
     {
      "id": "S3",
-     "statement": "The forecasts $y + e$ and $y - e$ are both $e$ away from $y$, so both numerators are $e$. The denominators are $y + (y + e) = 2y + e$ and $y + (y - e) = 2y - e > 0$. The larger denominator gives the smaller value. This is (b).",
+     "statement": "The forecasts $y + d$ and $y - d$ are both $d$ away from $y$, so both numerators are $d$. The denominators are $y + (y + d) = 2y + d$ and $y + (y - d) = 2y - d > 0$. The larger denominator gives the smaller value. This is (b).",
      "rule": "algebra",
      "by": [
       "S2"
@@ -7742,7 +7742,7 @@
   {
    "id": "E20",
    "profile": "formal",
-   "description": "Proof of C3 (section H3 of the proof document A1, rendered in A2). SMAPE measures the error on the log scale. For small errors it is half the absolute log error; for large errors it levels off.",
+   "description": "Proof of C3 (section H3 of the proof document A1, rendered in A2). sMAPE measures the error on the log scale. For small errors it is half the absolute log error; for large errors it levels off.",
    "foundation": "Kolmogorov probability axioms and real analysis",
    "steps": [
     {
@@ -7826,7 +7826,7 @@
     },
     {
      "id": "S2",
-     "statement": "A best forecast. Write $\\mathrm E[s(Y,f)]$ for the expectation over the random actual $Y$. As $f$ approaches 0 or grows without bound, $|\\ln y - \\ln f|$ grows for every positive $y$, so $s$ approaches 1 (C3), and so does its expectation. For every positive $f$ it is below 1. It changes continuously with $f$, because $s$ does and is at most 1 (bounded convergence). A continuous function that is below 1 in between and returns towards 1 at both ends reaches a lowest value at some $f > 0$. A forecast of 0 or a negative forecast scores 1 on every positive actual, so it is never better.",
+     "statement": "A best forecast. Write $\\mathrm E[s(y,f)]$ for the expectation over the random actual $y$. As $f$ approaches 0 or grows without bound, $|\\ln y - \\ln f|$ grows for every positive value of $y$, so $s$ approaches 1 (C3), and so does its expectation. For every positive $f$ it is below 1. It changes continuously with $f$, because $s$ does and is at most 1 (bounded convergence). A continuous function that is below 1 in between and returns towards 1 at both ends reaches a lowest value at some $f > 0$. A forecast of 0 or a negative forecast scores 1 on every positive actual, so it is never better.",
      "rule": "bounded convergence",
      "by": [
       "C3",
@@ -7874,7 +7874,7 @@
     },
     {
      "id": "S3",
-     "statement": "The derivative of the expectation. With this bound, the derivative may be taken inside the expectation (dominated convergence):\n$$\\frac{d}{df}\\,\\mathrm E[s(Y,f)] = 2\\,\\mathrm E\\big[w(Y,f)\\,(\\mathbf 1\\{Y < f\\} - \\mathbf 1\\{Y > f\\})\\big].$$",
+     "statement": "The derivative of the expectation. With this bound, the derivative may be taken inside the expectation (dominated convergence):\n$$\\frac{d}{df}\\,\\mathrm E[s(y,f)] = 2\\,\\mathrm E\\big[w(y,f)\\,(\\mathbf 1\\{y < f\\} - \\mathbf 1\\{y > f\\})\\big].$$",
      "rule": "dominated convergence",
      "by": [
       "S2"
@@ -7915,7 +7915,7 @@
     },
     {
      "id": "S8",
-     "statement": "The second derivative. Measure the forecast on the log scale, $c = \\ln f$, so that the expected contribution is $\\mathrm E[\\tanh(|\\ln Y - c|/2)]$ (C3). The derivative of $\\tanh(|x - c|/2)$ in $c$ is $-\\tfrac12\\operatorname{sech}^2\\big(\\tfrac{x-c}{2}\\big)$ for $c < x$ and $+\\tfrac12\\operatorname{sech}^2\\big(\\tfrac{x-c}{2}\\big)$ for $c > x$: it jumps by 1 at $c = x$. Differentiating again and taking the expectation over $x = \\ln Y$, the jumps add the density $g$ of $\\ln Y$ at $c$, and elsewhere the second derivative is $-\\tfrac12\\operatorname{sech}^2\\big(\\tfrac{x-c}{2}\\big)\\tanh\\big(\\tfrac{|x-c|}{2}\\big)$. So the second derivative of the expected contribution is\n$$g(c) - \\tfrac12\\,\\mathrm E\\Big[\\operatorname{sech}^2\\Big(\\frac{\\ln Y - c}{2}\\Big)\\tanh\\Big(\\frac{|\\ln Y - c|}{2}\\Big)\\Big].$$",
+     "statement": "The second derivative. Measure the forecast on the log scale, $c = \\ln f$, so that the expected contribution is $\\mathrm E[\\tanh(|\\ln y - c|/2)]$ (C3). The derivative of $\\tanh(|x - c|/2)$ in $c$ is $-\\tfrac12\\operatorname{sech}^2\\big(\\tfrac{x-c}{2}\\big)$ for $c < x$ and $+\\tfrac12\\operatorname{sech}^2\\big(\\tfrac{x-c}{2}\\big)$ for $c > x$: it jumps by 1 at $c = x$. Differentiating again and taking the expectation over $x = \\ln y$, the jumps add the density $g$ of $\\ln y$ at $c$, and elsewhere the second derivative is $-\\tfrac12\\operatorname{sech}^2\\big(\\tfrac{x-c}{2}\\big)\\tanh\\big(\\tfrac{|x-c|}{2}\\big)$. So the second derivative of the expected contribution is\n$$g(c) - \\tfrac12\\,\\mathrm E\\Big[\\operatorname{sech}^2\\Big(\\frac{\\ln y - c}{2}\\Big)\\tanh\\Big(\\frac{|\\ln y - c|}{2}\\Big)\\Big].$$",
      "rule": "earlier result",
      "by": [
       "C3"
@@ -7963,7 +7963,7 @@
    "steps": [
     {
      "id": "S1",
-     "statement": "By C3, $\\mathrm E[s(Y,f)] = \\mathrm E\\big[\\tanh\\big(|\\ln Y - \\ln f|/2\\big)\\big]$. Take a forecast $f = e^{m+t}$ with $t > 0$; the case $t < 0$ is the mirror image. We show that its expected sMAPE is larger than that of $e^m$.",
+     "statement": "By C3, $\\mathrm E[s(y,f)] = \\mathrm E\\big[\\tanh\\big(|\\ln y - \\ln f|/2\\big)\\big]$. Take a forecast $f = m\\,e^{\\tau}$ with $\\tau > 0$; the case $\\tau < 0$ is the mirror image. We show that its expected sMAPE is larger than that of $m$.",
      "rule": "setup",
      "by": [
       "C3"
@@ -7971,7 +7971,7 @@
     },
     {
      "id": "S2",
-     "statement": "Write both expectations as integrals over $v$, the distance of $\\ln y$ from $\\ln f$. For the forecast $e^{m+t}$, $\\ln y = m + t + v$; for $e^m$, $\\ln y = m + v$. Their difference is\n$$\\Delta = \\int \\tanh(|v|/2)\\,\\big[g(m+t+v) - g(m+v)\\big]\\,dv.$$",
+     "statement": "Write both expectations as integrals over $v$, the distance of $\\ln y$ from $\\ln f$. For the forecast $m\\,e^{\\tau}$, $\\ln y = \\ln m + \\tau + v$; for $m$, $\\ln y = \\ln m + v$. Their difference is\n$$\\Delta = \\int \\tanh(|v|/2)\\,\\big[g(\\ln m+\\tau+v) - g(\\ln m+v)\\big]\\,dv.$$",
      "rule": "definition",
      "by": [
       "S1"
@@ -7979,7 +7979,7 @@
     },
     {
      "id": "S3",
-     "statement": "Write $\\phi(v) = g(m+t+v) - g(m+v)$. By the symmetry of $g$ about $m$, $\\phi(-t-v) = g(m-v) - g(m-t-v) = g(m+v) - g(m+t+v) = -\\phi(v)$. So reflecting $v$ about $-t/2$ reverses the sign of $\\phi$.",
+     "statement": "Write $\\phi(v) = g(\\ln m+\\tau+v) - g(\\ln m+v)$. By the symmetry of $g$ about $\\ln m$, $\\phi(-\\tau-v) = g(\\ln m-v) - g(\\ln m-\\tau-v) = g(\\ln m+v) - g(\\ln m+\\tau+v) = -\\phi(v)$. So reflecting $v$ about $-\\tau/2$ reverses the sign of $\\phi$.",
      "rule": "definition",
      "by": [
       "S2"
@@ -7987,7 +7987,7 @@
     },
     {
      "id": "S4",
-     "statement": "Split the integral at $-t/2$ and reflect its left part onto the right. This gives\n$$\\Delta = \\int_{v > -t/2} \\big[\\tanh(|v|/2) - \\tanh(|v+t|/2)\\big]\\,\\phi(v)\\,dv.$$",
+     "statement": "Split the integral at $-\\tau/2$ and reflect its left part onto the right. This gives\n$$\\Delta = \\int_{v > -\\tau/2} \\big[\\tanh(|v|/2) - \\tanh(|v+\\tau|/2)\\big]\\,\\phi(v)\\,dv.$$",
      "rule": "algebra",
      "by": [
       "S3"
@@ -7995,7 +7995,7 @@
     },
     {
      "id": "S5",
-     "statement": "For $v > -t/2$, $v$ is closer to 0 than $v + t$ is: $|v| < |v + t|$. So the bracket is negative, because $\\tanh$ is increasing (C3). And $\\phi(v) \\le 0$ by unimodality: $g(m+t+v) \\le g(m+v)$. Their product is $\\ge 0$, and $> 0$ on a set of positive probability. So $\\Delta > 0$.",
+     "statement": "For $v > -\\tau/2$, $v$ is closer to 0 than $v + \\tau$ is: $|v| < |v + \\tau|$. So the bracket is negative, because $\\tanh$ is increasing (C3). And $\\phi(v) \\le 0$ by unimodality: $g(\\ln m+\\tau+v) \\le g(\\ln m+v)$. Their product is $\\ge 0$, and $> 0$ on a set of positive probability. So $\\Delta > 0$.",
      "rule": "monotonicity",
      "by": [
       "C3"
@@ -8026,7 +8026,7 @@
    "steps": [
     {
      "id": "S1",
-     "statement": "Write forecasts on the log scale as $\\ln f = m + c$. By C3, the expected contribution is $\\mathrm E[\\tanh(|\\ln Y - m - c|/2)]$, a function of $c$.",
+     "statement": "Write forecasts on the log scale as $\\ln f = \\ln m + c$. By C3, the expected contribution is $\\mathrm E[\\tanh(|\\ln y - \\ln m - c|/2)]$, a function of $c$.",
      "rule": "setup",
      "by": [
       "C3"
@@ -8042,7 +8042,7 @@
     },
     {
      "id": "S3",
-     "statement": "A forecast at the mode $m + a$ is exact for half the actuals and $2a$ away from the other half. So its expected $s$ is $\\tfrac12\\tanh(a)$. Since $\\tanh(a) = \\dfrac{2\\tanh(a/2)}{1 + \\tanh^2(a/2)}$, this is $\\dfrac{\\tanh(a/2)}{1 + \\tanh^2(a/2)} < \\tanh(a/2)$. The mode is better.",
+     "statement": "A forecast at the mode, $\\ln f = \\ln m + a$, is exact for half the actuals and $2a$ away from the other half. So its expected $s$ is $\\tfrac12\\tanh(a)$. Since $\\tanh(a) = \\dfrac{2\\tanh(a/2)}{1 + \\tanh^2(a/2)}$, this is $\\dfrac{\\tanh(a/2)}{1 + \\tanh^2(a/2)} < \\tanh(a/2)$. The mode is better.",
      "rule": "algebra",
      "by": [
       "S2"
@@ -8058,7 +8058,7 @@
     },
     {
      "id": "S5",
-     "statement": "Why the median is a local maximum. By C4, step 8, the second derivative of the expected contribution at the median is\n$$g(m) - \\tfrac12\\,\\mathrm E\\Big[\\operatorname{sech}^2\\Big(\\frac{\\ln Y - m}{2}\\Big)\\tanh\\Big(\\frac{|\\ln Y - m|}{2}\\Big)\\Big].$$",
+     "statement": "Why the median is a local maximum. By C4, step 8, the second derivative of the expected contribution at the median is\n$$g(\\ln m) - \\tfrac12\\,\\mathrm E\\Big[\\operatorname{sech}^2\\Big(\\frac{\\ln y - \\ln m}{2}\\Big)\\tanh\\Big(\\frac{|\\ln y - \\ln m|}{2}\\Big)\\Big].$$",
      "rule": "earlier result",
      "by": [
       "C4"
@@ -8066,7 +8066,7 @@
     },
     {
      "id": "S6",
-     "statement": "By symmetry the first derivative at the median is 0. When the groups narrow, few actuals lie near the median, so $g(m)$ tends to 0. Meanwhile the expectation tends to $\\operatorname{sech}^2(a/2)\\tanh(a/2) > 0$. So the second derivative becomes negative, and the median is a local maximum.",
+     "statement": "By symmetry the first derivative at the median is 0. When the groups narrow, few actuals lie near the median, so $g(\\ln m)$ tends to 0. Meanwhile the expectation tends to $\\operatorname{sech}^2(a/2)\\tanh(a/2) > 0$. So the second derivative becomes negative, and the median is a local maximum.",
      "rule": "symmetry",
      "by": [
       "S5"
@@ -8082,7 +8082,7 @@
     },
     {
      "id": "S8",
-     "statement": "Near the modes. Write $\\tanh(|z|/2) = 1 - 2k(z)$, with $k(z) = 1/(1 + e^{|z|})$. The function $k$ is largest at 0 and falls as $|z|$ grows, more slowly the larger $|z|$ is. Minimising the expected $s$ is maximising $\\mathrm E[k(\\ln Y - m - c)]$. As the groups narrow, this approaches $p\\,k(c + a) + (1 - p)\\,k(c - a)$, uniformly in $c$.",
+     "statement": "Near the modes. Write $\\tanh(|z|/2) = 1 - 2\\lambda(z)$, with $\\lambda(z) = 1/(1 + e^{|z|})$. The function $\\lambda$ is largest at 0 and falls as $|z|$ grows, more slowly the larger $|z|$ is. Minimising the expected $s$ is maximising $\\mathrm E[\\lambda(\\ln y - \\ln m - c)]$. As the groups narrow, this approaches $p\\,\\lambda(c + a) + (1 - p)\\,\\lambda(c - a)$, uniformly in $c$.",
      "rule": "definition",
      "by": [
       "S7"
@@ -8090,7 +8090,7 @@
     },
     {
      "id": "S9",
-     "statement": "With equal weights, take $0 < c < a$. The derivative of this limit is half the rate at which $k$ falls at distance $a - c$, minus half the rate at distance $a + c$. It is positive, because $k$ falls faster nearer 0. For $c > a$ the limit decreases. So on $c > 0$ its only maximum is at $c = a$, and the minimisers on that side approach $a$. By symmetry, those on the other side approach $-a$. This proves (a).",
+     "statement": "With equal weights, take $0 < c < a$. The derivative of this limit is half the rate at which $\\lambda$ falls at distance $a - c$, minus half the rate at distance $a + c$. It is positive, because $\\lambda$ falls faster nearer 0. For $c > a$ the limit decreases. So on $c > 0$ its only maximum is at $c = a$, and the minimisers on that side approach $a$. By symmetry, those on the other side approach $-a$. This proves (a).",
      "rule": "symmetry",
      "by": [
       "S8"
@@ -8098,7 +8098,7 @@
     },
     {
      "id": "S10",
-     "statement": "Unequal weights. The limit increases up to $c = -a$ and decreases after $c = a$. In between it is convex, by the argument of step 9. So its maximum is at $-a$ or at $a$. The difference between these two values is $(2p - 1)\\big(k(0) - k(2a)\\big)$, which is positive when $p > 1/2$. So the maximum, and with it the best forecast for narrow groups, is at the mode of the larger group. This proves (b).",
+     "statement": "Unequal weights. The limit increases up to $c = -a$ and decreases after $c = a$. In between it is convex, by the argument of step 9. So its maximum is at $-a$ or at $a$. The difference between these two values is $(2p - 1)\\big(\\lambda(0) - \\lambda(2a)\\big)$, which is positive when $p > 1/2$. So the maximum, and with it the best forecast for narrow groups, is at the mode of the larger group. This proves (b).",
      "rule": "convexity",
      "by": [
       "S9"
@@ -8137,7 +8137,7 @@
     },
     {
      "id": "S2",
-     "statement": "A positive forecast scores 1 on every zero actual (step 1). So its expected $s$ is $p_0$ plus $(1 - p_0)$ times its expected $s$ on the positive actuals. This is at least $p_0 + (1-p_0)\\,m_+$, with equality at the best positive forecasts, which exist (C9).",
+     "statement": "A positive forecast scores 1 on every zero actual (step 1). So its expected $s$ is $p_0$ plus $(1 - p_0)$ times its expected $s$ on the positive actuals. This is at least $p_0 + (1-p_0)\\,s_+$, with equality at the best positive forecasts, which exist (C9).",
      "rule": "earlier result",
      "by": [
       "S1",
@@ -8154,7 +8154,7 @@
     },
     {
      "id": "S4",
-     "statement": "The forecast 0 is better when $1 - p_0 < p_0 + (1 - p_0)m_+$. Collecting the terms in $p_0$ gives $1 - m_+ < p_0(2 - m_+)$. Since $2 - m_+ > 0$, this is the stated inequality.",
+     "statement": "The forecast 0 is better when $1 - p_0 < p_0 + (1 - p_0)s_+$. Collecting the terms in $p_0$ gives $1 - s_+ < p_0(2 - s_+)$. Since $2 - s_+ > 0$, this is the stated inequality.",
      "rule": "algebra",
      "by": [
       "S3"
@@ -8162,7 +8162,7 @@
     },
     {
      "id": "S5",
-     "statement": "Compare the threshold with $1/2$: $\\dfrac{1 - m_+}{2 - m_+} < \\dfrac12$ exactly when $2 - 2m_+ < 2 - m_+$, that is, when $m_+ > 0$. And $m_+ > 0$ unless the positive actuals are all one value.",
+     "statement": "Compare the threshold with $1/2$: $\\dfrac{1 - s_+}{2 - s_+} < \\dfrac12$ exactly when $2 - 2s_+ < 2 - s_+$, that is, when $s_+ > 0$. And $s_+ > 0$ unless the positive actuals are all one value.",
      "rule": "algebra",
      "by": [
       "S4"
@@ -8225,7 +8225,7 @@
     },
     {
      "id": "S5",
-     "statement": "Away from zero, uniformly. Fix a forecast $f_1 > 0$. For every $\\mu$ in a range around 0, say $|\\mu| \\le 1$, its expected $s$ is at most some value $q < 1$, since it changes continuously with $\\mu$. For a forecast $f$ with $|f| \\le \\delta$, every actual with $|y| \\ge \\sqrt\\delta$ scores at least $(\\sqrt\\delta - \\delta)/(\\sqrt\\delta + \\delta)$, which approaches 1 as $\\delta$ shrinks; and the share of actuals with $|y| < \\sqrt\\delta$ is small for every such $\\mu$: since $\\varepsilon$ is symmetric and its density decreases away from 0, an interval of a given length around 0 holds at least as much of its probability as any other interval of that length, so $P(|\\mu + \\varepsilon| < \\sqrt\\delta) \\le P(|\\varepsilon| < \\sqrt\\delta)$, which tends to 0 as $\\delta$ shrinks. So for $\\delta$ small enough, every forecast within $\\delta$ of 0 has an expected $s$ above $q$, for every $\\mu$ in the range: it is worse than $f_1$ (or its mirror image). The best forecasts therefore stay at least $\\delta$ from 0.",
+     "statement": "Away from zero, uniformly. Fix a forecast $f_1 > 0$. For every $\\mu$ in a range around 0, say $|\\mu| \\le 1$, its expected $s$ is at most some value $q < 1$, since it changes continuously with $\\mu$. For a forecast $f$ with $|f| \\le \\eta$, every actual with $|y| \\ge \\sqrt\\eta$ scores at least $(\\sqrt\\eta - \\eta)/(\\sqrt\\eta + \\eta)$, which approaches 1 as $\\eta$ shrinks; and the share of actuals with $|y| < \\sqrt\\eta$ is small for every such $\\mu$: since $\\varepsilon$ is symmetric and its density decreases away from 0, an interval of a given length around 0 holds at least as much of its probability as any other interval of that length, so $P(|\\mu + \\varepsilon| < \\sqrt\\eta) \\le P(|\\varepsilon| < \\sqrt\\eta)$, which tends to 0 as $\\eta$ shrinks. So for $\\eta$ small enough, every forecast within $\\eta$ of 0 has an expected $s$ above $q$, for every $\\mu$ in the range: it is worse than $f_1$ (or its mirror image). The best forecasts therefore stay at least $\\eta$ from 0.",
      "rule": "symmetry",
      "by": [
       "S4"
@@ -8256,7 +8256,7 @@
    "steps": [
     {
      "id": "S1",
-     "statement": "(a) RMSE. If $\\mathrm E[Y^2]$ is finite, so is $\\mathrm E[Y]$. Expanding the square gives $\\mathrm E[(Y-f)^2] = \\mathrm E[Y^2] - 2f\\,\\mathrm E[Y] + f^2$, which is finite. Conversely, $Y^2 \\le 2(Y - f)^2 + 2f^2$. So a finite $\\mathrm E[(Y-f)^2]$ makes $\\mathrm E[Y^2]$ finite.",
+     "statement": "(a) RMSE. If $\\mathrm E[y^2]$ is finite, so is $\\mathrm E[y]$. Expanding the square gives $\\mathrm E[(y-f)^2] = \\mathrm E[y^2] - 2f\\,\\mathrm E[y] + f^2$, which is finite. Conversely, $y^2 \\le 2(y - f)^2 + 2f^2$. So a finite $\\mathrm E[(y-f)^2]$ makes $\\mathrm E[y^2]$ finite.",
      "rule": "algebra",
      "by": [
       "D10"
@@ -8264,7 +8264,7 @@
     },
     {
      "id": "S2",
-     "statement": "Expanding both squares gives $(Y - f)^2 - (Y - g)^2 = (g - f)(2Y - f - g)$. Its expectation is finite when $\\mathrm E[Y]$ is, and equals $(f - g)(f + g - 2\\,\\mathrm E[Y]) = (f - \\mathrm E[Y])^2 - (g - \\mathrm E[Y])^2$.",
+     "statement": "Expanding both squares gives $(y - f_1)^2 - (y - f_2)^2 = (f_2 - f_1)(2y - f_1 - f_2)$. Its expectation is finite when $\\mathrm E[y]$ is, and equals $(f_1 - f_2)(f_1 + f_2 - 2\\,\\mathrm E[y]) = (f_1 - \\mathrm E[y])^2 - (f_2 - \\mathrm E[y])^2$.",
      "rule": "algebra",
      "by": [
       "S1"
@@ -8272,7 +8272,7 @@
     },
     {
      "id": "S3",
-     "statement": "For $f = \\mathrm E[Y]$ this is negative for every $g \\ne \\mathrm E[Y]$. So the mean is preferred.",
+     "statement": "For $f_1 = \\mathrm E[y]$ this is negative for every $f_2 \\ne \\mathrm E[y]$. So the mean is preferred.",
      "rule": "algebra",
      "by": [
       "S2"
@@ -8280,7 +8280,7 @@
     },
     {
      "id": "S4",
-     "statement": "If $\\mathrm E[Y]$ is infinite, then for $g > f$ the expectation in step 2 is $+\\infty$. Every forecast is beaten by any larger one, so none is preferred to all others.",
+     "statement": "If $\\mathrm E[y]$ is infinite, then for $f_2 > f_1$ the expectation in step 2 is $+\\infty$. Every forecast is beaten by any larger one, so none is preferred to all others.",
      "rule": "algebra",
      "by": [
       "S2"
@@ -8288,7 +8288,7 @@
     },
     {
      "id": "S5",
-     "statement": "(b) MAE. Since $|Y - f| \\ge Y - f$, $\\mathrm E|Y - f|$ is infinite when $\\mathrm E[Y]$ is. Otherwise it is at most $\\mathrm E[Y] + |f|$.",
+     "statement": "(b) MAE. Since $|y - f| \\ge y - f$, $\\mathrm E|y - f|$ is infinite when $\\mathrm E[y]$ is. Otherwise it is at most $\\mathrm E[y] + |f|$.",
      "rule": "algebra",
      "by": [
       "D11"
@@ -8296,7 +8296,7 @@
     },
     {
      "id": "S6",
-     "statement": "The difference $|Y - f| - |Y - g|$ is at most $|f - g|$ in size, so its expectation is finite.",
+     "statement": "The difference $|y - f_1| - |y - f_2|$ is at most $|f_1 - f_2|$ in size, so its expectation is finite.",
      "rule": "algebra",
      "by": [
       "S5"
@@ -8304,7 +8304,7 @@
     },
     {
      "id": "S7",
-     "statement": "Its derivative in $f$ is $\\mathbf 1\\{Y < f\\} - \\mathbf 1\\{Y > f\\}$. The expectation of this is $P(Y < f) - P(Y > f)$, which is negative below a median and positive above it. So a median is preferred.",
+     "statement": "The derivative of $|y - f|$ in $f$ is $\\mathbf 1\\{y < f\\} - \\mathbf 1\\{y > f\\}$. The expectation of this is $P(y < f) - P(y > f)$, which is negative below a median and positive above it. So a median is preferred.",
      "rule": "algebra",
      "by": [
       "S6"
@@ -8312,7 +8312,7 @@
     },
     {
      "id": "S8",
-     "statement": "(c) MAPE. For $f > 0$, the contribution of an actual to MAPE, divided by 100, is $|Y - f|/Y = |1 - f/Y|$. This is at least $f/Y - 1$. So the expected MAPE is infinite when $\\mathrm E[1/Y]$ is, and at most $1 + f\\,\\mathrm E[1/Y]$ otherwise.",
+     "statement": "(c) MAPE. For $f > 0$, the contribution of an actual to MAPE, divided by 100, is $|y - f|/y = |1 - f/y|$. This is at least $f/y - 1$. So the expected MAPE is infinite when $\\mathrm E[1/y]$ is, and at most $1 + f\\,\\mathrm E[1/y]$ otherwise.",
      "rule": "algebra",
      "by": [
       "D12"
@@ -8320,7 +8320,7 @@
     },
     {
      "id": "S9",
-     "statement": "As a function of $f$, $|1 - f/Y|$ is convex. Its derivative is $(1/Y)(\\mathbf 1\\{Y < f\\} - \\mathbf 1\\{Y > f\\})$. Its expectation is 0 where the actuals below $f$ and those above it have equal total weight $1/Y$: at a median of the actuals weighted by $1/Y$.",
+     "statement": "As a function of $f$, $|1 - f/y|$ is convex. Its derivative is $(1/y)(\\mathbf 1\\{y < f\\} - \\mathbf 1\\{y > f\\})$. Its expectation is 0 where the actuals below $f$ and those above it have equal total weight $1/y$: at a median of the actuals weighted by $1/y$.",
      "rule": "convexity",
      "by": [
       "S8"
@@ -8328,7 +8328,7 @@
     },
     {
      "id": "S10",
-     "statement": "The forecast 0 gives $|1 - 0| = 1$ for every actual, so MAPE 100. A negative forecast gives more than 1. So when $\\mathrm E[1/Y]$ is infinite, 0 is the only forecast with a finite expected MAPE.",
+     "statement": "The forecast 0 gives $|1 - 0| = 1$ for every actual, so MAPE 100. A negative forecast gives more than 1. So when $\\mathrm E[1/y]$ is infinite, 0 is the only forecast with a finite expected MAPE.",
      "rule": "algebra",
      "by": [
       "S9"
@@ -8336,7 +8336,7 @@
     },
     {
      "id": "S11",
-     "statement": "If $Y = 0$ with positive probability: for $f \\ne 0$ that actual contributes $|f|/0$, which is infinite. For $f = 0$ it contributes $0/0$, which is undefined.",
+     "statement": "If $y = 0$ with positive probability: for $f \\ne 0$ that actual contributes $|f|/0$, which is infinite. For $f = 0$ it contributes $0/0$, which is undefined.",
      "rule": "algebra",
      "by": [
       "S10"
@@ -8362,12 +8362,12 @@
   {
    "id": "E28",
    "profile": "formal",
-   "description": "Proof of C10 (section H11 of the proof document A1, rendered in A2). For widely spread actuals, every forecast scores close to the worst value. The differences between forecasts shrink, and the target moves from the median to the mode of $\\ln Y$.",
+   "description": "Proof of C10 (section H11 of the proof document A1, rendered in A2). For widely spread actuals, every forecast scores close to the worst value. The differences between forecasts shrink, and the target moves from the median to the mode of $\\ln y$.",
    "foundation": "Kolmogorov probability axioms and real analysis",
    "steps": [
     {
      "id": "S1",
-     "statement": "Rewrite the expectation. By C3, and since $\\tanh(|x|/2) = 1 - \\dfrac{2}{1 + e^{|x|}}$, $\\mathrm E[s(Y,f)] = 1 - \\mathrm E\\big[2/(1 + e^{|\\ln Y - \\ln f|})\\big]$. The density of $\\ln Y$ at $x$ is $g\\big((x - \\mu)/\\sigma\\big)/\\sigma$. Substituting $x = \\ln f + v$ in the integral gives\n$$\\mathrm E[s(Y,f)] = 1 - \\frac1\\sigma\\int \\frac{2}{1 + e^{|v|}}\\,g\\Big(c + \\frac v\\sigma\\Big)\\,dv.$$",
+     "statement": "Rewrite the expectation. By C3, and since $\\tanh(|x|/2) = 1 - \\dfrac{2}{1 + e^{|x|}}$, $\\mathrm E[s(y,f)] = 1 - \\mathrm E\\big[2/(1 + e^{|\\ln y - \\ln f|})\\big]$. The density of $\\ln y$ at $x$ is $h\\big((x - \\mu)/\\sigma\\big)/\\sigma$. Substituting $x = \\ln f + v$ in the integral gives\n$$\\mathrm E[s(y,f)] = 1 - \\frac1\\sigma\\int \\frac{2}{1 + e^{|v|}}\\,h\\Big(c + \\frac v\\sigma\\Big)\\,dv.$$",
      "rule": "change of variables",
      "by": [
       "C3"
@@ -8375,7 +8375,7 @@
     },
     {
      "id": "S2",
-     "statement": "Expand $g$. By Taylor's theorem, $g(c + v/\\sigma) = g(c) + g'(c)\\,v/\\sigma + \\tfrac12 g''(\\xi)\\,v^2/\\sigma^2$ for some $\\xi$ between $c$ and $c + v/\\sigma$.",
+     "statement": "Expand $h$. By Taylor's theorem, $h(c + v/\\sigma) = h(c) + h'(c)\\,v/\\sigma + \\tfrac12 h''(\\xi)\\,v^2/\\sigma^2$ for some $\\xi$ between $c$ and $c + v/\\sigma$.",
      "rule": "Taylor's theorem",
      "by": [
       "S1"
@@ -8383,7 +8383,7 @@
     },
     {
      "id": "S3",
-     "statement": "The first term integrates to $4\\ln 2\\,g(c)$, since $\\int \\frac{2}{1+e^{|v|}}\\,dv = 4\\ln 2$. Over $v > 0$, $\\int 2/(1 + e^v)\\,dv = 2\\ln 2$.",
+     "statement": "The first term integrates to $4\\ln 2\\,h(c)$, since $\\int \\frac{2}{1+e^{|v|}}\\,dv = 4\\ln 2$. Over $v > 0$, $\\int 2/(1 + e^v)\\,dv = 2\\ln 2$.",
      "rule": "algebra",
      "by": [
       "S2"
@@ -8399,7 +8399,7 @@
     },
     {
      "id": "S5",
-     "statement": "The third term is at most $\\tfrac12\\max|g''|$ times $\\int \\frac{2v^2}{1+e^{|v|}}\\,dv = 6\\zeta(3) \\approx 7.21$, divided by $\\sigma^2$. This integral is a standard Fermi–Dirac integral. With the factor $1/\\sigma$ of step 1, this gives the expansion.",
+     "statement": "The third term is at most $\\tfrac12\\max|h''|$ times $\\int \\frac{2v^2}{1+e^{|v|}}\\,dv = 6\\zeta(3) \\approx 7.21$, divided by $\\sigma^2$. This integral is a standard Fermi–Dirac integral. With the factor $1/\\sigma$ of step 1, this gives the expansion.",
      "rule": "standard integral",
      "by": [
       "S1"
@@ -8407,7 +8407,7 @@
     },
     {
      "id": "S6",
-     "statement": "(a). The expansion tends to 1, so the expected sMAPE tends to 200. Two forecasts at fixed quantile levels have fixed positions $c_1$ and $c_2$. So their difference is $4\\ln 2\\,[g(c_2) - g(c_1)]/\\sigma + O(\\sigma^{-3})$.",
+     "statement": "(a). The expansion tends to 1, so the expected sMAPE tends to 200. Two forecasts at fixed quantile levels have fixed positions $c_1$ and $c_2$. So their difference is $4\\ln 2\\,[h(c_2) - h(c_1)]/\\sigma + O(\\sigma^{-3})$.",
      "rule": "algebra",
      "by": [
       "S5"
@@ -8415,7 +8415,7 @@
     },
     {
      "id": "S7",
-     "statement": "(b). Minimising the expansion over $c$ is maximising $g(c)$, up to a term that shrinks like $\\sigma^{-2}$ for every $c$ at once. A density with a bounded derivative tends to 0 far out. So its single highest point $c_0$ stands clear of every other point, and the minimisers' positions tend to $c_0$. So do their quantile levels.",
+     "statement": "(b). Minimising the expansion over $c$ is maximising $h(c)$, up to a term that shrinks like $\\sigma^{-2}$ for every $c$ at once. A density with a bounded derivative tends to 0 far out. So its single highest point $c_0$ stands clear of every other point, and the minimisers' positions tend to $c_0$. So do their quantile levels.",
      "rule": "algebra",
      "by": [
       "S6"
@@ -8439,7 +8439,7 @@
     },
     {
      "id": "S10",
-     "statement": "So as the actuals spread out, the expected sMAPE flattens towards its bound. Differences between forecasts vanish like $1/\\sigma$. The target moves from the median to the mode of $\\ln Y$.",
+     "statement": "So as the actuals spread out, the expected sMAPE flattens towards its bound. Differences between forecasts vanish like $1/\\sigma$. The target moves from the median to the mode of $\\ln y$.",
      "rule": "conclusion",
      "by": [
       "S9"
@@ -8469,7 +8469,7 @@
    "steps": [
     {
      "id": "S1",
-     "statement": "Case (a): when $\\ln Y$ has a density symmetric about $\\ln m$ and unimodal, the median $m$ is the only forecast with the lowest expected sMAPE.",
+     "statement": "Case (a): when $\\ln y$ has a density symmetric about $\\ln m$ and unimodal, the median $m$ is the only forecast with the lowest expected sMAPE.",
      "by": [
       "C5"
      ],
@@ -8477,7 +8477,7 @@
     },
     {
      "id": "S2",
-     "statement": "Case (b): for positive $Y$ that takes no single value with positive probability, the derivative of $\\mathrm E[s(Y,f)]$ in $f$ is $2\\,\\mathrm E[w(Y,f)(\\mathbf 1\\{Y<f\\} - \\mathbf 1\\{Y>f\\})]$ with $w(y,f) = y/(y+f)^2$ (C4, its proof's step 3).",
+     "statement": "Case (b): for positive $y$ that takes no single value with positive probability, the derivative of $\\mathrm E[s(y,f)]$ in $f$ is $2\\,\\mathrm E[w(y,f)(\\mathbf 1\\{y<f\\} - \\mathbf 1\\{y>f\\})]$ with $w(y,f) = y/(y+f)^2$ (C4, its proof's step 3).",
      "by": [
       "C4"
      ],
@@ -8493,7 +8493,7 @@
     },
     {
      "id": "S4",
-     "statement": "With $c = \\ln f$, the second derivative of the expected contribution at $c = \\ln m$ is $g(\\ln m) - \\tfrac12\\mathrm E[\\operatorname{sech}^2((\\ln Y - \\ln m)/2)\\tanh(|\\ln Y - \\ln m|/2)]$ (C4, its proof's step 8). The stated inequality makes it positive, so $m$ is a strict local minimum.",
+     "statement": "With $c = \\ln f$, the second derivative of the expected contribution at $c = \\ln m$ is $g(\\ln m) - \\tfrac12\\mathrm E[\\operatorname{sech}^2((\\ln y - \\ln m)/2)\\tanh(|\\ln y - \\ln m|/2)]$ (C4, its proof's step 8). The stated inequality makes it positive, so $m$ is a strict local minimum.",
      "by": [
       "C4",
       "S3"
@@ -8528,7 +8528,7 @@
    "steps": [
     {
      "id": "S1",
-     "statement": "Which branch of the maximum. $t + \\epsilon \\ge 0.5 + \\epsilon$ exactly when $t \\ge 0.5$. So the denominator of $m$ is $t + \\epsilon$ when $t \\ge 0.5$, and $0.5 + \\epsilon$ when $t < 0.5$.",
+     "statement": "Which branch of the maximum. $\\ell + \\delta \\ge 0.5 + \\delta$ exactly when $\\ell \\ge 0.5$. So the denominator of $\\tilde s$ is $\\ell + \\delta$ when $\\ell \\ge 0.5$, and $0.5 + \\delta$ when $\\ell < 0.5$.",
      "rule": "algebra",
      "by": [
       "D1"
@@ -8536,7 +8536,7 @@
     },
     {
      "id": "S2",
-     "statement": "(a), the identity. When $t \\ge 0.5$, $t > 0$, so $s = |y-f|/t$ and $|y-f| = s\\,t$. By step 1, $m = |y-f|/(t+\\epsilon) = s\\,t/(t+\\epsilon)$.",
+     "statement": "(a), the identity. When $\\ell \\ge 0.5$, $\\ell > 0$, so $s = |y-f|/\\ell$ and $|y-f| = s\\,\\ell$. By step 1, $\\tilde s = |y-f|/(\\ell+\\delta) = s\\,\\ell/(\\ell+\\delta)$.",
      "rule": "algebra",
      "by": [
       "S1"
@@ -8544,7 +8544,7 @@
     },
     {
      "id": "S3",
-     "statement": "(a), the factor. The function $t \\mapsto t/(t+\\epsilon) = 1 - \\epsilon/(t+\\epsilon)$ is increasing in $t$, below 1, and tends to 1 as $t$ grows. At $t = 0.5$ it equals $0.5/0.6 = 5/6$. So for $t \\ge 0.5$ it lies in $[5/6, 1)$.",
+     "statement": "(a), the factor. The function $\\ell \\mapsto \\ell/(\\ell+\\delta) = 1 - \\delta/(\\ell+\\delta)$ is increasing in $\\ell$, below 1, and tends to 1 as $\\ell$ grows. At $\\ell = 0.5$ it equals $0.5/0.6 = 5/6$. So for $\\ell \\ge 0.5$ it lies in $[5/6, 1)$.",
      "rule": "monotonicity",
      "by": [
       "S2"
@@ -8552,7 +8552,7 @@
     },
     {
      "id": "S4",
-     "statement": "(a), close to $s$, but not a function of the ratio. By steps 2 and 3, $0 \\le s - m = s\\,\\epsilon/(t+\\epsilon) \\le \\epsilon/(t+\\epsilon)$, since $s \\le 1$ (step 7). So $m$ is within $\\epsilon/(t+\\epsilon)$ of $s$, which shrinks as $t$ grows. But $m$ depends on the scale: $(y,f) = (1,2)$ and $(10,20)$ have the same ratio and the same $s = 1/3$, while $m = 1/3.1$ and $10/30.1$. So $m$ is not a function of $y/f$ alone.",
+     "statement": "(a), close to $s$, but not a function of the ratio. By steps 2 and 3, $0 \\le s - \\tilde s = s\\,\\delta/(\\ell+\\delta) \\le \\delta/(\\ell+\\delta)$, since $s \\le 1$ (step 7). So $\\tilde s$ is within $\\delta/(\\ell+\\delta)$ of $s$, which shrinks as $\\ell$ grows. But $\\tilde s$ depends on the scale: $(y,f) = (1,2)$ and $(10,20)$ have the same ratio and the same $s = 1/3$, while $\\tilde s = 1/3.1$ and $10/30.1$. So $\\tilde s$ is not a function of $y/f$ alone.",
      "rule": "algebra",
      "by": [
       "S2"
@@ -8560,7 +8560,7 @@
     },
     {
      "id": "S5",
-     "statement": "(a), counts. If $y \\ge 1$, then $t \\ge 1 \\ge 0.5$. If $y = 0$, then $t = |f|$, which is at least 0.5 unless $|f| < 0.5$. So on counts only a zero actual with $|f| < 0.5$ has $t < 0.5$.",
+     "statement": "(a), counts. If $y \\ge 1$, then $\\ell \\ge 1 \\ge 0.5$. If $y = 0$, then $\\ell = |f|$, which is at least 0.5 unless $|f| < 0.5$. So on counts only a zero actual with $|f| < 0.5$ has $\\ell < 0.5$.",
      "rule": "algebra",
      "by": [
       "S4"
@@ -8568,7 +8568,7 @@
     },
     {
      "id": "S6",
-     "statement": "(b). When $t < 0.5$, by step 1, $m = |y-f|/(0.5+\\epsilon)$. For $y = f = 0$ this is 0. For $y = 0$ and $|f| < 0.5$ it is $|f|/(0.5+\\epsilon)$. And $s(0,f) = |f|/|f| = 1$ for $f \\ne 0$, the largest value of $s$ (step 7).",
+     "statement": "(b). When $\\ell < 0.5$, by step 1, $\\tilde s = |y-f|/(0.5+\\delta)$. For $y = f = 0$ this is 0. For $y = 0$ and $|f| < 0.5$ it is $|f|/(0.5+\\delta)$. And $s(0,f) = |f|/|f| = 1$ for $f \\ne 0$, the largest value of $s$ (step 7).",
      "rule": "algebra",
      "by": [
       "S1"
@@ -8576,7 +8576,7 @@
     },
     {
      "id": "S7",
-     "statement": "(c). $|y - f| \\le |y| + |f| = t$ (the triangle inequality), so $s \\le 1$. When $t \\ge 0.5$, $m \\le t/(t+\\epsilon) < 1$ (step 3). When $t < 0.5$, $m \\le t/(0.5+\\epsilon) < 0.5/0.6 < 1$. And $m \\ge 0$ because it is a ratio of a non-negative number to a positive one. A quantity between 0 and 1 has an expectation between 0 and 1, whatever the joint distribution of actuals and forecasts, so the expected msMAPE is between 0 and 200.",
+     "statement": "(c). $|y - f| \\le |y| + |f| = \\ell$ (the triangle inequality), so $s \\le 1$. When $\\ell \\ge 0.5$, $\\tilde s \\le \\ell/(\\ell+\\delta) < 1$ (step 3). When $\\ell < 0.5$, $\\tilde s \\le \\ell/(0.5+\\delta) < 0.5/0.6 < 1$. And $\\tilde s \\ge 0$ because it is a ratio of a non-negative number to a positive one. A quantity between 0 and 1 has an expectation between 0 and 1, whatever the joint distribution of actuals and forecasts, so the expected msMAPE is between 0 and 200.",
      "rule": "algebra",
      "by": [
       "S3"
@@ -8654,7 +8654,7 @@
    "availability": {
     "level": "public"
    },
-   "description": "Proofs of the study's formal results (paper numbering H1 to H11; record H1, H2, H3, H13, H4, H5, H7, H8, H31, H12, H14), in Markdown with LaTeX; final version, checked independently by AC4 (proof-check-report.md) and by the supervisor.",
+   "description": "Proofs of the study's formal results (paper numbering H1 to H11; record H1, H2, H3, H13, H4, H5, H7, H8, H31, H12, H14), in Markdown with LaTeX; final version, checked independently by AC4 (proof-check-report.md) and by the supervisor. Notation revised on 2026-11-17, content unchanged: y is the actual as a value and as a random quantity (was Y for the random actual), m the median of y in H5 to H7 (H6 and H7 wrote its logarithm m), s_+ the lowest expected s on the positive actuals in H8 (was m_+), h the density of epsilon in H11 (was g, the density of ln y elsewhere), two forecasts f_1 and f_2 in H10 (was f and g), the absolute distance d in H2 (was e), the shift tau in H6 (was t), lambda in H7 (was k), eta in H9 (was delta).",
    "licence": "CC-BY-4.0"
   },
   {
@@ -8664,7 +8664,7 @@
    "availability": {
     "level": "public"
    },
-   "description": "The same proofs rendered as PDF, final version.",
+   "description": "The same proofs rendered as PDF, final version, with the notation revised on 2026-11-17 (see the proofs in Markdown).",
    "licence": "CC-BY-4.0"
   },
   {
@@ -8696,7 +8696,7 @@
     "level": "public"
    },
    "licence": "CC-BY-4.0",
-   "description": "Proof of H35 (msMAPE beside sMAPE), in Markdown with LaTeX; checked independently by AC4 (CK26), whose suggested steps 4 and 7 were added after its check."
+   "description": "Proof of H35 (msMAPE beside sMAPE), in Markdown with LaTeX; checked independently by AC4 (CK26), whose suggested steps 4 and 7 were added after its check. Notation revised on 2026-11-17, content unchanged: the msMAPE term is written s~ (was m, now the median), its constant delta (was epsilon, now the random error of the other proofs), and |y|+|f| is l (was t)."
   },
   {
    "id": "A6",
@@ -8734,8 +8734,8 @@
   {
    "id": "A7",
    "kind": "lab_record",
-   "uri": "https://github.com/entrylib/study-planning/blob/3a692babdd7fa2ea9ff38aae9d071fc71883ff94/lab/lab.jsonl",
-   "version": "sha256:d04423f6fa54d7586c2b53607deeed9500ef29ea814cc2ffa617ff5d6c9978c2",
+   "uri": "https://github.com/entrylib/study-planning/blob/d333a591dfdb0ebf2cee0dbf32c4acc9973acd81/lab/lab.jsonl",
+   "version": "sha256:7e4e407e25d8e7da353837877e1ce73e60ca494112c3df67845737a675727f0c",
    "availability": {
     "level": "public"
    },
