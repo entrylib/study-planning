@@ -1,0 +1,8 @@
+maximum absolute difference between m and s (|y|+|f|)/(|y|+|f|+eps) where |y|+|f| >= 0.5 = 1.1102230246251565e-16
+violations of 5/6 <= (|y|+|f|)/(|y|+|f|+eps) <= 1 where |y|+|f| >= 0.5 = 0
+maximum absolute difference between m and |y-f|/(0.5+eps) where |y|+|f| < 0.5 = 0.0
+violations of 0 <= m < 1 = 0
+msMAPE term of a zero forecast of a zero actual = 0.0
+maximum absolute difference between m(0, f) and |f|/(0.5+eps) for 0 < |f| < 0.5 = 0.0
+pairs with |y|+|f| >= 0.5 = 132884
+pairs with |y|+|f| < 0.5 = 67116
