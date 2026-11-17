@@ -167,6 +167,7 @@
   ],
   "summary": "Which forecast does sMAPE reward? sMAPE has been criticised for its asymmetry and its behaviour near zero, but the forecast that minimises it had been found only in special cases. We show that for positive values sMAPE depends only on the ratio of actual to forecast, not on their difference: it is the hyperbolic tangent of half the absolute log error. So it scores a forecast k times too high and one k times too low the same, and is asymmetric only for equal absolute errors. Being bounded, it has a finite expected value for every distribution. Its target is a median of the actuals, each weighted by how close it is to the forecast by ratio. This is the median when the log of the actual is symmetric and unimodal; otherwise it can move to the side of the median that carries more weight. With two well-separated groups of actuals, the median becomes a local maximum. On intermittent demand the target is 0 once the share of zeros passes a threshold below one half. Otherwise sMAPE aims at a weighted median of the non-zero actuals. As the actuals spread out, expected sMAPE approaches its bound for every forecast, so forecasts become hard to tell apart, and the target moves from the median to the mode of the log. Where sMAPE and MAE both target the median, a test set's sMAPE minimiser estimates it less precisely than the sample median, increasingly so as the actuals spread out.",
   "classification": {
+   "subfield": "openalex:subfields/2613",
    "keywords": [
     "forecast evaluation",
     "error measures",
@@ -182,7 +183,7 @@
    "competing_interests": "Ivan Svetunkov runs EntryLib and wrote the review (entrylib:2026.000008) whose claims about sMAPE this study tests."
   },
   "id": "entrylib:2026.000013",
-  "correction_reason": "Nothing the paper claims has changed. This version adds what a reader finds their way by: a name and a summary in plain language for each of the 17 claims, the symbol of six defined terms, and five relations between the paper's own claims (C13 supports C5, C6, C7 and C11; C15 qualifies C12), each relation between the simulations and the proved claims now naming the table rows it concerns. The guarantor approved the names and summaries on 2026-11-17."
+  "correction_reason": "Nothing the paper claims has changed. This version adds what a reader finds their way by: a name and a summary in plain language for each of the 17 claims, the symbol of six defined terms, and five relations between the paper's own claims (C13 supports C5, C6, C7 and C11; C15 qualifies C12), each relation between the simulations and the proved claims now naming the table rows it concerns. The guarantor approved the names and summaries on 2026-11-17. The paper's subfield is now Statistics and Probability, chosen by the guarantor: the classifier had assigned Cognitive Neuroscience."
  },
  "contributors": [
   {
