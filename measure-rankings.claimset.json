@@ -142686,7 +142686,7 @@
   {
    "id": "A1",
    "kind": "data",
-   "uri": "files/measure-rankings.results.csv",
+   "uri": "https://entrylib.org/p/2026.000009/v1/files/files/measure-rankings.results.csv",
    "version": "sha256:72dd52ade595ea0490b699d28f8a163442257295b4fae2503eeaf2ec206a423e",
    "availability": {
     "level": "public"
