@@ -8778,7 +8778,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-inverse_Gaussian_shape=1000.png",
+   "uri": "files/figures/RN1-inverse_Gaussian_shape_1000.png",
    "version": "sha256:f5d0bd0230ac0e0aac43c1b708f365817da2d02f5a2a27ae8e2cfcc06676ab57",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8794,7 +8794,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-inverse_Gaussian_shape=200.png",
+   "uri": "files/figures/RN1-inverse_Gaussian_shape_200.png",
    "version": "sha256:af9f9e18e322a45f776994ea9dbdcf1d6d2aa42eaa783b3541ff8f24a738ce92",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8810,7 +8810,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-inverse_Gaussian_shape=100.png",
+   "uri": "files/figures/RN1-inverse_Gaussian_shape_100.png",
    "version": "sha256:a53f27c451f7fa9eb8568638888a469ae77f51592d6c30bcf9264c0c79909b9b",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8826,7 +8826,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-inverse_Gaussian_shape=50.png",
+   "uri": "files/figures/RN1-inverse_Gaussian_shape_50.png",
    "version": "sha256:ca028c9c07a271dda4c21c8b066f386bc8005874d64b4046519eee918a5b4875",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8842,7 +8842,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-inverse_Gaussian_shape=20.png",
+   "uri": "files/figures/RN1-inverse_Gaussian_shape_20.png",
    "version": "sha256:24ad0b8357ca38cf2e87d87f034a199d3ebb0ddae6c61160944bd12c37084629",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8858,7 +8858,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-inverse_Gaussian_shape=10.png",
+   "uri": "files/figures/RN1-inverse_Gaussian_shape_10.png",
    "version": "sha256:96a39a12e046bd64f5abcb622c2535ed0be0e5b78fdea9e7529e92b132b9ec70",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8875,7 +8875,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_left_sd=0.5_skew=-2.png",
+   "uri": "files/figures/RN1-log-skewed_left_sd_0.5_skew_-2.png",
    "version": "sha256:8056fb70807935f5e62b171a5dfa5eecd745d0c4ae2fa1e1234d714f38a19e35",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8891,7 +8891,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_left_sd=0.5_skew=-1.png",
+   "uri": "files/figures/RN1-log-skewed_left_sd_0.5_skew_-1.png",
    "version": "sha256:6318ac70da750fc75ed6ddc068fdaeadb0d4f81959b49713120235025dcfa93f",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8907,7 +8907,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_left_sd=0.5_skew=-0.5.png",
+   "uri": "files/figures/RN1-log-skewed_left_sd_0.5_skew_-0.5.png",
    "version": "sha256:6a96c0e2128b1ff51db864edb656deff49742c14c23b722ebfc8481b4d89c118",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8923,7 +8923,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_right_sd=0.5_skew=_2.png",
+   "uri": "files/figures/RN1-log-skewed_right_sd_0.5_skew__2.png",
    "version": "sha256:5d72e3ee447c7542bb6e83604e2a2bba5927843069cc6a151f3b487bf4a518d2",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8939,7 +8939,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_right_sd=0.5_skew=_1.png",
+   "uri": "files/figures/RN1-log-skewed_right_sd_0.5_skew__1.png",
    "version": "sha256:ca1572ce0b42b900562359e8dc8e5b7b479c5556ec4c8f9e05753974fc9f8abc",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8955,7 +8955,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_right_sd=0.5_skew=_0.5.png",
+   "uri": "files/figures/RN1-log-skewed_right_sd_0.5_skew__0.5.png",
    "version": "sha256:e95028fd94e4b16db183cafbe0d822bec0295db9c37140106d2c025ca37bb036",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8971,7 +8971,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=0.5.png",
+   "uri": "files/figures/RN1-lognormal_sigma_0.5.png",
    "version": "sha256:a011adfe460bf790b1ebd750205169d4452078ef8bc303cab5762e6dea06c653",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -8987,7 +8987,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_left_sd=1_skew=-2.png",
+   "uri": "files/figures/RN1-log-skewed_left_sd_1_skew_-2.png",
    "version": "sha256:ef4142826b8527f4cb36daeeeb2d1fc0ff9326f162dbd26d0c7636a4c2f01a2b",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9003,7 +9003,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_left_sd=1_skew=-1.png",
+   "uri": "files/figures/RN1-log-skewed_left_sd_1_skew_-1.png",
    "version": "sha256:c6772470669b9b57709494f4e1d608d99038b7955bab36714608011e664d7829",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9019,7 +9019,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_left_sd=1_skew=-0.5.png",
+   "uri": "files/figures/RN1-log-skewed_left_sd_1_skew_-0.5.png",
    "version": "sha256:86646dc2610775bd413fc30051cfb66394bc169193f2b51d8389895dd1a52d24",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9035,7 +9035,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_right_sd=1_skew=_2.png",
+   "uri": "files/figures/RN1-log-skewed_right_sd_1_skew__2.png",
    "version": "sha256:10822d590574773a55a86bba5c539f9f67d317ce88c2b6d03b9cac7ff31973f1",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9051,7 +9051,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_right_sd=1_skew=_1.png",
+   "uri": "files/figures/RN1-log-skewed_right_sd_1_skew__1.png",
    "version": "sha256:ceec8d040504718d6c22be2349f418c184e92324dd3fd17220cf3eae123cfe19",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9067,7 +9067,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-log-skewed_right_sd=1_skew=_0.5.png",
+   "uri": "files/figures/RN1-log-skewed_right_sd_1_skew__0.5.png",
    "version": "sha256:98bda774447672be32d5ec8f6430847fedafff3efae6ce49ad39601b5a7830d1",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9083,7 +9083,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=1.png",
+   "uri": "files/figures/RN1-lognormal_sigma_1.png",
    "version": "sha256:40ed74ee4bdb7769da22899eae6999feacffc838e089fbf558dc8bc7e506b829",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9149,7 +9149,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-normal_straddling_zero_mean=0.png",
+   "uri": "files/figures/RN1-normal_straddling_zero_mean_0.png",
    "version": "sha256:d40bb1a2e829f99a03b65cf9f39b8576c2f0e91d29d6afc24683dd2a6cdd1a85",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9165,7 +9165,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-normal_straddling_zero_mean=0.5.png",
+   "uri": "files/figures/RN1-normal_straddling_zero_mean_0.5.png",
    "version": "sha256:e36409efae653fd4f2732b7db28a3f90fabcd465dde513caf58f90c92c0a03cb",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9181,7 +9181,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-normal_straddling_zero_mean=1.png",
+   "uri": "files/figures/RN1-normal_straddling_zero_mean_1.png",
    "version": "sha256:d2fbb1ea0cb462e132fcb94e87e596064070c516adf3427a0ed0313c4ce79c1a",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9197,7 +9197,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=0.5_with_zeros_p0=0.25.png",
+   "uri": "files/figures/RN1-lognormal_sigma_0.5_with_zeros_p0_0.25.png",
    "version": "sha256:f3c951b394772df8ff25144b38481e88f111ee88d953aebdd99809fe9981060e",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9213,7 +9213,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=0.5_with_zeros_p0=0.42.png",
+   "uri": "files/figures/RN1-lognormal_sigma_0.5_with_zeros_p0_0.42.png",
    "version": "sha256:4ca3938f9aa48a7a364d161708bf7b021a7b3dc4dc430f73e24ce6d5a1065e39",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9229,7 +9229,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=0.5_with_zeros_p0=0.47.png",
+   "uri": "files/figures/RN1-lognormal_sigma_0.5_with_zeros_p0_0.47.png",
    "version": "sha256:29c07116f529100adc3907e01d1a97743cee8b4fe4fa697299cda70962949cc3",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9245,7 +9245,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=0.5_with_zeros_p0=0.6.png",
+   "uri": "files/figures/RN1-lognormal_sigma_0.5_with_zeros_p0_0.6.png",
    "version": "sha256:3a6440016a17d22a7d6c049a915ee5ddc8d66a8d66bc88af004571badb1d8b1c",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9261,7 +9261,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=1_with_zeros_p0=0.25.png",
+   "uri": "files/figures/RN1-lognormal_sigma_1_with_zeros_p0_0.25.png",
    "version": "sha256:7e6f60a3683fc89786b0cda4fe15c2218ba64e1b5470f77e073607899adb32ef",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9277,7 +9277,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=1_with_zeros_p0=0.37.png",
+   "uri": "files/figures/RN1-lognormal_sigma_1_with_zeros_p0_0.37.png",
    "version": "sha256:a6c14a5defbba14fd2a1b2c3b644ba4e25312ee15866efe7e5ee4d0b46856a6e",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9293,7 +9293,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=1_with_zeros_p0=0.42.png",
+   "uri": "files/figures/RN1-lognormal_sigma_1_with_zeros_p0_0.42.png",
    "version": "sha256:6da889f0f342f2736d15bdc8644991d41876d8b2729d5d693d56d96ccc72c253",
    "licence": "CC-BY-4.0",
    "availability": {
@@ -9310,7 +9310,7 @@
   {
    "kind": "figure",
    "function": "data_plot",
-   "uri": "files/figures/RN1-lognormal_sigma=1_with_zeros_p0=0.6.png",
+   "uri": "files/figures/RN1-lognormal_sigma_1_with_zeros_p0_0.6.png",
    "version": "sha256:07829b1bd3bc8046854bf50b2e5445e974a4e893c55ca934ae8fd83da1518007",
    "licence": "CC-BY-4.0",
    "availability": {
