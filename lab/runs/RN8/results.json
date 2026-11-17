@@ -1,0 +1,308 @@
+[
+ {
+  "variable": "maximum absolute difference from the ratio form",
+  "value": 8.526512829121202e-14,
+  "conditions": {
+   "hypothesis": "H1"
+  }
+ },
+ {
+  "variable": "maximum absolute difference between the ratio and its reciprocal",
+  "value": 8.526512829121202e-14,
+  "conditions": {
+   "hypothesis": "H2"
+  }
+ },
+ {
+  "variable": "maximum absolute difference from 200 tanh(|z|/2)",
+  "value": 8.526512829121202e-14,
+  "conditions": {
+   "hypothesis": "H3"
+  }
+ },
+ {
+  "variable": "violations of monotonicity, concavity or the bound 200 on 0 <= |z| <= 12",
+  "value": 0,
+  "conditions": {
+   "hypothesis": "H3"
+  }
+ },
+ {
+  "variable": "violations of 0 <= 100|z| - s <= 25|z|^3/3",
+  "value": 0,
+  "conditions": {
+   "hypothesis": "H9"
+  }
+ },
+ {
+  "variable": "maximum of |s - 100|z| + 25|z|^3/3| / |z|^5 for 0.05 < |z| < 0.5",
+  "value": 0.8331222242858257,
+  "conditions": {
+   "hypothesis": "H9"
+  }
+ },
+ {
+  "variable": "violations of s(y, y+e) < s(y, y-e)",
+  "value": 0,
+  "conditions": {
+   "hypothesis": "H10"
+  }
+ },
+ {
+  "variable": "maximum absolute difference between s(y, ky) and s(y, y/k)",
+  "value": 1.1368683772161603e-13,
+  "conditions": {
+   "hypothesis": "H10"
+  }
+ },
+ {
+  "variable": "maximum relative difference between the formula for S' and a numerical derivative",
+  "value": 4.8230731346192835e-08,
+  "conditions": {
+   "hypothesis": "H4"
+  }
+ },
+ {
+  "variable": "maximum distance in ln f between the minimiser and the median",
+  "value": 8.641082160920632e-08,
+  "conditions": {
+   "hypothesis": "H5"
+  }
+ },
+ {
+  "variable": "number of local minima, lognormal sigma=1 and log-Laplace b=1",
+  "value": 1,
+  "conditions": {
+   "hypothesis": "H5"
+  }
+ },
+ {
+  "variable": "maximum balance residual at the minimiser (pull below minus pull above)",
+  "value": 8.633256415344946e-09,
+  "conditions": {
+   "hypothesis": "H6"
+  }
+ },
+ {
+  "variable": "settings with one local minimum where the sign of D misplaces the target",
+  "value": 0,
+  "conditions": {
+   "hypothesis": "H6"
+  }
+ },
+ {
+  "variable": "maximum distance between the one-step and the exact quantile level",
+  "value": 0.0025140634149692365,
+  "conditions": {
+   "hypothesis": "H6"
+  }
+ },
+ {
+  "variable": "2 g(m) - E[sech^2(Z/2) tanh(|Z|/2)] for the equal-mode bimodal setting (negative: median a local maximum)",
+  "value": -0.34746407271495505,
+  "conditions": {
+   "hypothesis": "H7"
+  }
+ },
+ {
+  "variable": "number of local minima of the equal-mode bimodal setting",
+  "value": 2,
+  "conditions": {
+   "hypothesis": "H7"
+  }
+ },
+ {
+  "variable": "difference between the two minimal expected sMAPEs, equal-mode bimodal setting",
+  "value": 1.4210854715202004e-14,
+  "conditions": {
+   "hypothesis": "H7"
+  }
+ },
+ {
+  "variable": "unequal weights: global minimiser on the heavier side (both settings)",
+  "value": true,
+  "conditions": {
+   "hypothesis": "H7"
+  }
+ },
+ {
+  "variable": "zero threshold",
+  "value": 0.4686648333525576,
+  "conditions": {
+   "hypothesis": "H8",
+   "setting": "lognormal sigma=0.3"
+  }
+ },
+ {
+  "variable": "zero threshold",
+  "value": 0.44693771947246835,
+  "conditions": {
+   "hypothesis": "H8",
+   "setting": "lognormal sigma=0.5"
+  }
+ },
+ {
+  "variable": "zero threshold",
+  "value": 0.39404455455604903,
+  "conditions": {
+   "hypothesis": "H8",
+   "setting": "lognormal sigma=1"
+  }
+ },
+ {
+  "variable": "zero threshold",
+  "value": 0.3074891440748211,
+  "conditions": {
+   "hypothesis": "H8",
+   "setting": "lognormal sigma=2"
+  }
+ },
+ {
+  "variable": "maximum distance between the formula and the bisected threshold",
+  "value": 5.551115123125783e-17,
+  "conditions": {
+   "hypothesis": "H8"
+  }
+ },
+ {
+  "variable": "opposite-sign or one-zero pairs not scoring 200",
+  "value": 0,
+  "conditions": {
+   "hypothesis": "H8"
+  }
+ },
+ {
+  "variable": "simulated n Var(ln sMAPE minimiser) / large-sample value, lognormal sigma=1",
+  "value": 0.9943997768288128,
+  "interval": {
+   "level": 0.99,
+   "lower": 0.9353981515994695,
+   "upper": 1.0598078456840363
+  },
+  "conditions": {
+   "hypothesis": "H11",
+   "test-set size": 1000,
+   "test sets": 4000
+  }
+ },
+ {
+  "variable": "simulated n Var(ln sMAPE minimiser) / large-sample value, lognormal sigma=1",
+  "value": 1.021713746899414,
+  "interval": {
+   "level": 0.99,
+   "lower": 0.9396347019298308,
+   "upper": 1.0981626206556903
+  },
+  "conditions": {
+   "hypothesis": "H11",
+   "test-set size": 10000,
+   "test sets": 2000
+  }
+ },
+ {
+  "variable": "relative distance between the 1/y-weighted median and the minimiser of expected MAPE",
+  "value": 6.745308554134688e-05,
+  "conditions": {
+   "hypothesis": "H12"
+  }
+ },
+ {
+  "variable": "difference of expected squared errors minus (f-g)(f+g-2EY)",
+  "value": 0.0,
+  "conditions": {
+   "hypothesis": "H12"
+  }
+ },
+ {
+  "variable": "sMAPE terms outside [0, 200]",
+  "value": 0,
+  "conditions": {
+   "hypothesis": "H13"
+  }
+ },
+ {
+  "variable": "expected sMAPE at f = 1e-6 and f = 1e10 (both near 200)",
+  "value": 199.9999934058428,
+  "conditions": {
+   "hypothesis": "H13"
+  }
+ },
+ {
+  "variable": "the proof's bound on the error times sigma^3, 600 zeta(3) max|g''|, log-Gumbel",
+  "value": 309.8527387243095,
+  "conditions": {
+   "hypothesis": "H14"
+  }
+ },
+ {
+  "variable": "maximum |S - (200 - 800 ln2 g)| times sigma^3, log-Gumbel right",
+  "value": 264.49430838631474,
+  "conditions": {
+   "hypothesis": "H14",
+   "sigma": 5.0
+  }
+ },
+ {
+  "variable": "maximum |S - (200 - 800 ln2 g)| times sigma^3, log-Gumbel right",
+  "value": 292.26628907079544,
+  "conditions": {
+   "hypothesis": "H14",
+   "sigma": 10.0
+  }
+ },
+ {
+  "variable": "maximum |S - (200 - 800 ln2 g)| times sigma^3, log-Gumbel right",
+  "value": 300.1236621598764,
+  "conditions": {
+   "hypothesis": "H14",
+   "sigma": 20.0
+  }
+ },
+ {
+  "variable": "maximum |S - (200 - 800 ln2 g)| times sigma^3, log-Gumbel right",
+  "value": 302.12959117307037,
+  "conditions": {
+   "hypothesis": "H14",
+   "sigma": 40.0
+  }
+ },
+ {
+  "variable": "sigma^3 times the asymptotic relative efficiency, lognormal",
+  "value": 5.612973638589512,
+  "conditions": {
+   "hypothesis": "H14",
+   "sigma": 5.0
+  }
+ },
+ {
+  "variable": "sigma^3 times the asymptotic relative efficiency, lognormal",
+  "value": 6.743320209197448,
+  "conditions": {
+   "hypothesis": "H14",
+   "sigma": 10.0
+  }
+ },
+ {
+  "variable": "sigma^3 times the asymptotic relative efficiency, lognormal",
+  "value": 7.098855554841518,
+  "conditions": {
+   "hypothesis": "H14",
+   "sigma": 20.0
+  }
+ },
+ {
+  "variable": "sigma^3 times the asymptotic relative efficiency, lognormal",
+  "value": 7.19338905012072,
+  "conditions": {
+   "hypothesis": "H14",
+   "sigma": 40.0
+  }
+ },
+ {
+  "variable": "limit of sigma^3 times the relative efficiency for normal log-outcomes, from the proof",
+  "value": 7.225902655914273,
+  "conditions": {
+   "hypothesis": "H14"
+  }
+ }
+]
