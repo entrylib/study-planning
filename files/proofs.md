@@ -66,8 +66,13 @@ where $\tanh x = \dfrac{e^x - e^{-x}}{e^x + e^{-x}}$ is the hyperbolic tangent. 
 - (a) $s$ is 0 when $y = f$. It is strictly increasing and concave in $|\ln y - \ln f|$. It is bounded by 1, which it
   approaches as $|\ln y - \ln f|$ grows.
 - (b) For small log errors, $s \approx \tfrac12|\ln y - \ln f|$. Precisely,
-  $0 \le \tfrac12|\ln y - \ln f| - s \le \tfrac1{24}|\ln y - \ln f|^3$. So when all errors are small, sMAPE is about 100
-  times the mean absolute error of $\ln f$ as a forecast of $\ln y$. Like that error, it is then minimised by the median.
+  $0 \le \tfrac12|\ln y - \ln f| - s \le \tfrac1{24}|\ln y - \ln f|^3$. So when all log errors are small, sMAPE is about
+  100 times the mean absolute error of $\ln f$ as a forecast of $\ln y$ (the log-MAE).
+- (c) The log-MAE of a test set is minimised by its median. sMAPE is then minimised near the median, not in general at
+  it. For positive actuals $y_1, \dots, y_n$ with a median $m$, a forecast $f^*$ that minimises their sMAPE satisfies
+  $$\frac1n\sum_t|\ln y_t - \ln f^*| - \frac1n\sum_t|\ln y_t - \ln m| \le \frac1{12}\cdot\frac1n\sum_t|\ln y_t - \ln f^*|^3:$$
+  its mean absolute log error exceeds the smallest possible by at most a twelfth of its mean cubed absolute log error.
+  The minimiser is the median itself only under further conditions on the distribution of the actuals (H12).
 
 **Proof.**
 
@@ -80,10 +85,21 @@ where $\tanh x = \dfrac{e^x - e^{-x}}{e^x + e^{-x}}$ is the hyperbolic tangent. 
    grows; its derivative $1 - \tanh^2 x$ is positive and decreasing for $x > 0$. With the argument
    $|\ln y - \ln f|/2$, $s$ has these properties in $|\ln y - \ln f|$.
 5. For (b): for every $x \ge 0$, $x - x^3/3 \le \tanh x \le x$. Putting $x = |\ln y - \ln f|/2$ gives the bounds.
-6. The mean of $|\ln y_t - \ln f|$ over a test set is minimised when $\ln f$ is a median of the $\ln y_t$. Since the
-   logarithm is increasing, this is when $f$ is a median of the $y_t$.
+6. For (c), the median: the mean of $|\ln y_t - \ln f|$ over a test set is minimised when $\ln f$ is a median of the
+   $\ln y_t$. Since the logarithm is increasing, this is when $f$ is a median $m$ of the $y_t$.
+7. For (c), the bound: write $a(f) = \frac1n\sum_t|\ln y_t - \ln f|$, $k(f) = \frac1n\sum_t|\ln y_t - \ln f|^3$ and
+   $\bar s(f)$ for the mean of the sMAPE terms of the test set. Averaging the bounds of step 5 over the test set gives
+   $\bar s(f) \le \tfrac12 a(f) \le \bar s(f) + \tfrac1{24}k(f)$ for every $f > 0$. Let $f^*$ minimise $\bar s$, so that
+   $\bar s(f^*) \le \bar s(m)$. Then
+   $$\tfrac12 a(f^*) \le \bar s(f^*) + \tfrac1{24}k(f^*) \le \bar s(m) + \tfrac1{24}k(f^*) \le \tfrac12 a(m) + \tfrac1{24}k(f^*).$$
+   Multiplying by 2 gives $a(f^*) - a(m) \le \tfrac1{12}k(f^*)$, the stated inequality.
+8. For (c), not the median in general: take the five actuals $1, 1, e, e^4, e^4$, whose median is $e$. With the forecast
+   at $e$ the log errors are $1, 1, 0, 3, 3$ in size and the sMAPE terms sum to $2\tanh(0.5) + 2\tanh(1.5) = 2.734$. With
+   the forecast at 1 the log errors are $0, 0, 1, 4, 4$ and the terms sum to $\tanh(0.5) + 2\tanh(2) = 2.390$, which is
+   lower. So the median does not minimise the sMAPE of this test set, although it minimises its log-MAE (step 6).
 
-So $s = \tanh(|\ln y - \ln f|/2)$. It rises from 0 like half the absolute log error and levels off at 1. ∎
+So $s = \tanh(|\ln y - \ln f|/2)$. It rises from 0 like half the absolute log error and levels off at 1. For small
+errors sMAPE is close to the log-MAE, and its minimiser is close to the median without in general being the median. ∎
 
 ## H4. Expected sMAPE is always finite, and has a minimiser
 
@@ -113,29 +129,18 @@ lowest expected sMAPE always exists. ∎
 ## H5. In general, sMAPE targets a weighted median
 
 *What it shows:* for any distribution, the best forecast balances the actuals below it and above it. Each actual is
-weighted by how close it is to the forecast by ratio. This also says where the target lies relative to the median.
+weighted by how close it is to the forecast by ratio.
 
 **Statement.** Let the actual $y$ be positive and take no single value with positive probability. A forecast $f$ has the lowest
 expected sMAPE only if the actuals below $f$ and those above it carry equal total weight:
 
 $$\mathrm E\big[w(y,f)\,\mathbf 1\{y < f\}\big] = \mathrm E\big[w(y,f)\,\mathbf 1\{y > f\}\big], \qquad w(y,f) = \frac{y}{(y+f)^2}.$$
 
-Here $\mathbf 1\{A\}$ is 1 when $A$ holds and 0 otherwise. So the target is a median of the actuals weighted by $w$. An
-actual's weight is largest when it equals the forecast. It is the same for $y/f = r$ and $y/f = 1/r$, and it falls as
+Here $\mathbf 1\{A\}$ is 1 when $A$ holds and 0 otherwise. So the target is a median of the actuals weighted by $w$,
+where the ordinary median gives every actual the same weight. An actual's weight is largest when it equals the forecast. It is the same for $y/f = r$ and $y/f = 1/r$, and it falls as
 $y/f$ moves away from 1 in either direction (Figure 1).
 
 ![Figure 1. The weight of an actual on the sMAPE-optimal forecast, against the ratio of actual to forecast (log scale), relative to its largest value; MAE weighs every actual the same. An actual 10 times the forecast, or a tenth of it, weighs 0.33 of an actual equal to it; one 100 times or a hundredth, 0.04.](smape_weights.png)
-
-*Where the target lies.* Put the forecast at the median $m$ of $y$. Compare the total weight of the actuals above $m$
-with that of the actuals below it. Suppose the expected sMAPE has a single local minimum. Then the target lies above the
-median when the actuals above carry more weight. It lies below the median when those below carry more. When the two
-weights are equal, the expected sMAPE is flat at the median. The median is then the target if, in addition,
-
-$$2\,g(\ln m) > \mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln y - \ln m}{2}\Big)\tanh\Big(\frac{|\ln y - \ln m|}{2}\Big)\Big],$$
-
-where $g$ is the density of $\ln y$, continuous at $\ln m$. It says that enough actuals lie near the median, relative to
-the pull of those further away. Without this condition the median can be a flat point of inflection, with the target
-elsewhere.
 
 **Proof.**
 
@@ -152,32 +157,8 @@ elsewhere.
 5. *The weight.* With $r = y/f$, $w(y,f) = \dfrac1f\cdot\dfrac{r}{(1+r)^2} = \dfrac1f\cdot\dfrac{1}{r + 2 + 1/r}$. The sum
    $r + 1/r$ is the same for $r$ and $1/r$. It is smallest, 2, at $r = 1$, and grows as $r$ moves away from 1. So $w$ is
    largest at $y = f$ and falls as $y/f$ moves away from 1, equally for $r$ and $1/r$.
-6. *The shape of expected sMAPE.* With a single local minimum, the expected sMAPE decreases up to it and increases after
-   it. Otherwise it would turn again, at a local maximum. After that turn it would have to fall and then rise once more,
-   because it returns towards 1 at both ends (H4). That would give a second local minimum.
-7. *Where the target lies.* At $f = m$, by step 3 the derivative is twice the weight below $m$ minus the weight above
-   $m$. If the actuals above carry more weight, the derivative is negative: the expected sMAPE is decreasing at the
-   median. By step 6, the median then lies before the minimum, so the target is above the median. The case where the
-   actuals below carry more weight is the mirror image.
-8. *The second derivative.* Measure the forecast on the log scale, $c = \ln f$, so that the expected contribution is
-   $\mathrm E[\tanh(|\ln y - c|/2)]$ (H3). The derivative of $\tanh(|x - c|/2)$ in $c$ is
-   $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$ for $c < x$ and $+\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$
-   for $c > x$: it jumps by 1 at $c = x$. Differentiating again and taking the expectation over $x = \ln y$, the jumps
-   add the density $g$ of $\ln y$ at $c$, and elsewhere the second derivative is
-   $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)\tanh\big(\tfrac{|x-c|}{2}\big)$. So the second derivative of
-   the expected contribution is
-   $$g(c) - \tfrac12\,\mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln y - c}{2}\Big)\tanh\Big(\frac{|\ln y - c|}{2}\Big)\Big].$$
-9. *The sufficient condition.* If the two weights are equal, the first derivative at the median is 0 (step 3). If, in
-   addition, the stated inequality holds, the second derivative at $c = \ln m$ is positive (step 8), so the median is a
-   strict local minimum. With a single local minimum, it is the target.
-10. Without the inequality, a point where the first derivative is 0 can be a flat point of inflection, where the expected
-    sMAPE keeps falling on one side and rising on the other. The independent checker built such a case: a mixture whose
-    only minimum lies far below the median. So equal weights alone do not make the median the target.
 
-So sMAPE targets a weighted median of the actuals. Each actual is weighted by how close it is to the forecast by ratio.
-The target is above the median when the actuals above the median carry more of this weight, and below it when those
-below carry more. When the two balance, the median is the target if, in addition, enough actuals lie near it,
-relative to the pull of those further away, as the stated inequality says. ∎
+So sMAPE targets a weighted median of the actuals. Each actual is weighted by how close it is to the forecast by ratio. ∎
 
 ## H6. When the log of the actual is symmetric, sMAPE targets the median
 
@@ -231,7 +212,7 @@ $\mathrm E[\tanh(|\ln y - \ln m - c|/2)]$, a function of $c$.
    $\dfrac{\tanh(a/2)}{1 + \tanh^2(a/2)} < \tanh(a/2)$. The mode is better.
 3. The expected $s$ changes continuously as the groups widen from points, because $s$ is bounded and continuous. So the
    mode is still better for narrow groups.
-4. *Why the median is a local maximum.* By H5, step 8, the second derivative of the expected contribution at the median
+4. *Why the median is a local maximum.* By H12, step 4, the second derivative of the expected contribution at the median
    is
    $$g(\ln m) - \tfrac12\,\mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln y - \ln m}{2}\Big)\tanh\Big(\frac{|\ln y - \ln m|}{2}\Big)\Big].$$
 5. By symmetry the first derivative at the median is 0. When the groups narrow, few actuals lie near the median, so
@@ -430,9 +411,228 @@ where $O(\sigma^{-3})$ is a term at most a constant times $\sigma^{-3}$. Hence:
 So as the actuals spread out, the expected sMAPE flattens towards its bound. Differences between forecasts vanish like
 $1/\sigma$. The target moves from the median to the mode of $\ln y$. ∎
 
+## H12. When the target is the ordinary median, and on which side of it the target lies
+
+*What it shows:* the target is above the ordinary median when the actuals above it carry more weight, and below it when
+those below carry more. When the weights balance and enough actuals lie near the median, the median is the target. This
+is so when the log of the actual is symmetric with a single peak.
+
+**Statement.** Let the actual $y$ be positive and take no single value with positive probability. Let $m$ be its ordinary
+(unweighted) median, and let its expected sMAPE have a single local minimum. Put the forecast at $m$ and compare the
+total weight $w(y,m) = y/(y+m)^2$ of the actuals above $m$ with that of the actuals below it.
+
+- (a) If the actuals above $m$ carry more weight, the target lies above $m$. If those below carry more, it lies below
+  $m$.
+- (b) If the two weights are equal, $m$ is a point where the expected sMAPE is flat. It is then the target if, in
+  addition,
+  $$2\,g(\ln m) > \mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln y - \ln m}{2}\Big)\tanh\Big(\frac{|\ln y - \ln m|}{2}\Big)\Big],$$
+  where $g$ is the density of $\ln y$, continuous at $\ln m$. The inequality says that enough actuals lie near the
+  median, relative to the pull of those further away; it makes $m$ a strict local minimum. Without it, $m$ can be a
+  flat point of inflection, with the target elsewhere.
+- (c) When $\ln y$ has a density symmetric about $\ln m$ and unimodal (as in H6), $m$ is the only target. Lognormal and
+  log-Laplace actuals are examples.
+
+**Proof.**
+
+1. *The derivative at the median.* By H5, step 3, the derivative of the expected sMAPE term in $f$ is
+   $2\,\mathrm E[w(y,f)(\mathbf 1\{y < f\} - \mathbf 1\{y > f\})]$. At $f = m$ it is twice the total weight of the
+   actuals below $m$ minus that of the actuals above $m$.
+2. *The shape of expected sMAPE.* With a single local minimum, the expected sMAPE decreases up to it and increases after
+   it. Otherwise it would turn again, at a local maximum. After that turn it would have to fall and then rise once more,
+   because it returns towards 1 at both ends (H4). That would give a second local minimum.
+3. *(a).* If the actuals above $m$ carry more weight, the derivative at the median is negative (step 1): the expected
+   sMAPE is decreasing at the median. By step 2, the median then lies before the minimum, so the target is above the
+   median. The case where the actuals below carry more weight is the mirror image.
+4. *The second derivative.* Measure the forecast on the log scale, $c = \ln f$, so that the expected contribution is
+   $\mathrm E[\tanh(|\ln y - c|/2)]$ (H3). The derivative of $\tanh(|x - c|/2)$ in $c$ is
+   $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$ for $c < x$ and $+\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)$
+   for $c > x$: it jumps by 1 at $c = x$. Differentiating again and taking the expectation over $x = \ln y$, the jumps
+   add the density $g$ of $\ln y$ at $c$, and elsewhere the second derivative is
+   $-\tfrac12\operatorname{sech}^2\big(\tfrac{x-c}{2}\big)\tanh\big(\tfrac{|x-c|}{2}\big)$. So the second derivative of
+   the expected contribution is
+   $$g(c) - \tfrac12\,\mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln y - c}{2}\Big)\tanh\Big(\frac{|\ln y - c|}{2}\Big)\Big].$$
+5. *(b), the sufficient condition.* If the two weights are equal, the first derivative at the median is 0 (step 1): the
+   expected sMAPE is flat there. If, in addition, the stated inequality holds, the second derivative at $c = \ln m$ is
+   positive (step 4), so the median is a strict local minimum. With a single local minimum, it is the target.
+6. *(b), without the inequality.* A point where the first derivative is 0 can be a flat point of inflection, where the expected
+   sMAPE keeps falling on one side and rising on the other. The independent checker built such a case: a mixture whose
+   only minimum lies far below the median. So equal weights alone do not make the median the target.
+7. *(c).* By H6 the median is then the only forecast with the lowest expected sMAPE. For lognormal actuals $\ln y$ has
+   a normal density, and for log-Laplace actuals the Laplace density $e^{-|x - \ln m|/b}/(2b)$; both are symmetric
+   about $\ln m$ and strictly decreasing in the distance from it.
+
+So the target is above the ordinary median when the actuals above it carry more of the weight, and below it when those
+below carry more. When the two balance, the median is the target if, in addition, enough actuals lie near it, as the
+stated inequality says; this is the case when the log of the actual is symmetric with a single peak. ∎
+
+## H13. How well a test set tells two forecasts apart as the actuals spread out
+
+*What it shows:* for widely spread actuals, sMAPE loses its power to tell two forecasts apart, at the rate
+$\sigma^{-1/2}$. The absolute log error and the absolute error keep theirs; the squared error on lognormal actuals loses
+it faster than any power of $\sigma$.
+
+For a measure with term $L(y,f)$ and two forecasts $f_1$ and $f_2$, write $D = L(y,f_2) - L(y,f_1)$ for the difference
+of their scores on one actual. The *signal-to-noise ratio* of the comparison is $|\mathrm E[D]|/\mathrm{sd}(D)$. Over a
+test set of $n$ independent actuals, the mean of $D$ has standard error $\mathrm{sd}(D)/\sqrt n$, so it is $\sqrt n$ times
+the ratio many standard errors from zero.
+
+**Statement.** Let $\ln y = \mu + \sigma\varepsilon$, where $\varepsilon$ has a fixed density $h$ whose first and second
+derivatives are bounded and continuous, and distribution function $H$. Compare two forecasts at fixed quantile levels,
+$f_1 = e^{\mu + \sigma c_1}$ and $f_2 = e^{\mu + \sigma c_2}$ with $c_1 < c_2$.
+
+- (a) For the sMAPE term, as $\sigma$ grows,
+  $$\mathrm E[D] = \frac{4\ln 2\,(h(c_1) - h(c_2))}{\sigma} + O(\sigma^{-3}), \qquad \operatorname{Var}(D) = \frac{4(2\ln 2 - 1)(h(c_1) + h(c_2))}{\sigma} + O(\sigma^{-2}).$$
+  So when $h(c_1) \ne h(c_2)$ the ratio is
+  $$\frac{2\ln 2}{\sqrt{2\ln 2 - 1}}\cdot\frac{|h(c_1) - h(c_2)|}{\sqrt{h(c_1) + h(c_2)}}\cdot\sigma^{-1/2}\,\big(1 + O(1/\sigma)\big).$$
+  It falls to zero like $\sigma^{-1/2}$, and the size of the test set that keeps the mean difference a given number of
+  standard errors from zero grows in proportion to $\sigma$.
+- (b) For the absolute log error $|\ln y - \ln f|$ (the log-MAE), $D = \sigma(|\varepsilon - c_2| - |\varepsilon - c_1|)$, so
+  the ratio does not depend on $\sigma$.
+- (c) For the absolute error $|y - f|$ (MAE), as $\sigma$ grows the ratio tends to
+  $|2H(c_2) - 1|/\big(2\sqrt{H(c_2)(1 - H(c_2))}\big)$, which is positive unless the higher forecast is the median.
+- (d) For the squared error $(y - f)^2$ (RMSE), when $\mathrm E[y^2]$ is finite the ratio is
+  $|2\,\mathrm E[y] - f_1 - f_2|/(2\,\mathrm{sd}(y))$. For lognormal actuals, $e^{\sigma^2/2}$ times the ratio tends to 1 as
+  $\sigma$ grows.
+
+**Proof.**
+
+1. *The sMAPE difference.* Write $q(x) = 2/(1 + e^{|x|})$, so that $\tanh(|x|/2) = 1 - q(x)$, and
+   $q_i = q(\sigma(\varepsilon - c_i))$. By H3 the sMAPE term of the forecast $f_i$ is $1 - q_i$, because
+   $\ln y - \ln f_i = \sigma(\varepsilon - c_i)$. So $D = q_1 - q_2$.
+2. *Its mean.* By H11, $\mathrm E[q_i] = 4\ln 2\,h(c_i)/\sigma + O(\sigma^{-3})$. So
+   $\mathrm E[D] = 4\ln 2\,(h(c_1) - h(c_2))/\sigma + O(\sigma^{-3})$.
+3. *The mean of $q_i^2$.* Substituting $v = \sigma(\varepsilon - c_i)$, as in H11, step 1,
+   $\mathrm E[q_i^2] = \frac1\sigma\int q(v)^2\,h(c_i + v/\sigma)\,dv$. Expanding $h$ by Taylor's theorem, as in H11,
+   step 2: the first term integrates to $h(c_i)\int q(v)^2\,dv$; the second integrates to 0, because its factor $v$
+   changes sign with $v$ while the rest does not; the third is at most $\tfrac12\max|h''|\int v^2 q(v)^2\,dv$ divided by
+   $\sigma^2$, and this integral is finite because $q(v) \le 2e^{-|v|}$. Since
+   $\dfrac{1}{(1+e^v)^2} = \dfrac{1}{1+e^v} - \dfrac{e^v}{(1+e^v)^2}$, whose two parts integrate over $v > 0$ to $\ln 2$
+   and $\tfrac12$, $\int q(v)^2\,dv = 8(\ln 2 - \tfrac12) = 4(2\ln 2 - 1)$. So
+   $\mathrm E[q_i^2] = 4(2\ln 2 - 1)\,h(c_i)/\sigma + O(\sigma^{-3})$.
+4. *The cross term.* Since $q(x) \le 2e^{-|x|}$, $q_1 q_2 \le 4e^{-\sigma(|\varepsilon - c_1| + |\varepsilon - c_2|)} \le
+   4e^{-\sigma(c_2 - c_1)}$, because $|\varepsilon - c_1| + |\varepsilon - c_2| \ge c_2 - c_1$. So
+   $\mathrm E[q_1 q_2] \le 4e^{-\sigma(c_2 - c_1)}$, which is smaller than every power of $1/\sigma$.
+5. *The variance.* $\operatorname{Var}(D) = \mathrm E[q_1^2] + \mathrm E[q_2^2] - 2\,\mathrm E[q_1 q_2] - (\mathrm E[D])^2$.
+   By steps 2 to 4 this is $4(2\ln 2 - 1)(h(c_1) + h(c_2))/\sigma + O(\sigma^{-2})$; the term $(\mathrm E[D])^2$ is of
+   order $\sigma^{-2}$.
+6. *(a).* When $h(c_1) \ne h(c_2)$, $h(c_1) + h(c_2) > 0$. Dividing the size of the mean (step 2) by the square root of
+   the variance (step 5) gives the stated ratio. To keep $\sqrt n$ times the ratio at a given value, $n$ must be that
+   value squared over the ratio squared, which grows in proportion to $\sigma$.
+7. *(b).* For the absolute log error, $|\ln y - \ln f_i| = \sigma|\varepsilon - c_i|$, so
+   $D = \sigma(|\varepsilon - c_2| - |\varepsilon - c_1|)$. It is bounded by $\sigma(c_2 - c_1)$, so its mean and standard
+   deviation exist. Both are $\sigma$ times those of $|\varepsilon - c_2| - |\varepsilon - c_1|$, whose distribution does not
+   depend on $\sigma$. So their ratio, wherever the standard deviation is not zero, does not depend on $\sigma$.
+8. *(c).* For the absolute error, $D = |y - f_2| - |y - f_1|$ with $f_1 < f_2$. It equals $f_2 - f_1$ when $y \le f_1$,
+   $f_1 + f_2 - 2y$ when $f_1 < y < f_2$, and $-(f_2 - f_1)$ when $y \ge f_2$; so $|D| \le f_2$. Now
+   $f_1/f_2 = e^{-\sigma(c_2 - c_1)}$ tends to 0, and for every $\varepsilon < c_2$, $y/f_2 = e^{\sigma(\varepsilon - c_2)}$
+   tends to 0. So $D/f_2$ tends to 1 for $\varepsilon < c_2$ and to $-1$ for $\varepsilon > c_2$. By bounded convergence,
+   $\mathrm E[D/f_2] \to H(c_2) - (1 - H(c_2)) = 2H(c_2) - 1$ and $\mathrm E[(D/f_2)^2] \to 1$. So the variance of $D/f_2$
+   tends to $1 - (2H(c_2) - 1)^2 = 4H(c_2)(1 - H(c_2))$, and the ratio, which is the same for $D$ and $D/f_2$, tends to
+   the stated limit when $0 < H(c_2) < 1$. The limit is 0 only when $H(c_2) = 1/2$.
+9. *(d).* For the squared error, $D = (y - f_2)^2 - (y - f_1)^2 = (f_2 - f_1)(f_1 + f_2 - 2y)$. So
+   $\mathrm E[D] = (f_2 - f_1)(f_1 + f_2 - 2\,\mathrm E[y])$ and $\mathrm{sd}(D) = 2(f_2 - f_1)\,\mathrm{sd}(y)$, finite
+   when $\mathrm E[y^2]$ is. Their ratio is the stated one. For lognormal actuals $\mathrm E[y] = e^{\mu + \sigma^2/2}$,
+   $\mathrm{sd}(y) = \mathrm E[y]\sqrt{e^{\sigma^2} - 1}$ and $f_i/\mathrm E[y] = e^{\sigma c_i - \sigma^2/2}$, which tends to 0.
+   So $e^{\sigma^2/2}$ times the ratio is $|1 - (f_1 + f_2)/(2\,\mathrm E[y])|\,e^{\sigma^2/2}/\sqrt{e^{\sigma^2} - 1}$, which
+   tends to 1.
+
+So for widely spread actuals the absolute log error and the absolute error keep their power to tell two forecasts apart.
+sMAPE loses it at the rate $\sigma^{-1/2}$, and the squared error on lognormal actuals loses it faster than any power of
+$\sigma$. ∎
+
+## H14. The sMAPE minimiser of a test set in large samples
+
+*What it shows:* where the log of the actual is symmetric with a single peak, the forecast that minimises the sMAPE of a
+test set is asymptotically normal about the median. Compared with the sample median it is as precise for narrow
+distributions and loses all of its precision as the actuals spread out.
+
+**Statement.** Let $\ln y$ have a density $g$ that is symmetric about $\ln m$, unimodal (as in H6) and continuous at
+$\ln m$. Write $x = \ln y - \ln m$,
+
+$$A = \mathrm E\big[\operatorname{sech}^2(x/2)\tanh(|x|/2)\big], \qquad B = \mathrm E\big[\operatorname{sech}^4(x/2)\big].$$
+
+- (a) $A < 2g(\ln m)$.
+- (b) Over test sets of $n$ independent actuals, let $\hat f_n$ be a forecast with the lowest sMAPE of the test set.
+  Then $\hat f_n$ tends to $m$ in probability, and $\sqrt n(\ln\hat f_n - \ln m)$ is asymptotically normal with mean 0
+  and variance $B/(2g(\ln m) - A)^2$. For the sample median the variance is $1/(4g(\ln m)^2)$. The ratio of the two,
+  the large-sample value of the relative efficiency, is
+  $$\mathrm{ARE} = \frac{(2g(\ln m) - A)^2}{4\,g(\ln m)^2\,B}.$$
+- (c) For lognormal actuals with standard deviation $\sigma$ of $\ln y$: $\mathrm{ARE} \to 1$ as $\sigma \to 0$, and
+  $\mathrm{ARE}\,\sigma^3 \to 6(\ln 2)^2\sqrt{2\pi} \approx 7.23$ as $\sigma \to \infty$. For log-Laplace actuals with scale
+  $b$ of $\ln y$: $\mathrm{ARE} \to 1$ as $b \to 0$, and $\mathrm{ARE}\,b \to 3$ as $b \to \infty$.
+
+**Proof.** Write $x_t = \ln y_t - \ln m$ for the actuals of a test set and $\theta = \ln f - \ln m$ for a forecast $f$. By
+H3 the mean sMAPE term of the test set is $M_n(\theta) = \frac1n\sum_t\tanh(|x_t - \theta|/2)$, and its expectation is
+$M(\theta) = \mathrm E[\tanh(|x - \theta|/2)]$. So $\hat\theta_n = \ln\hat f_n - \ln m$ minimises $M_n$.
+
+1. *(a).* Write $k(u) = \operatorname{sech}^2(u/2)\tanh(|u|/2) \ge 0$. Since $k(u)$ is the derivative of $\tanh^2(u/2)$
+   for $u > 0$, $\int k(u)\,du = 2$. By unimodality $g(\ln m + u) \le g(\ln m)$, so
+   $A = \int k(u)\,g(\ln m + u)\,du \le 2g(\ln m)$. A density cannot equal $g(\ln m)$ everywhere, and $g(\ln m + u)$
+   does not increase as $|u|$ grows; so $g(\ln m + u) < g(\ln m)$ for every $|u|$ beyond some point, where $k > 0$. So
+   the inequality is strict.
+2. *The expected loss is lowest at 0 only.* $M(\theta)$ is the expected sMAPE term of the forecast $m\,e^\theta$. By H6,
+   $M(\theta) > M(0)$ for every $\theta \ne 0$. The function $\tanh(|u|/2)$ has slope at most $\tfrac12$, so $M$ and every
+   $M_n$ change by at most $\tfrac12|\theta_1 - \theta_2|$ between $\theta_1$ and $\theta_2$; in particular $M$ is
+   continuous. And $M(\theta) \to 1 > M(0)$ as $|\theta| \to \infty$, by bounded convergence. So for every $\eta > 0$ the
+   lowest value of $M$ over $|\theta| \ge \eta$ is above $M(0)$.
+3. *$M_n$ is close to $M$ for all $\theta$ at once.* For each $\theta$, $M_n(\theta) \to M(\theta)$ with probability 1
+   (law of large numbers; the terms are bounded). Take a grid of spacing $\gamma$ on $[-R, R]$: by the slope bound of
+   step 2, once $M_n$ is within $\gamma$ of $M$ at the grid points it is within $2\gamma$ of $M$ on all of $[-R, R]$.
+   Outside $[-R, R]$: an actual with $|x_t| \le R/2$ has $\tanh(|x_t - \theta|/2) \ge \tanh(R/4)$ when $|\theta| > R$, so
+   $M_n(\theta)$ is at least $\tanh(R/4)$ times the share of such actuals, which tends to
+   $\mathrm P(|x| \le R/2)$. Since $M(0) < 1$, for $R$ large this is above $M(0)$ by a fixed margin.
+4. *Consistency.* $M_n(\hat\theta_n) \le M_n(0)$, which tends to $M(0)$. By step 3, with probability tending to 1,
+   $|\hat\theta_n| \le R$ and $M(\hat\theta_n)$ is within any given margin of $M(0)$; by step 2, $|\hat\theta_n| < \eta$.
+   So $\hat\theta_n \to 0$ in probability, which is $\hat f_n \to m$. This is the argument of van der Vaart (1998,
+   Theorem 5.7).
+5. *The curvature at 0.* By H12, step 4, with $c = \ln m$, the second derivative of $M$ at 0 is
+   $g(\ln m) - \tfrac12 A = \tfrac12(2g(\ln m) - A)$, which is positive by step 1. The first derivative at 0 is 0,
+   because 0 is the minimum (step 2).
+6. *Asymptotic normality.* For every $x \ne 0$, $\theta \mapsto \tanh(|x - \theta|/2)$ has a derivative at $\theta = 0$,
+   $-\psi(x)$ with $\psi(x) = \tfrac12\operatorname{sech}^2(x/2)$ for $x > 0$ and $-\tfrac12\operatorname{sech}^2(x/2)$ for
+   $x < 0$; and $x = 0$ has probability zero. For every $x$ it changes by at most $\tfrac12|\theta_1 - \theta_2|$ (step
+   2). $M$ has a second-order expansion at its minimum 0 with a positive second derivative (step 5). And
+   $\hat\theta_n$ minimises $M_n$ and tends to 0 in probability (step 4). These are the conditions of the theorem on
+   estimators that minimise a criterion which is Lipschitz in the parameter (van der Vaart, 1998, Theorem 5.23). It
+   gives that $\sqrt n\,\hat\theta_n$ is asymptotically normal with mean 0 and variance $\mathrm E[\psi(x)^2]$ divided by
+   the square of the second derivative of $M$ at 0.
+7. *The variance.* $\mathrm E[\psi(x)^2] = \tfrac14\mathrm E[\operatorname{sech}^4(x/2)] = B/4$, and the square of the
+   second derivative is $\tfrac14(2g(\ln m) - A)^2$ (step 5). So the variance is $B/(2g(\ln m) - A)^2$.
+8. *The sample median.* The logarithm of the sample median of the $y_t$ is the sample median of the $\ln y_t$, which
+   minimises the mean of $|x_t - \theta|$. The same theorem applies with $|x - \theta|$ in place of
+   $\tanh(|x - \theta|/2)$: the derivative at 0 is $-1$ for $x > 0$ and $+1$ for $x < 0$, with square 1; the criterion
+   changes by at most $|\theta_1 - \theta_2|$; and the second derivative of $\mathrm E|x - \theta|$ at 0 is
+   $2g(\ln m)$, positive because $g$ is largest at $\ln m$. So the variance is $1/(4g(\ln m)^2)$.
+9. *(b), the ratio.* Dividing the variance of step 8 by that of step 7 gives
+   $\mathrm{ARE} = (2g(\ln m) - A)^2/(4g(\ln m)^2 B)$.
+10. *(c), narrow distributions.* Write $\ln y = \ln m + \sigma\varepsilon$ with $\varepsilon$ standard normal, or Laplace
+    with scale 1 and $\sigma = b$; then $g(\ln m) = h(0)/\sigma$ with $h$ the density of $\varepsilon$, and
+    $x = \sigma\varepsilon$. As $\sigma \to 0$, $A \to 0$ and $B \to 1$ by bounded convergence, and
+    $A/(2g(\ln m)) = \sigma A/(2h(0)) \to 0$. So $\mathrm{ARE} = (1 - A/(2g(\ln m)))^2/B \to 1$.
+11. *(c), wide lognormal distributions.* Since $\int k = 2$ (step 1),
+    $2g(\ln m) - A = \int k(u)\,[g(\ln m) - g(\ln m + u)]\,du$. For the normal density,
+    $g(\ln m) - g(\ln m + u) = \big(1 - e^{-u^2/(2\sigma^2)}\big)/(\sigma\sqrt{2\pi})$, and
+    $\tfrac{u^2}{2\sigma^2} - \tfrac{u^4}{8\sigma^4} \le 1 - e^{-u^2/(2\sigma^2)} \le \tfrac{u^2}{2\sigma^2}$. Integrating by
+    parts, $\int u^2 k(u)\,du = 4\int_0^\infty u\operatorname{sech}^2(u/2)\,du = 16\ln 2$; and $\int u^4 k(u)\,du$ is
+    finite. So $2g(\ln m) - A = 8\ln 2/(\sigma^3\sqrt{2\pi}) + O(\sigma^{-5})$. In the same way, with
+    $\int\operatorname{sech}^4(u/2)\,du = 8/3$, $B = 8/(3\sigma\sqrt{2\pi}) + O(\sigma^{-3})$. With
+    $g(\ln m) = 1/(\sigma\sqrt{2\pi})$, $\mathrm{ARE}\,\sigma^3$ tends to
+    $\dfrac{64(\ln 2)^2}{2\pi}\cdot\dfrac{2\pi}{4}\cdot\dfrac{3\sqrt{2\pi}}{8} = 6(\ln 2)^2\sqrt{2\pi}$.
+12. *(c), wide log-Laplace distributions.* Here $g(\ln m + u) = e^{-|u|/b}/(2b)$, so
+    $g(\ln m) - g(\ln m + u) = (1 - e^{-|u|/b})/(2b)$, which lies between $\big(|u|/b - u^2/(2b^2)\big)/(2b)$ and
+    $|u|/(2b^2)$. Integrating by parts, $\int |u|\,k(u)\,du = 2\int_0^\infty\operatorname{sech}^2(u/2)\,du = 4$. So
+    $2g(\ln m) - A = 2/b^2 + O(b^{-3})$, and in the same way $B = 4/(3b) + O(b^{-2})$. With $g(\ln m) = 1/(2b)$,
+    $\mathrm{ARE}\,b$ tends to $\dfrac{4}{b^4}\cdot b^2\cdot\dfrac{3b}{4}\cdot b = 3$.
+
+So the sMAPE minimiser of a test set is asymptotically normal about the median, with a variance that the density at the
+median and two expectations give. On lognormal and log-Laplace actuals it is as precise as the sample median for narrow
+distributions and loses all of its precision relative to it as the actuals spread out, at the rates $\sigma^{-3}$ and
+$b^{-1}$. ∎
+
 ## References
 
 - Anderson, T. W. (1955). The integral of a symmetric unimodal function over a symmetric convex set and some probability
   inequalities. *Proceedings of the American Mathematical Society*, 6(2), 170–176.
 - Goodwin, P., & Lawton, R. (1999). On the asymmetry of the symmetric MAPE. *International Journal of Forecasting*, 15(4),
   405–408.
+- van der Vaart, A. W. (1998). *Asymptotic Statistics*. Cambridge University Press.
