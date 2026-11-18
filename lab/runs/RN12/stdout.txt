@@ -1,0 +1,76 @@
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 2} 0.128068
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 2} 1.50115
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 2} 0.214025
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 10} 0.0383707
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 10} 1.00569
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 10} 0.214025
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 50} 0.0170409
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 50} 0.998723
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 50} 0.214025
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 2} 0.297341
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 2} 0.961505
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 2} 0.463242
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 10} 0.135395
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 10} 0.979004
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 10} 0.463242
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 50} 0.0618887
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 50} 1.00064
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 50} 0.463242
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 2} 0.392228
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 2} 0.775478
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 2} 0.492326
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 10} 0.226424
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 10} 1.00101
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 10} 0.492326
+signal-to-noise ratio, sMAPE {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 50} 0.101579
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 50} 1.00416
+signal-to-noise ratio, absolute log error {'error distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 50} 0.492326
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 2} 0.0481553
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 2} 0.686467
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 2} 0.0895159
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 10} 0.0303223
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 10} 0.966545
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 10} 0.0895159
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 50} 0.0139893
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 50} 0.997107
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 50} 0.0895159
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 2} 0.16794
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 2} 0.741957
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 2} 0.0909078
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 10} 0.0976316
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 10} 0.964495
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 10} 0.0909078
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 50} 0.0452398
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 50} 0.999343
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 50} 0.0909078
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 2} 0.179948
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 2} 0.57976
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 2} 0.0706273
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 10} 0.134535
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 10} 0.969217
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 10} 0.0706273
+signal-to-noise ratio, sMAPE {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 50} 0.0620931
+signal-to-noise ratio, sMAPE, over its large-spread formula {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 50} 1.00026
+signal-to-noise ratio, absolute log error {'error distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 50} 0.0706273
+large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 0.25} 0.969626
+large-sample relative efficiency over its large-spread rate {'family': 'lognormal', 'spread': 0.25} 0.00209668
+large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 1} 0.660082
+large-sample relative efficiency over its large-spread rate {'family': 'lognormal', 'spread': 1} 0.0913494
+large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 6} 0.0278984
+large-sample relative efficiency over its large-spread rate {'family': 'lognormal', 'spread': 6} 0.833953
+large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 50} 5.76422e-05
+large-sample relative efficiency over its large-spread rate {'family': 'lognormal', 'spread': 50} 0.997145
+large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 200} 9.03076e-07
+large-sample relative efficiency over its large-spread rate {'family': 'lognormal', 'spread': 200} 0.999821
+large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 0.25} 0.996926
+large-sample relative efficiency over its large-spread rate {'family': 'log-Laplace', 'spread': 0.25} 0.0830772
+large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 1} 0.89534
+large-sample relative efficiency over its large-spread rate {'family': 'log-Laplace', 'spread': 1} 0.298447
+large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 6} 0.375456
+large-sample relative efficiency over its large-spread rate {'family': 'log-Laplace', 'spread': 6} 0.750913
+large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 50} 0.0578041
+large-sample relative efficiency over its large-spread rate {'family': 'log-Laplace', 'spread': 50} 0.963401
+large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 200} 0.0148596
+large-sample relative efficiency over its large-spread rate {'family': 'log-Laplace', 'spread': 200} 0.99064
+violations of the bound on the log-MAE of the sMAPE minimiser {'test sets': 400} 0
+largest excess of the log-MAE over the median's, minus the bound {'test sets': 400} -2.66544e-06
