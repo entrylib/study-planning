@@ -43,3 +43,47 @@ negative binomial mean=1 size=0.5      msMAPE nu=0.1   target 0  level 0.577  sc
 negative binomial mean=1 size=0.5      msMAPE nu=0.5   target 0  level 0.577  score 84.53
 negative binomial mean=1 size=0.5      msMAPE nu=1     target 1  level 0.770  score 80.38
 negative binomial mean=1 size=0.5      Suilin          target 0  level 0.577  score 79.46
+negative binomial mean=2 size=0.5      sMAPE           target 0  level 0.447  score 110.56
+negative binomial mean=2 size=0.5      msMAPE nu=0.1   target 0  level 0.447  score 110.56
+negative binomial mean=2 size=0.5      msMAPE nu=0.5   target 1  level 0.626  score 101.86
+negative binomial mean=2 size=0.5      msMAPE nu=1     target 1  level 0.626  score 86.95
+negative binomial mean=2 size=0.5      Suilin          target 0  level 0.447  score 105.17
+lognormal sizes with zeros p0=0.2      sMAPE           target 1  level 0.600  score 95.95
+lognormal sizes with zeros p0=0.2      msMAPE nu=0.1   target 0.922  level 0.574  score 92.15
+lognormal sizes with zeros p0=0.2      msMAPE nu=0.5   target 0.8021  level 0.530  score 78.37
+lognormal sizes with zeros p0=0.2      msMAPE nu=1     target 0.8672  level 0.555  score 66.53
+lognormal sizes with zeros p0=0.2      Suilin          target 0.9054  level 0.568  score 89.49
+lognormal sizes with zeros p0=0.4      sMAPE           target 0  level 0.400  score 120.00
+lognormal sizes with zeros p0=0.4      msMAPE nu=0.1   target 0.7791  level 0.641  score 113.85
+lognormal sizes with zeros p0=0.4      msMAPE nu=0.5   target 0.5271  level 0.557  score 87.15
+lognormal sizes with zeros p0=0.4      msMAPE nu=1     target 0.5932  level 0.580  score 70.90
+lognormal sizes with zeros p0=0.4      Suilin          target 0.1702  level 0.423  score 94.45
+lognormal sizes with zeros p0=0.6      sMAPE           target 0  level 0.600  score 80.00
+lognormal sizes with zeros p0=0.6      msMAPE nu=0.1   target 0  level 0.600  score 79.78
+lognormal sizes with zeros p0=0.6      msMAPE nu=0.5   target 0  level 0.600  score 72.40
+lognormal sizes with zeros p0=0.6      msMAPE nu=1     target 0  level 0.600  score 60.93
+lognormal sizes with zeros p0=0.6      Suilin          target 0  level 0.600  score 65.90
+lognormal sizes with zeros p0=0.8      sMAPE           target 0  level 0.800  score 40.00
+lognormal sizes with zeros p0=0.8      msMAPE nu=0.1   target 0  level 0.800  score 39.89
+lognormal sizes with zeros p0=0.8      msMAPE nu=0.5   target 0  level 0.800  score 36.20
+lognormal sizes with zeros p0=0.8      msMAPE nu=1     target 0  level 0.800  score 30.46
+lognormal sizes with zeros p0=0.8      Suilin          target 0  level 0.800  score 32.95
+zero threshold, sMAPE: 0.3940
+zero threshold, msMAPE nu=0.1: 0.4191
+zero threshold, msMAPE nu=0.5: 0.5192
+zero threshold, msMAPE nu=1: 0.5647
+zero threshold, Suilin: 0.4700
+simulated Poisson mean=0.1
+simulated Poisson mean=0.3
+simulated Poisson mean=0.5
+simulated Poisson mean=0.7
+simulated Poisson mean=1
+simulated Poisson mean=1.5
+simulated Poisson mean=3
+simulated negative binomial mean=0.5 size=0.5
+simulated negative binomial mean=1 size=0.5
+simulated negative binomial mean=2 size=0.5
+simulated lognormal sizes with zeros p0=0.2
+simulated lognormal sizes with zeros p0=0.4
+simulated lognormal sizes with zeros p0=0.6
+simulated lognormal sizes with zeros p0=0.8
