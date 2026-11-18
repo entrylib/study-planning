@@ -461,12 +461,13 @@ total weight $w(y,m) = y/(y+m)^2$ of the actuals above $m$ with that of the actu
 5. *(b), the sufficient condition.* If the two weights are equal, the first derivative at the median is 0 (step 1): the
    expected sMAPE is flat there. If, in addition, the stated inequality holds, the second derivative at $c = \ln m$ is
    positive (step 4), so the median is a strict local minimum. With a single local minimum, it is the target.
-6. *(b), without the inequality.* A point where the first derivative is 0 can be a flat point of inflection, where
-   the expected sMAPE keeps falling on one side and rising on the other. An example, built by the independent checker
-   of this section: let $\ln y - \ln m$ be a mixture of three normal distributions, with mean $-1.5$ and standard
-   deviation $0.3$ (weight 0.4061), mean 0 and standard deviation $0.5$ (weight 0.0548), and mean $1.1587$ and
-   standard deviation 1 (weight 0.5390). Its median is $m$, the two weights are equal there, and the second derivative
-   of step 4 is 0 at $\ln m$; the expected sMAPE has a flat point of inflection at $m$ and its only minimum near
+6. *(b), without the inequality.* A point where the first derivative is 0 can be a flat point of inflection, through
+   which the expected sMAPE keeps rising (or keeps falling) without turning. An example, built by the independent
+   checker of this section: let $\ln y - \ln m$ be a mixture of three normal distributions, with mean $-1.5$ and
+   standard deviation $0.3$ (weight 0.406125), mean 0 and standard deviation $0.5$ (weight 0.054825), and mean
+   $1.158664$ and standard deviation 1 (weight 0.539050); these values are rounded from the exact solution of the
+   three conditions. Its median is $m$, the two weights are equal there, and the second derivative of step 4 is 0 at
+   $\ln m$; the expected sMAPE rises through $m$, where it is flat, and its only minimum is near
    $\ln f = \ln m - 1.25$. So equal weights alone do not make the median the target.
 7. *(c).* By H6 the median is then the only forecast with the lowest expected sMAPE (a density cannot be constant,
    so a symmetric unimodal density is strictly lower somewhere away from its centre, as H6 asks). For lognormal actuals $\ln y$ has
