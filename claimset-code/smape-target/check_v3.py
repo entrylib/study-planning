@@ -129,6 +129,27 @@ def main():
     add("H35", "values of the Suilin term outside [0, 1)", int(np.sum((m < 0) | (m >= 1))), pairs=n)
     add("H35", "Suilin term of a zero forecast of a zero actual", float(m_term(0.0, 0.0)))
 
+    # ---- H42: the msMAPE term of Smyl (2025), as Kolassa (2026, Definition 4) states it, with the constant nu
+    yy = 10.0 ** g.uniform(-3, 3, n) * g.random(n)
+    ff = 10.0 ** g.uniform(-3, 3, n) * g.random(n)
+    yy[: n // 10] = 0.0
+    ff[n // 10: n // 5] = 0.0
+    ss = s_term(yy, ff)
+    for nu in (0.1, 0.5, 1.0):
+        pp = np.abs(ff - yy) / (ff + np.maximum(yy, nu))
+        high, low = yy >= nu, yy < nu
+        add("H42", "largest error of the identity of (a)", float(np.max(np.abs(pp[high] - ss[high]))), pairs=n, nu=nu)
+        add("H42", "largest error of the identity of (b)",
+            float(np.max(np.abs(pp[low] - np.abs(ff - yy)[low] / (ff[low] + nu)))), pairs=n, nu=nu)
+        add("H42", "values of the msMAPE term outside [0, 1]", int(np.sum((pp < 0) | (pp > 1))), pairs=n, nu=nu)
+        add("H42", "values of the msMAPE term not below 1 for actuals below nu", int(np.sum(pp[low] >= 1)), pairs=n, nu=nu)
+        counts = g.poisson(1.0, n).astype(float)
+        pc, sc = np.abs(ff - counts) / (ff + np.maximum(counts, nu)), s_term(counts, ff)
+        add("H42", "pairs with a count of at least 1 where the msMAPE and sMAPE terms differ",
+            int(np.sum((counts >= 1) & (np.abs(pc - sc) > 1e-12))), pairs=n, nu=nu)
+        tiny = np.array([1e-9])
+        add("H42", "msMAPE term of a forecast of 1e-9 for a zero actual", float((tiny / (tiny + nu))[0]), nu=nu)
+
     # ---- H39: signal-to-noise ratios of a comparison of two forecasts
     cases = (("normal", norm, norm_cdf, -12.0, 12.0), ("Gumbel", gumbel, gumbel_cdf, -6.0, 30.0))
     for name, h, cdf, lo, hi in cases:
