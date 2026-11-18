@@ -531,7 +531,9 @@ $f_1 = e^{\mu + \sigma c_1}$ and $f_2 = e^{\mu + \sigma c_2}$ with $c_1 < c_2$.
    order $\sigma^{-2}$.
 6. *(a).* When $h(c_1) \ne h(c_2)$, $h(c_1) + h(c_2) > 0$. Dividing the size of the mean (step 2) by the square root of
    the variance (step 5) gives the stated ratio. To keep $\sqrt n$ times the ratio at a given value, $n$ must be that
-   value squared over the ratio squared, which grows in proportion to $\sigma$.
+   value squared over the ratio squared, which grows in proportion to $\sigma$. When $h(c_1) = h(c_2) > 0$ instead, the
+   mean is of order $\sigma^{-3}$ (step 2) while the variance is still of order $1/\sigma$ (step 5), so the ratio is of
+   order $\sigma^{-5/2}$.
 7. *(b).* For the absolute log error, $|\ln y - \ln f_i| = \sigma|\varepsilon - c_i|$, so
    $D = \sigma(|\varepsilon - c_2| - |\varepsilon - c_1|)$. It is bounded by $\sigma(c_2 - c_1)$, so its mean and standard
    deviation exist. Both are $\sigma$ times those of $|\varepsilon - c_2| - |\varepsilon - c_1|$, whose distribution does not
@@ -550,9 +552,10 @@ $f_1 = e^{\mu + \sigma c_1}$ and $f_2 = e^{\mu + \sigma c_2}$ with $c_1 < c_2$.
    So $e^{\sigma^2/2}$ times the ratio is $|1 - (f_1 + f_2)/(2\,\mathrm E[y])|\,e^{\sigma^2/2}/\sqrt{e^{\sigma^2} - 1}$, which
    tends to 1.
 
-So for widely spread actuals the absolute log error keeps its power to tell two forecasts apart, and the absolute error
-keeps it unless the higher forecast is the median. sMAPE loses it, at the rate $\sigma^{-1/2}$ when $h(c_1) \ne h(c_2)$,
-and the squared error on lognormal actuals loses it faster than any power of $\sigma$. ∎
+So for widely spread actuals the absolute log error keeps its power to tell two forecasts apart wherever its ratio is
+defined, and the absolute error keeps it when $0 < H(c_2) < 1$ and the higher forecast is not the median. sMAPE loses it
+at the rate $\sigma^{-1/2}$ when $h(c_1) \ne h(c_2)$, and faster, with a ratio of order $\sigma^{-5/2}$, when
+$h(c_1) = h(c_2) > 0$; the squared error on lognormal actuals loses it faster than any power of $\sigma$. ∎
 
 ## H14. The sMAPE minimiser of a test set in large samples
 
