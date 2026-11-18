@@ -1,0 +1,124 @@
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 5.266e-05
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.008727
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 2000} 2.749e-06
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 2000} 0.0008713
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5} 3.761e-15
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.0003989
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.004379
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 2000} 4.703e-05
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 2000} 0.0004373
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0} 2.397e-16
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.00122
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.003402
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 2000} 0.0001273
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 2000} 0.0003398
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5} 1.579e-15
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.0001627
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.03529
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 2000} 5.872e-07
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 2000} 0.00352
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5} 4.243e-13
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.0001512
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.006295
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 2000} 2.457e-05
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 2000} 0.0006281
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0} 7.932e-13
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.0003779
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.00326
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 2000} 4.713e-05
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 2000} 0.0003255
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5} 1.43e-12
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 0.5} 3.109e-15
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 0.5} 6.661e-16
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 0.5} 1.11e-15
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 1.0} 1.554e-15
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 1.0} 8.882e-16
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 1.0} 5.551e-16
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 2.0} 1.409e-13
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 2.0} 7.55e-15
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 2.0} 1.887e-15
+distance of exp(sigma^2 / 2) times the squared error's ratio from 1, lognormal, formula {'c1': 0.0, 'c2': 1.0, 'sigma': 4.0} 0.009325
+distance of exp(sigma^2 / 2) times the squared error's ratio from 1, lognormal, formula {'c1': 0.0, 'c2': 1.0, 'sigma': 6.0} 3.08e-06
+distance of exp(sigma^2 / 2) times the squared error's ratio from 1, lognormal, formula {'c1': 0.0, 'c2': 1.0, 'sigma': 8.0} 1.888e-11
+H3 | violations of the bound on the log-MAE of the sMAPE minimiser {'test_sets': 2000} 0
+H3 | largest excess of the minimiser's log-MAE over the median's, minus the bound {'test_sets': 2000} -1.26319e-06
+H3 | sum of sMAPE terms, forecast at the median, actuals 1, 1, e, e^4, e^4 {} 2.73453
+H3 | sum of sMAPE terms, forecast at 1, actuals 1, 1, e, e^4, e^4 {} 2.39017
+H4 | largest difference of the weights below and above the target, over their sum {'distributions': 6} 2.08915e-08
+H34 | distributions with more than one local minimum {'distributions': 6} 0
+H34 | distributions where the target is not on the side of the median that carries more weight {'distributions': 6} 0
+H34 | largest distance in logs between the target and the median, lognormal and log-Laplace {'distributions': 16} 1.75311e-07
+H35 | largest error of the identity of (a) {'pairs': 200000} 1.11022e-16
+H35 | largest error of the identity of (b) {'pairs': 200000} 0
+H35 | values of the Suilin term outside [0, 1) {'pairs': 200000} 0
+H35 | Suilin term of a zero forecast of a zero actual {} 0
+H42 | largest error of the identity of (a) {'pairs': 200000, 'nu': 0.1} 0
+H42 | largest error of the identity of (b) {'pairs': 200000, 'nu': 0.1} 0
+H42 | values of the msMAPE term outside [0, 1] {'pairs': 200000, 'nu': 0.1} 0
+H42 | values of the msMAPE term not below 1 for actuals below nu {'pairs': 200000, 'nu': 0.1} 0
+H42 | pairs with a count of at least 1 where the msMAPE and sMAPE terms differ {'pairs': 200000, 'nu': 0.1} 0
+H42 | msMAPE term of a forecast of 1e-9 for a zero actual {'nu': 0.1} 1e-08
+H42 | largest error of the identity of (a) {'pairs': 200000, 'nu': 0.5} 0
+H42 | largest error of the identity of (b) {'pairs': 200000, 'nu': 0.5} 0
+H42 | values of the msMAPE term outside [0, 1] {'pairs': 200000, 'nu': 0.5} 0
+H42 | values of the msMAPE term not below 1 for actuals below nu {'pairs': 200000, 'nu': 0.5} 0
+H42 | pairs with a count of at least 1 where the msMAPE and sMAPE terms differ {'pairs': 200000, 'nu': 0.5} 0
+H42 | msMAPE term of a forecast of 1e-9 for a zero actual {'nu': 0.5} 2e-09
+H42 | largest error of the identity of (a) {'pairs': 200000, 'nu': 1.0} 0
+H42 | largest error of the identity of (b) {'pairs': 200000, 'nu': 1.0} 0
+H42 | values of the msMAPE term outside [0, 1] {'pairs': 200000, 'nu': 1.0} 0
+H42 | values of the msMAPE term not below 1 for actuals below nu {'pairs': 200000, 'nu': 1.0} 0
+H42 | pairs with a count of at least 1 where the msMAPE and sMAPE terms differ {'pairs': 200000, 'nu': 1.0} 0
+H42 | msMAPE term of a forecast of 1e-9 for a zero actual {'nu': 1.0} 1e-09
+H39 | signal-to-noise ratio of sMAPE over its large-spread formula {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.999947
+H39 | signal-to-noise ratio of the absolute error over its limit {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.991273
+H39 | relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5} 1.68589e-15
+H39 | signal-to-noise ratio of sMAPE over its large-spread formula {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 1.0004
+H39 | signal-to-noise ratio of the absolute error over its limit {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.995621
+H39 | relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0} 8.38823e-16
+H39 | signal-to-noise ratio of sMAPE over its large-spread formula {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 1.00122
+H39 | signal-to-noise ratio of the absolute error over its limit {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.996598
+H39 | relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5} 4.51012e-16
+H39 | signal-to-noise ratio of sMAPE over its large-spread formula {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.999837
+H39 | signal-to-noise ratio of the absolute error over its limit {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.964706
+H39 | relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5} 4.18585e-15
+H39 | signal-to-noise ratio of sMAPE over its large-spread formula {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 1.00015
+H39 | signal-to-noise ratio of the absolute error over its limit {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.993705
+H39 | relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0} 4.88505e-15
+H39 | signal-to-noise ratio of sMAPE over its large-spread formula {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 1.00038
+H39 | signal-to-noise ratio of the absolute error over its limit {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.99674
+H39 | relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5} 1.3558e-14
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 0.5} 1
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 0.5} 1
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 0.5} 1
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 1.0} 1
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 1.0} 1
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 1.0} 1
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 2.0} 1
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 2.0} 1
+H39 | signal-to-noise ratio of the squared error over its formula, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 2.0} 1
+H39 | exp(sigma^2 / 2) times the squared error's ratio, lognormal, formula {'c1': 0.0, 'c2': 1.0, 'sigma': 4.0} 0.990675
+H39 | exp(sigma^2 / 2) times the squared error's ratio, lognormal, formula {'c1': 0.0, 'c2': 1.0, 'sigma': 6.0} 0.999997
+H40 | large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 0.25} 0.969626
+H40 | large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 0.5} 0.888054
+H40 | large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 1.0} 0.660082
+H40 | large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 1.5} 0.453975
+H40 | large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 2.0} 0.30733
+H40 | large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 3.0} 0.147385
+H40 | large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 4.0} 0.0777822
+H40 | large-sample relative efficiency, formula {'family': 'lognormal', 'spread': 6.0} 0.0278984
+H40 | distance of the large-sample relative efficiency from 1 at spread 0.01 {'family': 'lognormal'} 4.99977e-05
+H40 | large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 0.25} 0.996926
+H40 | large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 0.5} 0.97649
+H40 | large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 1.0} 0.89534
+H40 | large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 1.5} 0.803554
+H40 | large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 2.0} 0.720712
+H40 | large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 3.0} 0.590326
+H40 | large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 4.0} 0.496889
+H40 | large-sample relative efficiency, formula {'family': 'log-Laplace', 'spread': 6.0} 0.375456
+H40 | distance of the large-sample relative efficiency from 1 at spread 0.01 {'family': 'log-Laplace'} 1.24873e-08
+H40 | distributions where A is not below 2 g at the median {'distributions': 16} 0
+H40 | distributions compared with the asymptotic values recorded by RN7 {} 16
+H40 | largest difference from the asymptotic values recorded by RN7 {'distributions': 16} 0.000140017
+H40 | large-sample relative efficiency times sigma^3 over 6 (ln 2)^2 sqrt(2 pi), lognormal {'spread': 200} 0.999821
+H40 | large-sample relative efficiency times b over 3, log-Laplace {'spread': 200} 0.99064
