@@ -1,0 +1,42 @@
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 5.266e-05
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.008727
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 2000} 2.749e-06
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5, 'sigma': 2000} 0.0008713
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 0.5} 3.761e-15
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.0003989
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.004379
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 2000} 4.703e-05
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0, 'sigma': 2000} 0.0004373
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': 0.0, 'c2': 1.0} 2.397e-16
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.00122
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.003402
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 2000} 0.0001273
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5, 'sigma': 2000} 0.0003398
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'normal', 'c1': -0.5, 'c2': 1.5} 1.579e-15
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.0001627
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 200} 0.03529
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 2000} 5.872e-07
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5, 'sigma': 2000} 0.00352
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 0.5} 4.243e-13
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.0001512
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 200} 0.006295
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 2000} 2.457e-05
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0, 'sigma': 2000} 0.0006281
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': 0.0, 'c2': 1.0} 7.932e-13
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.0003779
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 200} 0.00326
+distance of sMAPE's signal-to-noise ratio over its large-spread formula from 1 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 2000} 4.713e-05
+distance of the absolute error's signal-to-noise ratio over its limit from 1 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5, 'sigma': 2000} 0.0003255
+relative spread of the absolute log error's signal-to-noise ratio over sigma = 2, 10, 50 {'error_distribution': 'Gumbel', 'c1': -0.5, 'c2': 1.5} 1.43e-12
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 0.5} 3.109e-15
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 0.5} 6.661e-16
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 0.5} 1.11e-15
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 1.0} 1.554e-15
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 1.0} 8.882e-16
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 1.0} 5.551e-16
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 0.5, 'sigma': 2.0} 1.409e-13
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': 0.0, 'c2': 1.0, 'sigma': 2.0} 7.55e-15
+distance of the squared error's signal-to-noise ratio over its formula from 1, lognormal {'c1': -0.5, 'c2': 1.5, 'sigma': 2.0} 1.887e-15
+distance of exp(sigma^2 / 2) times the squared error's ratio from 1, lognormal, formula {'c1': 0.0, 'c2': 1.0, 'sigma': 4.0} 0.009325
+distance of exp(sigma^2 / 2) times the squared error's ratio from 1, lognormal, formula {'c1': 0.0, 'c2': 1.0, 'sigma': 6.0} 3.08e-06
+distance of exp(sigma^2 / 2) times the squared error's ratio from 1, lognormal, formula {'c1': 0.0, 'c2': 1.0, 'sigma': 8.0} 1.888e-11
