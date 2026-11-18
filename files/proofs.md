@@ -89,12 +89,12 @@ where $\tanh x = \dfrac{e^x - e^{-x}}{e^x + e^{-x}}$ is the hyperbolic tangent. 
    difference is 0 at $x = 0$. Putting $x = |\ln y - \ln f|/2$ gives the bounds.
 6. For (c), the median: the mean of $|\ln y_t - \ln f|$ over a test set is minimised when $\ln f$ is a median of the
    $\ln y_t$. Since the logarithm is increasing, this is when $f$ is a median $m$ of the $y_t$.
-7. For (c), the bound: write $a(f) = \frac1n\sum_t|\ln y_t - \ln f|$, $k(f) = \frac1n\sum_t|\ln y_t - \ln f|^3$ and
+7. For (c), the bound: write $\bar\ell_1(f) = \frac1n\sum_t|\ln y_t - \ln f|$, $\bar\ell_3(f) = \frac1n\sum_t|\ln y_t - \ln f|^3$ and
    $\bar s(f)$ for the mean of the sMAPE terms of the test set. Averaging the bounds of step 5 over the test set gives
-   $\bar s(f) \le \tfrac12 a(f) \le \bar s(f) + \tfrac1{24}k(f)$ for every $f > 0$. Let $f^*$ minimise $\bar s$, so that
+   $\bar s(f) \le \tfrac12\bar\ell_1(f) \le \bar s(f) + \tfrac1{24}\bar\ell_3(f)$ for every $f > 0$. Let $f^*$ minimise $\bar s$, so that
    $\bar s(f^*) \le \bar s(m)$. Then
-   $$\tfrac12 a(f^*) \le \bar s(f^*) + \tfrac1{24}k(f^*) \le \bar s(m) + \tfrac1{24}k(f^*) \le \tfrac12 a(m) + \tfrac1{24}k(f^*).$$
-   Multiplying by 2 gives $a(f^*) - a(m) \le \tfrac1{12}k(f^*)$, the stated inequality.
+   $$\tfrac12\bar\ell_1(f^*) \le \bar s(f^*) + \tfrac1{24}\bar\ell_3(f^*) \le \bar s(m) + \tfrac1{24}\bar\ell_3(f^*) \le \tfrac12\bar\ell_1(m) + \tfrac1{24}\bar\ell_3(f^*).$$
+   Multiplying by 2 gives $\bar\ell_1(f^*) - \bar\ell_1(m) \le \tfrac1{12}\bar\ell_3(f^*)$, the stated inequality.
 8. For (c), not the median in general: take the five actuals $1, 1, e, e^4, e^4$, whose median is $e$. With the forecast
    at $e$ the log errors are $1, 1, 0, 3, 3$ in size and the sMAPE terms sum to $2\tanh(0.5) + 2\tanh(1.5) = 2.734$. With
    the forecast at 1 the log errors are $0, 0, 1, 4, 4$ and the terms sum to $\tanh(0.5) + 2\tanh(2) = 2.390$, which is
@@ -455,7 +455,7 @@ total weight $w(y,m) = y/(y+m)^2$ of the actuals above $m$ with that of the actu
    the expected contribution is
    $$g(c) - \tfrac12\,\mathrm E\Big[\operatorname{sech}^2\Big(\frac{\ln y - c}{2}\Big)\tanh\Big(\frac{|\ln y - c|}{2}\Big)\Big].$$
    This holds when $g$ is continuous at $c$: since $\operatorname{sech}^2 = 1 - \tanh^2$, the first derivative is
-   $\tfrac12(2G(c) - 1)$, with $G$ the distribution function of $\ln y$, whose derivative at $c$ is $g(c)$, plus the
+   $\mathrm P(\ln y \le c) - \tfrac12$, whose derivative at $c$ is $g(c)$, plus the
    expectation of $-\tfrac12\tanh^2\big(\tfrac{x-c}{2}\big)$ with the sign of $c - x$, a function of $c$ with a bounded
    continuous derivative, which may be differentiated inside the expectation.
 5. *(b), the sufficient condition.* If the two weights are equal, the first derivative at the median is 0 (step 1): the
@@ -585,10 +585,10 @@ H3 the mean sMAPE term of the test set is $M_n(\theta) = \frac1n\sum_t\tanh(|x_t
 $M(\theta) = \mathrm E[\tanh(|x - \theta|/2)]$. So $\hat\theta_n = \ln\hat f_n - \ln m$ minimises $M_n$; a minimiser exists,
 because $M_n$ is continuous, tends to 1 as $|\theta|$ grows, and is below 1 at each $x_t$.
 
-1. *(a).* Write $k(u) = \operatorname{sech}^2(u/2)\tanh(|u|/2) \ge 0$. Since $k(u)$ is the derivative of $\tanh^2(u/2)$
-   for $u > 0$, $\int k(u)\,du = 2$. By unimodality $g(\ln m + u) \le g(\ln m)$, so
-   $A = \int k(u)\,g(\ln m + u)\,du \le 2g(\ln m)$. A density cannot equal $g(\ln m)$ everywhere, and $g(\ln m + u)$
-   does not increase as $|u|$ grows; so $g(\ln m + u) < g(\ln m)$ for every $|u|$ beyond some point, where $k > 0$. So
+1. *(a).* Write $\kappa(u) = \operatorname{sech}^2(u/2)\tanh(|u|/2) \ge 0$. Since $\kappa(u)$ is the derivative of $\tanh^2(u/2)$
+   for $u > 0$, $\int\kappa(u)\,du = 2$. By unimodality $g(\ln m + u) \le g(\ln m)$, so
+   $A = \int\kappa(u)\,g(\ln m + u)\,du \le 2g(\ln m)$. A density cannot equal $g(\ln m)$ everywhere, and $g(\ln m + u)$
+   does not increase as $|u|$ grows; so $g(\ln m + u) < g(\ln m)$ for every $|u|$ beyond some point, where $\kappa > 0$. So
    the inequality is strict.
 2. *The expected loss is lowest at 0 only.* $M(\theta)$ is the expected sMAPE term of the forecast $m\,e^\theta$. By H6,
    $M(\theta) > M(0)$ for every $\theta \ne 0$. The function $\tanh(|u|/2)$ has slope at most $\tfrac12$, so $M$ and every
@@ -629,18 +629,18 @@ because $M_n$ is continuous, tends to 1 as $|\theta|$ grows, and is below 1 at e
     with scale 1 and $\sigma = b$; then $g(\ln m) = h(0)/\sigma$ with $h$ the density of $\varepsilon$, and
     $x = \sigma\varepsilon$. As $\sigma \to 0$, $A \to 0$ and $B \to 1$ by bounded convergence, and
     $A/(2g(\ln m)) = \sigma A/(2h(0)) \to 0$. So $\mathrm{ARE} = (1 - A/(2g(\ln m)))^2/B \to 1$.
-11. *(c), wide lognormal distributions.* Since $\int k = 2$ (step 1),
-    $2g(\ln m) - A = \int k(u)\,[g(\ln m) - g(\ln m + u)]\,du$. For the normal density,
+11. *(c), wide lognormal distributions.* Since $\int\kappa = 2$ (step 1),
+    $2g(\ln m) - A = \int\kappa(u)\,[g(\ln m) - g(\ln m + u)]\,du$. For the normal density,
     $g(\ln m) - g(\ln m + u) = \big(1 - e^{-u^2/(2\sigma^2)}\big)/(\sigma\sqrt{2\pi})$, and
     $\tfrac{u^2}{2\sigma^2} - \tfrac{u^4}{8\sigma^4} \le 1 - e^{-u^2/(2\sigma^2)} \le \tfrac{u^2}{2\sigma^2}$. Integrating by
-    parts, $\int u^2 k(u)\,du = 4\int_0^\infty u\operatorname{sech}^2(u/2)\,du = 16\ln 2$; and $\int u^4 k(u)\,du$ is
+    parts, $\int u^2\kappa(u)\,du = 4\int_0^\infty u\operatorname{sech}^2(u/2)\,du = 16\ln 2$; and $\int u^4\kappa(u)\,du$ is
     finite. So $2g(\ln m) - A = 8\ln 2/(\sigma^3\sqrt{2\pi}) + O(\sigma^{-5})$. In the same way, with
     $\int\operatorname{sech}^4(u/2)\,du = 8/3$, $B = 8/(3\sigma\sqrt{2\pi}) + O(\sigma^{-3})$. With
     $g(\ln m) = 1/(\sigma\sqrt{2\pi})$, $\mathrm{ARE}\,\sigma^3$ tends to
     $\dfrac{64(\ln 2)^2}{2\pi}\cdot\dfrac{2\pi}{4}\cdot\dfrac{3\sqrt{2\pi}}{8} = 6(\ln 2)^2\sqrt{2\pi}$.
 12. *(c), wide log-Laplace distributions.* Here $g(\ln m + u) = e^{-|u|/b}/(2b)$, so
     $g(\ln m) - g(\ln m + u) = (1 - e^{-|u|/b})/(2b)$, which lies between $\big(|u|/b - u^2/(2b^2)\big)/(2b)$ and
-    $|u|/(2b^2)$. Integrating by parts, $\int |u|\,k(u)\,du = 2\int_0^\infty\operatorname{sech}^2(u/2)\,du = 4$. So
+    $|u|/(2b^2)$. Integrating by parts, $\int |u|\,\kappa(u)\,du = 2\int_0^\infty\operatorname{sech}^2(u/2)\,du = 4$. So
     $2g(\ln m) - A = 2/b^2 + O(b^{-3})$, and in the same way $B = 4/(3b) + O(b^{-2})$. With $g(\ln m) = 1/(2b)$,
     $\mathrm{ARE}\,b$ tends to $\dfrac{4}{b^4}\cdot b^2\cdot\dfrac{3b}{4}\cdot b = 3$.
 
