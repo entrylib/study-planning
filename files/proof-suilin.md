@@ -44,3 +44,46 @@ where $|y| + |f| < 0.5$: it differs from sMAPE in kind only near zero. ∎
 
 *Revision.* Steps 4 and 7 (the bound on $s - \tilde s$, the counterexample to a function of the ratio, and $s \le 1$) were added
 after the independent check (lab check CK26), at the checker's suggestion; the checker had derived each of them.
+
+# The msMAPE of Smyl beside sMAPE: proof of H42 (study smape-target)
+
+*What it shows:* the msMAPE term is the sMAPE term except for actuals below its constant, where a zero actual no longer
+gives every non-zero forecast the largest value.
+
+Write $y \ge 0$ for an actual and $f \ge 0$ for a forecast. The sparse-proof sMAPE (msMAPE) of Smyl (2025), as Kolassa
+(2026, Definition 4) states it, has for a small constant $\nu > 0$ the term
+
+$$p(y,f) = \frac{|f-y|}{f+\max\{y,\nu\}},$$
+
+which is 0 when $y = f = 0$; msMAPE is 200 times the mean of $p$. Kolassa writes the constant $m$ and the factor 2 into
+the term; $m$ is the median in the other proofs, so the constant is $\nu$ here. The sMAPE term is
+$s(y,f) = |y-f|/(|y|+|f|)$, with $s = 0$ when $y = f = 0$.
+
+**Statement.** For $y \ge 0$, $f \ge 0$ and $\nu > 0$: (a) where $y \ge \nu$, $p(y,f) = s(y,f)$; so when every actual is
+at least $\nu$, msMAPE is sMAPE and has the same target. (b) Where $y < \nu$, $p(y,f) = |f-y|/(f+\nu)$: for a zero
+actual it is $f/(f+\nu)$, which is 0 at $f = 0$ and rises towards 1 as $f$ grows, where the sMAPE term is 1 for every
+$f > 0$. (c) $0 \le p \le 1$, with $p < 1$ where $y < \nu$; and for every $y$, $p(y,f)$ is continuous in $f$ at
+$f = 0$, so the expected msMAPE term has no jump at the zero forecast, where the expected sMAPE term jumps when zero
+actuals have positive probability. (d) On counts with $\nu \le 1$, $p$ differs from $s$ only for zero actuals.
+
+**Proof.**
+
+1. *(a).* When $y \ge \nu$, $\max\{y,\nu\} = y$, and $y > 0$ because $\nu > 0$. So $p = |f-y|/(f+y)$, which is
+   $s(y,f)$ for non-negative $y$ and $f$. If every actual is at least $\nu$, the two measures are then the same
+   function of the forecast on every test set and under every distribution of such actuals, so they have the same
+   minimisers.
+2. *(b).* When $y < \nu$, $\max\{y,\nu\} = \nu$, so $p = |f-y|/(f+\nu)$. For $y = 0$ this is
+   $f/(f+\nu) = 1 - \nu/(f+\nu)$, which is 0 at $f = 0$, increasing in $f$, below 1, and tends to 1 as $f$ grows. The
+   sMAPE term of a zero actual is $|f|/|f| = 1$ for every $f > 0$.
+3. *(c), the bounds.* $p \ge 0$ because its numerator is non-negative and its denominator is at least $\nu > 0$. Where
+   $y \ge \nu$, $p = s \le 1$, since $|f-y| \le f+y$. Where $y < \nu$: if $f \ge y$, $|f-y| = f-y \le f < f+\nu$; if
+   $f < y$, $|f-y| = y-f \le y < \nu \le f+\nu$. So $p < 1$ there.
+4. *(c), no jump at zero.* The denominator $f+\max\{y,\nu\}$ is at least $\nu > 0$ for every $f \ge 0$, so $p(y,f)$ is
+   a continuous function of $f$ on $f \ge 0$, at $f = 0$ too. Since $0 \le p \le 1$ (step 3), the expected term is
+   continuous in $f$ as well, by bounded convergence. The sMAPE term of a zero actual is 0 at $f = 0$ and 1 for
+   $f > 0$; so when zero actuals have probability $p_0 > 0$, the expected sMAPE term jumps by $p_0$ at $f = 0$.
+5. *(d).* A count is 0 or at least 1. With $\nu \le 1$, a count of at least 1 is at least $\nu$, so $p = s$ by step 1.
+   A zero count is below $\nu$, where $p(0,f) = f/(f+\nu)$ and $s(0,f) = 1$ for $f > 0$ (step 2).
+
+So the msMAPE term is the sMAPE term for actuals of at least $\nu$. Below $\nu$ its denominator no longer shrinks with
+the actual: a zero actual scores $f/(f+\nu)$, and the expected msMAPE has no jump at the zero forecast. ∎
