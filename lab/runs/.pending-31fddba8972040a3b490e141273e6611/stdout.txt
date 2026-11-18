@@ -1,0 +1,45 @@
+Poisson mean=0.1                       sMAPE           target 0  level 0.905  score 19.03
+Poisson mean=0.1                       msMAPE nu=0.1   target 0  level 0.905  score 19.03
+Poisson mean=0.1                       msMAPE nu=0.5   target 0  level 0.905  score 19.03
+Poisson mean=0.1                       msMAPE nu=1     target 0  level 0.905  score 19.03
+Poisson mean=0.1                       Suilin          target 0  level 0.905  score 17.34
+Poisson mean=0.3                       sMAPE           target 0  level 0.741  score 51.84
+Poisson mean=0.3                       msMAPE nu=0.1   target 0  level 0.741  score 51.84
+Poisson mean=0.3                       msMAPE nu=0.5   target 0  level 0.741  score 51.84
+Poisson mean=0.3                       msMAPE nu=1     target 0  level 0.741  score 51.84
+Poisson mean=0.3                       Suilin          target 0  level 0.741  score 47.46
+Poisson mean=0.5                       sMAPE           target 0  level 0.607  score 78.69
+Poisson mean=0.5                       msMAPE nu=0.1   target 0  level 0.607  score 78.69
+Poisson mean=0.5                       msMAPE nu=0.5   target 0  level 0.607  score 78.69
+Poisson mean=0.5                       msMAPE nu=1     target 1  level 0.910  score 67.18
+Poisson mean=0.5                       Suilin          target 0  level 0.607  score 72.37
+Poisson mean=0.7                       sMAPE           target 0  level 0.497  score 100.68
+Poisson mean=0.7                       msMAPE nu=0.1   target 0  level 0.497  score 100.68
+Poisson mean=0.7                       msMAPE nu=0.5   target 1  level 0.844  score 77.86
+Poisson mean=0.7                       msMAPE nu=1     target 1  level 0.844  score 61.31
+Poisson mean=0.7                       Suilin          target 0  level 0.497  score 92.99
+Poisson mean=1                         sMAPE           target 1  level 0.736  score 94.30
+Poisson mean=1                         msMAPE nu=0.1   target 1  level 0.736  score 87.61
+Poisson mean=1                         msMAPE nu=0.5   target 1  level 0.736  score 69.78
+Poisson mean=1                         msMAPE nu=1     target 1  level 0.736  score 57.52
+Poisson mean=1                         Suilin          target 1  level 0.736  score 87.03
+Poisson mean=1.5                       sMAPE           target 2  level 0.809  score 76.77
+Poisson mean=1.5                       msMAPE nu=0.1   target 2  level 0.809  score 74.64
+Poisson mean=1.5                       msMAPE nu=0.5   target 1  level 0.558  score 67.21
+Poisson mean=1.5                       msMAPE nu=1     target 1  level 0.558  score 59.77
+Poisson mean=1.5                       Suilin          target 2  level 0.809  score 73.75
+Poisson mean=3                         sMAPE           target 3  level 0.647  score 49.91
+Poisson mean=3                         msMAPE nu=0.1   target 3  level 0.647  score 49.59
+Poisson mean=3                         msMAPE nu=0.5   target 3  level 0.647  score 48.49
+Poisson mean=3                         msMAPE nu=1     target 3  level 0.647  score 47.42
+Poisson mean=3                         Suilin          target 3  level 0.647  score 48.86
+negative binomial mean=0.5 size=0.5    sMAPE           target 0  level 0.707  score 58.58
+negative binomial mean=0.5 size=0.5    msMAPE nu=0.1   target 0  level 0.707  score 58.58
+negative binomial mean=0.5 size=0.5    msMAPE nu=0.5   target 0  level 0.707  score 58.58
+negative binomial mean=0.5 size=0.5    msMAPE nu=1     target 0  level 0.707  score 58.58
+negative binomial mean=0.5 size=0.5    Suilin          target 0  level 0.707  score 54.46
+negative binomial mean=1 size=0.5      sMAPE           target 0  level 0.577  score 84.53
+negative binomial mean=1 size=0.5      msMAPE nu=0.1   target 0  level 0.577  score 84.53
+negative binomial mean=1 size=0.5      msMAPE nu=0.5   target 0  level 0.577  score 84.53
+negative binomial mean=1 size=0.5      msMAPE nu=1     target 1  level 0.770  score 80.38
+negative binomial mean=1 size=0.5      Suilin          target 0  level 0.577  score 79.46
