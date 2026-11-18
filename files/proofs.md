@@ -89,12 +89,12 @@ where $\tanh x = \dfrac{e^x - e^{-x}}{e^x + e^{-x}}$ is the hyperbolic tangent. 
    difference is 0 at $x = 0$. Putting $x = |\ln y - \ln f|/2$ gives the bounds.
 6. For (c), the median: the mean of $|\ln y_t - \ln f|$ over a test set is minimised when $\ln f$ is a median of the
    $\ln y_t$. Since the logarithm is increasing, this is when $f$ is a median $m$ of the $y_t$.
-7. For (c), the bound: write $\bar\ell_1(f) = \frac1n\sum_t|\ln y_t - \ln f|$, $\bar\ell_3(f) = \frac1n\sum_t|\ln y_t - \ln f|^3$ and
+7. For (c), the bound: with $z_t = \ln y_t - \ln f$ the log errors of the test set, write $\overline{|z|}(f) = \frac1n\sum_t|\ln y_t - \ln f|$, $\overline{|z|^3}(f) = \frac1n\sum_t|\ln y_t - \ln f|^3$ and
    $\bar s(f)$ for the mean of the sMAPE terms of the test set. Averaging the bounds of step 5 over the test set gives
-   $\bar s(f) \le \tfrac12\bar\ell_1(f) \le \bar s(f) + \tfrac1{24}\bar\ell_3(f)$ for every $f > 0$. Let $f^*$ minimise $\bar s$, so that
+   $\bar s(f) \le \tfrac12\overline{|z|}(f) \le \bar s(f) + \tfrac1{24}\overline{|z|^3}(f)$ for every $f > 0$. Let $f^*$ minimise $\bar s$, so that
    $\bar s(f^*) \le \bar s(m)$. Then
-   $$\tfrac12\bar\ell_1(f^*) \le \bar s(f^*) + \tfrac1{24}\bar\ell_3(f^*) \le \bar s(m) + \tfrac1{24}\bar\ell_3(f^*) \le \tfrac12\bar\ell_1(m) + \tfrac1{24}\bar\ell_3(f^*).$$
-   Multiplying by 2 gives $\bar\ell_1(f^*) - \bar\ell_1(m) \le \tfrac1{12}\bar\ell_3(f^*)$, the stated inequality.
+   $$\tfrac12\overline{|z|}(f^*) \le \bar s(f^*) + \tfrac1{24}\overline{|z|^3}(f^*) \le \bar s(m) + \tfrac1{24}\overline{|z|^3}(f^*) \le \tfrac12\overline{|z|}(m) + \tfrac1{24}\overline{|z|^3}(f^*).$$
+   Multiplying by 2 gives $\overline{|z|}(f^*) - \overline{|z|}(m) \le \tfrac1{12}\overline{|z|^3}(f^*)$, the stated inequality.
 8. For (c), not the median in general: take the five actuals $1, 1, e, e^4, e^4$, whose median is $e$. With the forecast
    at $e$ the log errors are $1, 1, 0, 3, 3$ in size and the sMAPE terms sum to $2\tanh(0.5) + 2\tanh(1.5) = 2.734$. With
    the forecast at 1 the log errors are $0, 0, 1, 4, 4$ and the terms sum to $\tanh(0.5) + 2\tanh(2) = 2.390$, which is
