@@ -553,9 +553,9 @@ $f_1 = e^{\mu + \sigma c_1}$ and $f_2 = e^{\mu + \sigma c_2}$ with $c_1 < c_2$.
    tends to 1.
 
 So for widely spread actuals the absolute log error keeps its power to tell two forecasts apart wherever its ratio is
-defined, and the absolute error keeps it when $0 < H(c_2) < 1$ and the higher forecast is not the median. sMAPE loses it
-at the rate $\sigma^{-1/2}$ when $h(c_1) \ne h(c_2)$, and faster, with a ratio of order $\sigma^{-5/2}$, when
-$h(c_1) = h(c_2) > 0$; the squared error on lognormal actuals loses it faster than any power of $\sigma$. ∎
+defined. The absolute error keeps it when $0 < H(c_2) < 1$ and the higher forecast is not the median. sMAPE loses it at
+the rate $\sigma^{-1/2}$ when $h(c_1) \ne h(c_2)$. It loses it faster, with a ratio of order $\sigma^{-5/2}$, when
+$h(c_1) = h(c_2) > 0$. The squared error on lognormal actuals loses it faster than any power of $\sigma$. ∎
 
 ## H14. The sMAPE minimiser of a test set in large samples
 
