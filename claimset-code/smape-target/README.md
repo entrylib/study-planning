@@ -12,6 +12,7 @@ scripts compute exactly and check on simulated test sets.
 - `measures.py`: the measures, scoring many fixed forecasts on one test set at once.
 - `minimiser.py`: the exact sMAPE minimiser of a test set (always one of its outcomes).
 - `targets.py` (plan PL1), `efficiency.py` (PL2), `flatness.py` (PL3): the simulations; `plot_*.py`: their figures.
+- `experiment_v4.py`: the numerical experiment of version 4 (formulas of H47 to H50 by quadrature and simulation).
 - `test_smape.py`: checks against exact results (`python3 -m unittest test_smape`).
 
 Requirements: `pip install -r requirements.txt` (Python 3.10+).
