@@ -649,10 +649,307 @@ median and two expectations give. On lognormal and log-Laplace actuals it is asy
 median for narrow distributions and asymptotically loses all of its precision relative to it as the actuals spread out,
 at the rates $\sigma^{-3}$ and $b^{-1}$. ∎
 
+## H47. Two separated groups of actuals: the target lies in one of them
+
+*What it shows:* when the log actuals fall in two separated intervals, expected sMAPE is concave across the gap between
+them. So the target lies in one of the groups, whatever their shapes and weights. With equal weights, the forecasts in
+the gap are medians, and none of them is the target. This generalises H7, whose groups were mirror images.
+
+**Statement.** Let $\ln y$ take all its values in two separated intervals: $[l_1, u_1]$ with probability $p$ and
+$[l_2, u_2]$ with probability $1 - p$, where $u_1 < l_2$ and $0 < p < 1$. The two groups may have any shapes.
+
+- (a) Expected sMAPE is strictly concave in $\ln f$ for $e^{u_1} < f < e^{l_2}$. So no forecast strictly between the
+  groups is the sMAPE target: each has a higher expected sMAPE than $e^{u_1}$ or $e^{l_2}$.
+- (b) A forecast below $e^{l_1}$ has a higher expected sMAPE than $e^{l_1}$, and one above $e^{u_2}$ a higher one than
+  $e^{u_2}$. So the sMAPE target lies in $[e^{l_1}, e^{u_1}]$ or in $[e^{l_2}, e^{u_2}]$.
+- (c) When $p = 1/2$, every forecast strictly between the groups is a median of $y$, and none of them is the sMAPE
+  target.
+- (d) When each group is a single point, $\ln y = l_1$ with probability $p$ and $l_2$ otherwise, the sMAPE target is
+  $e^{l_1}$ if $p > 1/2$, $e^{l_2}$ if $p < 1/2$, and both if $p = 1/2$.
+- (e) Between the groups, expected sMAPE is largest at a forecast where the actuals below it and above it carry equal
+  total weight $w(y, f) = y/(y+f)^2$, if there is one there. With $p = 1/2$ that forecast is a median, and a strict local
+  maximum. When the groups mirror each other about $\ln m$, it is $m$. More generally, let $y$ be positive and take no
+  single value with positive probability. A median $m$ is a strict local maximum of expected sMAPE when the weights
+  balance at $m$ and $2g(\ln m) < \mathrm E[\operatorname{sech}^2((\ln y - \ln m)/2)\tanh(|\ln y - \ln m|/2)]$, where
+  $g$ is the density of $\ln y$, continuous at $\ln m$.
+
+**Proof.** Write $x = \ln y$ and $c = \ln f$. By H3, expected sMAPE is 200 times $S(c) = \mathrm E[\tau(|x - c|)]$, with
+$\tau(t) = \tanh(t/2)$. Call the actuals with $x \in [l_1, u_1]$ the first group and those with $x \in [l_2, u_2]$ the
+second.
+
+1. *The term is strictly concave in the distance.* For $t > 0$, $\tau''(t) = -\tfrac12\operatorname{sech}^2(t/2)
+   \tanh(t/2) < 0$. So $\tau$ is strictly concave on $[0, \infty)$. It is also strictly increasing there.
+2. *(a).* Take $c$ in $[u_1, l_2]$. Every actual of the first group has $x \le u_1 \le c$, so its term is $\tau(c - x)$.
+   As a function of $c$ on $[u_1, l_2]$ this is strictly concave (step 1). Every actual of the second group has
+   $x \ge l_2 \ge c$, so its term is $\tau(x - c)$, also strictly concave in $c$ there. $S$ is the expectation of these
+   terms, and both groups have positive probability. So $S$ is strictly concave on $[u_1, l_2]$. Now let
+   $c = \lambda u_1 + (1 - \lambda)l_2$ with $0 < \lambda < 1$. Strict concavity gives
+   $S(c) > \lambda S(u_1) + (1 - \lambda)S(l_2) \ge \min\{S(u_1), S(l_2)\}$.
+3. *(b).* Take $c < c' \le l_1$. Every actual has $x \ge l_1 \ge c' > c$. So its term at $c$ is $\tau(x - c)$, which is
+   larger than its term $\tau(x - c')$ at $c'$, since $\tau$ is strictly increasing. Taking expectations,
+   $S(c) > S(c')$. With $c' = l_1$, every forecast below $e^{l_1}$ is worse than $e^{l_1}$. The case above $e^{u_2}$
+   is the mirror image.
+4. *Where the target lies.* Expected sMAPE has a lowest point (H4). By step 3 it is in $[l_1, u_2]$, and by step 2 it
+   is not strictly between $u_1$ and $l_2$. So it lies in $[l_1, u_1]$ or in $[l_2, u_2]$, which is (b).
+5. *(c).* Let $p = 1/2$ and $u_1 < c < l_2$. Then $\mathrm P(x \le c) = \mathrm P(x \ge c) = 1/2$, so $c$ is a median of
+   $x$. Since $\ln$ is increasing, $e^c$ is a median of $y$. By step 2, $e^c$ is not the target.
+6. *(d).* With single points, $S(l_1) = (1 - p)\,\tau(l_2 - l_1)$ and $S(l_2) = p\,\tau(l_2 - l_1)$, with
+   $\tau(l_2 - l_1) > 0$. By step 4 the target is $e^{l_1}$ or $e^{l_2}$. So it is $e^{l_1}$ when $1 - p < p$, that is
+   $p > 1/2$; $e^{l_2}$ when $p < 1/2$; and both when $p = 1/2$. (So with points and $p = 1/2$, the two targets are
+   themselves medians, at the edges of the gap. This is why (c) speaks of forecasts strictly between the groups.)
+7. *(e), the weight balance.* By H5, step 3, the derivative of the expected sMAPE term in $f$ is
+   $2\,\mathrm E[w(y, f)(\mathbf 1\{y < f\} - \mathbf 1\{y > f\})]$. For $f$ strictly between the groups, the actuals
+   below $f$ are the first group and those above it the second. So the derivative is 0 exactly where the two groups
+   carry equal total weight. The derivative in $c$ is $f$ times the derivative in $f$, so it has the same sign and the
+   same zeros. By step 2, $S$ is strictly concave in $c$ on the gap, so its derivative is strictly decreasing there. It
+   has at most one zero, and where it has one, $S$ has its strict maximum over the gap.
+8. *(e), equal weights and mirror images.* With $p = 1/2$, every forecast strictly between the groups is a median (step
+   5), the balancing one included. Now let the groups mirror each other about $\ln m$: $\ln y - \ln m$ has the same
+   distribution as $\ln m - \ln y$. The mirror maps $u_1$ to $l_2$, so $\ln m = (u_1 + l_2)/2$ lies in the gap. Write
+   $r = y/m$, so that $w(y, m) = \phi(r)/m$ with $\phi(r) = r/(1 + r)^2$, and $\phi(1/r) = \phi(r)$. Since $r$ and $1/r$
+   have the same distribution, $\mathrm E[\phi(r)\mathbf 1\{r < 1\}] = \mathrm E[\phi(1/r)\mathbf 1\{1/r < 1\}] =
+   \mathrm E[\phi(r)\mathbf 1\{r > 1\}]$. So the weights balance at $m$, and by step 7 the maximum over the gap is at
+   $m$.
+9. *(e), in general.* Let $y$ take no single value with positive probability, and let the weights balance at a median
+   $m$. By the derivative of step 7, the first derivative of $S$ at $c = \ln m$ is 0. By H12, step 4, its second
+   derivative there is $g(\ln m) - \tfrac12\mathrm E[\operatorname{sech}^2((\ln y - \ln m)/2)\tanh(|\ln y - \ln m|/2)]$,
+   when $g$ is continuous at $\ln m$. Under the stated inequality it is negative. A zero first derivative and a
+   negative second derivative make $\ln m$ a strict local maximum of $S$. So $m$ is a strict local maximum of expected
+   sMAPE.
+
+So with two separated groups of actuals, expected sMAPE is a hump across the gap. The target lies in one of the groups,
+and with equal weights no forecast in the gap, though each is a median, is the target. Between the groups, the top of
+the hump is where the weights of the two groups balance. ∎
+
+## H48. When the sMAPE minimiser is more precise than the sample median
+
+*What it shows:* for log-symmetric actuals with a single peak and a small spread, one number decides which of the two
+estimates of the median is more precise: the peakedness index $h(0)\mathrm E[Z^2]/\mathrm E|Z|$. The kurtosis does not
+decide it. For a large spread the sMAPE minimiser loses all of its precision relative to the median, at least as fast
+as $1/\sigma$, unless the density has a very sharp peak. A narrow core makes the sMAPE minimiser the more precise.
+
+**Statement.** Let $\ln y = \ln m + \sigma Z$, where $Z$ has a density $h$ that is symmetric about 0, unimodal, and
+continuous at 0 with $h(0) > 0$, and $\sigma > 0$ is the spread. Then sMAPE and MAE both target the median $m$. Let ARE
+be the asymptotic relative efficiency of the sMAPE minimiser of a test set to the sample median.
+
+- (a) Small spread. If $\mathrm E[Z^2] < \infty$, then $\mathrm{ARE} = 1 + \tfrac{\sigma^2}{2}\big(\mathrm E[Z^2] -
+  \mathrm E|Z|/h(0)\big) + o(\sigma^2)$ as $\sigma \to 0$. So for small spreads the sMAPE minimiser is the more precise
+  when the peakedness index $h(0)\mathrm E[Z^2]/\mathrm E|Z|$ exceeds 1, and the sample median when it is below 1. The
+  index is not a function of the kurtosis: the Laplace distribution and Student's t with 6 degrees of freedom both have
+  kurtosis 6, and their indices are 1 and 5/8.
+- (b) Large spread. If $|h(z) - h(0)| \le L|z|$ for all $z$, then $\sigma\,\mathrm{ARE}$ stays bounded as
+  $\sigma \to \infty$. So ARE tends to 0.
+- (c) A narrow core. Let $\ln y - \ln m$ be a mixture: with probability $q$ in $(0, 1)$ from a normal distribution with
+  mean 0 and standard deviation $\epsilon$, and otherwise from a fixed distribution with a density $k$ that is symmetric
+  about 0, unimodal and continuous at 0. As $\epsilon \to 0$, ARE tends to $1/(q + (1 - q)\,\mathrm E_k[\operatorname{sech}^4(x/2)])$,
+  which exceeds 1. So the sMAPE minimiser can be the more precise, by a factor up to nearly $1/q$.
+
+**Proof.** By H12 (c) both measures target $m$. By H14 (b),
+$\mathrm{ARE} = (2g - A)^2/(4g^2B)$ with $g = g(\ln m) = h(0)/\sigma$, $A = \mathrm E[\kappa(\sigma Z)]$ and
+$B = \mathrm E[\operatorname{sech}^4(\sigma Z/2)]$, where $\kappa(u) = \operatorname{sech}^2(u/2)\tanh(|u|/2)$. By H14 (a),
+$2g - A > 0$. Write $h_0 = h(0)$.
+
+1. *Two bounds.* Since $\operatorname{sech}^2 \le 1$ and $\tanh t \le t$ for $t \ge 0$, $0 \le \kappa(u) \le |u|/2$.
+   Comparing the series term by term, $\cosh v \le e^{v^2/2}$. So $\operatorname{sech}^4 v \ge e^{-2v^2} \ge 1 - 2v^2$,
+   and with $v = u/2$: $0 \le 1 - \operatorname{sech}^4(u/2) \le u^2/2$.
+2. *(a), the two expectations.* Let $\sigma \to 0$. For each $Z$, $\kappa(\sigma Z)/\sigma \to |Z|/2$, and by step 1 it
+   is at most $|Z|/2$, which has a finite mean because $\mathrm E[Z^2] < \infty$. By dominated convergence,
+   $A = \tfrac12\sigma\mathrm E|Z| + o(\sigma)$. In the same way, $(1 - \operatorname{sech}^4(\sigma Z/2))/\sigma^2 \to
+   Z^2/2$, bounded by $Z^2/2$ (step 1). So $B = 1 - \tfrac12\sigma^2\mathrm E[Z^2] + o(\sigma^2)$.
+3. *(a), the expansion.* $(2g - A)/(2g) = 1 - \sigma A/(2h_0) = 1 - \sigma^2\mathrm E|Z|/(4h_0) + o(\sigma^2)$. Its
+   square is $1 - \sigma^2\mathrm E|Z|/(2h_0) + o(\sigma^2)$. Dividing by $B$ (step 2),
+   $\mathrm{ARE} = 1 + \tfrac{\sigma^2}{2}\big(\mathrm E[Z^2] - \mathrm E|Z|/h_0\big) + o(\sigma^2)$.
+4. *(a), the sign.* The coefficient of $\sigma^2$ is positive exactly when $h_0\mathrm E[Z^2] > \mathrm E|Z|$, that is,
+   when the index exceeds 1. Then $\mathrm{ARE} > 1$ for all small enough $\sigma$: the sMAPE minimiser is the more
+   precise. When the index is below 1, $\mathrm{ARE} < 1$ for small $\sigma$: the sample median is the more precise. The
+   index is unchanged when $Z$ is multiplied by a constant $a > 0$: $h(0)$ becomes $h(0)/a$, $\mathrm E[Z^2]$ becomes
+   $a^2\mathrm E[Z^2]$ and $\mathrm E|Z|$ becomes $a\mathrm E|Z|$.
+5. *(a), the kurtosis.* For the Laplace density $\tfrac12e^{-|z|}$: $h_0 = 1/2$, $\mathrm E|Z| = 1$, $\mathrm E[Z^2] = 2$
+   and $\mathrm E[Z^4] = 24$. The index is 1 and the kurtosis $24/2^2 = 6$. For Student's t with $\nu > 4$ degrees of
+   freedom, $h_0 = \Gamma(\tfrac{\nu+1}{2})/(\sqrt{\nu\pi}\,\Gamma(\tfrac\nu2))$,
+   $\mathrm E|Z| = 2\sqrt\nu\,\Gamma(\tfrac{\nu+1}{2})/(\sqrt\pi(\nu - 1)\Gamma(\tfrac\nu2))$ and
+   $\mathrm E[Z^2] = \nu/(\nu - 2)$. So $h_0/\mathrm E|Z| = (\nu - 1)/(2\nu)$, the index is $(\nu - 1)/(2(\nu - 2))$, and
+   the kurtosis is $3 + 6/(\nu - 4)$. With $\nu = 6$ the index is $5/8$ and the kurtosis 6. Two shapes with the same
+   kurtosis have different indices, so the index is not a function of the kurtosis.
+6. *(b).* Since $\int\kappa = 2$ (H14, step 1), $2g - A = \int\kappa(u)\,[g(\ln m) - g(\ln m + u)]\,du$, with
+   $g(\ln m + u) = h(u/\sigma)/\sigma$. So $2g - A = \sigma^{-1}\int\kappa(u)\,[h_0 - h(u/\sigma)]\,du \le
+   (L/\sigma^2)\int|u|\kappa(u)\,du = 4L/\sigma^2$, using $\int|u|\kappa = 4$ (H14, step 12). Next,
+   $\sigma B = \int\operatorname{sech}^4(u/2)\,h(u/\sigma)\,du$. Here $h(u/\sigma) \to h_0$ for each $u$ (continuity at 0)
+   and $h \le h_0$ (unimodality), so by dominated convergence $\sigma B \to h_0\int\operatorname{sech}^4(u/2)\,du =
+   8h_0/3$ (H14, step 11). Then $\sigma\,\mathrm{ARE} = \sigma(2g - A)^2/(4g^2B) \le
+   \sigma\cdot\dfrac{16L^2}{\sigma^4}\cdot\dfrac{\sigma^2}{4h_0^2 B} = \dfrac{4L^2}{h_0^2\,\sigma B}$, which tends to
+   $3L^2/(2h_0^3)$. So $\sigma\,\mathrm{ARE}$ stays bounded, and ARE tends to 0, at least as fast as $1/\sigma$.
+7. *(c).* The density of $\ln y - \ln m$ is $q\,\varphi(u/\epsilon)/\epsilon + (1 - q)k(u)$, with $\varphi$ the standard
+   normal density. Each part is symmetric about 0 and does not increase with $|u|$, so their sum is symmetric and
+   unimodal; it is continuous at 0. So H14 applies, with $g = g(\ln m) = q/(\epsilon\sqrt{2\pi}) + (1 - q)k(0)$. Let
+   $W$ be standard normal and $X$ have density $k$. Then $A = q\,\mathrm E[\kappa(\epsilon W)] + (1 - q)\mathrm E[\kappa(X)]$.
+   The first part tends to 0 (it is at most $\tfrac12 q\epsilon\mathrm E|W|$, step 1), and the second is at most
+   $1 - q$. So $A$ stays bounded while $g \to \infty$, and $A/(2g) \to 0$. Next,
+   $B = q\,\mathrm E[\operatorname{sech}^4(\epsilon W/2)] + (1 - q)B_k \to q + (1 - q)B_k$, with
+   $B_k = \mathrm E[\operatorname{sech}^4(X/2)]$, by bounded convergence. So
+   $\mathrm{ARE} = (1 - A/(2g))^2/B \to 1/(q + (1 - q)B_k)$. Since $\operatorname{sech}^4(x/2) < 1$ for $x \ne 0$ and
+   $X \ne 0$ with probability 1, $B_k < 1$, and the limit exceeds 1. It is below $1/q$ and approaches $1/q$ as $B_k$
+   approaches 0, as it does when $k$ is spread out more and more.
+
+So for small spreads the peakedness index, not the kurtosis, decides which estimate of the median is more precise. For
+large spreads the sMAPE minimiser loses its precision relative to the sample median at least as fast as $1/\sigma$ when
+the density is Lipschitz at its peak. A narrow core of actuals makes it the more precise. ∎
+
+## H49. How precisely a test set locates each measure's target
+
+*What it shows:* for any continuous distribution of positive actuals, the forecast that minimises each of RMSE, MAE,
+MAPE and sMAPE on a test set is asymptotically normal about the measure's target on the log scale. Each limiting
+variance has a closed form in the distribution.
+
+**Statement.** Let the actual $y$ be positive, with a continuous distribution, and let $g$ be the density of $\ln y$.
+For each measure, let $\theta^*$ be its target and $V$ the asymptotic variance of a minimiser. Under the conditions
+given, $\sqrt n(\ln\hat\theta_n - \ln\theta^*)$ is asymptotically normal with mean 0 and variance $V$.
+
+- (a) RMSE: $\theta^* = \mathrm E[y]$ and $V = \operatorname{Var}(y)/\mathrm E[y]^2$, the squared coefficient of
+  variation, when $\mathrm E[y^2] < \infty$.
+- (b) MAE: $\theta^*$ is the median and $V = 1/(4g(\ln\theta^*)^2)$, when $g$ is continuous and positive at
+  $\ln\theta^*$.
+- (c) MAPE: $\theta^*$ is the (−1)-median and $V = \mathrm E[(\theta^*/y)^2]/(4g(\ln\theta^*)^2)$, when
+  $\mathrm E[y^{-2}] < \infty$ and $g$ is continuous and positive at $\ln\theta^*$.
+- (d) sMAPE: when the sMAPE target $\theta^*$ is unique, $g$ is continuous at $\ln\theta^*$ and
+  $D = 2g(\ln\theta^*) - \mathrm E[\operatorname{sech}^2(z/2)\tanh(|z|/2)] > 0$ with $z = \ln y - \ln\theta^*$, then
+  $V = \mathrm E[\operatorname{sech}^4(z/2)]/D^2$.
+
+**Proof.** The test set has $n$ independent actuals $y_1, \dots, y_n$ with the distribution of $y$; write $x_t = \ln y_t$.
+
+1. *(a).* The forecast with the lowest mean squared error of the test set is the sample mean $\bar y$, and RMSE is its
+   square root, so it has the same minimiser. When $\mathrm E[y^2] < \infty$, the central limit theorem gives that
+   $\sqrt n(\bar y - \mathrm E y)$ is asymptotically normal with mean 0 and variance $\operatorname{Var}(y)$. The
+   logarithm has derivative $1/\mathrm E y$ at $\mathrm E y > 0$, so by the delta method (van der Vaart, 1998, Theorem
+   3.1) $\sqrt n(\ln\bar y - \ln\mathrm E y)$ is asymptotically normal with variance
+   $\operatorname{Var}(y)/\mathrm E[y]^2$.
+2. *(b).* The forecasts with the lowest MAE of the test set are its sample medians: any point between the two middle
+   actuals when $n$ is even. Since $\ln$ is increasing, the logarithm of such a point lies between the two middle values
+   of the $x_t$. The two middle values differ by $O_P(1/n)$ when $g$ is positive at the median, so every choice has the
+   same limit as the sample median of the $x_t$. The distribution function of $x$ has derivative $g(\ln\theta^*) > 0$
+   at its median $\ln\theta^*$, since $g$ is continuous and positive there. So the sample median of the $x_t$ is
+   asymptotically normal with variance $\tfrac12\cdot\tfrac12/g(\ln\theta^*)^2$ (van der Vaart, 1998, Corollary 21.5),
+   which is $1/(4g(\ln\theta^*)^2)$.
+3. *(c), the target.* Write $g_y$ for the density of $y$, so that $g_y(f) = g(\ln f)/f$. The MAPE term of a forecast
+   $f$ is proportional to $|y - f|/y \le 1 + f/y$, whose mean is finite since $\mathrm E[1/y] \le
+   \mathrm E[y^{-2}]^{1/2} < \infty$. Its expectation $P(f) = \mathrm E[|y - f|/y]$ is convex in $f$, with derivative
+   $\mathrm E[y^{-1}(\mathbf 1\{y < f\} - \mathbf 1\{y > f\})] = \mathrm E[1/y]\,(2Q(f) - 1)$, where $Q$ is the
+   distribution function of the density proportional to $g_y(y)/y$. So $P$ is lowest where $Q(f) = 1/2$: at the median of
+   that distribution, the (−1)-median $\theta^*$ (Gneiting, 2011). Since $g$ is continuous and positive at $\ln\theta^*$,
+   $Q$ has the positive derivative $g_y(\theta^*)/(\theta^*\mathrm E[1/y])$ there. So $\theta^*$ is the only minimiser,
+   and the second derivative of $P$ at $\theta^*$ is $2g_y(\theta^*)/\theta^*$.
+4. *(c), consistency.* The mean of $|y_t - f|/y_t$ over the test set is convex in $f$ and tends to $P(f)$ for each $f$,
+   with probability 1, by the law of large numbers. Convex functions that converge at every point converge uniformly on
+   closed bounded intervals (Rockafellar, 1970, Theorem 10.8). Take $\eta > 0$. $P$ is lower at $\theta^*$ than at
+   $\theta^* \pm \eta$; so, with probability tending to 1, so is the test set's criterion. A convex function that is lower
+   at a point than at two points on either side has all its minimisers between them. So the minimiser $\hat\theta_n$ tends
+   to $\theta^*$ in probability.
+5. *(c), the variance.* For each $y \ne \theta^*$, $f \mapsto |y - f|/y$ has the derivative $\psi(y) = -\operatorname{sign}(y - \theta^*)/y$
+   at $\theta^*$, and it changes by at most $|f_1 - f_2|/y$ between $f_1$ and $f_2$, with $\mathrm E[y^{-2}] < \infty$.
+   $P$ has a second-order expansion at its minimum $\theta^*$ with the positive second derivative of step 3, and
+   $\hat\theta_n$ is consistent (step 4). These are the conditions of van der Vaart (1998), Theorem 5.23. It gives that
+   $\sqrt n(\hat\theta_n - \theta^*)$ is asymptotically normal with variance $\mathrm E[\psi^2]$ divided by the square of the
+   second derivative: $\mathrm E[y^{-2}]\,\theta^{*2}/(4g_y(\theta^*)^2)$. By the delta method, the variance for
+   $\ln\hat\theta_n$ is this divided by $\theta^{*2}$. With $g_y(\theta^*) = g(\ln\theta^*)/\theta^*$ it is
+   $\mathrm E[y^{-2}]\,\theta^{*2}/(4g(\ln\theta^*)^2) = \mathrm E[(\theta^*/y)^2]/(4g(\ln\theta^*)^2)$.
+6. *(d).* On the log scale the sMAPE minimiser minimises $M_n(c) = \frac1n\sum_t\tanh(|x_t - c|/2)$ (H3), whose
+   expectation is $M(c) = \mathrm E[\tanh(|x - c|/2)]$. The proof of H14 (b), steps 2 to 7, carries over with the median
+   replaced by $c^* = \ln\theta^*$. Steps 2 to 4 (consistency) use only that $M$ is continuous, has a unique minimiser,
+   and tends to 1 as $|c|$ grows while $M(c^*) < 1$ (H4). Step 5 uses H12, step 4: when $g$ is continuous at $c^*$, the
+   second derivative of $M$ at $c^*$ is $g(c^*) - \tfrac12\mathrm E[\operatorname{sech}^2(z/2)\tanh(|z|/2)] = D/2$,
+   positive by assumption. The first derivative at the minimum $c^*$ is 0. Steps 6 and 7 give the variance
+   $\tfrac14\mathrm E[\operatorname{sech}^4(z/2)]/(D/2)^2 = \mathrm E[\operatorname{sech}^4(z/2)]/D^2$.
+
+So for each measure, the minimiser of a test set is asymptotically normal about the target on the log scale, with the
+variances stated. ∎
+
+## H50. How each measure's precision falls as the actuals spread out
+
+*What it shows:* in a log-location-scale family, the asymptotic variance of the MAE minimiser grows like the square of
+the spread for every shape. That of RMSE and MAPE depends on the tails of the shape, and that of sMAPE on the shape of
+its peak. So no measure always loses its precision slowest or fastest.
+
+**Statement.** Let $\ln y = \mu + \sigma Z$, where $Z$ has a fixed density $h$, and let $V$ be the asymptotic variance
+of a minimiser of each measure (H49), as $\sigma$ grows. Write $M(t) = \mathrm E[e^{tZ}]$. (This $M$ is not the
+expected loss of H14.)
+
+- (a) MAE: $V = \sigma^2/(4h(z_{1/2})^2)$, where $z_{1/2}$ is the median of $Z$ and $h(z_{1/2}) > 0$. It grows like
+  $\sigma^2$ for every shape.
+- (b) RMSE: $V = M(2\sigma)/M(\sigma)^2 - 1$. It is infinite once $M(2\sigma)$ is.
+- (c) MAPE: $V = e^{2\sigma z_*}M(-2\sigma)\sigma^2/(4h(z_*)^2)$, where $z_*$ is the median of the density proportional
+  to $e^{-\sigma z}h(z)$ and $h(z_*) > 0$. It is infinite once $M(-2\sigma)$ is.
+- (d) sMAPE, when $h$ is symmetric about 0, unimodal and continuous at 0 with $h(0) > 0$. Its growth is set by the
+  shape of $h$ at 0. If $h$ has a bounded continuous second derivative with $h''(0) < 0$, then
+  $V\sigma^{-5} \to h(0)/(24(\ln 2)^2h''(0)^2)$. If $|h(z) - h(0) - h'(0^+)|z|| \le Kz^2$ with $h'(0^+) < 0$, then
+  $V\sigma^{-3} \to h(0)/(6h'(0^+)^2)$. If $h(z) = h(0)$ for $|z| \le \delta$, then $V$ grows at least like a constant
+  times $\sigma e^{2\delta\sigma}$, faster than any power of $\sigma$.
+- (e) So no measure always flattens slowest or fastest. For a normal $Z$ (lognormal actuals), MAE grows like
+  $\sigma^2$ and sMAPE like $\sigma^5$, while RMSE ($e^{\sigma^2} - 1$) and MAPE ($\pi\sigma^2e^{\sigma^2}/2$) grow
+  faster than any power. For a uniform $Z$ on $(-1, 1)$, RMSE ($\sigma\coth\sigma - 1$) and MAPE ($\sigma\tanh\sigma$)
+  grow like $\sigma$, more slowly than MAE, while sMAPE grows faster than any power.
+
+**Proof.** Write $x = \ln y$. Its density is $g(x) = h((x - \mu)/\sigma)/\sigma$. The conditions of H49 are taken to
+hold, as each part needs: in (a) and (c), $h$ is continuous at $z_{1/2}$ and at $z_*$. Where the moment that a part of
+H49 needs is infinite, there is no finite $V$, and the statement writes $V = \infty$.
+
+1. *(a).* The median of $x$ is $\mu + \sigma z_{1/2}$, where $g = h(z_{1/2})/\sigma$. By H49 (b),
+   $V = 1/(4g^2) = \sigma^2/(4h(z_{1/2})^2)$. The shape fixes $h(z_{1/2})$, so $V$ grows like $\sigma^2$.
+2. *(b).* $\mathrm E[y] = e^\mu M(\sigma)$ and $\mathrm E[y^2] = e^{2\mu}M(2\sigma)$. By H49 (a),
+   $V = \mathrm E[y^2]/\mathrm E[y]^2 - 1 = M(2\sigma)/M(\sigma)^2 - 1$. When $M(2\sigma) = \infty$, $\mathrm E[y^2]$ is
+   infinite, and H49 (a) gives no finite $V$.
+3. *(c).* The (−1)-median is the median of the density proportional to $g_y(y)/y$ (H49, step 3). On the log scale that
+   density is proportional to $e^{-x}g(x)$, and in $z = (x - \mu)/\sigma$ to $e^{-\sigma z}h(z)$. So
+   $\ln\theta^* = \mu + \sigma z_*$, and $g(\ln\theta^*) = h(z_*)/\sigma$. Next, $\theta^*/y = e^{\sigma(z_* - Z)}$, so
+   $\mathrm E[(\theta^*/y)^2] = e^{2\sigma z_*}M(-2\sigma)$. H49 (c) gives the stated $V$. When $M(-2\sigma) = \infty$,
+   $\mathrm E[y^{-2}]$ is infinite, and H49 (c) gives no finite $V$.
+4. *(d), the parts of $V$.* By H12 (c) the sMAPE target is $m = e^\mu$, and by H14 (b),
+   $V = B/D^2$ with $D = 2g - A$. Here $g = h_0/\sigma$ with $h_0 = h(0)$, $A = \mathrm E[\kappa(\sigma Z)]$ and
+   $B = \mathrm E[\operatorname{sech}^4(\sigma Z/2)]$, as in H48. By H48, step 6, $\sigma B \to 8h_0/3$, and
+   $D = \sigma^{-1}\int\kappa(u)\,[h_0 - h(u/\sigma)]\,du > 0$ (H14 (a)).
+5. *(d), a smooth peak.* Since $h$ is symmetric, $h'(0) = 0$. By Taylor's theorem,
+   $h_0 - h(t) = -\tfrac12h''(\xi)t^2$ for some $\xi$ between 0 and $t$. So
+   $\sigma^3D = \int\kappa(u)\,u^2\,\big(-\tfrac12h''(\xi_u)\big)\,du$, with $\xi_u$ between 0 and $u/\sigma$. As
+   $\sigma \to \infty$, $h''(\xi_u) \to h''(0)$ by continuity, and the integrand is bounded by
+   $\tfrac12\sup|h''|\,u^2\kappa(u)$, which is integrable. So $\sigma^3D \to -\tfrac12h''(0)\int u^2\kappa = -8\ln 2\,h''(0)$,
+   using $\int u^2\kappa = 16\ln 2$ (H14, step 11). Then
+   $V\sigma^{-5} = \sigma B/(\sigma^3D)^2 \to (8h_0/3)/(64(\ln 2)^2h''(0)^2) = h_0/(24(\ln 2)^2h''(0)^2)$.
+6. *(d), a corner.* Write $h_0 - h(t) = -h'(0^+)|t| - r(t)$, with $|r(t)| \le Kt^2$. Then
+   $\sigma^2D = -h'(0^+)\int|u|\kappa(u)\,du - \sigma\int\kappa(u)\,r(u/\sigma)\,du$. The first part is $-4h'(0^+)$
+   (H14, step 12), and the second is at most $(K/\sigma)\int u^2\kappa = 16K\ln 2/\sigma$ in size. So
+   $\sigma^2D \to -4h'(0^+)$, and $V\sigma^{-3} = \sigma B/(\sigma^2D)^2 \to (8h_0/3)/(16h'(0^+)^2) = h_0/(6h'(0^+)^2)$.
+7. *(d), a flat top.* If $h(z) = h_0$ for $|z| \le \delta$, the integrand of $D$ is 0 for $|u| \le \sigma\delta$, and
+   $0 \le h_0 - h \le h_0$ elsewhere (unimodality). For $t > 0$, $\int_t^\infty\kappa(u)\,du = 1 - \tanh^2(t/2) =
+   \operatorname{sech}^2(t/2)$, since $\kappa$ is the derivative of $\tanh^2(u/2)$ for $u > 0$. So
+   $D \le (2h_0/\sigma)\operatorname{sech}^2(\sigma\delta/2) \le (8h_0/\sigma)e^{-\sigma\delta}$. For $\sigma$ large
+   enough, $\sigma B \ge 4h_0/3$ (step 4). Then $V = B/D^2 \ge (4h_0/(3\sigma))\,\sigma^2e^{2\sigma\delta}/(64h_0^2) =
+   \sigma e^{2\sigma\delta}/(48h_0)$, which grows faster than any power of $\sigma$.
+8. *(e), a normal $Z$.* $h_0 = 1/\sqrt{2\pi}$ and $z_{1/2} = 0$, so by (a) $V = \pi\sigma^2/2$. $M(t) = e^{t^2/2}$, so by
+   (b) $V = e^{2\sigma^2}/e^{\sigma^2} - 1 = e^{\sigma^2} - 1$. The density proportional to $e^{-\sigma z}h(z)$ is
+   normal with mean $-\sigma$, so $z_* = -\sigma$ and $h(z_*) = e^{-\sigma^2/2}/\sqrt{2\pi}$. With
+   $e^{2\sigma z_*}M(-2\sigma) = e^{-2\sigma^2}e^{2\sigma^2} = 1$, (c) gives $V = \sigma^2\cdot 2\pi e^{\sigma^2}/4 =
+   \pi\sigma^2e^{\sigma^2}/2$. And $h''(0) = -h_0 < 0$ with $h''$ bounded and continuous, so by (d) the variance of sMAPE
+   grows like $\sigma^5$.
+9. *(e), a uniform $Z$ on $(-1, 1)$.* $h_0 = 1/2$ and $z_{1/2} = 0$, so by (a) $V = \sigma^2$.
+   $M(t) = \sinh t/t$, so by (b) $V = \dfrac{\sinh 2\sigma}{2\sigma}\cdot\dfrac{\sigma^2}{\sinh^2\sigma} - 1 =
+   \sigma\coth\sigma - 1$. The density proportional to $e^{-\sigma z}$ on $(-1, 1)$ has its median where
+   $e^{\sigma} - e^{-\sigma z_*} = \tfrac12(e^\sigma - e^{-\sigma})$, that is $e^{-\sigma z_*} = \cosh\sigma$; and
+   $h(z_*) = 1/2$. So by (c) $V = \dfrac{1}{\cosh^2\sigma}\cdot\dfrac{\sinh 2\sigma}{2\sigma}\cdot\sigma^2 =
+   \sigma\tanh\sigma$. Both grow like $\sigma$. The density is flat on $(-1, 1)$, so by (d), with $\delta = 1$, the
+   variance of sMAPE grows faster than any power.
+10. *(e), the comparison.* For lognormal actuals MAE loses its precision slowest and RMSE and MAPE fastest. For
+    log-uniform actuals RMSE and MAPE lose it slowest and sMAPE fastest. So no measure is always the slowest or always
+    the fastest.
+
+So as the actuals spread out, each measure's minimiser locates its target less precisely, at a rate set by a different
+feature of the distribution: none for MAE, the tails for RMSE and MAPE, and the peak for sMAPE. ∎
+
 ## References
 
 - Anderson, T. W. (1955). The integral of a symmetric unimodal function over a symmetric convex set and some probability
   inequalities. *Proceedings of the American Mathematical Society*, 6(2), 170–176.
+- Gneiting, T. (2011). Making and evaluating point forecasts. *Journal of the American Statistical Association*,
+  106(494), 746–762. https://doi.org/10.1198/jasa.2011.r10138
 - Goodwin, P., & Lawton, R. (1999). On the asymmetry of the symmetric MAPE. *International Journal of Forecasting*, 15(4),
   405–408.
+- Rockafellar, R. T. (1970). *Convex Analysis*. Princeton University Press.
 - van der Vaart, A. W. (1998). *Asymptotic Statistics*. Cambridge University Press.

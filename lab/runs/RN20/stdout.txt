@@ -1,0 +1,414 @@
+lognormal sigma 0.5 {'RMSE': '0.284', 'MAE': '0.3927', 'MAPE': '0.5042', 'sMAPE': '0.4422'}
+lognormal sigma 1.0 {'RMSE': '1.718', 'MAE': '1.571', 'MAPE': '4.27', 'sMAPE': '2.38'}
+lognormal sigma 2.0 {'RMSE': '53.6', 'MAE': '6.283', 'MAPE': '343.1', 'sMAPE': '20.44'}
+log-Laplace scale 0.25 {'RMSE': '0.1719', 'MAE': '0.0625', 'MAPE': '0.1302', 'sMAPE': '0.06269'}
+log-Laplace scale 0.5 {'RMSE': 'inf', 'MAE': '0.25', 'MAPE': 'inf', 'sMAPE': '0.256'}
+log-Laplace scale 1.0 {'RMSE': 'inf', 'MAE': '1', 'MAPE': 'inf', 'sMAPE': '1.117'}
+log-uniform half-width 0.5 {'RMSE': '0.08198', 'MAE': '0.25', 'MAPE': '0.2311', 'sMAPE': '0.2716'}
+log-uniform half-width 1.0 {'RMSE': '0.313', 'MAE': '1', 'MAPE': '0.7616', 'sMAPE': '1.388'}
+log-uniform half-width 2.0 {'RMSE': '1.075', 'MAE': '4', 'MAPE': '1.928', 'sMAPE': '13.93'}
+gamma shape 20 {'RMSE': '0.05', 'MAE': '0.07964', 'MAPE': '0.08855', 'sMAPE': '0.08163'}
+gamma shape 5 {'RMSE': '0.2', 'MAE': '0.3322', 'MAPE': '0.5616', 'sMAPE': '0.3651'}
+gamma shape 1 {'RMSE': '1', 'MAE': '2.081', 'MAPE': 'inf', 'sMAPE': '3.014'}
+gamma shape 0.5 {'RMSE': '2', 'MAE': '5.442', 'MAPE': 'inf', 'sMAPE': '9.634'}
+inverse Gaussian mean 1.0 shape 1.0 {'RMSE': '1', 'MAE': '1.24', 'MAPE': '1.57', 'sMAPE': '1.761'}
+inverse Gaussian mean 1.0 shape 0.2 {'RMSE': '5', 'MAE': '3.271', 'MAPE': '3.108', 'sMAPE': '6.424'}
+inverse Gaussian mean 1.0 shape 0.05 {'RMSE': '20', 'MAE': '4.674', 'MAPE': '3.606', 'sMAPE': '8.976'}
+Weibull shape 2.0 {'RMSE': '0.2732', 'MAE': '0.5203', 'MAPE': 'inf', 'sMAPE': '0.5756'}
+Weibull shape 1.0 {'RMSE': '1', 'MAE': '2.081', 'MAPE': 'inf', 'sMAPE': '3.014'}
+Weibull shape 0.5 {'RMSE': '5', 'MAE': '8.325', 'MAPE': 'inf', 'sMAPE': '24.37'}
+log generalised normal power 0.5 spread 1.0 {'RMSE': 'inf', 'MAE': '4', 'MAPE': 'inf', 'sMAPE': '2.355'}
+normal mixture q 0.5 sd 0.05 and 1.0 {'RMSE': '1.391', 'MAE': '0.01425', 'MAPE': '13.05', 'sMAPE': '0.01263'}
+PASS A lognormal sigma 0.5: sMAPE target found numerically at ln y = -1.92e-18, the median
+PASS E lognormal sigma 0.5 MAE n 6: simulated n Var 0.3198 vs exact 0.3221
+PASS E lognormal sigma 0.5 MAE n 12: simulated n Var 0.3714 vs exact 0.3525
+PASS E lognormal sigma 0.5 MAE n 24: simulated n Var 0.3546 vs exact 0.3711
+PASS E lognormal sigma 0.5 MAE n 48: simulated n Var 0.4007 vs exact 0.3815
+PASS E lognormal sigma 0.5 MAE n 100: simulated n Var 0.3842 vs exact 0.3872
+PASS E lognormal sigma 0.5 MAE n 250: simulated n Var 0.3835 vs exact 0.3905
+PASS A lognormal sigma 0.5 RMSE: simulated V 0.2824 vs formula 0.284
+PASS E lognormal sigma 0.5 MAE n 1000: simulated n Var 0.4028 vs exact 0.3921
+PASS A lognormal sigma 0.5 MAE: simulated V 0.4028 vs formula 0.3927
+PASS A lognormal sigma 0.5 MAPE: simulated V 0.4935 vs formula 0.5042
+PASS A lognormal sigma 0.5 sMAPE: simulated V 0.4564 vs formula 0.4422
+PASS A lognormal sigma 0.5: simulated ARE 0.8826 on the same side of 1 as 0.8881
+PASS A lognormal sigma 1.0: sMAPE target found numerically at ln y = -8.59e-17, the median
+PASS E lognormal sigma 1.0 MAE n 6: simulated n Var 1.314 vs exact 1.288
+PASS E lognormal sigma 1.0 MAE n 12: simulated n Var 1.481 vs exact 1.41
+PASS E lognormal sigma 1.0 MAE n 24: simulated n Var 1.491 vs exact 1.484
+PASS E lognormal sigma 1.0 MAE n 48: simulated n Var 1.443 vs exact 1.526
+PASS E lognormal sigma 1.0 MAE n 100: simulated n Var 1.532 vs exact 1.549
+PASS E lognormal sigma 1.0 MAE n 250: simulated n Var 1.549 vs exact 1.562
+PASS A lognormal sigma 1.0 RMSE: simulated V 1.704 vs formula 1.718
+PASS E lognormal sigma 1.0 MAE n 1000: simulated n Var 1.62 vs exact 1.569
+PASS A lognormal sigma 1.0 MAE: simulated V 1.62 vs formula 1.571
+PASS A lognormal sigma 1.0 MAPE: simulated V 4.396 vs formula 4.27
+PASS A lognormal sigma 1.0 sMAPE: simulated V 2.423 vs formula 2.38
+PASS A lognormal sigma 1.0: simulated ARE 0.6686 on the same side of 1 as 0.6601
+PASS A lognormal sigma 2.0: sMAPE target found numerically at ln y = -4.77e-16, the median
+PASS E lognormal sigma 2.0 MAE n 6: simulated n Var 5.168 vs exact 5.154
+PASS E lognormal sigma 2.0 MAE n 12: simulated n Var 5.591 vs exact 5.641
+PASS E lognormal sigma 2.0 MAE n 24: simulated n Var 6.152 vs exact 5.938
+PASS E lognormal sigma 2.0 MAE n 48: simulated n Var 5.597 vs exact 6.104
+PASS E lognormal sigma 2.0 MAE n 100: simulated n Var 6.127 vs exact 6.195
+PASS E lognormal sigma 2.0 MAE n 250: simulated n Var 6.392 vs exact 6.248
+FAIL A lognormal sigma 2.0 RMSE: simulated V 35.22 vs formula 53.6; with 4000 actuals 40.6
+PASS E lognormal sigma 2.0 MAE n 1000: simulated n Var 6.273 vs exact 6.274
+PASS A lognormal sigma 2.0 MAE: simulated V 6.273 vs formula 6.283
+PASS A lognormal sigma 2.0 MAPE: simulated V 483.7 vs formula 343.1
+PASS A lognormal sigma 2.0 sMAPE: simulated V 19.88 vs formula 20.44
+PASS A lognormal sigma 2.0: simulated ARE 0.3155 on the same side of 1 as 0.3073
+PASS A log-Laplace scale 0.25: sMAPE target found numerically at ln y = -2.60e-17, the median
+PASS E log-Laplace scale 0.25 MAE n 6: simulated n Var 0.1013 vs exact 0.09784
+PASS E log-Laplace scale 0.25 MAE n 12: simulated n Var 0.08882 vs exact 0.0886
+PASS E log-Laplace scale 0.25 MAE n 24: simulated n Var 0.08298 vs exact 0.08163
+PASS E log-Laplace scale 0.25 MAE n 48: simulated n Var 0.07644 vs exact 0.07636
+PASS E log-Laplace scale 0.25 MAE n 100: simulated n Var 0.07024 vs exact 0.07226
+PASS E log-Laplace scale 0.25 MAE n 250: simulated n Var 0.06601 vs exact 0.06876
+PASS A log-Laplace scale 0.25 RMSE: simulated V 0.164 vs formula 0.1719
+PASS E log-Laplace scale 0.25 MAE n 1000: simulated n Var 0.06259 vs exact 0.06571
+PASS A log-Laplace scale 0.25 MAE: simulated V 0.06259 vs formula 0.0625
+PASS A log-Laplace scale 0.25 MAPE: simulated V 0.1276 vs formula 0.1302
+PASS A log-Laplace scale 0.25 sMAPE: simulated V 0.06304 vs formula 0.06269
+PASS A log-Laplace scale 0.25: simulated ARE 0.9928 on the same side of 1 as 0.9969
+PASS A log-Laplace scale 0.5: sMAPE target found numerically at ln y = -3.07e-17, the median
+PASS E log-Laplace scale 0.5 MAE n 6: simulated n Var 0.4016 vs exact 0.3914
+PASS E log-Laplace scale 0.5 MAE n 12: simulated n Var 0.3497 vs exact 0.3544
+PASS E log-Laplace scale 0.5 MAE n 24: simulated n Var 0.3292 vs exact 0.3265
+PASS E log-Laplace scale 0.5 MAE n 48: simulated n Var 0.3124 vs exact 0.3054
+PASS E log-Laplace scale 0.5 MAE n 100: simulated n Var 0.3001 vs exact 0.289
+PASS E log-Laplace scale 0.5 MAE n 250: simulated n Var 0.2774 vs exact 0.275
+PASS E log-Laplace scale 0.5 MAE n 1000: simulated n Var 0.2629 vs exact 0.2629
+PASS A log-Laplace scale 0.5 MAE: simulated V 0.2629 vs formula 0.25
+PASS A log-Laplace scale 0.5 sMAPE: simulated V 0.2711 vs formula 0.256
+PASS A log-Laplace scale 0.5: simulated ARE 0.9698 on the same side of 1 as 0.9765
+PASS A log-Laplace scale 1.0: sMAPE target found numerically at ln y = 3.47e-18, the median
+PASS E log-Laplace scale 1.0 MAE n 6: simulated n Var 1.598 vs exact 1.566
+PASS E log-Laplace scale 1.0 MAE n 12: simulated n Var 1.382 vs exact 1.418
+PASS E log-Laplace scale 1.0 MAE n 24: simulated n Var 1.324 vs exact 1.306
+PASS E log-Laplace scale 1.0 MAE n 48: simulated n Var 1.252 vs exact 1.222
+PASS E log-Laplace scale 1.0 MAE n 100: simulated n Var 1.22 vs exact 1.156
+PASS E log-Laplace scale 1.0 MAE n 250: simulated n Var 1.115 vs exact 1.1
+PASS E log-Laplace scale 1.0 MAE n 1000: simulated n Var 1.035 vs exact 1.051
+PASS A log-Laplace scale 1.0 MAE: simulated V 1.035 vs formula 1
+PASS A log-Laplace scale 1.0 sMAPE: simulated V 1.181 vs formula 1.117
+PASS A log-Laplace scale 1.0: simulated ARE 0.8765 on the same side of 1 as 0.8953
+PASS A log-uniform half-width 0.5: sMAPE target found numerically at ln y = -4.16e-18, the median
+PASS E log-uniform half-width 0.5 MAE n 6: simulated n Var 0.1557 vs exact 0.1607
+PASS E log-uniform half-width 0.5 MAE n 12: simulated n Var 0.198 vs exact 0.1978
+PASS E log-uniform half-width 0.5 MAE n 24: simulated n Var 0.2304 vs exact 0.2215
+PASS E log-uniform half-width 0.5 MAE n 48: simulated n Var 0.2361 vs exact 0.2351
+PASS E log-uniform half-width 0.5 MAE n 100: simulated n Var 0.235 vs exact 0.2427
+PASS E log-uniform half-width 0.5 MAE n 250: simulated n Var 0.2504 vs exact 0.247
+PASS A log-uniform half-width 0.5 RMSE: simulated V 0.07877 vs formula 0.08198
+PASS E log-uniform half-width 0.5 MAE n 1000: simulated n Var 0.2383 vs exact 0.2492
+PASS A log-uniform half-width 0.5 MAE: simulated V 0.2383 vs formula 0.25
+PASS A log-uniform half-width 0.5 MAPE: simulated V 0.2262 vs formula 0.2311
+PASS A log-uniform half-width 0.5 sMAPE: simulated V 0.26 vs formula 0.2716
+PASS A log-uniform half-width 0.5: simulated ARE 0.9166 on the same side of 1 as 0.9204
+PASS A log-uniform half-width 1.0: sMAPE target found numerically at ln y = -3.72e-17, the median
+PASS E log-uniform half-width 1.0 MAE n 6: simulated n Var 0.6414 vs exact 0.6429
+PASS E log-uniform half-width 1.0 MAE n 12: simulated n Var 0.8129 vs exact 0.7912
+PASS E log-uniform half-width 1.0 MAE n 24: simulated n Var 0.9307 vs exact 0.8861
+PASS E log-uniform half-width 1.0 MAE n 48: simulated n Var 0.9959 vs exact 0.9404
+PASS E log-uniform half-width 1.0 MAE n 100: simulated n Var 0.9275 vs exact 0.9707
+PASS E log-uniform half-width 1.0 MAE n 250: simulated n Var 1.035 vs exact 0.9881
+PASS A log-uniform half-width 1.0 RMSE: simulated V 0.3193 vs formula 0.313
+PASS E log-uniform half-width 1.0 MAE n 1000: simulated n Var 1.017 vs exact 0.997
+PASS A log-uniform half-width 1.0 MAE: simulated V 1.017 vs formula 1
+PASS A log-uniform half-width 1.0 MAPE: simulated V 0.7521 vs formula 0.7616
+PASS A log-uniform half-width 1.0 sMAPE: simulated V 1.405 vs formula 1.388
+PASS A log-uniform half-width 1.0: simulated ARE 0.724 on the same side of 1 as 0.7205
+PASS A log-uniform half-width 2.0: sMAPE target found numerically at ln y = -1.97e-16, the median
+PASS E log-uniform half-width 2.0 MAE n 6: simulated n Var 2.702 vs exact 2.571
+PASS E log-uniform half-width 2.0 MAE n 12: simulated n Var 3.114 vs exact 3.165
+PASS E log-uniform half-width 2.0 MAE n 24: simulated n Var 3.533 vs exact 3.545
+PASS E log-uniform half-width 2.0 MAE n 48: simulated n Var 3.921 vs exact 3.762
+PASS E log-uniform half-width 2.0 MAE n 100: simulated n Var 3.74 vs exact 3.883
+PASS E log-uniform half-width 2.0 MAE n 250: simulated n Var 3.859 vs exact 3.952
+PASS A log-uniform half-width 2.0 RMSE: simulated V 1.057 vs formula 1.075
+PASS E log-uniform half-width 2.0 MAE n 1000: simulated n Var 3.724 vs exact 3.988
+PASS A log-uniform half-width 2.0 MAE: simulated V 3.724 vs formula 4
+PASS A log-uniform half-width 2.0 MAPE: simulated V 1.951 vs formula 1.928
+PASS A log-uniform half-width 2.0 sMAPE: simulated V 12.78 vs formula 13.93
+PASS A log-uniform half-width 2.0: simulated ARE 0.2913 on the same side of 1 as 0.2871
+PASS E gamma shape 20 RMSE n 6: simulated n Var 0.05203 vs exact 0.05021
+PASS E gamma shape 20 MAE n 6: simulated n Var 0.06628 vs exact 0.06553
+PASS E gamma shape 20 RMSE n 12: simulated n Var 0.05011 vs exact 0.0501
+PASS E gamma shape 20 MAE n 12: simulated n Var 0.06865 vs exact 0.0716
+PASS E gamma shape 20 RMSE n 24: simulated n Var 0.04861 vs exact 0.05005
+PASS E gamma shape 20 MAE n 24: simulated n Var 0.0732 vs exact 0.07532
+PASS E gamma shape 20 RMSE n 48: simulated n Var 0.04967 vs exact 0.05003
+PASS E gamma shape 20 MAE n 48: simulated n Var 0.07624 vs exact 0.07739
+PASS E gamma shape 20 RMSE n 100: simulated n Var 0.0495 vs exact 0.05001
+PASS E gamma shape 20 MAE n 100: simulated n Var 0.07784 vs exact 0.07854
+PASS E gamma shape 20 RMSE n 250: simulated n Var 0.04714 vs exact 0.05001
+PASS E gamma shape 20 MAE n 250: simulated n Var 0.07609 vs exact 0.07919
+PASS E gamma shape 20 RMSE n 1000: simulated n Var 0.04927 vs exact 0.05
+PASS A gamma shape 20 RMSE: simulated V 0.04927 vs formula 0.05
+PASS E gamma shape 20 MAE n 1000: simulated n Var 0.07744 vs exact 0.07953
+PASS A gamma shape 20 MAE: simulated V 0.07744 vs formula 0.07964
+PASS A gamma shape 20 MAPE: simulated V 0.08847 vs formula 0.08855
+PASS A gamma shape 20 sMAPE: simulated V 0.07916 vs formula 0.08163
+PASS E gamma shape 5 RMSE n 6: simulated n Var 0.2044 vs exact 0.2034
+PASS E gamma shape 5 MAE n 6: simulated n Var 0.2895 vs exact 0.276
+PASS E gamma shape 5 RMSE n 12: simulated n Var 0.1947 vs exact 0.2017
+PASS E gamma shape 5 MAE n 12: simulated n Var 0.2838 vs exact 0.3001
+PASS E gamma shape 5 RMSE n 24: simulated n Var 0.2008 vs exact 0.2008
+PASS E gamma shape 5 MAE n 24: simulated n Var 0.316 vs exact 0.3149
+PASS E gamma shape 5 RMSE n 48: simulated n Var 0.1911 vs exact 0.2004
+PASS E gamma shape 5 MAE n 48: simulated n Var 0.3122 vs exact 0.3232
+PASS E gamma shape 5 RMSE n 100: simulated n Var 0.1954 vs exact 0.2002
+PASS E gamma shape 5 MAE n 100: simulated n Var 0.3367 vs exact 0.3278
+PASS E gamma shape 5 RMSE n 250: simulated n Var 0.2095 vs exact 0.2001
+PASS E gamma shape 5 MAE n 250: simulated n Var 0.3259 vs exact 0.3304
+PASS E gamma shape 5 RMSE n 1000: simulated n Var 0.2058 vs exact 0.2
+PASS A gamma shape 5 RMSE: simulated V 0.2058 vs formula 0.2
+PASS E gamma shape 5 MAE n 1000: simulated n Var 0.3322 vs exact 0.3318
+PASS A gamma shape 5 MAE: simulated V 0.3322 vs formula 0.3322
+PASS A gamma shape 5 MAPE: simulated V 0.5764 vs formula 0.5616
+PASS A gamma shape 5 sMAPE: simulated V 0.3652 vs formula 0.3651
+PASS E gamma shape 1 RMSE n 6: simulated n Var 1.044 vs exact 1.088
+PASS E gamma shape 1 MAE n 6: simulated n Var 1.793 vs exact 1.818
+PASS E gamma shape 1 RMSE n 12: simulated n Var 1.01 vs exact 1.043
+PASS E gamma shape 1 MAE n 12: simulated n Var 1.808 vs exact 1.927
+PASS E gamma shape 1 RMSE n 24: simulated n Var 0.9488 vs exact 1.021
+PASS E gamma shape 1 MAE n 24: simulated n Var 1.918 vs exact 1.997
+PASS E gamma shape 1 RMSE n 48: simulated n Var 1.001 vs exact 1.01
+PASS E gamma shape 1 MAE n 48: simulated n Var 2.151 vs exact 2.037
+PASS E gamma shape 1 RMSE n 100: simulated n Var 0.9791 vs exact 1.005
+PASS E gamma shape 1 MAE n 100: simulated n Var 2.04 vs exact 2.06
+PASS E gamma shape 1 RMSE n 250: simulated n Var 0.9723 vs exact 1.002
+PASS E gamma shape 1 MAE n 250: simulated n Var 2.011 vs exact 2.073
+PASS E gamma shape 1 RMSE n 1000: simulated n Var 1.005 vs exact 1.001
+PASS A gamma shape 1 RMSE: simulated V 1.005 vs formula 1
+PASS E gamma shape 1 MAE n 1000: simulated n Var 2.045 vs exact 2.079
+PASS A gamma shape 1 MAE: simulated V 2.045 vs formula 2.081
+PASS A gamma shape 1 sMAPE: simulated V 3.062 vs formula 3.014
+PASS E gamma shape 0.5 RMSE n 6: simulated n Var 2.467 vs exact 2.37
+PASS E gamma shape 0.5 MAE n 6: simulated n Var 4.868 vs exact 4.991
+PASS E gamma shape 0.5 RMSE n 12: simulated n Var 2.085 vs exact 2.176
+PASS E gamma shape 0.5 MAE n 12: simulated n Var 4.763 vs exact 5.166
+PASS E gamma shape 0.5 RMSE n 24: simulated n Var 2.022 vs exact 2.086
+PASS E gamma shape 0.5 MAE n 24: simulated n Var 5.279 vs exact 5.289
+PASS E gamma shape 0.5 RMSE n 48: simulated n Var 2.025 vs exact 2.042
+PASS E gamma shape 0.5 MAE n 48: simulated n Var 5.305 vs exact 5.361
+PASS E gamma shape 0.5 RMSE n 100: simulated n Var 2.024 vs exact 2.02
+PASS E gamma shape 0.5 MAE n 100: simulated n Var 5.375 vs exact 5.402
+PASS E gamma shape 0.5 RMSE n 250: simulated n Var 2.057 vs exact 2.008
+PASS E gamma shape 0.5 MAE n 250: simulated n Var 5.576 vs exact 5.426
+PASS E gamma shape 0.5 RMSE n 1000: simulated n Var 1.995 vs exact 2.002
+PASS A gamma shape 0.5 RMSE: simulated V 1.995 vs formula 2
+PASS E gamma shape 0.5 MAE n 1000: simulated n Var 5.375 vs exact 5.438
+PASS A gamma shape 0.5 MAE: simulated V 5.375 vs formula 5.442
+PASS A gamma shape 0.5 sMAPE: simulated V 9.033 vs formula 9.634
+PASS E inverse Gaussian mean 1.0 shape 1.0 RMSE n 6: simulated n Var 0.9491 vs exact 0.9264
+PASS E inverse Gaussian mean 1.0 shape 1.0 MAE n 6: simulated n Var 1.013 vs exact 0.9817
+PASS E inverse Gaussian mean 1.0 shape 1.0 RMSE n 12: simulated n Var 0.9778 vs exact 0.961
+PASS E inverse Gaussian mean 1.0 shape 1.0 MAE n 12: simulated n Var 1.139 vs exact 1.094
+PASS E inverse Gaussian mean 1.0 shape 1.0 RMSE n 24: simulated n Var 1.042 vs exact 0.9799
+PASS E inverse Gaussian mean 1.0 shape 1.0 MAE n 24: simulated n Var 1.246 vs exact 1.162
+PASS E inverse Gaussian mean 1.0 shape 1.0 RMSE n 48: simulated n Var 0.9561 vs exact 0.9898
+PASS E inverse Gaussian mean 1.0 shape 1.0 MAE n 48: simulated n Var 1.216 vs exact 1.2
+PASS E inverse Gaussian mean 1.0 shape 1.0 RMSE n 100: simulated n Var 1.006 vs exact 0.995
+PASS E inverse Gaussian mean 1.0 shape 1.0 MAE n 100: simulated n Var 1.245 vs exact 1.22
+PASS E inverse Gaussian mean 1.0 shape 1.0 RMSE n 250: simulated n Var 0.9477 vs exact 0.998
+PASS E inverse Gaussian mean 1.0 shape 1.0 MAE n 250: simulated n Var 1.242 vs exact 1.232
+PASS E inverse Gaussian mean 1.0 shape 1.0 RMSE n 1000: simulated n Var 0.9875 vs exact 0.9995
+PASS A inverse Gaussian mean 1.0 shape 1.0 RMSE: simulated V 0.9875 vs formula 1
+PASS E inverse Gaussian mean 1.0 shape 1.0 MAE n 1000: simulated n Var 1.249 vs exact 1.238
+PASS A inverse Gaussian mean 1.0 shape 1.0 MAE: simulated V 1.249 vs formula 1.24
+PASS A inverse Gaussian mean 1.0 shape 1.0 MAPE: simulated V 1.616 vs formula 1.57
+PASS A inverse Gaussian mean 1.0 shape 1.0 sMAPE: simulated V 1.785 vs formula 1.761
+PASS E inverse Gaussian mean 1.0 shape 0.2 RMSE n 6: simulated n Var 3.52 vs exact 3.693
+PASS E inverse Gaussian mean 1.0 shape 0.2 MAE n 6: simulated n Var 2.497 vs exact 2.622
+PASS E inverse Gaussian mean 1.0 shape 0.2 RMSE n 12: simulated n Var 4.301 vs exact 4.207
+PASS E inverse Gaussian mean 1.0 shape 0.2 MAE n 12: simulated n Var 2.875 vs exact 2.91
+PASS E inverse Gaussian mean 1.0 shape 0.2 RMSE n 24: simulated n Var 4.77 vs exact 4.552
+PASS E inverse Gaussian mean 1.0 shape 0.2 MAE n 24: simulated n Var 3.194 vs exact 3.08
+PASS E inverse Gaussian mean 1.0 shape 0.2 RMSE n 48: simulated n Var 4.747 vs exact 4.76
+PASS E inverse Gaussian mean 1.0 shape 0.2 MAE n 48: simulated n Var 3.089 vs exact 3.173
+PASS E inverse Gaussian mean 1.0 shape 0.2 RMSE n 100: simulated n Var 4.618 vs exact 4.88
+PASS E inverse Gaussian mean 1.0 shape 0.2 MAE n 100: simulated n Var 3.264 vs exact 3.223
+PASS E inverse Gaussian mean 1.0 shape 0.2 RMSE n 250: simulated n Var 5.274 vs exact 4.951
+PASS E inverse Gaussian mean 1.0 shape 0.2 MAE n 250: simulated n Var 3.279 vs exact 3.252
+PASS E inverse Gaussian mean 1.0 shape 0.2 RMSE n 1000: simulated n Var 4.89 vs exact 4.988
+PASS A inverse Gaussian mean 1.0 shape 0.2 RMSE: simulated V 4.89 vs formula 5
+PASS E inverse Gaussian mean 1.0 shape 0.2 MAE n 1000: simulated n Var 3.328 vs exact 3.266
+PASS A inverse Gaussian mean 1.0 shape 0.2 MAE: simulated V 3.328 vs formula 3.271
+PASS A inverse Gaussian mean 1.0 shape 0.2 MAPE: simulated V 3.261 vs formula 3.108
+PASS A inverse Gaussian mean 1.0 shape 0.2 sMAPE: simulated V 6.439 vs formula 6.424
+PASS E inverse Gaussian mean 1.0 shape 0.05 RMSE n 6: simulated n Var 8.639 vs exact 9.169
+PASS E inverse Gaussian mean 1.0 shape 0.05 MAE n 6: simulated n Var 3.929 vs exact 3.99
+PASS E inverse Gaussian mean 1.0 shape 0.05 RMSE n 12: simulated n Var 11.64 vs exact 12.11
+PASS E inverse Gaussian mean 1.0 shape 0.05 MAE n 12: simulated n Var 4.178 vs exact 4.3
+PASS E inverse Gaussian mean 1.0 shape 0.05 RMSE n 24: simulated n Var 14.84 vs exact 14.77
+PASS E inverse Gaussian mean 1.0 shape 0.05 MAE n 24: simulated n Var 4.188 vs exact 4.476
+PASS E inverse Gaussian mean 1.0 shape 0.05 RMSE n 48: simulated n Var 17.23 vs exact 16.83
+PASS E inverse Gaussian mean 1.0 shape 0.05 MAE n 48: simulated n Var 4.866 vs exact 4.572
+PASS E inverse Gaussian mean 1.0 shape 0.05 RMSE n 100: simulated n Var 18.64 vs exact 18.27
+PASS E inverse Gaussian mean 1.0 shape 0.05 MAE n 100: simulated n Var 4.255 vs exact 4.624
+PASS E inverse Gaussian mean 1.0 shape 0.05 RMSE n 250: simulated n Var 19.54 vs exact 19.25
+PASS E inverse Gaussian mean 1.0 shape 0.05 MAE n 250: simulated n Var 4.309 vs exact 4.654
+PASS E inverse Gaussian mean 1.0 shape 0.05 RMSE n 1000: simulated n Var 19.77 vs exact 19.8
+PASS A inverse Gaussian mean 1.0 shape 0.05 RMSE: simulated V 19.77 vs formula 20
+PASS E inverse Gaussian mean 1.0 shape 0.05 MAE n 1000: simulated n Var 4.634 vs exact 4.669
+PASS A inverse Gaussian mean 1.0 shape 0.05 MAE: simulated V 4.634 vs formula 4.674
+PASS A inverse Gaussian mean 1.0 shape 0.05 MAPE: simulated V 3.537 vs formula 3.606
+PASS A inverse Gaussian mean 1.0 shape 0.05 sMAPE: simulated V 8.581 vs formula 8.976
+PASS E Weibull shape 2.0 MAE n 6: simulated n Var 0.486 vs exact 0.4544
+PASS E Weibull shape 2.0 MAE n 12: simulated n Var 0.5205 vs exact 0.4816
+PASS E Weibull shape 2.0 MAE n 24: simulated n Var 0.4975 vs exact 0.4993
+PASS E Weibull shape 2.0 MAE n 48: simulated n Var 0.4986 vs exact 0.5093
+PASS E Weibull shape 2.0 MAE n 100: simulated n Var 0.5184 vs exact 0.5149
+PASS E Weibull shape 2.0 MAE n 250: simulated n Var 0.4904 vs exact 0.5181
+PASS A Weibull shape 2.0 RMSE: simulated V 0.2768 vs formula 0.2732
+PASS E Weibull shape 2.0 MAE n 1000: simulated n Var 0.5219 vs exact 0.5198
+PASS A Weibull shape 2.0 MAE: simulated V 0.5219 vs formula 0.5203
+PASS A Weibull shape 2.0 sMAPE: simulated V 0.5765 vs formula 0.5756
+PASS E Weibull shape 1.0 MAE n 6: simulated n Var 1.762 vs exact 1.818
+PASS E Weibull shape 1.0 MAE n 12: simulated n Var 1.839 vs exact 1.927
+PASS E Weibull shape 1.0 MAE n 24: simulated n Var 2.069 vs exact 1.997
+PASS E Weibull shape 1.0 MAE n 48: simulated n Var 2.009 vs exact 2.037
+PASS E Weibull shape 1.0 MAE n 100: simulated n Var 2.097 vs exact 2.06
+PASS E Weibull shape 1.0 MAE n 250: simulated n Var 2.039 vs exact 2.073
+PASS A Weibull shape 1.0 RMSE: simulated V 1.05 vs formula 1
+PASS E Weibull shape 1.0 MAE n 1000: simulated n Var 1.99 vs exact 2.079
+PASS A Weibull shape 1.0 MAE: simulated V 1.99 vs formula 2.081
+PASS A Weibull shape 1.0 sMAPE: simulated V 2.926 vs formula 3.014
+PASS E Weibull shape 0.5 MAE n 6: simulated n Var 7.316 vs exact 7.271
+PASS E Weibull shape 0.5 MAE n 12: simulated n Var 7.468 vs exact 7.706
+PASS E Weibull shape 0.5 MAE n 24: simulated n Var 7.644 vs exact 7.988
+PASS E Weibull shape 0.5 MAE n 48: simulated n Var 8.186 vs exact 8.149
+PASS E Weibull shape 0.5 MAE n 100: simulated n Var 7.945 vs exact 8.239
+PASS E Weibull shape 0.5 MAE n 250: simulated n Var 8.453 vs exact 8.29
+PASS A Weibull shape 0.5 RMSE: simulated V 5.052 vs formula 5
+PASS E Weibull shape 0.5 MAE n 1000: simulated n Var 8.535 vs exact 8.317
+PASS A Weibull shape 0.5 MAE: simulated V 8.535 vs formula 8.325
+PASS A Weibull shape 0.5 sMAPE: simulated V 24.12 vs formula 24.37
+PASS A log generalised normal power 0.5 spread 1.0: sMAPE target found numerically at ln y = -9.69e-17, the median
+PASS E log generalised normal power 0.5 spread 1.0 MAE n 6: simulated n Var 34.04 vs exact 36.15
+PASS E log generalised normal power 0.5 spread 1.0 MAE n 12: simulated n Var 23.18 vs exact 22.88
+PASS E log generalised normal power 0.5 spread 1.0 MAE n 24: simulated n Var 16.4 vs exact 16.25
+PASS E log generalised normal power 0.5 spread 1.0 MAE n 48: simulated n Var 12.26 vs exact 12.52
+PASS E log generalised normal power 0.5 spread 1.0 MAE n 100: simulated n Var 9.842 vs exact 10.18
+PASS E log generalised normal power 0.5 spread 1.0 MAE n 250: simulated n Var 8.116 vs exact 8.618
+FAIL E log generalised normal power 0.5 spread 1.0 MAE n 1000: simulated n Var 6.564 vs exact 8.734
+FAIL A log generalised normal power 0.5 spread 1.0 MAE: simulated V 6.564 vs formula 4; with 4000 actuals 5.362
+FAIL A log generalised normal power 0.5 spread 1.0 sMAPE: simulated V 4.509 vs formula 2.355; with 4000 actuals 3.658
+PASS A log generalised normal power 0.5 spread 1.0: simulated ARE 1.456 on the same side of 1 as 1.699
+PASS A normal mixture q 0.5 sd 0.05 and 1.0: sMAPE target found numerically at ln y = 3.04e-18, the median
+PASS E normal mixture q 0.5 sd 0.05 and 1.0 MAE n 6: simulated n Var 0.1627 vs exact 0.2007
+PASS E normal mixture q 0.5 sd 0.05 and 1.0 MAE n 12: simulated n Var 0.0812 vs exact 0.06615
+PASS E normal mixture q 0.5 sd 0.05 and 1.0 MAE n 24: simulated n Var 0.02396 vs exact 0.02126
+PASS E normal mixture q 0.5 sd 0.05 and 1.0 MAE n 48: simulated n Var 0.015 vs exact 0.01538
+PASS E normal mixture q 0.5 sd 0.05 and 1.0 MAE n 100: simulated n Var 0.01508 vs exact 0.01466
+PASS E normal mixture q 0.5 sd 0.05 and 1.0 MAE n 250: simulated n Var 0.01312 vs exact 0.0144
+PASS A normal mixture q 0.5 sd 0.05 and 1.0 RMSE: simulated V 1.474 vs formula 1.391
+PASS E normal mixture q 0.5 sd 0.05 and 1.0 MAE n 1000: simulated n Var 0.01475 vs exact 0.01429
+PASS A normal mixture q 0.5 sd 0.05 and 1.0 MAE: simulated V 0.01475 vs formula 0.01425
+PASS A normal mixture q 0.5 sd 0.05 and 1.0 MAPE: simulated V 8.767 vs formula 13.05; with 4000 actuals 10.91
+PASS A normal mixture q 0.5 sd 0.05 and 1.0 sMAPE: simulated V 0.01325 vs formula 0.01263
+PASS A normal mixture q 0.5 sd 0.05 and 1.0: simulated ARE 1.113 on the same side of 1 as 1.128
+PASS B lognormal 0.5 RMSE: general formula 0.284025 vs closed form 0.284025
+PASS B lognormal 0.5 MAE: general formula 0.392699 vs closed form 0.392699
+PASS B lognormal 0.5 MAPE: general formula 0.504236 vs closed form 0.504236
+PASS B lognormal 1.0 RMSE: general formula 1.71828 vs closed form 1.71828
+PASS B lognormal 1.0 MAE: general formula 1.5708 vs closed form 1.5708
+PASS B lognormal 1.0 MAPE: general formula 4.26987 vs closed form 4.26987
+PASS B lognormal 2.0 RMSE: general formula 53.5982 vs closed form 53.5982
+PASS B lognormal 2.0 MAE: general formula 6.28319 vs closed form 6.28319
+PASS B lognormal 2.0 MAPE: general formula 343.05 vs closed form 343.05
+PASS B log-uniform 0.5 RMSE: general formula 0.0819767 vs closed form 0.0819767
+PASS B log-uniform 0.5 MAE: general formula 0.25 vs closed form 0.25
+PASS B log-uniform 0.5 MAPE: general formula 0.231059 vs closed form 0.231059
+PASS B log-uniform 0.5 sMAPE: general formula 0.271632 vs closed form 0.271632
+PASS B log-uniform 1.0 RMSE: general formula 0.313035 vs closed form 0.313035
+PASS B log-uniform 1.0 MAE: general formula 1 vs closed form 1
+PASS B log-uniform 1.0 MAPE: general formula 0.761594 vs closed form 0.761594
+PASS B log-uniform 1.0 sMAPE: general formula 1.38794 vs closed form 1.38794
+PASS B log-uniform 2.0 RMSE: general formula 1.07463 vs closed form 1.07463
+PASS B log-uniform 2.0 MAE: general formula 4 vs closed form 4
+PASS B log-uniform 2.0 MAPE: general formula 1.92806 vs closed form 1.92806
+PASS B log-uniform 2.0 sMAPE: general formula 13.9325 vs closed form 13.9325
+PASS B log-uniform 4.0 RMSE: general formula 3.00268 vs closed form 3.00268
+PASS B log-uniform 4.0 MAE: general formula 16 vs closed form 16
+PASS B log-uniform 4.0 MAPE: general formula 3.99732 vs closed form 3.99732
+PASS B log-uniform 4.0 sMAPE: general formula 1066.43 vs closed form 1066.43
+PASS B normal shape: V/sigma^5 0.21742 at 200 vs limit 0.21738
+PASS B Laplace shape: V/sigma^3 0.33648 at 200 vs limit 0.33333
+PASS B uniform shape: V/(sigma e^(2 sigma)) 0.083333 at 16 vs limit 1/12
+PASS C(a) normal: (ARE-1)/(sigma^2/2) -1 at 0.01 vs -1
+PASS C(a) logistic: (ARE-1)/(sigma^2/2) -2.255 at 0.01 vs -2.255
+PASS C(a) Student t 6: (ARE-1)/(sigma^2/2) -0.9001 at 0.01 vs -0.9
+PASS C(a) Laplace: (ARE-1)/(sigma^2/2) -0.0002497 at 0.01 vs 4.441e-16
+PASS C(a) uniform: (ARE-1)/(sigma^2/2) -0.6667 at 0.01 vs -0.6667
+PASS C(a) generalised normal 0.75: (ARE-1)/(sigma^2/2) 2.699 at 0.01 vs 2.707
+PASS C(b) normal: sigma ARE 0.06743 at 10.0 within bound 1.383
+PASS C(b) normal: sigma ARE 0.0007221 at 100.0 within bound 1.383
+PASS C(b) normal: sigma ARE 7.226e-06 at 1000.0 within bound 1.383
+PASS C(b) logistic: sigma ARE 0.0275 at 10.0 within bound 0.8889
+PASS C(b) logistic: sigma ARE 0.0002881 at 100.0 within bound 0.8889
+PASS C(b) logistic: sigma ARE 2.883e-06 at 1000.0 within bound 0.8889
+PASS C(b) Student t 6: sigma ARE 0.09253 at 10.0 within bound 1.386
+PASS C(b) Student t 6: sigma ARE 0.001024 at 100.0 within bound 1.386
+PASS C(b) Student t 6: sigma ARE 1.025e-05 at 1000.0 within bound 1.386
+PASS C(b) Laplace: sigma ARE 2.51 at 10.0 within bound 3
+PASS C(b) Laplace: sigma ARE 2.944 at 100.0 within bound 3
+PASS C(b) Laplace: sigma ARE 2.994 at 1000.0 within bound 3
+PASS C(c) q 0.5 wide sd 1.0: ARE 1.1638 at core sd 0.001 vs limit 1.1646
+PASS C(c) q 0.3 wide sd 2.0: ARE 1.5975 at core sd 0.001 vs limit 1.5998
+PASS C(c) q 0.8 wide sd 0.5: ARE 1.021 at core sd 0.001 vs limit 1.0211
+PASS D(a) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.5}: concave across the gap (max second difference -5.09e-08)
+PASS D(a) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.5}: every gap forecast worse than an end
+PASS D(b) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.5}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.5}: target 0.3169 lies in group 1
+PASS D(e) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.5}: weights balance at the gap maximum (6.18e-05)
+PASS D(a) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.6}: concave across the gap (max second difference -4.75e-08)
+PASS D(a) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.6}: every gap forecast worse than an end
+PASS D(b) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.6}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.6}: target 0.2938 lies in group 1
+PASS D(e) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.6}: weights balance at the gap maximum (1.01e-04)
+PASS D sim {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.6}: share in the target's group at n 500 = 1.000
+PASS D(a) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.4}: concave across the gap (max second difference -5.43e-08)
+PASS D(a) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.4}: every gap forecast worse than an end
+PASS D(b) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.4}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.4}: target 2.7625 lies in group 2
+PASS D(e) {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.4}: weights balance at the gap maximum (1.51e-04)
+FAIL D sim {'groups': '[0.0, 0.5] and [2.0, 4.0]', 'p': 0.4}: share in the target's group at n 500 = 0.938
+PASS D(a) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.3}: concave across the gap (max second difference -1.81e-08)
+PASS D(a) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.3}: every gap forecast worse than an end
+PASS D(b) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.3}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.3}: target 1.0755 lies in group 2
+PASS D sim {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.3}: share in the target's group at n 500 = 1.000
+PASS D(a) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.5}: concave across the gap (max second difference -2.6e-08)
+PASS D(a) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.5}: every gap forecast worse than an end
+PASS D(b) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.5}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.5}: target 1.0415 lies in group 2
+PASS D(e) {'groups': '[-1.0, 0.0] and [1.0, 1.2]', 'p': 0.5}: weights balance at the gap maximum (4.87e-05)
+PASS D(a) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.5}: concave across the gap (max second difference -8.03e-08)
+PASS D(a) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.5}: every gap forecast worse than an end
+PASS D(b) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.5}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.5}: target 0.0000 lies in group 1
+PASS D(d) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.5}: target both, expected both
+PASS D(e) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.5}: weights balance at the gap maximum (-9.59e-17)
+PASS D(a) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.55}: concave across the gap (max second difference -7.23e-08)
+PASS D(a) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.55}: every gap forecast worse than an end
+PASS D(b) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.55}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.55}: target 0.0000 lies in group 1
+PASS D(d) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.55}: target low, expected low
+PASS D(e) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.55}: weights balance at the gap maximum (-9.34e-05)
+PASS D sim {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.55}: share in the target's group at n 500 = 0.985
+PASS D(a) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.45}: concave across the gap (max second difference -7.23e-08)
+PASS D(a) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.45}: every gap forecast worse than an end
+PASS D(b) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.45}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.45}: target 2.0000 lies in group 2
+PASS D(d) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.45}: target high, expected high
+PASS D(e) {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.45}: weights balance at the gap maximum (9.34e-05)
+PASS D sim {'groups': '[0.0, 0.0] and [2.0, 2.0]', 'p': 0.45}: share in the target's group at n 500 = 0.988
+PASS D(a) {'groups': '[-1.0, 1.0] and [1.5, 1.7]', 'p': 0.5}: concave across the gap (max second difference -5.93e-09)
+PASS D(a) {'groups': '[-1.0, 1.0] and [1.5, 1.7]', 'p': 0.5}: every gap forecast worse than an end
+PASS D(b) {'groups': '[-1.0, 1.0] and [1.5, 1.7]', 'p': 0.5}: worse below the lowest and above the highest group
+PASS D(b) {'groups': '[-1.0, 1.0] and [1.5, 1.7]', 'p': 0.5}: target 1.5408 lies in group 2
+PASS D(e) mirror mixture: 2g 0.001763 < 0.3553 and the median is a local maximum
+387 of 392 checks pass
