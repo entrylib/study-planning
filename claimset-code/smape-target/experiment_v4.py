@@ -236,9 +236,16 @@ def trigamma(x):
 
 def exact_median_variance(d, n, points=400001):
     """Exact variance of the sample median of x = ln y for a test set of n actuals (the mean of the two middle order
-    statistics when n is even, the middle one when odd), from the joint density of order statistics, on a fine grid."""
-    x = np.linspace(d.lo, d.hi, points)
-    dx = x[1] - x[0]
+    statistics when n is even, the middle one when odd), from the joint density of order statistics, on a fine grid:
+    a uniform grid over the support, joined with a second one around the median, 40 times as wide as the median's
+    standard deviation for n actuals (so that a sharp peak at the median is resolved)."""
+    x0 = np.linspace(d.lo, d.hi, points)
+    w0 = d.g(x0)
+    F0 = np.cumsum(w0) / w0.sum()
+    med0 = float(np.interp(0.5, F0, x0))
+    half = 20 / (2 * max(float(d.g(np.array(med0))), 1e-12) * math.sqrt(n))
+    x = np.unique(np.concatenate([x0, np.linspace(max(d.lo, med0 - half), min(d.hi, med0 + half), points)]))
+    dx = np.gradient(x)
     g = d.g(x) * dx
     g = g / g.sum()
     F = np.cumsum(g) - g / 2
@@ -246,16 +253,18 @@ def exact_median_variance(d, n, points=400001):
     u = x - med
     if n % 2:
         k = (n + 1) // 2
-        lw = (math.lgamma(n + 1) - math.lgamma(k) - math.lgamma(n - k + 1)
-              + (k - 1) * np.log(np.maximum(F, 1e-300)) + (n - k) * np.log(np.maximum(1 - F, 1e-300)))
-        w = np.exp(lw) * g
+        lw = (k - 1) * np.log(np.maximum(F, 1e-300)) + (n - k) * np.log(np.maximum(1 - F, 1e-300))
+        w = np.exp(lw - lw.max()) * g                      # one factor: its largest value can be divided out
         w = w / w.sum()
         m1 = float(np.sum(w * u))
         return float(np.sum(w * u * u)) - m1 * m1
     k = n // 2                                   # X_(k) = a < b = X_(k+1)
-    lc = math.lgamma(n + 1) - math.lgamma(k) - math.lgamma(n - k)
-    A = np.exp(lc / 2 + (k - 1) * np.log(np.maximum(F, 1e-300))) * g
-    B = np.exp(lc / 2 + (n - k - 1) * np.log(np.maximum(1 - F, 1e-300))) * g
+    # F(a)^(k-1) (1 - F(b))^(n-k-1), scaled by 2^(n-2) so that it is about 1 at the median; the constant factor cancels
+    # when divided by the mass. Where an exponent is clipped, the pair's product is negligible.
+    la = np.clip((k - 1) * np.log(np.maximum(2 * F, 1e-300)), -745, 700)
+    lb = np.clip((n - k - 1) * np.log(np.maximum(2 * (1 - F), 1e-300)), -745, 700)
+    A = np.exp(la) * g
+    B = np.exp(lb) * g
     def tail(v):                                 # sum over j > i of v_j
         c = np.cumsum(v[::-1])[::-1]
         return np.concatenate([c[1:], [0.0]])
