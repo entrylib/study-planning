@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.43",
+  "schema_version": "0.44",
   "paper": {
     "title": "Evaluating forecasts and classifiers: which measures, scoring rules and tests to use",
     "contributions": [
@@ -36,11 +36,11 @@
     "contribution_record": "complete",
     "origin": "native",
     "exploration": {
-      "lab_record": "A10",
+      "lab_record": "A11",
       "questions": 1,
       "hypotheses": {
-        "total": 55,
-        "supported": 53,
+        "total": 59,
+        "supported": 57,
         "not_supported": 0,
         "inconclusive": 0,
         "revised": 0,
@@ -65,19 +65,19 @@
     "ext": {
       "review": {
         "flow": {
-          "assessed": 20,
+          "assessed": 21,
           "excluded_full_text": {
             "out of scope: it was cited only for implementation facts of ETS models and back-transformed forecasts, which decision DC1 left out of this study": 2
           },
-          "included": 18,
-          "other_sources": 18
+          "included": 19,
+          "other_sources": 19
         }
       }
     },
     "licence": "CC-BY-4.0",
     "id": "entrylib:2026.000008",
-    "correction_reason": "Version 1 labelled the review's findings and recommendations extension, with an extends relation to the very works cited as their evidence, which said they extend those works; they state what those works establish, so version 2 labels them synthesis (claimset v0.43) and drops those relations, keeping extension only for C16, the one rule that goes beyond its sources, which extends Gneiting and Raftery (2007); and, at the guarantor's request, it rewords C3 (RMSSE as an example of the scaling), C4 (MAE and MASE as the main measure only when the mean and median forecasts coincide), C8 (absolute-error measures avoided on intermittent series), C13 (sharpness compared only among calibrated distributions and intervals) and C24 (choose a measure for what the methods predict, even if precedent used another).",
-    "summary": "How should a study measure and compare predictions? This review states what the methodological literature establishes and the rules it draws from it. A measure has to match what a prediction targets: squared error (RMSE) for forecasts of the mean, absolute error (MAE) for the median, the pinball loss for a quantile, the interval score with coverage for intervals, CRPS or the log score for distributions, and log loss or the Brier score for class probabilities. MAPE rewards forecasts that are too low, sMAPE prefers forecasts that are too high, and AUC and accuracy do not judge probabilities. Errors of series on different scales should be scaled per series before they are averaged, never summed as they are. The mean, median and quartiles of a scaled measure summarise accuracy over many series; rank-based tests (Friedman with Nemenyi, MCB) and the Diebold-Mariano test tell whether similar methods differ statistically.",
+    "correction_reason": "Version 3 adds reading aids and corrects what the review says about sMAPE. Every claim now has a name and a plain-language summary, and the claims are grouped in sections. Definitions come after those they name, and the file uses schema 0.44. C33 now says that sMAPE penalises low forecasts more only for equal absolute errors, and that forecasts too high and too low by the same factor score the same (entrylib:2026.000013@v3#C2). C54 to C57 are new. They state four results of entrylib:2026.000013: sMAPE targets a weighted median (C4); it rewards the forecast 0 once zeros are frequent enough (C7); it loses its power to tell forecasts apart as the outcomes spread out (C18); and it finds the median less precisely than the sample median (C15). C6 now rests on these four results and on C33. Its old reason, that sMAPE rewards forecasts that are too high, is not true in general, and the summary no longer says it. The declarations now name the guarantor's own claimset. No other statement changed.",
+    "summary": "How should a study measure and compare predictions? This review states what the methodological literature establishes and the rules it draws from it. A measure has to match what a prediction targets: squared error (RMSE) for forecasts of the mean, absolute error (MAE) for the median, the pinball loss for a quantile, the interval score with coverage for intervals, CRPS or the log score for distributions, and log loss or the Brier score for class probabilities. MAPE rewards forecasts that are too low, sMAPE rewards a weighted median, and AUC and accuracy do not judge probabilities. Errors of series on different scales should be scaled per series before they are averaged, never summed as they are. The mean, median and quartiles of a scaled measure summarise accuracy over many series; rank-based tests (Friedman with Nemenyi, MCB) and the Diebold-Mariano test tell whether similar methods differ statistically.",
     "classification": {
       "keywords": [
         "forecast evaluation",
@@ -90,12 +90,12 @@
       "topics": [
         "openalex:T11918",
         "openalex:T13487",
-        "openalex:T13309"
+        "openalex:T11700"
       ]
     },
     "declarations": {
       "funding": [],
-      "competing_interests": "Ivan Svetunkov runs EntryLib, which publishes the study-planning guides that this claimset summarises."
+      "competing_interests": "Ivan Svetunkov runs EntryLib, which publishes the study-planning guides that this claimset summarises. He is also the guarantor of entrylib:2026.000013, the claimset on sMAPE that C33 and C54 to C57 cite."
     },
     "highlights": [
       "C1",
@@ -103,6 +103,100 @@
       "C5",
       "C12",
       "C15"
+    ],
+    "sections": [
+      {
+        "title": "Point forecasts",
+        "claims": [
+          "C30",
+          "C29",
+          "C31",
+          "C1",
+          "C2",
+          "C7",
+          "C4",
+          "C19",
+          "C24"
+        ]
+      },
+      {
+        "title": "Percentage errors and intermittent series",
+        "claims": [
+          "C32",
+          "C5",
+          "C33",
+          "C54",
+          "C55",
+          "C56",
+          "C57",
+          "C6",
+          "C41",
+          "C8"
+        ]
+      },
+      {
+        "title": "Quantiles and prediction intervals",
+        "claims": [
+          "C34",
+          "C9",
+          "C35",
+          "C10",
+          "C11"
+        ]
+      },
+      {
+        "title": "Predictive distributions",
+        "claims": [
+          "C36",
+          "C37",
+          "C12",
+          "C39",
+          "C13",
+          "C40",
+          "C14"
+        ]
+      },
+      {
+        "title": "Class probabilities and classifiers",
+        "claims": [
+          "C38",
+          "C15",
+          "C16",
+          "C42",
+          "C17",
+          "C43",
+          "C18"
+        ]
+      },
+      {
+        "title": "Comparing series on different scales",
+        "claims": [
+          "C44",
+          "C45",
+          "C25",
+          "C46",
+          "C47",
+          "C26",
+          "C3",
+          "C48",
+          "C27",
+          "C49",
+          "C28",
+          "C50",
+          "C20"
+        ]
+      },
+      {
+        "title": "Statistical tests",
+        "claims": [
+          "C51",
+          "C21",
+          "C52",
+          "C22",
+          "C53",
+          "C23"
+        ]
+      }
     ]
   },
   "contributors": [
@@ -121,7 +215,7 @@
       ],
       "run_period": {
         "start": "2026-11-13",
-        "end": "2026-11-14"
+        "end": "2026-11-19"
       },
       "system": {
         "name": "Claude Code"
@@ -424,7 +518,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Score a point forecast by what it targets",
+      "summary": "Evaluate a point forecast with a scoring function that is consistent for what it targets: the mean, the median or a quantile."
     },
     {
       "id": "C2",
@@ -472,7 +570,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Score mean forecasts with squared error",
+      "summary": "A point forecast of the mean should be evaluated with squared error, as RMSE does, because squared error is lowest in expectation at the mean."
     },
     {
       "id": "C3",
@@ -523,7 +625,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Across scales, scale RMSE by the naive forecast's in-sample RMSE",
+      "summary": "When mean forecasts are compared over series on different scales, divide each series' RMSE by the in-sample RMSE of its one-step naive forecast, as RMSSE does."
     },
     {
       "id": "C4",
@@ -573,7 +679,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Use MAE or MASE as the main measure only when mean and median coincide",
+      "summary": "MAE and MASE reward the median. Use them as the main measure only when the mean and median forecasts are the same."
     },
     {
       "id": "C5",
@@ -622,7 +732,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Do not use MAPE for mean or median forecasts",
+      "summary": "MAPE should not be the measure for forecasts of the mean or the median. It rewards a different, lower forecast."
     },
     {
       "id": "C6",
@@ -650,6 +764,10 @@
       },
       "planning": "exploratory",
       "depends_on": [
+        "C54",
+        "C55",
+        "C56",
+        "C57",
         "C33"
       ],
       "scope": {
@@ -661,7 +779,8 @@
         }
       },
       "limitations": [
-        "L5"
+        "L5",
+        "L7"
       ],
       "assessments": [
         {
@@ -669,7 +788,9 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "name": "Do not use sMAPE for point forecasts",
+      "summary": "sMAPE should not be the measure for point forecasts. It rewards a weighted median, prefers zero when outcomes are often zero, and tells forecasts apart poorly when outcomes spread out."
     },
     {
       "id": "C7",
@@ -717,7 +838,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Score median forecasts with absolute error",
+      "summary": "A point forecast of the median should be evaluated with absolute error: MAE, or MASE across series on different scales."
     },
     {
       "id": "C8",
@@ -767,7 +892,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Avoid absolute-error measures on intermittent series",
+      "summary": "On intermittent series, absolute-error measures should be avoided. They give their best scores to forecasts close to zero."
     },
     {
       "id": "C9",
@@ -814,7 +943,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Score quantile forecasts with the pinball loss",
+      "summary": "Evaluate a quantile forecast with the pinball loss at its level. With several levels, average over them."
     },
     {
       "id": "C10",
@@ -863,7 +996,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Score prediction intervals with the interval score and report coverage",
+      "summary": "Evaluate prediction intervals with the interval score. Report their coverage against the nominal level beside it."
     },
     {
       "id": "C11",
@@ -910,7 +1047,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Coverage alone does not measure prediction intervals",
+      "summary": "Coverage alone should not be the measure of prediction intervals. It ignores how wide they are."
     },
     {
       "id": "C12",
@@ -958,7 +1099,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Score predictive distributions with a proper scoring rule",
+      "summary": "Evaluate predictive distributions with a proper scoring rule, such as the CRPS or the log score."
     },
     {
       "id": "C13",
@@ -1006,7 +1151,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Check calibration first, then compare sharpness",
+      "summary": "First check predictive distributions and intervals for calibration. Compare their sharpness only among those that are calibrated."
     },
     {
       "id": "C14",
@@ -1057,7 +1206,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "For counts, use proper scores and a randomised PIT",
+      "summary": "Evaluate predictive distributions of counts, such as intermittent sales, with proper scoring rules and a randomised probability integral transform."
     },
     {
       "id": "C15",
@@ -1105,7 +1258,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Score class probabilities with a proper scoring rule",
+      "summary": "Evaluate forecast probabilities of classes with a proper scoring rule, such as the log score or the Brier score."
     },
     {
       "id": "C16",
@@ -1163,7 +1320,11 @@
           "strength": "moderate",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L4: no cited work states it; it rests on an argument from the definition of accuracy."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Do not measure class probabilities by accuracy",
+      "summary": "Accuracy should not be the measure of forecast class probabilities."
     },
     {
       "id": "C17",
@@ -1211,7 +1372,11 @@
           "strength": "moderate",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. L1: the finding it rests on was checked only in the abstract of its work; a full text could qualify it."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Do not measure class probabilities by AUC",
+      "summary": "AUC should not be the measure of forecast class probabilities. It averages costs over a distribution that depends on the classifier."
     },
     {
       "id": "C18",
@@ -1263,7 +1428,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "With rare positives, report the precision-recall curve",
+      "summary": "When positive cases are rare, report the precision-recall curve, not the ROC curve alone."
     },
     {
       "id": "C19",
@@ -1312,7 +1481,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Methods with different targets need measures for their own targets",
+      "summary": "When one method forecasts the mean and another the median, evaluate each with a measure consistent for its own target, or make them target the same thing."
     },
     {
       "id": "C20",
@@ -1362,7 +1535,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Summarise accuracy over series by mean, median and quartiles",
+      "summary": "Over many series, summarise accuracy by the mean, the median and the quartiles of a scaled measure, such as RMSSE or MASE."
     },
     {
       "id": "C21",
@@ -1411,7 +1588,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Test differences in ranks with Friedman and Nemenyi",
+      "summary": "To tell whether several methods of similar accuracy differ significantly over many series, test their ranks with the Friedman test, then Nemenyi comparisons."
     },
     {
       "id": "C22",
@@ -1460,7 +1641,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Compare with the best method by MCB on ranks",
+      "summary": "To tell which methods differ significantly from the best over many series, use multiple comparisons with the best (MCB) on ranks."
     },
     {
       "id": "C23",
@@ -1509,7 +1694,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Compare two forecasts of one series with the Diebold-Mariano test",
+      "summary": "Compare the accuracy of two forecasts of the same series with the Diebold-Mariano test."
     },
     {
       "id": "C24",
@@ -1556,7 +1745,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Choose the measure by what the methods predict",
+      "summary": "Choose an error measure that matches what the compared methods predict, even if competitions or well-known studies used another."
     },
     {
       "id": "C25",
@@ -1604,7 +1797,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Do not sum or average scale-dependent measures across scales",
+      "summary": "Do not sum or average scale-dependent measures, such as RMSE and MAE, across series on different scales."
     },
     {
       "id": "C26",
@@ -1653,7 +1850,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Scale each series' errors before averaging",
+      "summary": "To aggregate point forecast accuracy over series on different scales, first scale each series' errors by a quantity of that series that does not depend on the forecasts. Then average."
     },
     {
       "id": "C27",
@@ -1702,7 +1903,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Across scales, scale each series' pinball loss",
+      "summary": "When quantile forecasts are compared over series on different scales, scale each series' pinball loss by a quantity of that series."
     },
     {
       "id": "C28",
@@ -1751,7 +1956,11 @@
           "strength": "high",
           "rationale": "Exploratory in the lab's terms: a literature claim, stated from the guide before its papers were read, then confirmed against them (the status of its hypothesis in the lab record); no test was planned or run. It follows by the argument of its warrant from findings that its works state, quoted from full texts or read in full by the guarantor."
         }
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Across scales, scale each series' interval score",
+      "summary": "When prediction intervals are compared over series on different scales, scale each series' interval score by a quantity of that series."
     },
     {
       "id": "C29",
@@ -1803,7 +2012,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Squared error is consistent for the mean",
+      "summary": "Squared error is a consistent scoring function for the mean."
     },
     {
       "id": "C30",
@@ -1860,7 +2073,11 @@
         "L3",
         "L5",
         "L6"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "The scoring function decides which forecast is best",
+      "summary": "Which forecast scores best depends on the scoring function. One consistent for the mean or a quantile is lowest in expectation at that value of the outcome's distribution."
     },
     {
       "id": "C31",
@@ -1912,7 +2129,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Absolute error is consistent for the median",
+      "summary": "Absolute error is a consistent scoring function for the median."
     },
     {
       "id": "C32",
@@ -1980,17 +2201,23 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "MAPE rewards a forecast that lies too low",
+      "summary": "The error averaged by MAPE is consistent for the median of order −1. That favours forecasts well below the mean or the median."
     },
     {
       "id": "C33",
-      "statement": "For the same outcome, [[D10:sMAPE]] penalises a forecast below the outcome more heavily than a forecast above it.",
+      "statement": "For the same positive outcome, [[D10:sMAPE]] penalises a forecast below the outcome more heavily than a forecast above it by the same absolute amount, while a forecast k times too low and one k times too high score the same.",
       "about": {
         "subject": "D10",
         "relation": "penalises more heavily",
         "object": "forecasts below the outcome",
         "comparator": null,
-        "conditions": []
+        "conditions": [
+          "forecasts the same absolute distance from the outcome"
+        ]
       },
       "type": "methodological",
       "role": "supporting",
@@ -2004,11 +2231,16 @@
         {
           "kind": "cited",
           "reference": "B11"
+        },
+        {
+          "kind": "cited",
+          "reference": "B19",
+          "locator": "entrylib:2026.000013@v3#C2"
         }
       ],
       "provenance": "author_stated",
       "hypothesis": {
-        "lab_event": "H40",
+        "lab_event": "H102",
         "outcome": "supported"
       },
       "planning": "exploratory",
@@ -2025,6 +2257,28 @@
               "start": 17140,
               "end": 17220,
               "artefact": "A7"
+            },
+            {
+              "reference": "B19",
+              "locator": "entrylib:2026.000013@v3#C2",
+              "lab_event": "XT36",
+              "exact": "so a forecast $k$ times too high ($f = ky$) and one $k$ times too low ($f = y/k$) score the same",
+              "prefix": "he [[D1:sMAPE term]] unchanged, ",
+              "suffix": "; (b) of two forecasts the same ",
+              "start": 47847,
+              "end": 47943,
+              "artefact": "A12"
+            },
+            {
+              "reference": "B19",
+              "locator": "entrylib:2026.000013@v3#C2",
+              "lab_event": "XT37",
+              "exact": "of two forecasts the same absolute distance $d$ from $y$ ($0 < d < y$), the higher one scores better",
+              "prefix": "($f = y/k$) score the same; (b) ",
+              "suffix": ":\n$$s(y, y+d) = \\frac{d}{2y+d} <",
+              "start": 47949,
+              "end": 48049,
+              "artefact": "A12"
             }
           ],
           "kind": "summary"
@@ -2036,8 +2290,11 @@
       "limitations": [
         "L3",
         "L5",
-        "L6"
-      ]
+        "L6",
+        "L7"
+      ],
+      "name": "sMAPE penalises low forecasts more only for equal absolute errors",
+      "summary": "For the same outcome, sMAPE penalises a forecast below it more than one above it by the same amount. A forecast k times too low and one k times too high score the same."
     },
     {
       "id": "C34",
@@ -2089,7 +2346,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "The pinball loss is consistent for its quantile",
+      "summary": "The pinball loss at a level is a consistent scoring function for the quantile at that level."
     },
     {
       "id": "C35",
@@ -2157,7 +2418,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "The interval score is proper for central intervals",
+      "summary": "The interval score is a proper scoring rule for central prediction intervals. It accounts for both their width and their coverage."
     },
     {
       "id": "C36",
@@ -2211,7 +2476,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "The CRPS is proper for continuous outcomes",
+      "summary": "The CRPS is a proper scoring rule for predictive distributions of continuous outcomes."
     },
     {
       "id": "C37",
@@ -2263,7 +2532,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "The log score is strictly proper",
+      "summary": "The log score is a strictly proper scoring rule."
     },
     {
       "id": "C38",
@@ -2320,7 +2593,11 @@
         "L2",
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "The Brier score is proper for class probabilities",
+      "summary": "The Brier score is a proper scoring rule for forecast probabilities of classes."
     },
     {
       "id": "C39",
@@ -2372,7 +2649,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Maximise sharpness subject to calibration",
+      "summary": "Predictive distributions are assessed by making them as sharp as possible while staying calibrated."
     },
     {
       "id": "C40",
@@ -2410,7 +2691,11 @@
       "limitations": [
         "L5",
         "L6"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "A randomised PIT checks calibration for counts",
+      "summary": "The calibration of predictive distributions of counts can be checked with a randomised probability integral transform."
     },
     {
       "id": "C41",
@@ -2468,7 +2753,11 @@
       "limitations": [
         "L5",
         "L6"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "On intermittent series, absolute error favours forecasts near zero",
+      "summary": "On intermittent series, absolute-error measures give their best scores to forecasts close to zero."
     },
     {
       "id": "C42",
@@ -2506,7 +2795,11 @@
       "limitations": [
         "L1",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "AUC averages costs over a classifier-dependent distribution",
+      "summary": "The AUC equals the misclassification loss averaged over a distribution of costs that depends on the classifier itself."
     },
     {
       "id": "C43",
@@ -2575,7 +2868,11 @@
       },
       "limitations": [
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "On imbalanced data, the precision-recall curve says more than ROC",
+      "summary": "On imbalanced data, the precision-recall curve is more informative than the ROC curve for evaluating binary classifiers."
     },
     {
       "id": "C44",
@@ -2643,7 +2940,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Scale-dependent measures cannot be compared across scales",
+      "summary": "Scale-dependent measures, such as RMSE and MAE, cannot be compared across series on different scales."
     },
     {
       "id": "C45",
@@ -2681,7 +2982,11 @@
       "limitations": [
         "L5",
         "L6"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Unscaled sums are dominated by the largest series",
+      "summary": "When errors of series on different scales are summed or averaged without scaling, the series with the largest values dominate."
     },
     {
       "id": "C46",
@@ -2733,7 +3038,11 @@
       "limitations": [
         "L3",
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Scaled errors can be averaged across scales",
+      "summary": "Scaled errors, as in MASE, do not depend on the scale of the data. They can be averaged over series on different scales."
     },
     {
       "id": "C47",
@@ -2800,7 +3109,11 @@
       "limitations": [
         "L5",
         "L6"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "M5 scored point forecasts with RMSSE",
+      "summary": "The M5 accuracy competition scored point forecasts with RMSSE: each series' squared errors divided by the in-sample mean squared error of its one-step naive forecast."
     },
     {
       "id": "C48",
@@ -2856,7 +3169,11 @@
       "limitations": [
         "L5",
         "L6"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "M5 scored quantiles with the scaled pinball loss",
+      "summary": "The M5 uncertainty competition scored quantile forecasts with the pinball loss divided by the in-sample mean absolute error of the one-step naive forecast."
     },
     {
       "id": "C49",
@@ -2894,7 +3211,11 @@
       "limitations": [
         "L5",
         "L6"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "M4 scored intervals with the mean scaled interval score",
+      "summary": "The M4 competition scored prediction intervals with the interval score of each series scaled by an in-sample error of that series."
     },
     {
       "id": "C50",
@@ -2945,7 +3266,11 @@
       },
       "limitations": [
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Averages over many data sets are sensitive to outliers",
+      "summary": "Averages of a performance measure over many data sets are susceptible to outliers."
     },
     {
       "id": "C51",
@@ -3025,7 +3350,11 @@
       },
       "limitations": [
         "L5"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "Friedman and Nemenyi compare methods by ranks",
+      "summary": "The Friedman test, followed by the Nemenyi test, compares several methods over many data sets by their ranks. It needs the measure to be comparable across data sets only in a limited way."
     },
     {
       "id": "C52",
@@ -3063,7 +3392,11 @@
       "limitations": [
         "L5",
         "L6"
-      ]
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "M3 used MCB on ranks",
+      "summary": "Multiple comparisons with the best (MCB) on ranks were used to test the differences between the methods of the M3 competition."
     },
     {
       "id": "C53",
@@ -3101,6 +3434,286 @@
       "limitations": [
         "L5",
         "L6"
+      ],
+      "verifiability": "open",
+      "verifiability_flags": [],
+      "name": "The Diebold-Mariano test allows correlated, non-normal errors",
+      "summary": "The Diebold-Mariano test of equal accuracy of two forecasts allows errors that are serially correlated and not normally distributed."
+    },
+    {
+      "id": "C54",
+      "statement": "For a positive outcome that takes no single value with positive probability, a point forecast f has the lowest expected [[D10:sMAPE]] only if the outcomes below f and those above it carry equal total weight y/(y + f)^2, where y is the outcome. So sMAPE targets a median of the outcomes weighted in this way. The ordinary median gives every outcome the same weight. sMAPE's target is the ordinary median only if these weights balance at the ordinary median.",
+      "about": {
+        "subject": "D10",
+        "relation": "targets",
+        "object": "a median of the outcomes weighted by y/(y + f)^2",
+        "comparator": null,
+        "conditions": [
+          "positive outcomes that take no single value with positive probability"
+        ]
+      },
+      "name": "sMAPE targets a weighted median",
+      "summary": "The forecast with the lowest expected sMAPE is a weighted median of the outcomes. Outcomes close to the forecast by ratio weigh most. It is the ordinary median only if the weights balance there.",
+      "type": "methodological",
+      "role": "supporting",
+      "novelty": "synthesis",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B20",
+          "locator": "entrylib:2026.000013@v3#C4"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H103",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B20",
+              "locator": "entrylib:2026.000013@v3#C4",
+              "lab_event": "XT27",
+              "exact": "has the lowest expected sMAPE only if the actuals below $f$ and those above it carry equal total",
+              "prefix": "ive probability. A forecast $f$ ",
+              "suffix": " [[D5:weight]] $w(y,f) = y/(y+f)",
+              "start": 18839,
+              "end": 18935,
+              "artefact": "A12"
+            },
+            {
+              "reference": "B20",
+              "locator": "entrylib:2026.000013@v3#C4",
+              "lab_event": "XT28",
+              "exact": "is a median of the actuals weighted by $w$, where the ordinary median gives every actual the same weight",
+              "prefix": ".$$\n So the [[D6:sMAPE target]] ",
+              "suffix": ". An actual's weight is largest ",
+              "start": 19079,
+              "end": 19183,
+              "artefact": "A12"
+            }
+          ],
+          "kind": "summary"
+        }
+      },
+      "scope": {
+        "data_type": "point forecasts of positive outcomes"
+      },
+      "limitations": [
+        "L7"
+      ]
+    },
+    {
+      "id": "C55",
+      "statement": "Let the outcome y be 0 with probability p0 and otherwise positive. Let s+ be the lowest expected value of the [[D10:sMAPE]] term |y - f|/(|y| + |f|) that a positive forecast f reaches on the positive outcomes. The forecast 0 has the lowest expected sMAPE when p0 > (1 - s+)/(2 - s+). A positive forecast has it when the inequality is reversed. This threshold is below one half whenever s+ > 0.",
+      "about": {
+        "subject": "D10",
+        "relation": "targets the forecast 0 when",
+        "object": "the probability of a zero outcome exceeds (1 - s+)/(2 - s+)",
+        "comparator": null,
+        "conditions": [
+          "outcomes that are 0 with positive probability and otherwise positive"
+        ]
+      },
+      "name": "With enough zeros, sMAPE rewards the forecast 0",
+      "summary": "When the outcome is often zero, the forecast 0 has the lowest expected sMAPE once the share of zeros passes a threshold. The threshold is below one half.",
+      "type": "methodological",
+      "role": "supporting",
+      "novelty": "synthesis",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B21",
+          "locator": "entrylib:2026.000013@v3#C7"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H104",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B21",
+              "locator": "entrylib:2026.000013@v3#C7",
+              "lab_event": "XT29",
+              "exact": "Let the actual $y$ be 0 with probability $p_0$ and otherwise positive, and $s_+$ the lowest expected $s$ a positive forecast reaches on the positive actuals.",
+              "prefix": "PE term]] its largest value, 1. ",
+              "suffix": " The forecast 0 is the [[D6:sMAP",
+              "start": 23406,
+              "end": 23563,
+              "artefact": "A12"
+            },
+            {
+              "reference": "B21",
+              "locator": "entrylib:2026.000013@v3#C7",
+              "lab_event": "XT30",
+              "exact": "when $p_0 > (1 - s_+)/(2 - s_+)$, and a positive forecast does when the inequality is reversed; the threshold is below $1/2$ whenever $s_+ > 0$",
+              "prefix": "st 0 is the [[D6:sMAPE target]] ",
+              "suffix": ".\n  in plain words: The worst po",
+              "start": 23606,
+              "end": 23749,
+              "artefact": "A12"
+            }
+          ],
+          "kind": "summary"
+        }
+      },
+      "scope": {
+        "data_type": "point forecasts of outcomes that are zero with positive probability"
+      },
+      "limitations": [
+        "L7"
+      ]
+    },
+    {
+      "id": "C56",
+      "statement": "Let ln y = μ + σε, where ε has a fixed density h with bounded continuous first and second derivatives and distribution function H. Take two point forecasts at fixed quantile levels, f1 = exp(μ + σc1) and f2 = exp(μ + σc2), with c1 < c2. Compare them by the ratio of the mean to the standard deviation of the difference of their scores on one outcome. As σ grows, for [[D10:sMAPE]] the ratio falls to zero like σ^(-1/2) when h(c1) ≠ h(c2). So, under sMAPE, the size of the test set that keeps the mean score difference a given number of standard errors from zero grows in proportion to σ. For the absolute log error |ln y - ln f|, the ratio does not depend on σ, wherever the standard deviation of the difference is positive. For the absolute error |y - f|, the ratio tends, as σ grows, to a limit that is positive when 0 < H(c2) < 1 and the higher forecast is not the median.",
+      "about": {
+        "subject": "D10",
+        "relation": "loses, as the spread of ln y grows, its power to tell apart",
+        "object": "two point forecasts at fixed quantile levels",
+        "comparator": "the absolute log error and the absolute error",
+        "conditions": [
+          "outcomes with ln y = μ + σε, ε of a fixed smooth density, σ growing"
+        ]
+      },
+      "name": "sMAPE loses its power to tell forecasts apart as outcomes spread out",
+      "summary": "As the outcomes spread out, a test set tells two forecasts apart less and less well under sMAPE. The absolute log error keeps its power. So does the absolute error, unless the higher forecast is the median.",
+      "type": "methodological",
+      "role": "supporting",
+      "novelty": "synthesis",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B22",
+          "locator": "entrylib:2026.000013@v3#C18"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H105",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B22",
+              "locator": "entrylib:2026.000013@v3#C18",
+              "lab_event": "XT31",
+              "exact": "Let $\\ln y = \\mu + \\sigma\\varepsilon$, where $\\varepsilon$ has a fixed density $h$ with bounded continuous first and second derivatives and distribution function $H$",
+              "prefix": "firmatory; outcome supported]\n  ",
+              "suffix": ", and compare two forecasts at f",
+              "start": 36847,
+              "end": 37012,
+              "artefact": "A12"
+            },
+            {
+              "reference": "B22",
+              "locator": "entrylib:2026.000013@v3#C18",
+              "lab_event": "XT32",
+              "exact": "it falls to zero like $\\sigma^{-1/2}$, and the size of the test set that keeps the mean difference a given number of standard errors from zero grows in proportion to $\\sigma$",
+              "prefix": "ma^{-1/2}\\,(1 + O(1/\\sigma)):$$\n",
+              "suffix": ". (b) For the absolute log error",
+              "start": 37578,
+              "end": 37752,
+              "artefact": "A12"
+            },
+            {
+              "reference": "B22",
+              "locator": "entrylib:2026.000013@v3#C18",
+              "lab_event": "XT33",
+              "exact": "then: the absolute log error keeps its power to tell two forecasts apart wherever its ratio is defined. The absolute error keeps it when $0 < H(c_2) < 1$ and the higher forecast is not the median. sMAPE loses it at the rate $\\sigma^{-1/2}$ when $h(c_1) \\ne h(c_2)$",
+              "prefix": "ows. For widely spread actuals, ",
+              "suffix": ". It loses it faster, with a rat",
+              "start": 38445,
+              "end": 38709,
+              "artefact": "A12"
+            }
+          ],
+          "kind": "summary"
+        }
+      },
+      "scope": {
+        "data_type": "comparisons of two point forecasts of positive outcomes whose logarithm spreads out"
+      },
+      "limitations": [
+        "L7"
+      ]
+    },
+    {
+      "id": "C57",
+      "statement": "On lognormal and log-Laplace outcomes, where [[D10:sMAPE]] and [[D7:MAE]] both target the median, the forecast that minimises sMAPE on a test set varies more than the sample median, which minimises MAE. This holds for every spread of ln y studied, from 0.25 to 6, and every test-set size studied, from 6 to 10000 outcomes. Take the ratio of the variance of the log sample median to that of the log sMAPE minimiser. With 10000 outcomes, it falls from 0.97 to 0.03 on lognormal outcomes as σ grows from 0.25 to 6. It falls from 1.00 to 0.34 on log-Laplace outcomes as the scale b grows from 0.25 to 6.",
+      "about": {
+        "subject": "the forecast that minimises sMAPE on a test set",
+        "relation": "varies more than",
+        "object": "the sample median",
+        "comparator": "D7",
+        "conditions": [
+          "lognormal and log-Laplace outcomes, spread of ln y from 0.25 to 6",
+          "test sets of 6 to 10000 outcomes"
+        ]
+      },
+      "name": "sMAPE finds the median less precisely than the sample median",
+      "summary": "Where sMAPE and MAE both reward the median, the forecast that minimises sMAPE on a test set varies more than the sample median. The gap grows as the outcomes spread out.",
+      "type": "methodological",
+      "role": "supporting",
+      "novelty": "synthesis",
+      "support": [
+        {
+          "kind": "cited",
+          "reference": "B23",
+          "locator": "entrylib:2026.000013@v3#C15"
+        }
+      ],
+      "provenance": "author_stated",
+      "hypothesis": {
+        "lab_event": "H106",
+        "outcome": "supported"
+      },
+      "planning": "exploratory",
+      "ext": {
+        "review": {
+          "extracts": [
+            {
+              "reference": "B23",
+              "locator": "entrylib:2026.000013@v3#C15",
+              "lab_event": "XT34",
+              "exact": "varies more than the sample median for every spread and test-set size studied",
+              "prefix": "sMAPE minimiser of a test set]] ",
+              "suffix": ": its [[D9:relative efficiency]]",
+              "start": 32440,
+              "end": 32517,
+              "artefact": "A12"
+            },
+            {
+              "reference": "B23",
+              "locator": "entrylib:2026.000013@v3#C15",
+              "lab_event": "XT35",
+              "exact": "at $n = 10000$ from 0.97 to 0.03 on lognormal actuals as $\\sigma$ grows from 0.25 to 6, and from 1.00 to 0.34 on log-Laplace actuals as $b$ grows from 0.25 to 6",
+              "prefix": "alls as the actuals spread out, ",
+              "suffix": ", close to the large-sample valu",
+              "start": 32598,
+              "end": 32758,
+              "artefact": "A12"
+            }
+          ],
+          "kind": "summary"
+        }
+      },
+      "scope": {
+        "data_type": "test sets of independent draws from lognormal and log-Laplace distributions"
+      },
+      "limitations": [
+        "L7"
       ]
     }
   ],
@@ -3154,9 +3767,13 @@
       "id": "W6",
       "reasoning": "deductive",
       "premises": [
+        "C54",
+        "C55",
+        "C56",
+        "C57",
         "C33"
       ],
-      "text": "sMAPE penalises forecasts below the outcome more heavily than forecasts above it, so it rewards forecasts that are too high; and it divides by the mean of the absolute outcome and the absolute forecast, which is zero when both are zero, so it is then undefined."
+      "text": "sMAPE targets a median of the outcomes weighted by y/(y + f)^2, which is the ordinary median only if those weights balance there, so the forecast it rewards is in general neither the mean nor the median (C54); on outcomes that are zero with positive probability, as on intermittent series, it rewards the forecast 0 once the share of zeros passes a threshold below one half (C55); as the outcomes spread out, a test set tells two forecasts apart less and less well under sMAPE, while the absolute log error keeps that power (C56); where it does target the median, the forecast that minimises it on a test set varies more than the sample median, which minimises MAE, the more so the wider the spread (C57); it penalises a forecast below the outcome more than one above only for equal absolute errors, and forecasts too high and too low by the same factor score the same, so it does not in general reward forecasts that are too high (C33); and it divides by the mean of the absolute outcome and the absolute forecast, which is zero when both are zero, so it is then undefined."
     },
     {
       "id": "W7",
@@ -3485,6 +4102,21 @@
       ],
       "impact": "reduces_precision",
       "mitigation": "none"
+    },
+    {
+      "id": "L7",
+      "category": "sampling",
+      "statement": "C54 to C57, and the second source of C33, come from entrylib:2026.000013, the guarantor's own claimset. It was not found by a search: the review records none. It was added at the guarantor's request, after the review's other works had been read. Work that disagrees with these claims was not searched for. Each of these claims quotes the passage it rests on. The cited C2, C4, C7 and C18 are proved there and checked by an independent agent; C15 is computed there.",
+      "affects": [
+        "C6",
+        "C33",
+        "C54",
+        "C55",
+        "C56",
+        "C57"
+      ],
+      "impact": "could_bias_magnitude",
+      "mitigation": "none"
     }
   ],
   "artefacts": [
@@ -3558,7 +4190,7 @@
       "kind": "data",
       "version": "sha256:8ae56333b46ffae705ec463b6a3dd1d81bc4fe5934e5e13a635e4bbf401d1a97",
       "description": "The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets (Saito and Rehmsmeier 2015, PLoS ONE 10(3), e0118432, doi:10.1371/journal.pone.0118432) (application/pdf), saved by hand on 2026-11-13; recorded in the lab record as SR8 on 2026-11-13. venue: PLoS ONE; published: 2015-03-04. Written by others.",
-      "uri": "lab/sources/SR8/saito-rehmsmeier2015.pdf",
+      "uri": "https://entrylib.org/p/2026.000008/v2/files/lab/sources/SR8/saito-rehmsmeier2015.pdf",
       "availability": {
         "level": "public"
       },
@@ -3579,14 +4211,25 @@
       "reference": "B1"
     },
     {
-      "id": "A10",
+      "id": "A11",
       "kind": "lab_record",
-      "uri": "https://github.com/entrylib/study-planning/blob/c7600573b73d0811083abb75fed01e3cbe88fe01/lab/lab.jsonl",
-      "version": "sha256:3aa42af8c61dfab6ff36054762be2127d3cdd3332c93f4698df9bf01f8f8f025",
+      "uri": "https://github.com/entrylib/study-planning/blob/1fd56f485bb7d05558d3f5c93cdbd0512bed8029/lab/lab.jsonl",
+      "version": "sha256:459e5e7eeb3d93175be2644c04a8d2c514d755374dbfc42e8f3ac62a1ae0335f",
       "availability": {
         "level": "public"
       },
-      "description": "Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-13; exported with claimset 0.43.0).",
+      "description": "Lab record of the study: questions, hypotheses, plans, runs, results and decisions, as an append-only, hash-chained event log (Claimset lab record specification v0.22, begun 2026-11-13; exported with claimset 0.44.6).",
+      "licence": "CC-BY-4.0"
+    },
+    {
+      "id": "A12",
+      "kind": "data",
+      "version": "sha256:dc1feeae195a1bed73d18a8ab239b66cf6857905b1ed157f75dcd9ea4d6a6b53",
+      "description": "What does sMAPE reward? An analytical and simulation study (claimset entrylib:2026.000013@v3, EntryLib, version 3 of 2026-11-18) (application/json), saved by hand on 2026-11-19; recorded in the lab record as SR10 on 2026-11-19. venue: EntryLib; published: 2026-11-18; author: Ivan Svetunkov (guarantor). Written by others. The guarantor's own published claimset: version 3 of entrylib:2026.000013, whose guarantor, Ivan Svetunkov (AC2), is this review's guarantor; written by Claude Code agents under his supervision. Saved with curl from EntryLib on 2026-11-19: the claimset file (https://entrylib.org/p/2026.000013@v3.json) as the original, and EntryLib's plain-text reading view of the same version (https://entrylib.org/p/2026.000013@v3.txt) as its text, which quotes are taken from. Licence CC-BY-4.0. Its rights belong to its author, the guarantor; the record's rights holder is study or third_party, and it is recorded as third_party because it is a published work, not material this study collected.",
+      "uri": "lab/sources/SR10/smape-v3.claimset.json",
+      "availability": {
+        "level": "public"
+      },
       "licence": "CC-BY-4.0"
     }
   ],
@@ -3820,6 +4463,76 @@
           "read": "full_text",
           "checked_on": "2026-11-13",
           "lab_event": "SC20"
+        }
+      }
+    },
+    {
+      "id": "B19",
+      "target": "entrylib:2026.000013@v3#C2",
+      "id_type": "claimset",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-19",
+          "artefact": "A12",
+          "lab_event": "SC23"
+        }
+      }
+    },
+    {
+      "id": "B20",
+      "target": "entrylib:2026.000013@v3#C4",
+      "id_type": "claimset",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-19",
+          "artefact": "A12",
+          "lab_event": "SC23"
+        }
+      }
+    },
+    {
+      "id": "B21",
+      "target": "entrylib:2026.000013@v3#C7",
+      "id_type": "claimset",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-19",
+          "artefact": "A12",
+          "lab_event": "SC23"
+        }
+      }
+    },
+    {
+      "id": "B22",
+      "target": "entrylib:2026.000013@v3#C18",
+      "id_type": "claimset",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-19",
+          "artefact": "A12",
+          "lab_event": "SC23"
+        }
+      }
+    },
+    {
+      "id": "B23",
+      "target": "entrylib:2026.000013@v3#C15",
+      "id_type": "claimset",
+      "ext": {
+        "review": {
+          "read": "full_text",
+          "version": "published",
+          "checked_on": "2026-11-19",
+          "artefact": "A12",
+          "lab_event": "SC23"
         }
       }
     }
