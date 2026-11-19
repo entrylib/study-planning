@@ -222,47 +222,130 @@ def var_and_se(v):
     return s2, math.sqrt(max(m4 - s2 * s2, 0.0) / len(v))
 
 
+SIZES = (6, 12, 24, 48, 100, 250, 1000)
+
+
+def trigamma(x):
+    """psi_1(x) for x > 0: recurrence up to 6, then the asymptotic series."""
+    t = 0.0
+    while x < 6:
+        t += 1 / (x * x)
+        x += 1
+    return t + 1 / x + 1 / (2 * x ** 2) + 1 / (6 * x ** 3) - 1 / (30 * x ** 5) + 1 / (42 * x ** 7) - 1 / (30 * x ** 9)
+
+
+def exact_median_variance(d, n, points=400001):
+    """Exact variance of the sample median of x = ln y for a test set of n actuals (the mean of the two middle order
+    statistics when n is even, the middle one when odd), from the joint density of order statistics, on a fine grid."""
+    x = np.linspace(d.lo, d.hi, points)
+    dx = x[1] - x[0]
+    g = d.g(x) * dx
+    g = g / g.sum()
+    F = np.cumsum(g) - g / 2
+    med = float(np.interp(0.5, F, x))
+    u = x - med
+    if n % 2:
+        k = (n + 1) // 2
+        lw = (math.lgamma(n + 1) - math.lgamma(k) - math.lgamma(n - k + 1)
+              + (k - 1) * np.log(np.maximum(F, 1e-300)) + (n - k) * np.log(np.maximum(1 - F, 1e-300)))
+        w = np.exp(lw) * g
+        w = w / w.sum()
+        m1 = float(np.sum(w * u))
+        return float(np.sum(w * u * u)) - m1 * m1
+    k = n // 2                                   # X_(k) = a < b = X_(k+1)
+    lc = math.lgamma(n + 1) - math.lgamma(k) - math.lgamma(n - k)
+    A = np.exp(lc / 2 + (k - 1) * np.log(np.maximum(F, 1e-300))) * g
+    B = np.exp(lc / 2 + (n - k - 1) * np.log(np.maximum(1 - F, 1e-300))) * g
+    def tail(v):                                 # sum over j > i of v_j
+        c = np.cumsum(v[::-1])[::-1]
+        return np.concatenate([c[1:], [0.0]])
+    s0, s1, s2 = tail(B), tail(B * u), tail(B * u * u)
+    mass = float(np.sum(A * s0))
+    ea, eb = float(np.sum(A * u * s0)) / mass, float(np.sum(A * s1)) / mass
+    ea2, eb2, eab = float(np.sum(A * u * u * s0)) / mass, float(np.sum(A * s2)) / mass, float(np.sum(A * u * s1)) / mass
+    mean = (ea + eb) / 2
+    return (ea2 + 2 * eab + eb2) / 4 - mean * mean
+
+
+def exact_rmse_variance(name, n):
+    """Exact variance of ln of the sample mean: gamma (shape k): the sum is gamma with shape nk, so trigamma(nk);
+    inverse Gaussian (mean mu, shape lam): the sample mean is inverse Gaussian with shape n lam, by quadrature."""
+    if name.startswith("gamma shape "):
+        return trigamma(n * float(name.split()[-1]))
+    if name.startswith("inverse Gaussian "):
+        w = name.split()
+        dm = inverse_gaussian(float(w[3]), n * float(w[5]))
+        mass = dm.E(np.ones_like(dm.x))
+        m1 = dm.E(dm.x) / mass
+        return dm.E((dm.x - m1) ** 2) / mass
+    return None
+
+
+def extremity(d):
+    """E|x - E x|^(1/2) / sd(x)^(1/2) for x = ln y (the supervisor's measure, TM46)."""
+    m = d.E(d.x) / d.E(np.ones_like(d.x))
+    sd = math.sqrt(d.E((d.x - m) ** 2) / d.E(np.ones_like(d.x)))
+    return d.E_at(m, lambda z: np.sqrt(np.abs(z))) / d.E(np.ones_like(d.x)) / math.sqrt(sd)
+
+
 def part_a(rng, reps, n, quick):
     settings = [lognormal(s) for s in (0.5, 1.0, 2.0)] + [log_laplace(b) for b in (0.25, 0.5, 1.0)] \
         + [log_uniform(a) for a in (0.5, 1.0, 2.0)] + [gamma(k) for k in (20, 5, 1, 0.5)] \
         + [inverse_gaussian(1.0, lam) for lam in (1.0, 0.2, 0.05)] + [weibull(k) for k in (2.0, 1.0, 0.5)] \
         + [gennorm(0.5, 1.0), mixture(0.5, 0.05, 1.0)]
+    sizes = tuple(m for m in SIZES if m < n) + (n,)
     if quick:
-        settings = settings[::4]
+        settings, sizes = settings[::4], (6, 24, n)
     results, checks = [], []
     for d in settings:
         vf = d.variances()
         if d.symmetric:
             c = d.smape_target()
             checks.append((f"A {d.name}: sMAPE target found numerically at ln y = {c:.2e}, the median", abs(c) < 1e-6))
-        x = d.sample(rng, (reps, n))
-        logs = sample_logs(x)
-        for m in ("RMSE", "MAE", "MAPE", "sMAPE"):
-            v, c = vf[m]
-            s2, se = var_and_se(logs[m])
-            cond = {"distribution": d.name, "measure": m, "n": n, "test sets": reps}
-            results.append(("asymptotic variance by formula", v, cond))
-            results.append(("asymptotic variance by simulation", n * s2, cond))
-            results.append(("standard error of the simulated variance", n * se, cond))
-            if math.isfinite(v):
-                ok = abs(n * s2 - v) <= 4 * n * se + 0.05 * v
-                text = f"A {d.name} {m}: simulated V {n * s2:.4g} vs formula {v:.4g}"
-                if not ok:                       # the plan's second chance: 4n actuals per test set, same tolerance
-                    n4 = 4 * n
-                    s2b, seb = var_and_se(sample_logs(d.sample(rng, (reps, n4)), (m,))[m])
-                    results.append(("asymptotic variance by simulation", n4 * s2b, {**cond, "n": n4}))
-                    results.append(("standard error of the simulated variance", n4 * seb, {**cond, "n": n4}))
-                    ok = abs(n4 * s2b - v) <= 4 * n4 * seb + 0.05 * v
-                    text += f"; with {n4} actuals {n4 * s2b:.4g}"
-                checks.append((text, ok))
-        if abs(vf["sMAPE"][1] - vf["MAE"][1]) < 1e-6:                 # both target the median: ARE
+            results.append(("extremity", extremity(d), {"distribution": d.name}))
+        both_median = abs(vf["sMAPE"][1] - vf["MAE"][1]) < 1e-6
+        if both_median:
             are_f = vf["MAE"][0] / vf["sMAPE"][0]
-            are_s = var_and_se(logs["MAE"])[0] / var_and_se(logs["sMAPE"])[0]
-            cond = {"distribution": d.name, "n": n, "test sets": reps}
-            results.append(("asymptotic relative efficiency by formula", are_f, cond))
-            results.append(("relative efficiency by simulation", are_s, cond))
-            checks.append((f"A {d.name}: simulated ARE {are_s:.4g} on the same side of 1 as {are_f:.4g}",
-                           abs(are_f - 1) < 0.05 or (are_s - 1) * (are_f - 1) > 0))
+            results.append(("asymptotic relative efficiency by formula", are_f, {"distribution": d.name}))
+        for size in sizes:
+            logs = sample_logs(d.sample(rng, (reps, size)))
+            for m in ("RMSE", "MAE", "MAPE", "sMAPE"):
+                v, _ = vf[m]
+                s2, se = var_and_se(logs[m])
+                cond = {"distribution": d.name, "measure": m, "n": size, "test sets": reps}
+                results.append(("asymptotic variance by simulation", size * s2, cond))
+                results.append(("standard error of the simulated variance", size * se, cond))
+                if size == n:
+                    results.append(("asymptotic variance by formula", v, {k: cond[k] for k in ("distribution", "measure")}))
+                if math.isfinite(v):
+                    results.append(("n times variance over formula", size * s2 / v, cond))
+                exact = None
+                if m == "MAE":
+                    exact = exact_median_variance(d, size)
+                elif m == "RMSE":
+                    exact = exact_rmse_variance(d.name, size)
+                if exact is not None:
+                    results.append(("exact variance of the log minimiser times n", size * exact, cond))
+                    checks.append((f"E {d.name} {m} n {size}: simulated n Var {size * s2:.4g} vs exact {size * exact:.4g}",
+                                   abs(s2 - exact) <= 4 * se + 0.01 * exact))
+                if size == n and math.isfinite(v):
+                    ok = abs(n * s2 - v) <= 4 * n * se + 0.05 * v
+                    text = f"A {d.name} {m}: simulated V {n * s2:.4g} vs formula {v:.4g}"
+                    if not ok:                   # the plan's second chance: 4n actuals per test set, same tolerance
+                        n4 = 4 * n
+                        s2b, seb = var_and_se(sample_logs(d.sample(rng, (reps, n4)), (m,))[m])
+                        results.append(("asymptotic variance by simulation", n4 * s2b, {**cond, "n": n4}))
+                        results.append(("standard error of the simulated variance", n4 * seb, {**cond, "n": n4}))
+                        ok = abs(n4 * s2b - v) <= 4 * n4 * seb + 0.05 * v
+                        text += f"; with {n4} actuals {n4 * s2b:.4g}"
+                    checks.append((text, ok))
+            if both_median:
+                are_s = var_and_se(logs["MAE"])[0] / var_and_se(logs["sMAPE"])[0]
+                results.append(("relative efficiency by simulation", are_s,
+                                {"distribution": d.name, "n": size, "test sets": reps}))
+                if size == n:
+                    checks.append((f"A {d.name}: simulated ARE {are_s:.4g} on the same side of 1 as {are_f:.4g}",
+                                   abs(are_f - 1) < 0.05 or (are_s - 1) * (are_f - 1) > 0))
         print(d.name, {m: f"{vf[m][0]:.4g}" for m in vf}, flush=True)
     return results, checks
 
@@ -344,6 +427,7 @@ def part_c():
         m1, m2 = d1.E(np.abs(d1.x)), d1.E(d1.x ** 2)
         lim = m2 - m1 / h0
         results.append(("peakedness index", h0 * m2 / m1, {"shape": name}))
+        results.append(("extremity", extremity(d1), {"shape": name}))
         r = (are_of(shape_dist(name, 0.01)) - 1) / (0.01 ** 2 / 2)
         results.append(("(ARE - 1)/(sigma^2/2)", r, {"shape": name, "spread": 0.01}))
         checks.append((f"C(a) {name}: (ARE-1)/(sigma^2/2) {r:.4g} at 0.01 vs {lim:.4g}",
@@ -358,13 +442,13 @@ def part_c():
             results.append(("sigma times ARE", v, {"shape": name, "spread": s}))
             checks.append((f"C(b) {name}: sigma ARE {v:.4g} at {s} within bound {bound:.4g}", v <= bound))
     for q, k in ((0.5, 1.0), (0.3, 2.0), (0.8, 0.5)):
-        lim_d = mixture(q, 1.0, k)       # only its grid is used: E_k sech^4 from the wide component
         kd = Dist("k", lambda x: np.exp(-x * x / (2 * k * k)) / (k * math.sqrt(2 * math.pi)), -12 * k, 12 * k, None)
         lim = 1 / (q + (1 - q) * kd.E(sech(kd.x / 2) ** 4))
-        del lim_d
         for eps in (1e-2, 1e-3):
-            a = are_of(mixture(q, eps, k))
+            dm = mixture(q, eps, k)
+            a = are_of(dm)
             results.append(("ARE of a narrow-core mixture", a, {"q": q, "core sd": eps, "wide sd": k, "limit": lim}))
+            results.append(("extremity", extremity(dm), {"q": q, "core sd": eps, "wide sd": k}))
             if eps == 1e-3:
                 checks.append((f"C(c) q {q} wide sd {k}: ARE {a:.5g} at core sd 0.001 vs limit {lim:.5g}",
                                abs(a / lim - 1) < 0.01))
