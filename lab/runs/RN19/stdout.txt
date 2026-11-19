@@ -1,0 +1,57 @@
+index h(0)E[Z^2]/E|Z| {'shape': 'uniform'} 0.333333
+ARE {'shape': 'uniform', 'spread': 0.05} 0.999167
+ARE {'shape': 'uniform', 'spread': 0.25} 0.979403
+ARE {'shape': 'uniform', 'spread': 1.0} 0.72049
+ARE {'shape': 'uniform', 'spread': 4.0} 0.0150034
+ARE {'shape': 'uniform', 'spread': 16.0} 2.43152e-12
+index h(0)E[Z^2]/E|Z| {'shape': 'normal'} 0.5
+ARE {'shape': 'normal', 'spread': 0.05} 0.998751
+ARE {'shape': 'normal', 'spread': 0.25} 0.969626
+ARE {'shape': 'normal', 'spread': 1.0} 0.660082
+ARE {'shape': 'normal', 'spread': 4.0} 0.0777822
+ARE {'shape': 'normal', 'spread': 16.0} 0.00171616
+index h(0)E[Z^2]/E|Z| {'shape': 'logistic'} 0.593285
+ARE {'shape': 'logistic', 'spread': 0.05} 0.997185
+ARE {'shape': 'logistic', 'spread': 0.25} 0.933292
+ARE {'shape': 'logistic', 'spread': 1.0} 0.46875
+ARE {'shape': 'logistic', 'spread': 4.0} 0.0348017
+ARE {'shape': 'logistic', 'spread': 16.0} 0.000690672
+index h(0)E[Z^2]/E|Z| {'shape': 't6'} 0.625
+ARE {'shape': 't6', 'spread': 0.05} 0.998873
+ARE {'shape': 't6', 'spread': 0.25} 0.971743
+ARE {'shape': 't6', 'spread': 1.0} 0.67828
+ARE {'shape': 't6', 'spread': 4.0} 0.0965014
+ARE {'shape': 't6', 'spread': 16.0} 0.00240083
+index h(0)E[Z^2]/E|Z| {'shape': 'Laplace'} 1
+ARE {'shape': 'Laplace', 'spread': 0.05} 0.999992
+ARE {'shape': 'Laplace', 'spread': 0.25} 0.996926
+ARE {'shape': 'Laplace', 'spread': 1.0} 0.89534
+ARE {'shape': 'Laplace', 'spread': 4.0} 0.496889
+ARE {'shape': 'Laplace', 'spread': 16.0} 0.167347
+index h(0)E[Z^2]/E|Z| {'shape': 'gennorm 0.75'} 1.67466
+ARE {'shape': 'gennorm 0.75', 'spread': 0.05} 1.00316
+ARE {'shape': 'gennorm 0.75', 'spread': 0.25} 1.03704
+ARE {'shape': 'gennorm 0.75', 'spread': 1.0} 1.04316
+ARE {'shape': 'gennorm 0.75', 'spread': 4.0} 0.828987
+ARE {'shape': 'gennorm 0.75', 'spread': 16.0} 0.514801
+index h(0)E[Z^2]/E|Z| {'shape': 'gennorm 0.5'} 5
+ARE {'shape': 'gennorm 0.5', 'spread': 0.05} 1.06168
+ARE {'shape': 'gennorm 0.5', 'spread': 0.25} 1.31871
+ARE {'shape': 'gennorm 0.5', 'spread': 1.0} 1.69879
+ARE {'shape': 'gennorm 0.5', 'spread': 4.0} 2.07726
+ARE {'shape': 'gennorm 0.5', 'spread': 16.0} 2.3554
+ARE {'shape': 'normal mixture 0.5 sd 0.1 and sd 10.0', 'spread': 1.0} 1.76444
+ARE {'shape': 'normal mixture 0.3 sd 0.05 and sd 20.0', 'spread': 1.0} 2.92769
+ARE {'shape': 'normal mixture 0.5 sd 0.5 and sd 5.0', 'spread': 1.0} 1.21789
+asymptotic variance of the log sMAPE minimiser {'shape': 'normal', 'spread': 2.0} 20.4444
+asymptotic variance of the log sMAPE minimiser {'shape': 'normal', 'spread': 4.0} 323.117
+asymptotic variance of the log sMAPE minimiser {'shape': 'normal', 'spread': 8.0} 7919.95
+asymptotic variance of the log sMAPE minimiser {'shape': 'normal', 'spread': 16.0} 234316
+asymptotic variance of the log sMAPE minimiser {'shape': 'Laplace', 'spread': 2.0} 5.55007
+asymptotic variance of the log sMAPE minimiser {'shape': 'Laplace', 'spread': 4.0} 32.2004
+asymptotic variance of the log sMAPE minimiser {'shape': 'Laplace', 'spread': 8.0} 212.597
+asymptotic variance of the log sMAPE minimiser {'shape': 'Laplace', 'spread': 16.0} 1529.75
+asymptotic variance of the log sMAPE minimiser {'shape': 'uniform', 'spread': 2.0} 13.9325
+asymptotic variance of the log sMAPE minimiser {'shape': 'uniform', 'spread': 4.0} 1066.43
+asymptotic variance of the log sMAPE minimiser {'shape': 'uniform', 'spread': 8.0} 5.93202e+06
+asymptotic variance of the log sMAPE minimiser {'shape': 'uniform', 'spread': 16.0} 1.05284e+14
