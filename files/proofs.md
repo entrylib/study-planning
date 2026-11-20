@@ -705,7 +705,9 @@ second.
    has at most one zero, and where it has one, $S$ has its strict maximum over the gap.
 8. *(e), equal weights and mirror images.* With $p = 1/2$, every forecast strictly between the groups is a median (step
    5), the balancing one included. Now let the groups mirror each other about $\ln m$: $\ln y - \ln m$ has the same
-   distribution as $\ln m - \ln y$. The mirror maps $u_1$ to $l_2$, so $\ln m = (u_1 + l_2)/2$ lies in the gap. Write
+   distribution as $\ln m - \ln y$, which needs $p = 1/2$. The mirror maps the first group onto the second, so the
+   largest value of the first and the smallest of the second lie at equal distances from $\ln m$, on either side, and
+   $\ln m$ lies strictly between the groups. Write
    $r = y/m$, so that $w(y, m) = \phi(r)/m$ with $\phi(r) = r/(1 + r)^2$, and $\phi(1/r) = \phi(r)$. Since $r$ and $1/r$
    have the same distribution, $\mathrm E[\phi(r)\mathbf 1\{r < 1\}] = \mathrm E[\phi(1/r)\mathbf 1\{1/r < 1\}] =
    \mathrm E[\phi(r)\mathbf 1\{r > 1\}]$. So the weights balance at $m$, and by step 7 the maximum over the gap is at
@@ -744,7 +746,7 @@ be the asymptotic relative efficiency of the sMAPE minimiser of a test set to th
   about 0, unimodal and continuous at 0. As $\epsilon \to 0$, ARE tends to $1/(q + (1 - q)\,\mathrm E_k[\operatorname{sech}^4(x/2)])$,
   which exceeds 1. So the sMAPE minimiser can be the more precise, by a factor up to nearly $1/q$.
 
-**Proof.** By H12 (c) both measures target $m$. By H14 (b),
+**Proof.** By H12 (c) sMAPE targets $m$, and by H10 (b) MAE targets the median, which is $m$. By H14 (b),
 $\mathrm{ARE} = (2g - A)^2/(4g^2B)$ with $g = g(\ln m) = h(0)/\sigma$, $A = \mathrm E[\kappa(\sigma Z)]$ and
 $B = \mathrm E[\operatorname{sech}^4(\sigma Z/2)]$, where $\kappa(u) = \operatorname{sech}^2(u/2)\tanh(|u|/2)$. By H14 (a),
 $2g - A > 0$. Write $h_0 = h(0)$.
@@ -817,13 +819,14 @@ given, $\sqrt n(\ln\hat\theta_n - \ln\theta^*)$ is asymptotically normal with me
 
 **Proof.** The test set has $n$ independent actuals $y_1, \dots, y_n$ with the distribution of $y$; write $x_t = \ln y_t$.
 
-1. *(a).* The forecast with the lowest mean squared error of the test set is the sample mean $\bar y$, and RMSE is its
-   square root, so it has the same minimiser. When $\mathrm E[y^2] < \infty$, the central limit theorem gives that
+1. *(a).* The target of RMSE is $\mathrm E[y]$ (H10 (a)). The forecast with the lowest mean squared error of the test
+   set is the sample mean $\bar y$, and RMSE is its square root, so it has the same minimiser. When $\mathrm E[y^2] < \infty$, the central limit theorem gives that
    $\sqrt n(\bar y - \mathrm E y)$ is asymptotically normal with mean 0 and variance $\operatorname{Var}(y)$. The
    logarithm has derivative $1/\mathrm E y$ at $\mathrm E y > 0$, so by the delta method (van der Vaart, 1998, Theorem
    3.1) $\sqrt n(\ln\bar y - \ln\mathrm E y)$ is asymptotically normal with variance
    $\operatorname{Var}(y)/\mathrm E[y]^2$.
-2. *(b).* The forecasts with the lowest MAE of the test set are its sample medians: any point between the two middle
+2. *(b).* The target of MAE is the median (H10 (b); when $\mathrm E[y]$ is infinite, in H10 (b)'s sense of
+   differences of expected scores). The forecasts with the lowest MAE of the test set are its sample medians: any point between the two middle
    actuals when $n$ is even. Since $\ln$ is increasing, the logarithm of such a point lies between the two middle values
    of the $x_t$. The two middle values differ by $O_P(1/n)$ when $g$ is positive at the median, so every choice has the
    same limit as the sample median of the $x_t$. The distribution function of $x$ has derivative $g(\ln\theta^*) > 0$
@@ -902,15 +905,14 @@ H49 needs is infinite, there is no finite $V$, and the statement writes $V = \in
    $\ln\theta^* = \mu + \sigma z_*$, and $g(\ln\theta^*) = h(z_*)/\sigma$. Next, $\theta^*/y = e^{\sigma(z_* - Z)}$, so
    $\mathrm E[(\theta^*/y)^2] = e^{2\sigma z_*}M(-2\sigma)$. H49 (c) gives the stated $V$. When $M(-2\sigma) = \infty$,
    $\mathrm E[y^{-2}]$ is infinite, and H49 (c) gives no finite $V$.
-4. *(d), the parts of $V$.* By H12 (c) the sMAPE target is $m = e^\mu$, and by H14 (b),
+4. *(d), the parts of $V$.* By H12 (c) the sMAPE target is $m = e^\mu$, the median, and by H14 (b),
    $V = B/D^2$ with $D = 2g - A$. Here $g = h_0/\sigma$ with $h_0 = h(0)$, $A = \mathrm E[\kappa(\sigma Z)]$ and
    $B = \mathrm E[\operatorname{sech}^4(\sigma Z/2)]$, as in H48. By H48, step 6, $\sigma B \to 8h_0/3$, and
    $D = \sigma^{-1}\int\kappa(u)\,[h_0 - h(u/\sigma)]\,du > 0$ (H14 (a)).
-5. *(d), a smooth peak.* Since $h$ is symmetric, $h'(0) = 0$. By Taylor's theorem,
-   $h_0 - h(t) = -\tfrac12h''(\xi)t^2$ for some $\xi$ between 0 and $t$. So
-   $\sigma^3D = \int\kappa(u)\,u^2\,\big(-\tfrac12h''(\xi_u)\big)\,du$, with $\xi_u$ between 0 and $u/\sigma$. As
-   $\sigma \to \infty$, $h''(\xi_u) \to h''(0)$ by continuity, and the integrand is bounded by
-   $\tfrac12\sup|h''|\,u^2\kappa(u)$, which is integrable. So $\sigma^3D \to -\tfrac12h''(0)\int u^2\kappa = -8\ln 2\,h''(0)$,
+5. *(d), a smooth peak.* Since $h$ is symmetric, $h'(0) = 0$. Write $\rho(t) = (h_0 - h(t))/t^2$ for $t \ne 0$. By
+   Taylor's theorem, $|\rho(t)| \le \tfrac12\sup|h''|$, and $\rho(t) \to -\tfrac12h''(0)$ as $t \to 0$. Then
+   $\sigma^3D = \int\kappa(u)\,u^2\,\rho(u/\sigma)\,du$. As $\sigma \to \infty$, $\rho(u/\sigma) \to -\tfrac12h''(0)$
+   for each $u$, and the integrand is bounded by $\tfrac12\sup|h''|\,u^2\kappa(u)$, which is integrable. So $\sigma^3D \to -\tfrac12h''(0)\int u^2\kappa = -8\ln 2\,h''(0)$,
    using $\int u^2\kappa = 16\ln 2$ (H14, step 11). Then
    $V\sigma^{-5} = \sigma B/(\sigma^3D)^2 \to (8h_0/3)/(64(\ln 2)^2h''(0)^2) = h_0/(24(\ln 2)^2h''(0)^2)$.
 6. *(d), a corner.* Write $h_0 - h(t) = -h'(0^+)|t| - r(t)$, with $|r(t)| \le Kt^2$. Then
@@ -936,8 +938,8 @@ H49 needs is infinite, there is no finite $V$, and the statement writes $V = \in
    $h(z_*) = 1/2$. So by (c) $V = \dfrac{1}{\cosh^2\sigma}\cdot\dfrac{\sinh 2\sigma}{2\sigma}\cdot\sigma^2 =
    \sigma\tanh\sigma$. Both grow like $\sigma$. The density is flat on $(-1, 1)$, so by (d), with $\delta = 1$, the
    variance of sMAPE grows faster than any power.
-10. *(e), the comparison.* For lognormal actuals MAE loses its precision slowest and RMSE and MAPE fastest. For
-    log-uniform actuals RMSE and MAPE lose it slowest and sMAPE fastest. So no measure is always the slowest or always
+10. *(e), the comparison.* For lognormal actuals MAE loses its precision slowest; MAPE loses it fastest, then RMSE. For
+    log-uniform actuals RMSE loses it slowest, then MAPE, and sMAPE fastest. So no measure is always the slowest or always
     the fastest.
 
 So as the actuals spread out, each measure's minimiser locates its target less precisely, at a rate set by a different
