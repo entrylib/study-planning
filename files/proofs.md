@@ -668,7 +668,8 @@ $[l_2, u_2]$ with probability $1 - p$, where $u_1 < l_2$ and $0 < p < 1$. The tw
   $e^{l_1}$ if $p > 1/2$, $e^{l_2}$ if $p < 1/2$, and both if $p = 1/2$.
 - (e) Between the groups, expected sMAPE is largest at a forecast where the actuals below it and above it carry equal
   total weight $w(y, f) = y/(y+f)^2$, if there is one there. With $p = 1/2$ that forecast is a median, and a strict local
-  maximum. When the groups mirror each other about $\ln m$, it is $m$. More generally, let $y$ be positive and take no
+  maximum. When $p = 1/2$ and the groups mirror each other about $\ln m$ (so that $\ln y - \ln m$ and
+  $\ln m - \ln y$ have the same distribution), it is $m$. More generally, let $y$ be positive and take no
   single value with positive probability. A median $m$ is a strict local maximum of expected sMAPE when the weights
   balance at $m$ and $2g(\ln m) < \mathrm E[\operatorname{sech}^2((\ln y - \ln m)/2)\tanh(|\ln y - \ln m|/2)]$, where
   $g$ is the density of $\ln y$, continuous at $\ln m$.
@@ -876,11 +877,13 @@ its peak. So no measure always loses its precision slowest or fastest.
 of a minimiser of each measure (H49), as $\sigma$ grows. Write $M(t) = \mathrm E[e^{tZ}]$. (This $M$ is not the
 expected loss of H14.)
 
-- (a) MAE: $V = \sigma^2/(4h(z_{1/2})^2)$, where $z_{1/2}$ is the median of $Z$ and $h(z_{1/2}) > 0$. It grows like
-  $\sigma^2$ for every shape.
-- (b) RMSE: $V = M(2\sigma)/M(\sigma)^2 - 1$. It is infinite once $M(2\sigma)$ is.
+- (a) MAE: $V = \sigma^2/(4h(z_{1/2})^2)$, where $z_{1/2}$ is the median of $Z$, and $h$ is continuous and positive at
+  $z_{1/2}$. It grows like $\sigma^2$ for every such shape.
+- (b) RMSE: $V = M(2\sigma)/M(\sigma)^2 - 1$. When $M(2\sigma)$ is infinite, H49 gives no finite $V$; we write
+  $V = \infty$.
 - (c) MAPE: $V = e^{2\sigma z_*}M(-2\sigma)\sigma^2/(4h(z_*)^2)$, where $z_*$ is the median of the density proportional
-  to $e^{-\sigma z}h(z)$ and $h(z_*) > 0$. It is infinite once $M(-2\sigma)$ is.
+  to $e^{-\sigma z}h(z)$, and $h$ is continuous and positive at $z_*$. When $M(-2\sigma)$ is infinite, H49 gives no
+  finite $V$; we write $V = \infty$.
 - (d) sMAPE, when $h$ is symmetric about 0, unimodal and continuous at 0 with $h(0) > 0$. Its growth is set by the
   shape of $h$ at 0. If $h$ has a bounded continuous second derivative with $h''(0) < 0$, then
   $V\sigma^{-5} \to h(0)/(24(\ln 2)^2h''(0)^2)$. If $|h(z) - h(0) - h'(0^+)|z|| \le Kz^2$ with $h'(0^+) < 0$, then
@@ -891,9 +894,10 @@ expected loss of H14.)
   faster than any power. For a uniform $Z$ on $(-1, 1)$, RMSE ($\sigma\coth\sigma - 1$) and MAPE ($\sigma\tanh\sigma$)
   grow like $\sigma$, more slowly than MAE, while sMAPE grows faster than any power.
 
-**Proof.** Write $x = \ln y$. Its density is $g(x) = h((x - \mu)/\sigma)/\sigma$. The conditions of H49 are taken to
-hold, as each part needs: in (a) and (c), $h$ is continuous at $z_{1/2}$ and at $z_*$. Where the moment that a part of
-H49 needs is infinite, there is no finite $V$, and the statement writes $V = \infty$.
+**Proof.** Write $x = \ln y$. Its density is $g(x) = h((x - \mu)/\sigma)/\sigma$, continuous and positive at
+$\mu + \sigma z_{1/2}$ and at $\mu + \sigma z_*$ when $h$ is at $z_{1/2}$ and $z_*$, as H49 (b) and (c) need. Where
+the moment that a part of H49 needs is infinite, H49 gives no finite $V$, and the statement writes $V = \infty$. That
+is a convention: it does not show that $\sqrt n(\ln\hat\theta_n - \ln\theta^*)$ has no normal limit.
 
 1. *(a).* The median of $x$ is $\mu + \sigma z_{1/2}$, where $g = h(z_{1/2})/\sigma$. By H49 (b),
    $V = 1/(4g^2) = \sigma^2/(4h(z_{1/2})^2)$. The shape fixes $h(z_{1/2})$, so $V$ grows like $\sigma^2$.
