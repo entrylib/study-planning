@@ -529,8 +529,7 @@ def part_d(rng, quick):
                 g_of = np.where(mins <= u1 + 1e-12, 1, 2)
                 share = float(np.mean(g_of == in_group))
                 results.append(("share of test-set minimisers in the target's group", share, {**cond, "n": n}))
-                if n == 500 and p != 0.5:
-                    checks.append((f"D sim {cond}: share in the target's group at n 500 = {share:.3f}", share >= 0.95))
+                # an estimate, not a check: H47 says nothing about finite test sets (supervisor, 2026-11-20)
     # H47 (e), not separated: equal normal groups at +-1.5 with sd 0.4 on the log scale, mirror images about 0
     d = Dist("mirror mixture", lambda t: 0.5 * (np.exp(-(t - 1.5) ** 2 / 0.32) + np.exp(-(t + 1.5) ** 2 / 0.32))
              / (0.4 * math.sqrt(2 * math.pi)), -6, 6, None, breaks=(0.0,))
