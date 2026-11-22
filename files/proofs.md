@@ -739,7 +739,7 @@ be the asymptotic relative efficiency of the sMAPE minimiser of a test set to th
   \mathrm E|Z|/h(0)\big) + o(\sigma^2)$ as $\sigma \to 0$. So for small spreads the sMAPE minimiser is the more precise
   when the peakedness index $h(0)\mathrm E[Z^2]/\mathrm E|Z|$ exceeds 1, and the sample median when it is below 1. The
   index is not a function of the kurtosis: the Laplace distribution and Student's t with 6 degrees of freedom both have
-  kurtosis 6, and their indices are 1 and 5/8.
+  kurtosis 6 (excess kurtosis 3), and their indices are 1 and 5/8.
 - (b) Large spread. If $|h(z) - h(0)| \le L|z|$ for all $z$, then $\sigma\,\mathrm{ARE}$ stays bounded as
   $\sigma \to \infty$. So ARE tends to 0.
 - (c) A narrow core. Let $\ln y - \ln m$ be a mixture: with probability $q$ in $(0, 1)$ from a normal distribution with
@@ -772,7 +772,7 @@ $2g - A > 0$. Write $h_0 = h(0)$.
    freedom, $h_0 = \Gamma(\tfrac{\nu+1}{2})/(\sqrt{\nu\pi}\,\Gamma(\tfrac\nu2))$,
    $\mathrm E|Z| = 2\sqrt\nu\,\Gamma(\tfrac{\nu+1}{2})/(\sqrt\pi(\nu - 1)\Gamma(\tfrac\nu2))$ and
    $\mathrm E[Z^2] = \nu/(\nu - 2)$. So $h_0/\mathrm E|Z| = (\nu - 1)/(2\nu)$, the index is $(\nu - 1)/(2(\nu - 2))$, and
-   the kurtosis is $3 + 6/(\nu - 4)$. With $\nu = 6$ the index is $5/8$ and the kurtosis 6. Two shapes with the same
+   the kurtosis is $3 + 6/(\nu - 4)$. With $\nu = 6$ the index is $5/8$ and the kurtosis 6 (excess kurtosis 3). Two shapes with the same
    kurtosis have different indices, so the index is not a function of the kurtosis.
 6. *(b).* Since $\int\kappa = 2$ (H14, step 1), $2g - A = \int\kappa(u)\,[g(\ln m) - g(\ln m + u)]\,du$, with
    $g(\ln m + u) = h(u/\sigma)/\sigma$. So $2g - A = \sigma^{-1}\int\kappa(u)\,[h_0 - h(u/\sigma)]\,du \le
