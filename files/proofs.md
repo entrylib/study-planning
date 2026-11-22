@@ -675,7 +675,8 @@ $[l_2, u_2]$ with probability $1 - p$, where $u_1 < l_2$ and $0 < p < 1$. The tw
   $g$ is the density of $\ln y$, continuous at $\ln m$.
 
 **Proof.** Write $x = \ln y$ and $c = \ln f$. By H3, expected sMAPE is 200 times $S(c) = \mathrm E[\tau(|x - c|)]$, with
-$\tau(t) = \tanh(t/2)$. Call the actuals with $x \in [l_1, u_1]$ the first group and those with $x \in [l_2, u_2]$ the
+$\tau(t) = \tanh(t/2)$. Take $[l_1, u_1]$ and $[l_2, u_2]$ as the smallest intervals that hold the two groups; every part of
+the statement for these intervals gives it for any larger ones that are still separated. Call the actuals with $x \in [l_1, u_1]$ the first group and those with $x \in [l_2, u_2]$ the
 second.
 
 1. *The term is strictly concave in the distance.* For $t > 0$, $\tau''(t) = -\tfrac12\operatorname{sech}^2(t/2)
