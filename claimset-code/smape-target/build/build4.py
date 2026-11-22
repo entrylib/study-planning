@@ -75,9 +75,9 @@ for x in X["definitions"]:
         DMAP[x["id"]] = f"D{nxt}"
         nxt += 1
 NEWDEF = {DMAP[x["id"]]: x for x in X["definitions"] if DMAP[x["id"]] not in p_terms.values()}
-assert sorted(NEWDEF, key=lambda s: int(s[1:])) == ["D36", "D37", "D38", "D39", "D40", "D41"], NEWDEF.keys()
+assert sorted(NEWDEF, key=lambda s: int(s[1:])) == ["D36", "D37", "D38", "D39", "D40", "D41", "D42"], NEWDEF.keys()
 TERM_TM = {"TM8": "D8", "TM12": "D12", "TM29": "D2", "TM30": "D3", "TM6": "D6", "TM10": "D10", "TM11": "D11",
-           "TM31": "D5", "TM41": "D36", "TM42": "D37", "TM43": "D38", "TM44": "D39", "TM45": "D40", "TM46": "D41"}
+           "TM31": "D5", "TM28": "D1", "TM41": "D36", "TM42": "D37", "TM43": "D38", "TM44": "D39", "TM45": "D40", "TM46": "D41"}
 
 
 def remap(s):
@@ -100,6 +100,8 @@ for did, x in NEWDEF.items():
 NEWDEF_TEXT["D37"]["symbol"] = "$h(0)\\,\\mathrm E[Z^2]/\\mathrm E|Z|$"
 NEWDEF_TEXT["D36"]["symbol"] = "$V$"
 NEWDEF_TEXT["D38"]["source"] = "B17"
+assert NEWDEF_TEXT["D42"]["term"] == "M-estimator"
+NEWDEF_TEXT["D42"]["source"] = "B19"
 NEWDEF_TEXT["D40"]["symbol"] = "$\\mathrm{ARE}$"
 NEWDEF_TEXT["D40"]["definition"] += (" In symbols, $\\mathrm{ARE} = V_{\\mathrm{MAE}}/V_{\\mathrm{sMAPE}}$, with $V$ the "
                                      "[[D36:asymptotic variance of a minimiser]] of each.")
@@ -218,6 +220,9 @@ new_ev["E44"]["description"] += (
     " The values named 'extremity' (tables T1, T6 and T8) are the Hypotailedness of ln y (deviation DV7). The plan "
     "reported them; the supervisor dropped them from this paper.")
 new_ev["E44"]["description"] = new_ev["E44"]["description"].replace("[[D41:extremity]]", "extremity")
+assert "the theory of M-estimators" in new_ev["E42"]["description"]
+new_ev["E42"]["description"] = new_ev["E42"]["description"].replace("the theory of M-estimators",
+                                                                    "the theory of [[D42:M-estimators]]")
 new_ev["E43"]["description"] = new_ev["E43"]["description"].replace(
     ", so that it reads alike with entrylib:2026.000016, which uses excess kurtosis; nothing else changes",
     "; nothing else changes")
@@ -458,6 +463,8 @@ def formal_evidence(eid, cid, paper_h, body):
 secs = sections((STUDY / "files" / "proofs.md").read_text())
 for h, cid in (("H47", "C6"), ("H48", "C22"), ("H49", "C23"), ("H50", "C24")):
     new_ev[PROOF_ID[cid]] = formal_evidence(PROOF_ID[cid], cid, h, secs[h])
+new_ev["E40"]["description"] += (" Each measure's minimiser is an [[D42:M-estimator]], and the theory of M-estimators "
+                                  "gives its limit.")
 
 # version 3's proof of C6 (E24) proved the mirror-image statement, which version 4 no longer claims
 d["evidence"] = [e for e in d["evidence"] if e["id"] != "E24"]
@@ -569,7 +576,7 @@ claims["C25"]["scope"] = {"conditions": "21 distributions; test sets of 6 to 100
 claims["C22"]["relations"] = [
     {"type": "extends", "reference": "B19",
      "note": "Huber (1964) defines M-estimators of location and their asymptotic variance, E[ψ²]/(E ψ')², and "
-             "compares them with the sample median. On the log scale the sMAPE minimiser is such an M-estimator, with "
+             "compares them with the sample median. On the log scale the sMAPE minimiser is such an [[D42:M-estimator]], with "
              "loss tanh(|z|/2). That loss is not Huber's loss: it is like the absolute loss near 0 and bounded far "
              "out. C22 compares this estimator with the sample median."},
     {"type": "extends", "reference": "B20",
@@ -747,7 +754,7 @@ d["evidence"].sort(key=lambda e: int(e["id"][1:]))
 # definitions in reading order: version 3's order, the new ones after the terms they use
 order = [x["id"] for x in P["definitions"]]
 pos = order.index("D9") + 1
-order[pos:pos] = ["D36", "D39", "D40", "D37", "D38"]
+order[pos:pos] = ["D42", "D36", "D39", "D40", "D37", "D38"]
 dd = {x["id"]: x for x in d["definitions"]}
 d["definitions"] = [dd[i] for i in order]
 OUT.write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n")
