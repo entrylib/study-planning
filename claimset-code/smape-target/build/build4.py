@@ -111,6 +111,8 @@ d["references"] += [
     {"id": "B17", "target": "10.1198/jasa.2011.r10138", "id_type": "doi"},
     {"id": "B18", "target": "Rockafellar, R. T. (1970). Convex Analysis. Princeton University Press.",
      "id_type": "reference"},
+    {"id": "B19", "target": "10.1214/aoms/1177703732", "id_type": "doi"},
+    {"id": "B20", "target": "10.1002/9780470316481", "id_type": "doi"},
 ]
 
 # ------------------------------------------------------------------ artefacts
@@ -565,6 +567,15 @@ claims["C6"]["scope"] = {"conditions": "positive actuals whose logs fall in two 
                                         "and weights"}
 claims["C25"]["scope"] = {"conditions": "21 distributions; test sets of 6 to 1000 actuals; 2000 test sets each"}
 claims["C22"]["relations"] = [
+    {"type": "extends", "reference": "B19",
+     "note": "Huber (1964) defines M-estimators of location and their asymptotic variance, E[ψ²]/(E ψ')², and "
+             "compares them with the sample median. On the log scale the sMAPE minimiser is such an M-estimator, with "
+             "loss tanh(|z|/2). That loss is not Huber's loss: it is like the absolute loss near 0 and bounded far "
+             "out. C22 compares this estimator with the sample median."},
+    {"type": "extends", "reference": "B20",
+     "note": "Serfling (1980) gives the classical efficiency of the sample median relative to the mean, "
+             "4h(0)²σ²: the height of the density at the centre, against the spread, decides which is more precise. "
+             "C22's peakedness index plays that role for the sMAPE minimiser against the sample median."},
     {"type": "refines", "target": "C19", "id_type": "local",
      "note": "C19 gives the asymptotic relative efficiency for log-symmetric unimodal actuals and its limits for "
              "lognormal and log-Laplace actuals.", "results": ["E43.T5"]}]
