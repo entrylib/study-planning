@@ -719,6 +719,13 @@ for c in d["contributors"]:
         if k in xc[c["id"]]:
             c[k] = xc[c["id"]][k]
 
+# Stephan Kolassa, for his notes on version 3 (the supervisor's request); not an actor of the lab record
+assert max(int(c["id"][1:]) for c in d["contributors"]) == 5
+kolassa = {"id": "P6", "type": "human", "positions": ["contributor"], "name": "Stephan Kolassa",
+           "orcid": "0000-0001-9393-0765", "credit_roles": ["validation", "writing_review_editing"]}
+at = next(i for i, c in enumerate(d["contributors"]) if c["id"] == "P2") + 1
+d["contributors"].insert(at, kolassa)
+
 d["artefacts"] = [arts[k] for k in sorted(arts, key=lambda s: int(s[1:]))]
 
 # long formulas on a line of their own (warning 44), in every text the validator reads for formulas
