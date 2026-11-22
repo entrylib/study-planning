@@ -103,24 +103,14 @@ NEWDEF_TEXT["D38"]["source"] = "B17"
 NEWDEF_TEXT["D40"]["symbol"] = "$\\mathrm{ARE}$"
 NEWDEF_TEXT["D40"]["definition"] += (" In symbols, $\\mathrm{ARE} = V_{\\mathrm{MAE}}/V_{\\mathrm{sMAPE}}$, with $V$ the "
                                      "[[D36:asymptotic variance of a minimiser]] of each.")
-NEWDEF_TEXT["D41"]["source"] = "B19"
-NEWDEF_TEXT["D41"]["symbol"] = "$H$"
-NEWDEF_TEXT["D41"]["definition"] = (
-    "For a random variable $X$ with a finite positive variance $\\sigma^2$: $H = \\mathrm E|X - \\mathrm E X|^{1/2}/"
-    "\\sigma^{1/2}$, the half absolute moment scaled by the square root of the standard deviation. It is defined and "
-    "studied in entrylib:2026.000016 (D4). It lies in $(0, 1]$. It is lower when the values lie unevenly about the mean, "
-    "many near it and a few far out. It is 0.877 for a uniform, 0.822 for a normal and 0.745 for a Laplace distribution. "
-    "The Extremity coefficient of the same claimset (D5), $2H^p - 1$ with $p \\approx 5.30$, rises with $H$, so the two "
-    "order distributions alike. Here $X = \\ln y$.")
-d["definitions"] += [NEWDEF_TEXT[k] for k in sorted(NEWDEF_TEXT, key=lambda s: int(s[1:]))]
+# D41 (Hypotailedness, from the record's TM46) is not used: the supervisor dropped it from the paper
+d["definitions"] += [NEWDEF_TEXT[k] for k in sorted(NEWDEF_TEXT, key=lambda s: int(s[1:])) if k != "D41"]
 
 # ------------------------------------------------------------------ references
 d["references"] += [
     {"id": "B17", "target": "10.1198/jasa.2011.r10138", "id_type": "doi"},
     {"id": "B18", "target": "Rockafellar, R. T. (1970). Convex Analysis. Princeton University Press.",
      "id_type": "reference"},
-    {"id": "B19", "target": "entrylib:2026.000016#D4", "id_type": "claimset"},
-    {"id": "B20", "target": "entrylib:2026.000016#C19", "id_type": "claimset"},
 ]
 
 # ------------------------------------------------------------------ artefacts
@@ -188,10 +178,18 @@ for run, eid in EV_RUN.items():
     e["id"] = eid
     e = walk(e, lambda s: s.replace(f"{old}.", f"{eid}."))
     amap = {}
+    e["tables"] = [t for t in e["tables"] if run == "RN21" or t["columns"] not in (["D40"], ["extremity"])]
     for t in e["tables"]:
         t["columns"] = [dref(c) for c in t["columns"]]
-        if "extremity" in t["columns"]:
-            t["description"] = t["description"].replace("extremity", "extremity (Hypotailedness, D41)", 1)
+        # Hypotailedness (recorded as 'extremity', later D41) is not used by this paper: its columns are dropped,
+        # except in RN21, whose planned estimate names it
+        drop = [k for k, c in enumerate(t["columns"]) if c in ("D41", "extremity")] if run != "RN21" else []
+        if drop:
+            t["columns"] = [c for k, c in enumerate(t["columns"]) if k not in drop]
+            for r in t.get("rows", []):
+                r["values"] = [v for k, v in enumerate(r["values"]) if k not in drop]
+            t["description"] = re.sub(r"^(Hypotailedness|extremity), |, (Hypotailedness|extremity)(?= by)", "",
+                                      t["description"])
         t["description"] = re.sub(r"\bD(\d+)\b", lambda m: dref(m.group(0)), t["description"])
         if t.get("rows_file"):
             src = SRC.parent / xarts[t["rows_file"]]["uri"]
@@ -206,7 +204,7 @@ for run, eid in EV_RUN.items():
         t["artefact"] = "A6"
     e["artefacts"] = ["A6"] + [amap[a] for a in e["artefacts"] if a in amap]
     if "setup" in e:
-        e["setup"] = {k: [dref(x) for x in v] for k, v in e["setup"].items()}
+        e["setup"] = {k: [dref(x) for x in v if dref(x) != "D41"] for k, v in e["setup"].items()}
     e["description"] = remap(re.sub(r"\(D(\d+)\)", lambda m: f"({dref('D' + m.group(1))})", e["description"]))
     new_ev[eid] = e
 
@@ -215,8 +213,12 @@ new_ev["E43"]["description"] += (
     " The share of test-set minimisers in the target's group (table T10) is an estimate, not a check: the "
     "hypothesis says nothing about finite test sets (the supervisor's decision after RN20, deviation DV6).")
 new_ev["E44"]["description"] += (
-    " The values named 'extremity' in this run are Hypotailedness (D41) values; the name was corrected after the run "
-    "(deviation DV7), the values are unchanged.")
+    " The values named 'extremity' (tables T1, T6 and T8) are the Hypotailedness of ln y (deviation DV7). The plan "
+    "reported them; the supervisor dropped them from this paper.")
+new_ev["E44"]["description"] = new_ev["E44"]["description"].replace("[[D41:extremity]]", "extremity")
+new_ev["E43"]["description"] = new_ev["E43"]["description"].replace(
+    ", so that it reads alike with entrylib:2026.000016, which uses excess kurtosis; nothing else changes",
+    "; nothing else changes")
 new_ev["E42"]["description"] += (
     " Three settings converge slowly and are reported as such, not as checks of the formulas (deviation DV5, see L8). "
     "One check against an exact small-sample value failed through a defect of the code, since fixed (deviation DV4).")
@@ -260,16 +262,16 @@ for shape in ("uniform", "normal", "logistic", "Student t 6", "Laplace", "genera
     small = float(T5[(shape, "0.01")]["(ARE - 1)/(sigma^2/2)"])
     big = T5.get((shape, "100.0"), {}).get("sigma times ARE")
     rows2.append({"id": f"r{len(rows2) + 1}", "label": [shape],
-                  "values": [round(T6[shape][0], 3), round(T6[shape][1], 3), EXCESS[shape], round(small, 3) + 0.0,
+                  "values": [round(T6[shape][0], 3), EXCESS[shape], round(small, 3) + 0.0,
                              round(ARE1[shape], 3) if shape in ARE1 else None,
                              float(f"{float(big):.3g}") if big else None]})
 e44["tables"].append({
-    "id": "T12", "description": "Table 2. For six shapes of ln y: the peakedness index (D37) and Hypotailedness (D41). "
-    "Then the excess kurtosis, a closed form the run did not compute. Then the small-spread coefficient "
+    "id": "T12", "description": "Table 2. For six shapes of ln y: the peakedness index (D37), and the excess kurtosis, "
+    "a closed form the run did not compute. Then the small-spread coefficient "
     "(ARE - 1)/(sigma^2/2) at spread 0.01, the ARE at spread 1 and sigma times the ARE at spread 100. With ARE above "
     "1, the sMAPE minimiser is the more precise. Values from tables T1, T5 and T6 of this run; the run did not compute the ARE at spread 1 for "
     "the logistic, Student t and generalised normal shapes, nor sigma ARE for the uniform and generalised normal.",
-    "row_labels": ["shape"], "columns": ["D37", "D41", "excess kurtosis", "(ARE - 1)/(sigma^2/2) at spread 0.01",
+    "row_labels": ["shape"], "columns": ["D37", "excess kurtosis", "(ARE - 1)/(sigma^2/2) at spread 0.01",
                                          "ARE at spread 1", "sigma times ARE at spread 100"],
     "rows": rows2})
 
@@ -466,7 +468,7 @@ SUPPORT = {
            {"kind": "empirical_quant", "evidence": "E43", "results": ["E43.T9", "E43.T10", "E43.T1"]}],
     "C22": [{"kind": "formal_proof", "evidence": "E39"},
             {"kind": "empirical_quant", "evidence": "E43",
-             "results": ["E43.T5", "E43.T6", "E43.T7", "E43.T8", "E43.T1", "E43.T3"]}],
+             "results": ["E43.T5", "E43.T6", "E43.T7", "E43.T1", "E43.T3"]}],
     "C23": [{"kind": "formal_proof", "evidence": "E40"},
             {"kind": "empirical_quant", "evidence": "E42", "results": ["E42.T4", "E42.T2"]},
             {"kind": "cited", "reference": "B15", "locator": "Theorems 3.1, 5.7 and 5.23, Corollary 21.5"},
@@ -496,7 +498,7 @@ NAMES = {
     "C25": ("Each measure's precision, computed and simulated",
             "On 21 distributions, the formulas of C23 and 2000 simulated test sets agree, except in three slow "
             "cases. RMSE is the most precise on most families; MAE on lognormal actuals with a wide spread and on "
-            "log-Laplace actuals. Hypotailedness orders the six shapes as the peakedness index does."),
+            "log-Laplace actuals."),
 }
 c25_statement = (
     "On 21 distributions of positive actuals, the [[D36:asymptotic variance of a minimiser]] $V$ of each of "
@@ -512,9 +514,7 @@ c25_statement = (
     "In Table 1, RMSE has the smallest $V$ on lognormal actuals with a narrow spread, and on log-uniform, gamma, "
     "Weibull and inverse Gaussian actuals with shape 1. MAE "
     "has it on log-Laplace actuals and on lognormal actuals with a wide spread. MAPE has it on inverse Gaussian "
-    "actuals with shape 0.05. "
-    "On the six shapes of Table 2, [[D41:Hypotailedness]] falls as the [[D37:peakedness index]] rises, and the index "
-    "crosses 1 at the Laplace shape.")
+    "actuals with shape 0.05.")
 for xid, cid in NEW_CLAIMS.items():
     x = copy.deepcopy(xcl[xid])
     c = {"id": cid, "name": NAMES[cid][0], "summary": NAMES[cid][1]}
@@ -565,10 +565,6 @@ claims["C6"]["scope"] = {"conditions": "positive actuals whose logs fall in two 
                                         "and weights"}
 claims["C25"]["scope"] = {"conditions": "21 distributions; test sets of 6 to 1000 actuals; 2000 test sets each"}
 claims["C22"]["relations"] = [
-    {"type": "extends", "reference": "B20", "self": True,
-     "note": "C19 of entrylib:2026.000016 shows that the Extremity coefficient and kurtosis order distributions "
-             "differently: the Laplace distribution has a smaller excess kurtosis than Student's t with 5 degrees of "
-             "freedom but a smaller Extremity."},
     {"type": "refines", "target": "C19", "id_type": "local",
      "note": "C19 gives the asymptotic relative efficiency for log-symmetric unimodal actuals and its limits for "
              "lognormal and log-Laplace actuals.", "results": ["E43.T5"]}]
@@ -623,9 +619,7 @@ lims["L10"] = {"id": "L10", "category": "model_specification", "affects": ["C22"
 lims["L11"] = {"id": "L11", "category": "other", "affects": ["C22"], "impact": "could_bias_magnitude",
                "mitigation": "none",
                "statement": "The peakedness index decides the sign of ARE - 1 only for small spreads (C22 a). At "
-                            "moderate spreads the ARE must be computed. Hypotailedness orders the six shapes of "
-                            "Table 2 as the index does, but it is not a criterion: across narrow-core mixtures the two "
-                            "do not move together."}
+                            "moderate spreads the ARE must be computed."}
 d["limitations"] = [lims[k] for k in sorted(lims, key=lambda s: int(s[1:]))]
 for lid, l in lims.items():
     for cid in l.get("affects", []):
@@ -691,7 +685,7 @@ paper["summary"] = (
     "median is the more precise.")
 paper["highlights"] = ["C1", "C4", "C23", "C22", "C6"]
 paper["classification"]["keywords"] = paper["classification"]["keywords"] + ["asymptotic variance",
-                                                                             "relative efficiency", "Hypotailedness"]
+                                                                             "relative efficiency"]
 paper["correction_reason"] = (
     "Version 4 answers a reader's notes on version 3. Corrected: C6 now covers any two separated groups of actuals, "
     "with any shapes and weights; version 3 proved it for mirror-image groups only. Added: how precisely a test set "
@@ -742,7 +736,7 @@ d["evidence"].sort(key=lambda e: int(e["id"][1:]))
 # definitions in reading order: version 3's order, the new ones after the terms they use
 order = [x["id"] for x in P["definitions"]]
 pos = order.index("D9") + 1
-order[pos:pos] = ["D36", "D39", "D40", "D37", "D41", "D38"]
+order[pos:pos] = ["D36", "D39", "D40", "D37", "D38"]
 dd = {x["id"]: x for x in d["definitions"]}
 d["definitions"] = [dd[i] for i in order]
 OUT.write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n")
