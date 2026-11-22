@@ -577,8 +577,7 @@ claims["C22"]["relations"] = [
     {"type": "extends", "reference": "B19",
      "note": "Huber (1964) defines M-estimators of location and their asymptotic variance, E[ψ²]/(E ψ')², and "
              "compares them with the sample median. On the log scale the sMAPE minimiser is such an [[D42:M-estimator]], with "
-             "loss tanh(|z|/2). That loss is not Huber's loss: it is like the absolute loss near 0 and bounded far "
-             "out. C22 compares this estimator with the sample median."},
+             "loss tanh(|z|/2). C22 compares this estimator with the sample median."},
     {"type": "extends", "reference": "B20",
      "note": "Serfling (1980) gives the classical efficiency of the sample median relative to the mean, "
              "4h(0)²σ²: the height of the density at the centre, against the spread, decides which is more precise. "
@@ -591,16 +590,10 @@ claims["C23"]["relations"] = [
      "note": "Gneiting (2011) shows that MAPE's target is the (-1)-median, the median of the distribution with density "
              "proportional to that of y divided by y."}]
 claims["C6"]["relations"] = [
-    {"type": "qualifies", "reference": "B4",
-     "note": "C5 of entrylib:2026.000009 found sMAPE's preferred candidate close to the median on the distributions it "
-             "studied."},
     {"type": "refines", "target": "C12", "id_type": "local",
      "note": "C12 says when the ordinary median is the target: the weights balance there and enough actuals lie near "
              "it.", "results": ["E43.T9"]}]
 claims["C24"]["relations"] = [
-    {"type": "extends", "reference": "B15",
-     "note": "van der Vaart (1998) gives the asymptotic normality of estimators that minimise a criterion, with their "
-             "limiting variance."},
     {"type": "explains", "target": "C10", "id_type": "local",
      "note": "C10 says expected sMAPE flattens as the actuals spread out, so a test set tells forecasts apart less "
              "well.", "results": ["E43.T5"]}]
@@ -639,10 +632,18 @@ lims["L11"] = {"id": "L11", "category": "other", "affects": ["C22"], "impact": "
                "statement": "The peakedness index decides the sign of ARE - 1 only for small spreads (C22 a). At "
                             "moderate spreads the ARE must be computed."}
 d["limitations"] = [lims[k] for k in sorted(lims, key=lambda s: int(s[1:]))]
+# the claims of version 3 keep their limitations as published; only the new claims are given theirs
+for c in d["claims"]:
+    pc = next((x for x in P["claims"] if x["id"] == c["id"]), None)
+    if pc is not None and c["id"] not in NEW_CLAIMS.values():
+        if "limitations" in pc:
+            c["limitations"] = list(pc["limitations"])
+        else:
+            c.pop("limitations", None)
 for lid, l in lims.items():
     for cid in l.get("affects", []):
         c = claims.get(cid)
-        if c is not None and lid not in c.get("limitations", []):
+        if c is not None and cid in NEW_CLAIMS.values() and lid not in c.get("limitations", []):
             c["limitations"] = sorted(c.get("limitations", []) + [lid], key=lambda s: int(s[1:]))
 
 e1 = next(e for e in d["evidence"] if e["id"] == "E1")
