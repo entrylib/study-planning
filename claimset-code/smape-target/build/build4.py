@@ -260,7 +260,7 @@ for shape in ("uniform", "normal", "logistic", "Student t 6", "Laplace", "genera
     small = float(T5[(shape, "0.01")]["(ARE - 1)/(sigma^2/2)"])
     big = T5.get((shape, "100.0"), {}).get("sigma times ARE")
     rows2.append({"id": f"r{len(rows2) + 1}", "label": [shape],
-                  "values": [round(T6[shape][0], 3), round(T6[shape][1], 3), EXCESS[shape], round(small, 3),
+                  "values": [round(T6[shape][0], 3), round(T6[shape][1], 3), EXCESS[shape], round(small, 3) + 0.0,
                              round(ARE1[shape], 3) if shape in ARE1 else None,
                              float(f"{float(big):.3g}") if big else None]})
 e44["tables"].append({
