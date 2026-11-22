@@ -290,8 +290,8 @@ def exact_rmse_variance(name, n):
     return None
 
 
-def extremity(d):
-    """E|x - E x|^(1/2) / sd(x)^(1/2) for x = ln y (the supervisor's measure, TM46)."""
+def hypotailedness(d):
+    """Hypotailedness of x = ln y, E|x - E x|^(1/2) / sd(x)^(1/2) (entrylib:2026.000016, D4; term TM46.R2)."""
     m = d.E(d.x) / d.E(np.ones_like(d.x))
     sd = math.sqrt(d.E((d.x - m) ** 2) / d.E(np.ones_like(d.x)))
     return d.E_at(m, lambda z: np.sqrt(np.abs(z))) / d.E(np.ones_like(d.x)) / math.sqrt(sd)
@@ -311,7 +311,7 @@ def part_a(rng, reps, n, quick):
         if d.symmetric:
             c = d.smape_target()
             checks.append((f"A {d.name}: sMAPE target found numerically at ln y = {c:.2e}, the median", abs(c) < 1e-6))
-            results.append(("extremity", extremity(d), {"distribution": d.name}))
+            results.append(("Hypotailedness", hypotailedness(d), {"distribution": d.name}))
         both_median = abs(vf["sMAPE"][1] - vf["MAE"][1]) < 1e-6
         if both_median:
             are_f = vf["MAE"][0] / vf["sMAPE"][0]
@@ -436,7 +436,7 @@ def part_c():
         m1, m2 = d1.E(np.abs(d1.x)), d1.E(d1.x ** 2)
         lim = m2 - m1 / h0
         results.append(("peakedness index", h0 * m2 / m1, {"shape": name}))
-        results.append(("extremity", extremity(d1), {"shape": name}))
+        results.append(("Hypotailedness", hypotailedness(d1), {"shape": name}))
         r = (are_of(shape_dist(name, 0.01)) - 1) / (0.01 ** 2 / 2)
         results.append(("(ARE - 1)/(sigma^2/2)", r, {"shape": name, "spread": 0.01}))
         checks.append((f"C(a) {name}: (ARE-1)/(sigma^2/2) {r:.4g} at 0.01 vs {lim:.4g}",
@@ -457,7 +457,7 @@ def part_c():
             dm = mixture(q, eps, k)
             a = are_of(dm)
             results.append(("ARE of a narrow-core mixture", a, {"q": q, "core sd": eps, "wide sd": k, "limit": lim}))
-            results.append(("extremity", extremity(dm), {"q": q, "core sd": eps, "wide sd": k}))
+            results.append(("Hypotailedness", hypotailedness(dm), {"q": q, "core sd": eps, "wide sd": k}))
             if eps == 1e-3:
                 checks.append((f"C(c) q {q} wide sd {k}: ARE {a:.5g} at core sd 0.001 vs limit {lim:.5g}",
                                abs(a / lim - 1) < 0.01))
