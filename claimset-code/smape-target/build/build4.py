@@ -804,6 +804,9 @@ note("C25", lambda r: r.get("target") == "C23",
      "C25 checks C23's formulas against simulated test sets of 6 to 1000 actuals.")
 rel("C6", lambda r: r.get("target") == "C12")
 rel("C23", lambda r: r.get("reference") == "B17")
+claims["C23"]["relations"] = [{"type": "extends", "reference": "B17",
+                               "note": "Gneiting (2011) gives MAPE's target, the (-1)-median; C23 adds how precisely a "
+                                       "test set locates it."}]
 # 6. E43: one sentence for the rewording history
 e = ev["E43"]
 i = e["description"].index("Design: The independent checker")
@@ -820,7 +823,10 @@ d40 = next(x for x in d["definitions"] if x["id"] == "D40")
 cut = (" In symbols, $\\mathrm{ARE} = V_{\\mathrm{MAE}}/V_{\\mathrm{sMAPE}}$, with $V$ the "
        "[[D36:asymptotic variance of a minimiser]] of each.")
 assert cut in d40["definition"]
-d40["definition"] = d40["definition"].replace(cut, "")
+d40["definition"] = (
+    "Where sMAPE and MAE both target the median: $\\mathrm{ARE} = V_{\\mathrm{MAE}}/V_{\\mathrm{sMAPE}}$, the "
+    "[[D36:asymptotic variance of a minimiser]] of the log sample median divided by that of the log "
+    "[[D8:sMAPE minimiser of a test set]]. Above 1, the sMAPE minimiser is the more precise.")
 # 9. E38
 ev["E38"]["description"] = ev["E38"]["description"].replace(
     " This generalises version 3 of C6, whose groups were mirror images.", "")
