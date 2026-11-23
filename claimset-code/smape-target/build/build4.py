@@ -759,6 +759,96 @@ for lst, fields in _v.FORMULA_FIELDS.items():
 d["claims"].sort(key=lambda c: int(c["id"][1:]))
 d["evidence"].sort(key=lambda e: int(e["id"][1:]))
 
+# ------------------------------------------------------------------ leanness (the supervisor: "Remove those that we
+# did not ask and don't need")
+ev = {e["id"]: e for e in d["evidence"]}
+claims = {c["id"]: c for c in d["claims"]}
+# 1. E42 and E43 keep only the tables a claim cites; data files only those tables used go with them
+cited = {r for c in d["claims"] for sup in c.get("support", []) for r in sup.get("results", [])}
+gone_files = set()
+for eid in ("E42", "E43"):
+    e = ev[eid]
+    keep = [t for t in e["tables"] if f"{eid}.{t['id']}" in cited]
+    gone_files |= {t["rows_file"] for t in e["tables"] if t not in keep and t.get("rows_file")}
+    e["tables"] = keep
+    e["artefacts"] = [a for a in e["artefacts"] if a not in gone_files]
+still = {t.get("rows_file") for e in d["evidence"] for t in e.get("tables", [])}
+gone_files -= still
+for aid in gone_files:
+    (OUTDIR / arts[aid]["uri"]).unlink()
+d["artefacts"] = [a for a in d["artefacts"] if a["id"] not in gone_files]
+
+
+def rel(cid, pred):
+    c = claims[cid]
+    c["relations"] = [r for r in c.get("relations", []) if not pred(r)]
+    if not c["relations"]:
+        del c["relations"]
+
+
+def note(cid, pred, text):
+    r = next(r for r in claims[cid]["relations"] if pred(r))
+    r["note"] = text
+
+
+# 2. to 5. relations
+r19 = next(r for r in claims["C22"]["relations"] if r.get("reference") == "B19")
+cut = " On the log scale the sMAPE minimiser is such an [[D42:M-estimator]], with loss tanh(|z|/2)."
+assert cut in r19["note"]
+r19["note"] = r19["note"].replace(cut, "")
+note("C22", lambda r: r.get("target") == "C19",
+     "C22 adds the expansion for small spreads, the bound for large spreads and the limit for a narrow core.")
+note("C24", lambda r: r.get("target") == "C10",
+     "C24 measures C10's flattening as the growth of the minimiser's variance with the spread.")
+note("C25", lambda r: r.get("target") == "C23",
+     "C25 checks C23's formulas against simulated test sets of 6 to 1000 actuals.")
+rel("C6", lambda r: r.get("target") == "C12")
+rel("C23", lambda r: r.get("reference") == "B17")
+# 6. E43: one sentence for the rewording history
+e = ev["E43"]
+i = e["description"].index("Design: The independent checker")
+j = e["description"].index("python3 claimset-code/smape-target/experiment_v4.py")
+e["description"] = (e["description"][:i] + "A repeat of the run of PL18, which decided the reworded C6, C22 and C24. "
+                    "Command: " + e["description"][j:])
+# 7. L11 goes
+d["limitations"] = [l for l in d["limitations"] if l["id"] != "L11"]
+for c in d["claims"]:
+    if "L11" in c.get("limitations", []):
+        c["limitations"] = [x for x in c["limitations"] if x != "L11"]
+# 8. D40: the ratio once, in words
+d40 = next(x for x in d["definitions"] if x["id"] == "D40")
+cut = (" In symbols, $\\mathrm{ARE} = V_{\\mathrm{MAE}}/V_{\\mathrm{sMAPE}}$, with $V$ the "
+       "[[D36:asymptotic variance of a minimiser]] of each.")
+assert cut in d40["definition"]
+d40["definition"] = d40["definition"].replace(cut, "")
+# 9. E38
+ev["E38"]["description"] = ev["E38"]["description"].replace(
+    " This generalises version 3 of C6, whose groups were mirror images.", "")
+s7 = next(x for x in ev["E38"]["steps"] if x["id"] == "S7")
+cut = (" (So with points and $p = 1/2$, the two targets are themselves medians, at the edges of the gap. This is why "
+       "(c) speaks of forecasts strictly between the groups.)")
+assert cut in s7["statement"]
+s7["statement"] = s7["statement"].replace(cut, "")
+# 10. proof descriptions that copied their claim's summary
+for eid in ("E18", "E20", "E22", "E25", "E26", "E28", "E30", "E38", "E39", "E41"):
+    e = ev[eid]
+    m = re.match(r"Proof of (C\d+) \(section (H\d+) of the proof document A1, rendered in A2\)\.", e["description"])
+    if m:
+        e["description"] = f"Proof of {m.group(1)} (proofs.md, section {m.group(2)})."
+    else:
+        m = re.match(r"Proof of (C\d+) \(the (first|second) proof of the proof document A5\)\.", e["description"])
+        assert m, (eid, e["description"][:80])
+        e["description"] = f"Proof of {m.group(1)} (proof-suilin.md, {m.group(2)} proof)."
+# 11. the role of the numerical checks, said once, in D31
+for eid in ("E1", "E11", "E31", "E32", "E33"):
+    e = ev[eid]
+    e["description"] = re.sub(r" They check the formulas on concrete numbers; the proofs? (is|are) the evidence for the "
+                              r"claims?\.", "", e["description"])
+    assert "concrete numbers" not in e["description"], eid
+d31 = next(x for x in d["definitions"] if x["id"] == "D31")
+assert "concrete numbers" not in d31["definition"]
+d31["definition"] += " They check the formulas on concrete numbers; the proofs are the evidence for the claims."
+
 # definitions in reading order: version 3's order, the new ones after the terms they use
 order = [x["id"] for x in P["definitions"]]
 pos = order.index("D9") + 1
