@@ -863,5 +863,57 @@ pos = order.index("D9") + 1
 order[pos:pos] = ["D42", "D36", "D39", "D40", "D37", "D38"]
 dd = {x["id"]: x for x in d["definitions"]}
 d["definitions"] = [dd[i] for i in order]
+# ------------------------------------------------------------------ fractions set as a paper sets them
+# Every a/b in a formula becomes \frac{a}{b} (frac.py), except in sub- and superscripts; formulas written as plain text in
+# the authors' fields are set as formulas first. The record's own texts (tests, checks) and the names of variables stay
+# as the record gives them.
+from frac import convert_doc  # noqa: E402
+
+PLAIN = [  # (object, field path, old, new)
+    ("D37", "definition", "It is 1/3 for a uniform, 1/2 for a normal", "It is $1/3$ for a uniform, $1/2$ for a normal"),
+    ("C1", "note:B", "|y-f|/[(|y|+|f|)/2]", "$|y-f|/\\big(\\tfrac12(|y|+|f|)\\big)$"),
+    ("C4", "note:B", "weighted by y/(y+f)^2", "weighted by $y/(y+f)^2$"),
+    ("C10", "statement", "which differs from 1/2", "which differs from $1/2$"),
+    ("C10", "statement", "tends to 1/2:", "tends to $1/2$:"),
+    ("C18", "note:B", "like 1/σ", "like $1/\\sigma$"),
+    ("C18", "note:B", "like σ^(-1/2)", "like $\\sigma^{-1/2}$"),
+    ("C22", "statement", "their indices are 1 and 5/8", "their indices are 1 and $5/8$"),
+    ("C22", "note:B", "E[ψ²]/(E ψ')²", "$\\mathrm E[\\psi^2]/(\\mathrm E\\,\\psi')^2$"),
+    ("E13", "table:T5", "weighted by 1/y", "weighted by $1/y$"),
+    ("E30", "step:S8", "between 5/6 and 1", "between $5/6$ and 1"),
+    ("E42", "description", "C: (ARE - 1)/(sigma^2/2) at spread 0.01", "C: $(\\mathrm{ARE} - 1)/(\\sigma^2/2)$ at spread 0.01"),
+    ("E42", "description", "within 2% of E[Z^2] - E|Z|/h(0)", "within 2% of $\\mathrm E[Z^2] - \\mathrm E|Z|/h(0)$"),
+    ("E42", "description", "at or below 3L^2/(2h(0)^3)", "at or below $3L^2/(2h(0)^3)$"),
+    ("E42", "description", "p not 1/2", "$p \\ne 1/2$"),
+    ("L9", "statement", "against its limit 1/3", "against its limit $1/3$"),
+    ("A3", "description", "the weight y/(y+f)^2", "the weight $y/(y+f)^2$"),
+    ("A3", "description", "against y/f on a log scale", "against $y/f$ on a log scale"),
+]
+objs = {x["id"]: x for k in ("claims", "definitions", "evidence", "limitations", "artefacts") for x in d.get(k) or []}
+for oid, where, old, new in PLAIN:
+    o = objs[oid]
+    if where.startswith("note:"):
+        targets = [r for r in o.get("relations") or [] if old in r.get("note", "")]
+        assert len(targets) == 1, (oid, old)
+        targets[0]["note"] = targets[0]["note"].replace(old, new)
+    elif where.startswith("table:"):
+        t = next(t for t in o["tables"] if t["id"].endswith(where[6:]) and old in t.get("description", ""))
+        t["description"] = t["description"].replace(old, new)
+    elif where.startswith("step:"):
+        st = next(x for x in o["steps"] if x["id"] == where[5:])
+        assert old in st["statement"], (oid, old)
+        st["statement"] = st["statement"].replace(old, new)
+    else:
+        assert old in o[where], (oid, old)
+        o[where] = o[where].replace(old, new)
+for x in d["paper"]["exploration"]["not_claimed"]:
+    if "p = 1/2" in x.get("statement", ""):
+        x["statement"] = x["statement"].replace("p = 1/2", "$p = 1/2$")
+SKIP = ("uri", "version", "id", "target", "test", "checks", "variable", "estimate", "conditions", "name", "label",
+        "labels", "quantities", "hypothesis", "lab_event", "why")
+failures = []
+d = convert_doc(d, failures, SKIP)
+assert not failures, failures
+
 OUT.write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n")
 print("wrote", OUT)
