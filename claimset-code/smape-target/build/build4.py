@@ -795,7 +795,9 @@ def note(cid, pred, text):
 r19 = next(r for r in claims["C22"]["relations"] if r.get("reference") == "B19")
 cut = " On the log scale the sMAPE minimiser is such an [[D42:M-estimator]], with loss tanh(|z|/2)."
 assert cut in r19["note"]
-r19["note"] = r19["note"].replace(cut, "")
+r19["note"] = ("Huber (1964) defines [[D42:M-estimators]] of location and their asymptotic variance, "
+              "E[ψ²]/(E ψ')², and compares them with the sample median. C22 compares the sMAPE minimiser, an "
+              "M-estimator, with the sample median.")
 note("C22", lambda r: r.get("target") == "C19",
      "C22 adds the expansion for small spreads, the bound for large spreads and the limit for a narrow core.")
 note("C24", lambda r: r.get("target") == "C10",
